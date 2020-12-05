@@ -655,7 +655,7 @@
 <p>（这里的根节点下标是由1开始而得出以上规则，但其实由0开始也可得出相应的规则，此部分重点还是放在下标1开始）<br><img src="/posts/49310/4.png" alt="图片"></p>
 <p><strong>（3）基本结构代码实现</strong></p>
 <pre class="line-numbers language-C++"><code class="language-C++">
-template<typename item>
+template<typename Item>
 class MaxHeap{
 
 private:
@@ -686,7 +686,7 @@ public:
 };
 
 }
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-二叉堆中的-Shift-Up-和-Shift-Down"><a href="#3-二叉堆中的-Shift-Up-和-Shift-Down" class="headerlink" title="3. 二叉堆中的 Shift Up 和 Shift Down"></a>3. 二叉堆中的 Shift Up 和 Shift Down</h4><p>在完成代码的二叉堆基本结构后，需要实现最重要的两个操作逻辑，即Shift Up 和 Shift Down。<br><strong>（1）Shift Up</strong><br>下面就实现在二叉堆中如何插入一个元素，即优先队列中“入队操作”。以下动画中需要插入元素52，由于二叉堆是用数组表示，所以相当于在数组末尾添加一个元素，相当于52是索引值11的元素。<br><strong>算法思想</strong><br> <strong>注意！其实整个逻辑思想完全依赖于二叉树的特征，因为在二叉堆上任何一个子节点都不大于其父节点，</strong> 所以需要将新插入的元素挪到合适位置来维护此特征：</p>
 <ul>
 <li>首先判断新加入的元素（先归到二叉堆中）和其父节点的大小,52比16小，所以交换位置。</li>
@@ -706,7 +706,11 @@ public:
 
     // 像最大堆中插入一个新的元素 item
     void insert(Item item){
-        assert( count + 1 <= capacity ); data[count+1]="item;//注意下标是从1开始，所以新增元素插入位置为count+1，并非count" count ++; 数量增加1 shiftup(count); }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></=></code></pre>
+        assert( count + 1 <= capacity );
+        data[count+1] = item;//注意下标是从1开始，所以新增元素插入位置为count+1，并非count
+        count ++;//数量增加1
+        shiftUp(count);
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意：以上代码中严格需要注意边界问题，因为在创建MaxHeap已设置好数组个数MaxHeap<int> maxheap = MaxHeap<int>(100);，所以在上述insert中使用了assert函数来判断，若超过数组长度则不插入。其实这里有另外一种更好的解决方法，就是超过时动态增加数组长度</int></int></p>
 <p><strong>（2）Shift Down</strong></p>
 <p>上一部分讲解了如何从二叉堆中插入一个元素，此部分讲解如何取出一个元素，即优先队列中“出队操作”。</p>
@@ -724,7 +728,9 @@ public:
 <p>代码实现:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">
     void shiftDown(int k){
-        while( 2*k <= count ){ int j="2*k;" 在此轮循环中,data[k]和data[j]交换位置 if( j+1 <="count" && data[j+1]> data[j] )
+        while( 2*k <= count ){
+            int j = 2*k; // 在此轮循环中,data[k]和data[j]交换位置
+            if( j+1 <= count && data[j+1] > data[j] )
                 j ++;
             // data[j] 是 data[2*k]和data[2*k+1]中的最大值
 
@@ -744,12 +750,12 @@ public:
         shiftDown(1);
 
         return ret;
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></code></pre>
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="二-二叉堆优化"><a href="#二-二叉堆优化" class="headerlink" title="二. 二叉堆优化"></a>二. 二叉堆优化</h2><h4 id="1-Heapify"><a href="#1-Heapify" class="headerlink" title="1. Heapify"></a>1. Heapify</h4><p>在学习以上二叉堆实现后，发现它同样可用于排序，不断调用二叉堆的extractMax方法，即可取出数据。（从大到小的顺序）</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// heapSort1, 将所有的元素依次添加到堆中, 在将所有元素从堆中依次取出来, 即完成了排序
 // 无论是创建堆的过程, 还是从堆中依次取出元素的过程, 时间复杂度均为O(nlogn)
 // 整个堆排序的整体时间复杂度为O(nlogn)
-template<typename t>
+template<typename T>
 void heapSort1(T arr[], int n){
 
     MaxHeap<T> maxheap = MaxHeap<T>(n);
@@ -759,7 +765,7 @@ void heapSort1(T arr[], int n){
     for( int i = n-1 ; i >= 0 ; i-- )
         arr[i] = maxheap.extractMax();
 
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></T></T></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>（1）测试</strong></p>
 <p>所以以下将二叉堆和之前所学到的O(n*logn)排序算法比较测试，分别对</p>
 <p>无序数组<br>近乎有序数组<br>包含大量重复值数组<br>以上3组测试用例进行时间比较，结果如下:</p>
@@ -792,14 +798,14 @@ void heapSort1(T arr[], int n){
             shiftDown(i);
     }
 
-template<typename t>
+template<typename T>
 void heapSort2(T arr[], int n){
     //优化后的创建二叉堆构造函数
     MaxHeap<T> maxheap = MaxHeap<T>(arr,n);
     for( int i = n-1 ; i >= 0 ; i-- )
         arr[i] = maxheap.extractMax();
 
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></T></T></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>（4）测试</p>
 <p>通过优化后的创建二叉堆构造函数再次测试，结果如下：<br><img src="/posts/49310/7.png" alt="图片"></p>
 <p>结论</p>
@@ -818,7 +824,7 @@ void heapSort2(T arr[], int n){
 <p>代码实现</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 优化的shiftDown过程, 使用赋值的方式取代不断的swap,
 // 该优化思想和我们之前对插入排序进行优化的思路是一致的
-template<typename t>
+template<typename T>
 void __shiftDown2(T arr[], int n, int k){
 
     T e = arr[k];
@@ -837,7 +843,7 @@ void __shiftDown2(T arr[], int n, int k){
 }
 
 // 不使用一个额外的最大堆, 直接在原数组上进行原地的堆排序
-template<typename t>
+template<typename T>
 void heapSort(T arr[], int n){
 
     // 注意，此时我们的堆是从0开始索引的,因为是原地排序
@@ -850,7 +856,7 @@ void heapSort(T arr[], int n){
         swap( arr[0] , arr[i] );
         __shiftDown2(arr, i, 0);
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>测试：</p>
 <p>分别测试原始Shift Down堆排序 和 Heapify堆排序 和 原地堆排序的时间消耗。<br><img src="/posts/49310/9.png" alt="图片"></p>
 <p>从结构得知优化后的原地堆排序快于之前原始Shift Down堆排序和Heapify堆排序，因为新的算法不需要额外的空间，也不需要对这些空间赋值，所以性能有所提高。</p>
@@ -1224,7 +1230,7 @@ void heapSort(T arr[], int n){
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>

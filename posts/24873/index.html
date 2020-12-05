@@ -668,7 +668,7 @@
 </ul>
 <p>代码为：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 将arr[l...mid]和arr[mid+1...r]两部分进行归并
-template<typename t>
+template<typename  T>
 void __merge(T arr[], int l, int mid, int r){
 
     /* VS不支持动态长度数组, 即不能使用 T aux[r-l+1]的方式申请aux的空间
@@ -678,7 +678,14 @@ void __merge(T arr[], int l, int mid, int r){
     T aux[r-l+1];
     //T *aux = new T[r-l+1];
 
-    for( int i = l ; i <= r; i ++ ) aux[i-l]="arr[i];" 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1 int j="mid+1;" for( k="l" ; <="r;" ){ if(> mid ){  // 如果左半部分元素已经全部处理完毕
+    for( int i = l ; i <= r; i ++ )
+        aux[i-l] = arr[i];
+
+    // 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1
+    int i = l, j = mid+1;
+    for( int k = l ; k <= r; k ++ ){
+
+        if( i > mid ){  // 如果左半部分元素已经全部处理完毕
             arr[k] = aux[j-l]; j ++;
         }
         else if( j > r ){  // 如果右半部分元素已经全部处理完毕
@@ -696,7 +703,7 @@ void __merge(T arr[], int l, int mid, int r){
 }
 
 // 递归使用归并排序,对arr[l...r]的范围进行排序
-template<typename t>
+template<typename T>
 void __mergeSort(T arr[], int l, int r){
 
     if( l >= r )
@@ -709,22 +716,44 @@ void __mergeSort(T arr[], int l, int r){
 }
 
 //主函数中调用此方法即可（暴露给上层调用）
-template<typename t>
+template<typename T>
 void mergeSort(T arr[], int n){
     __mergeSort( arr , 0 , n-1 );
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></typename></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-比较归并排序与插入排序的时间效率"><a href="#3-比较归并排序与插入排序的时间效率" class="headerlink" title="3. 比较归并排序与插入排序的时间效率"></a>3. 比较归并排序与插入排序的时间效率</h4><p>以下测试将对比归并排序和插入排序，分别在无序、有序的测试用例下的时间：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">int main() {
     int n = 50000;
 
     // 测试1 一般性测试
-    cout<<"Test for random array, size="<<n<<" , range [0, "<<n<<"]"<<endl; int* arr1="SortTestHelper::generateRandomArray(n,0,n);" arr2="SortTestHelper::copyIntArray(arr1," n); sorttesthelper::testsort("insertion sort", insertionsort, arr1, sorttesthelper::testsort("merge mergesort, arr2, delete[] arr1; arr2; cout<<endl; 测试2 测试近乎有序的数组 int swaptimes="10;" assert(>= 0 );
+    cout<<"Test for random array, size = "<<n<<", random range [0, "<<n<<"]"<<endl;
+    int* arr1 = SortTestHelper::generateRandomArray(n,0,n);
+    int* arr2 = SortTestHelper::copyIntArray(arr1, n);
 
-    cout<<"Test for nearly ordered array, size="<<n<<" , swap time="<<swapTimes<<endl;
+    SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
+    SortTestHelper::testSort("Merge Sort",     mergeSort,     arr2, n);
+
+    delete[] arr1;
+    delete[] arr2;
+
+    cout<<endl;
+
+ // 测试2 测试近乎有序的数组
+
+    int swapTimes = 10;
+    assert( swapTimes >= 0 );
+
+    cout<<"Test for nearly ordered array, size = "<<n<<", swap time = "<<swapTimes<<endl;
     arr1 = SortTestHelper::generateNearlyOrderedArray(n,swapTimes);
     arr2 = SortTestHelper::copyIntArray(arr1, n);
 
-    SortTestHelper::testSort(" insertion sort", insertionsort, arr1, n); sorttesthelper::testsort("merge mergesort, arr2, delete[] arr1; arr2; return 0; }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></"Test></"Test></code></pre>
+    SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
+    SortTestHelper::testSort("Merge Sort",     mergeSort,     arr2, n);
+
+    delete[] arr1;
+    delete[] arr2;
+
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>结果显示:<br><img src="/posts/24873/3.png" alt="merge对比"></p>
 <p>现象分析</p>
 <ul>
@@ -748,10 +777,14 @@ void mergeSort(T arr[], int n){
 <pre class="line-numbers language-C++"><code class="language-C++">【__merge函数不作修改，在此不粘贴了】
 
 // 对arr[l...r]范围的数组进行插入排序
-template<typename t>
+template<typename T>
 void insertionSort(T arr[], int l, int r){
 
-    for( int i = l+1 ; i <= r ; i ++ ) { t e="arr[i];" int j; for (j="i;" j> l && arr[j-1] > e; j--)
+    for( int i = l+1 ; i <= r ; i ++ ) {
+
+        T e = arr[i];
+        int j;
+        for (j = i; j > l && arr[j-1] > e; j--)
             arr[j] = arr[j-1];
         arr[j] = e;
     }
@@ -759,18 +792,29 @@ void insertionSort(T arr[], int l, int r){
 }
 
 // 使用优化的归并排序算法, 对arr[l...r]的范围进行排序
-template<typename t>
+template<typename T>
 void __mergeSort2(T arr[], int l, int r){
 
     // 优化1: 对于小规模数组, 使用插入排序
-    if( r - l <= 15 ){ insertionsort(arr, l, r); return; } int mid="(l+r)/2;" __mergesort2(arr, mid); mid+1, 优化2: 对于arr[mid] <="arr[mid+1]的情况,不进行merge" 对于近乎有序的数组非常有效,但是对于一般情况,有一定的性能损失 if( arr[mid]> arr[mid+1] )
+    if( r - l <= 15 ){
+        insertionSort(arr, l, r);
+        return;
+    }
+
+    int mid = (l+r)/2;
+    __mergeSort2(arr, l, mid);
+    __mergeSort2(arr, mid+1, r);
+
+    // 优化2: 对于arr[mid] <= arr[mid+1]的情况,不进行merge
+    // 对于近乎有序的数组非常有效,但是对于一般情况,有一定的性能损失
+    if( arr[mid] > arr[mid+1] )
         __merge(arr, l, mid, r);
 }
 
-template<typename t>
+template<typename T>
 void mergeSort2(T arr[], int n){
     __mergeSort2( arr , 0 , n-1 );
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></=></typename></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="二-自底向上的归并排序"><a href="#二-自底向上的归并排序" class="headerlink" title="二. 自底向上的归并排序"></a>二. 自底向上的归并排序</h2><p><strong>1.算法思想</strong><br>在理解了归并排序的思想后，其实不一定非要按照自顶向下的思路，可以考虑自底向上的过程，查看以下过程：</p>
 <ul>
 <li>将此数组按照从坐到右的顺序两两划分成多个小组来进行归并排序的过程（一个组有2个元素）。</li>
@@ -785,14 +829,14 @@ void mergeSort2(T arr[], int n){
 </ul>
 <p>以下代码中__merge归并过程函数相同</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 使用自底向上的归并排序算法
-template <typename t>
+template <typename T>
 void mergeSortBU(T arr[], int n){
     for( int sz = 1; sz < n ; sz += sz )
         for( int i = 0 ; i < n - sz ; i += sz+sz )
             // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
             __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
 
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>以上代码实现过程中有个特点即未使用到数组的特性，即不是通过索引值来获取元素值。正因如此，可使用O(n*logn)的时间对链表这样的数据结构进行排序，这也是个很常见的算法问题，需仔细琢磨！</strong></p>
 <hr>
 <p><strong>3. 代码优化</strong><br>这里可优化的两处同自顶向下归并排序法相同，以下稍作总结：</p>
@@ -803,16 +847,17 @@ void mergeSortBU(T arr[], int n){
 <p><strong>优化后代码如下：</strong></p>
 <pre class="line-numbers language-C++"><code class="language-C++">【insertionSort函数前面已经贴出，在此不重复粘贴】
 
-template <typename t>
+template <typename T>
 void mergeSortBU(T arr[], int n){
 for( int i = 0 ; i < n ; i += 16 )
         insertionSort(arr,i,min(i+15,n-1));
 
     for( int sz = 16; sz < n ; sz += sz )
         for( int i = 0 ; i < n - sz ; i += sz+sz )
-            // 对于arr[mid] <= arr[mid+1]的情况,不进行merge if( arr[i+sz-1]> arr[i+sz] )
+            // 对于arr[mid] <= arr[mid+1]的情况,不进行merge
+            if( arr[i+sz-1] > arr[i+sz] )
                 __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>注意</strong><br>测试数量为100000，比较自顶向下、自底向上两种归并排序在无序和有序数组测试的情况下，两者的测试结果如下：<br><img src="/posts/24873/4.png" alt="两者对比"></p>
 <p><strong>结论</strong></p>
 <p>整体而言， 两种算法的效率是差不多的。但是如果进行仔细测试， 自底向上的归并排序会略胜一筹，而且它更适用于链表这样的数据结构进行排序。<strong>(LeetCode上第148号问题)</strong></p>
@@ -1189,7 +1234,7 @@ for( int i = 0 ; i < n ; i += 16 )
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>

@@ -671,14 +671,25 @@
     // 向最大索引堆中插入一个新的元素, 新元素的索引为i, 元素为item
     // 传入的i对用户而言,是从0索引的
     void insert(int i, Item item){
-        assert( count + 1 <= 1 capacity ); assert( i +>= 1 && i + 1 <= capacity ); i +="1;" data[i]="item;" indexes[count+1]="i;" count++; shiftup(count); }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></=></=></code></pre>
+        assert( count + 1 <= capacity );
+        assert( i + 1 >= 1 && i + 1 <= capacity );
+
+        i += 1;
+        data[i] = item;
+        indexes[count+1] = i;
+        count++;
+
+        shiftUp(count);
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>删除函数：</li>
 </ul>
 <pre class="line-numbers language-C++"><code class="language-C++">    // 索引堆中, 数据之间的比较根据data的大小进行比较, 但实际操作的是索引
     void shiftDown( int k ){
 
-        while( 2*k <= 1 count ){ int j="2*k;" if( + <="count" && data[indexes[j+1]]> data[indexes[j]] )
+        while( 2*k <= count ){
+            int j = 2*k;
+            if( j + 1 <= count && data[indexes[j+1]] > data[indexes[j]] )
                 j += 1;
 
             if( data[indexes[k]] >= data[indexes[j]] )
@@ -699,7 +710,7 @@
         count--;
         shiftDown(1);
         return ret;
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></code></pre>
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>（3）更改函数</strong></p>
 <p>在第一点“引出问题”中提到一个问题，就是二叉堆中的某个节点的元素值可能会被改变，（实际应用中：OS中任务的优先级会动态改变）所以提供一个方法仅供修改元素值。</p>
 <p><strong>注意：修改元素值后必然还要维护索引堆的特性，所以该元素的值位置可能会有所改变，具体操作也简单，只需分别调用shiftUp、shiftDown方法即可找到合适位置。</strong></p>
@@ -711,7 +722,13 @@
 
         // 找到indexes[j] = i, j表示data[i]在堆中的位置
         // 之后shiftUp(j), 再shiftDown(j)
-        for( int j = 1 ; j <= count ; j ++ ) if( indexes[j]="=" i ){ shiftup(j); shiftdown(j); return; } }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></=></code></pre>
+        for( int j = 1 ; j <= count ; j ++ )
+            if( indexes[j] == i ){
+                shiftUp(j);
+                shiftDown(j);
+                return;
+            }
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="4-反向查找优化-——-更改元素值"><a href="#4-反向查找优化-——-更改元素值" class="headerlink" title="4. 反向查找优化 —— 更改元素值"></a>4. 反向查找优化 —— 更改元素值</h4><p><strong>（1）引出问题</strong><br><img src="/posts/31650/5.png" alt="图片"><br>举个例子，如上图，若用户要更改下标4所指向元素的数据，将此数据更爱以后需要维护index数组，此数组本质上是一个堆，其中存储的元素对应着上一层索引。</p>
 <p>所以需要做的是在index数组中找到4的位置，在下标9指向的位置，上一点的实现方法是顺序遍历查找下标9的位置，4指向的data是13，<strong>然后调用shiftUp、shiftDown方法维护二叉堆特征，这样过程的时间复杂度为O(n)级别。</strong></p>
 <p><strong>（2）思想</strong><br>其实对于以上更改元素值思想还有可以优化的地方，此种思想非常经典，被称为“反向查找”，查看下图：<br><img src="/posts/31650/6.png" alt="图片"></p>
@@ -738,7 +755,9 @@
     // 索引堆中, 数据之间的比较根据data的大小进行比较, 但实际操作的是索引
     void shiftDown( int k ){
 
-        while( 2*k <= 1 count ){ int j="2*k;" if( + <="count" && data[indexes[j+1]]> data[indexes[j]] )
+        while( 2*k <= count ){
+            int j = 2*k;
+            if( j + 1 <= count && data[indexes[j+1]] > data[indexes[j]] )
                 j += 1;
 
             if( data[indexes[k]] >= data[indexes[j]] )
@@ -754,7 +773,24 @@
    // 向最大索引堆中插入一个新的元素, 新元素的索引为i, 元素为item
     // 传入的i对用户而言,是从0索引的
     void insert(int i, Item item){
-        assert( count + 1 <= 1 capacity ); assert( i +>= 1 && i + 1 <= capacity ); 再插入一个新元素前,还需要保证索引i所在的位置是没有元素的。 assert( !contain(i) i +="1;" data[i]="item;" indexes[count+1]="i;" reverse[i]="count+1;" count++; shiftup(count); } 从最大索引堆中取出堆顶元素, 即索引堆中所存储的最大数据 item extractmax(){ count> 0 );
+        assert( count + 1 <= capacity );
+        assert( i + 1 >= 1 && i + 1 <= capacity );
+
+        // 再插入一个新元素前,还需要保证索引i所在的位置是没有元素的。
+        assert( !contain(i) );
+
+        i += 1;
+        data[i] = item;
+        indexes[count+1] = i;
+        reverse[i] = count+1;
+        count++;
+
+        shiftUp(count);
+    }
+
+    // 从最大索引堆中取出堆顶元素, 即索引堆中所存储的最大数据
+    Item extractMax(){
+        assert( count > 0 );
 
         Item ret = data[indexes[1]];
         swap( indexes[1] , indexes[count] );
@@ -776,7 +812,7 @@
         shiftUp( reverse[i] );
         shiftDown( reverse[i] );
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></=></=></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="五-堆衍生的问题"><a href="#五-堆衍生的问题" class="headerlink" title="五. 堆衍生的问题"></a>五. 堆衍生的问题</h2><h4 id="1-使用堆实现优先队列"><a href="#1-使用堆实现优先队列" class="headerlink" title="1. 使用堆实现优先队列"></a>1. 使用堆实现优先队列</h4><p><strong>在N个元素中选出前M个元素</strong><br>例如在1,000,000个元素中选出前100名，也就是“在N个元素中选出前M个元素”。</p>
 <p>按照之前学习的一些排序算法，性能最优可达到O(n* logn )<strong>但是使用了优先队列，可将时间复杂度从O(n *logn )降低为O(n *logM)</strong>！（若N是百万级别数字，其实这优化的不少）使用一个最小堆，使长度维护在100，将前100个元素放入最小堆之后再插入新的元素，此时只会将堆中最小元素移出去，堆的长度不变，将这1,000,000个元素遍历完后，最小堆中存放的100个元素就是前100名，因为比其小的元素全都请了出去。</p>
 <h4 id="2-多路归并排序"><a href="#2-多路归并排序" class="headerlink" title="2. 多路归并排序"></a>2. 多路归并排序</h4><p>可以使用堆来完成多路归并排序，首先思考归并排序思想，是将数组一分为二，两个子数组分别排序后进行归并，每次归并的过程只有两个子数组元素比较，如下图：<br><img src="/posts/31650/8.png" alt="图片"><br>其实在归并排序过程中可以一次分成多个（大于2，这里是4）子数组，再进行归并，每次比较4个元素的大小关系，理所当然想到逐个元素比较，<strong>但是可以将这4个元素放入堆中，再逐个取出来，取出来的元素属于哪个子数组，再添加这个子数组的下一个元素进入堆中，来维护这个堆。</strong></p>
@@ -1163,7 +1199,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>

@@ -652,13 +652,25 @@
 <p>代码为：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
 // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
-template <typename t>
+template <typename T>
 int __partition(T arr[], int l, int r){
 
     T v = arr[l];
 
     int j = l; // arr[l+1...j] < v ; arr[j+1...i) > v
-    for( int i = l + 1 ; i <= r ; i ++ ) if( arr[i] < v ){ j ++; swap( arr[j] , ); } arr[l] arr[j]); return j; 对arr[l...r]部分进行快速排序 template <typename t>
+    for( int i = l + 1 ; i <= r ; i ++ )
+        if( arr[i] < v ){
+            j ++;
+            swap( arr[j] , arr[i] );
+        }
+
+    swap( arr[l] , arr[j]);
+
+    return j;
+}
+
+// 对arr[l...r]部分进行快速排序
+template <typename T>
 void __quickSort(T arr[], int l, int r){
 
     if( l >= r )
@@ -669,16 +681,28 @@ void __quickSort(T arr[], int l, int r){
     __quickSort(arr, p+1, r);
 }
 
-template <typename t>
+template <typename T>
 void quickSort(T arr[], int n){
     __quickSort(arr, 0, n-1);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-比较Merge-Sort和Quick-Sort两种排序算法的性能效率"><a href="#3-比较Merge-Sort和Quick-Sort两种排序算法的性能效率" class="headerlink" title="3. 比较Merge Sort和Quick Sort两种排序算法的性能效率"></a>3. 比较Merge Sort和Quick Sort两种排序算法的性能效率</h4><pre class="line-numbers language-C++"><code class="language-C++">int main() {
 
     int n = 100000;
 
     // 测试1 一般性测试
-    cout<<"Test for random array, size="<<n<<" , range [0, "<<n<<"]"<<endl; int* arr1="SortTestHelper::generateRandomArray(n,0,n);" arr2="SortTestHelper::copyIntArray(arr1,n);" sorttesthelper::testsort("merge sort", mergesort, arr1, n); sorttesthelper::testsort("quick quicksort, arr2, delete[] arr1; arr2; cout<<endl; return 0; }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></"Test></code></pre>
+    cout<<"Test for random array, size = "<<n<<", random range [0, "<<n<<"]"<<endl;
+    int* arr1 = SortTestHelper::generateRandomArray(n,0,n);
+    int* arr2 = SortTestHelper::copyIntArray(arr1,n);
+
+    SortTestHelper::testSort("Merge Sort", mergeSort, arr1, n);
+    SortTestHelper::testSort("Quick Sort", quickSort, arr2, n);
+
+    delete[] arr1;
+    delete[] arr2;
+
+    cout<<endl;
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="/posts/2307/3.png" alt="result"></p>
 <p>总结:</p>
 <p><strong>两种排序算法虽然都是O(nlogn)级别的, 但是快速排序（Quick Sort）算法有常数级的优势，比归并排序（Merge Sort） 快，即使已经对  **归并排序</strong>  进行了优化。**</p>
@@ -700,7 +724,7 @@ void quickSort(T arr[], int n){
 <p>代码如下：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
 // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
-template <typename t>
+template <typename T>
 int _partition(T arr[], int l, int r){
 
     // ☆☆☆☆☆ 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
@@ -708,16 +732,38 @@ int _partition(T arr[], int l, int r){
 
     T v = arr[l];
     int j = l;
-    for( int i = l + 1 ; i <= r ; i ++ ) if( arr[i] < v ){ j ++; swap( arr[j] , ); } arr[l] arr[j]); return j; 对arr[l...r]部分进行快速排序 template <typename t>
+    for( int i = l + 1 ; i <= r ; i ++ )
+        if( arr[i] < v ){
+            j ++;
+            swap( arr[j] , arr[i] );
+        }
+
+    swap( arr[l] , arr[j]);
+
+    return j;
+}
+
+// 对arr[l...r]部分进行快速排序
+template <typename T>
 void _quickSort(T arr[], int l, int r){
 
     // 对于小规模数组, 使用插入排序进行优化
-    if( r - l <= 15 ){ insertionsort(arr,l,r); return; } int p="_partition(arr," l, r); _quicksort(arr, p-1 ); p+1, template <typename t>
+    if( r - l <= 15 ){
+        insertionSort(arr,l,r);
+        return;
+    }
+
+    int p = _partition(arr, l, r);
+    _quickSort(arr, l, p-1 );
+    _quickSort(arr, p+1, r);
+}
+
+template <typename T>
 void quickSort(T arr[], int n){
     //设置随机种子
     srand(time(NULL));
     _quickSort(arr, 0, n-1);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>优化后的测试<br><img src="/posts/2307/8.png" alt="result4"><br>最后在优化后发现快速排序的性能已经极高地提升起来了，虽然没有快过归并排序，因为归并排序中的第二个优化，在已经排好序的数组中不用再次递归调用了。<strong>但也只是在近乎有序数组的情况下，这里快速排序结合随机算法进行了优化，在大部分情况下性能还是更优的。（此时快速排序的时间复杂度在最坏情况下仍是O(n^2)，但是此概率是极其极其低，近乎为0）</strong></p>
 <h2 id="二-双路快速排序法（Quick-Sort-2-Ways）"><a href="#二-双路快速排序法（Quick-Sort-2-Ways）" class="headerlink" title="二. 双路快速排序法（Quick Sort 2 Ways）"></a>二. 双路快速排序法（Quick Sort 2 Ways）</h2><h4 id="1-快速排序问题"><a href="#1-快速排序问题" class="headerlink" title="1. 快速排序问题"></a>1. 快速排序问题</h4><p><strong>(1）包含大量相同元素的数组测试</strong></p>
 <p>经过上面的优化过程，快速排序算法已是非常稳健了，但是它仍然存在一些问题：再测试一组特殊实例情况，对存在包含大量相同元素的数组（0~10范围内50万个数）进行排序，结果如下。<br><img src="/posts/2307/9.png" alt="result5"></p>
@@ -743,17 +789,21 @@ void quickSort(T arr[], int n){
 
 // 双路快速排序的partition
 // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
-template <typename t>
+template <typename T>
 int _partition2(T arr[], int l, int r){
 
     // 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
     swap( arr[l] , arr[rand()%(r-l+1)+l] );
     T v = arr[l];
 
-    // arr[l+1...i) <= v; arr(j...r]>= v
+    // arr[l+1...i) <= v; arr(j...r] >= v
     int i = l+1, j = r;
     while( true ){
-        // 注意这里的边界, arr[i] < v, 不能是arr[i] <= v，因为会导致两部分数量不平衡 while( i <="r" && arr[i] v ) ++; 注意这里的边界, arr[j]> v, 不能是arr[j] >= v
+        // 注意这里的边界, arr[i] < v, 不能是arr[i] <= v，因为会导致两部分数量不平衡
+        while( i <= r && arr[i] < v )
+            i ++;
+
+        // 注意这里的边界, arr[j] > v, 不能是arr[j] >= v
         while( j >= l+1 && arr[j] > v )
             j --;
 
@@ -768,7 +818,7 @@ int _partition2(T arr[], int l, int r){
     swap( arr[l] , arr[j]);
 
     return j;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>注意<br>以上代码中的重点，也就是<strong>双路快速排序法</strong>的重点，就是判断下标i、j增减的条件边界，之前反复强调的重点就是将重复值平均分配到数组中的两个部分，所以边界判断只能是&lt; 或 &gt;，而不是&lt;= 或&gt;=。<br>下面举个例子来体会，数组 1,0,0, …, 0, 0：</p>
 <ul>
 <li>对于arr[i]&lt; v和arr[j]&gt;v的方式，第一次partition得到的分点是数组中间；</li>
@@ -795,11 +845,22 @@ int _partition2(T arr[], int l, int r){
 <pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
 
 // 递归的三路快速排序算法
-template <typename t>
+template <typename T>
 void __quickSort3Ways(T arr[], int l, int r){
 
     // 对于小规模数组, 使用插入排序进行优化
-    if( r - l <= 15 ){ insertionsort(arr,l,r); return; } 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot swap( arr[l], arr[rand()%(r-l+1)+l ] ); t v="arr[l];" int lt="l;" arr[l+1...lt] < gt="r" + 1; arr[gt...r]> v
+    if( r - l <= 15 ){
+        insertionSort(arr,l,r);
+        return;
+    }
+
+    // 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
+    swap( arr[l], arr[rand()%(r-l+1)+l ] );
+
+    T v = arr[l];
+
+    int lt = l;     // arr[l+1...lt] < v
+    int gt = r + 1; // arr[gt...r] > v
     int i = l+1;    // arr[lt+1...i) == v
     while( i < gt ){
         if( arr[i] < v ){
@@ -820,7 +881,7 @@ void __quickSort3Ways(T arr[], int l, int r){
 
     __quickSort3Ways(arr, l, lt-1);
     __quickSort3Ways(arr, gt, r);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-归并排序、快速排序、三路快速排序比较"><a href="#3-归并排序、快速排序、三路快速排序比较" class="headerlink" title="3. 归并排序、快速排序、三路快速排序比较"></a>3. 归并排序、快速排序、三路快速排序比较</h4><p>下面针对以上讲解的3种快速排序方式分别对随机数组、近乎有序数组、包含大量重复元素数组进行测试，结果如下（测试代码见源码）：<br><img src="/posts/2307/14.png" alt="sort"></p>
 <p>结论:</p>
 <ul>
@@ -858,7 +919,15 @@ void __quickSort3Ways(T arr[], int l, int r){
 long long __merge( int arr[], int l, int mid, int r){
 
     int *aux = new int[r-l+1];
-    for( int i = l ; i <= r ; i ++ ) aux[i-l]="arr[i];" 初始化逆序数对个数 res="0" long 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1 int j="l," k="mid" + 1; for( <="r" ){ if(> mid ){ // 如果左半部分元素已经全部处理完毕
+    for( int i = l ; i <= r ; i ++ )
+        aux[i-l] = arr[i];
+
+    // 初始化逆序数对个数 res = 0
+    long long res = 0;
+    // 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1
+    int j = l, k = mid + 1;
+    for( int i = l ; i <= r ; i ++ ){
+        if( j > mid ){ // 如果左半部分元素已经全部处理完毕
             arr[i] = aux[k-l];
             k ++;
         }
@@ -866,7 +935,30 @@ long long __merge( int arr[], int l, int mid, int r){
             arr[i] = aux[j-l];
             j ++;
         }
-        else if( aux[j-l] <= 1 aux[k-l] ){ 左半部分所指元素 <="右半部分所指元素" arr[i]="aux[j-l];" j ++; } else{ 右半部分所指元素 k 此时, 因为右半部分k所指的元素小 这个元素和左半部分的所有未处理的元素都构成了逆序数对 左半部分此时未处理的元素个数为 mid - + res long)(mid 1); delete[] aux; return res; 求arr[l..r]范围的逆序数对个数 思考: 归并排序的优化可否用于求逆序数对的算法? :) long __inversioncount(int arr[], int l, r){ if( l>= r )
+        else if( aux[j-l] <= aux[k-l] ){ // 左半部分所指元素 <= 右半部分所指元素
+            arr[i] = aux[j-l];
+            j ++;
+        }
+        else{ // 右半部分所指元素 < 左半部分所指元素
+            arr[i] = aux[k-l];
+            k ++;
+            // 此时, 因为右半部分k所指的元素小
+            // 这个元素和左半部分的所有未处理的元素都构成了逆序数对
+            // 左半部分此时未处理的元素个数为 mid - j + 1
+            res += (long long)(mid - j + 1);
+        }
+    }
+
+    delete[] aux;
+
+    return res;
+}
+
+// 求arr[l..r]范围的逆序数对个数
+// 思考: 归并排序的优化可否用于求逆序数对的算法? :)
+long long __inversionCount(int arr[], int l, int r){
+
+    if( l >= r )
         return 0;
 
     int mid = l + (r-l)/2;
@@ -883,21 +975,31 @@ long long __merge( int arr[], int l, int mid, int r){
 long long inversionCount(int arr[], int n){
 
     return __inversionCount(arr, 0, n-1);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></=></=></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-取数组中第n大的元素"><a href="#3-取数组中第n大的元素" class="headerlink" title="3. 取数组中第n大的元素"></a>3. 取数组中第n大的元素</h4><p>如果这个问题是取数组中的最大值或最小值，那么时间复杂度为O(n)，可是现在是取第n大的元素，例如在1000000里取第1000个元素。</p>
 <p>此问题的解决思路很简单，就是给整个数组排序再通过下标索引取出元素即可，算法复杂度为O(n*logn)，但是！在本篇博文中学习了快速排序后，可使用O(n)时间获取。</p>
 <p>快速排序的核心过程:<br><strong>每次找到一个标志点，将此点挪到数组中合适的位置，注意此合适位置恰好是数组中排序好后所处的位置。</strong></p>
 <p>示例引导:<br>例如下图示例中的标志点4，最后挪到的位置恰好就是数组最后有序的位置，比如此时我们要获取第6个位置上的元素，那么标志位4之前的元素无需考虑，从后部分处理，继续处理后部分的第二位是谁？<br><img src="/posts/2307/16.png" alt="sort"></p>
 <pre class="line-numbers language-C++"><code class="language-C++">// partition 过程, 和快排的partition一样
 // 思考: 双路快排和三路快排的思想能不能用在selection算法中? :)
-template <typename t>
+template <typename T>
 int __partition( T arr[], int l, int r ){
 
     int p = rand()%(r-l+1) + l;
     swap( arr[l] , arr[p] );
 
     int j = l; //[l+1...j] < p ; [lt+1..i) > p
-    for( int i = l + 1 ; i <= r ; i ++ ) if( arr[i] < arr[l] swap(arr[i], arr[++j]); swap(arr[l], arr[j]); return j; } 求出arr[l...r]范围里第k小的数 template <typename t>
+    for( int i = l + 1 ; i <= r ; i ++ )
+        if( arr[i] < arr[l] )
+            swap(arr[i], arr[++j]);
+
+    swap(arr[l], arr[j]);
+
+    return j;
+}
+
+// 求出arr[l...r]范围里第k小的数
+template <typename T>
 int __selection( T arr[], int l, int r, int k ){
 
     if( l == r )
@@ -915,14 +1017,14 @@ int __selection( T arr[], int l, int r, int k ){
 }
 
 // 寻找arr数组中第k小的元素
-template <typename t>
+template <typename T>
 int selection(T arr[], int n, int k) {
 
     assert( k >= 0 && k < n );
 
     srand(time(NULL));
     return __selection(arr, 0, n - 1, k);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></=></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下一篇博文将讲解另一个排序算法——堆排序，也是此系列的第一个数据结构—–堆，后续学习你会发现对于堆的使用将远超与求解排序。</p>
 <p>转载自：<a href="https://blog.csdn.net/ITermeng/article/details/77397212">https://blog.csdn.net/ITermeng/article/details/77397212</a></p>
 <script>
@@ -1294,7 +1396,7 @@ int selection(T arr[], int n, int k) {
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>

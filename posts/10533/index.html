@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Gcc编译的背后, 博客 JoyTsing">
-    <meta name="description" content="前言在linux下写代码时，使用gcc只需要输入gcc a.c -o a就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了">
+    <meta name="keywords" content="记录博客的一次更新, 博客 JoyTsing">
+    <meta name="description" content="记录一次博客的更新已经很久没有写博客了，上一次写博客还是在半年前因为课程要求做读书笔记才记的，这半年来发生了很多事情，我的想法与之前也发生了很大的变化，希望能够从现在开始认认真真读几本书，好好写一下博客，记录一下自己的生活，最后希望自己能够">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Gcc编译的背后 | JoyTsing</title>
+    <title>记录博客的一次更新 | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -406,12 +406,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Gcc编译的背后</h1>
+                    <h1 class="description center-align post-title">记录博客的一次更新</h1>
                 </div>
             </div>
         </div>
@@ -527,12 +527,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C</span>
+                                <a href="/tags/Hexo/">
+                                    <span class="chip bg-color">Hexo</span>
                                 </a>
                             
                         </div>
@@ -543,8 +539,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/C/" class="post-category">
-                                    C
+                                <a href="/categories/Hexo/" class="post-category">
+                                    Hexo
                                 </a>
                             
                         </div>
@@ -556,7 +552,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-12-04
+                        2020-12-05
                     </div>
                 
 
@@ -570,7 +566,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        422
+                        204
                     </div>
                 
 
@@ -592,11 +588,16 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在linux下写代码时，使用gcc只需要输入<code>gcc a.c -o a</code>就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了这几个过程，通过<code>-v</code>参数就可以查看它的编译细节，想要看某个具体的编译过程，则可以分别使用<code>-E</code>,<code>-S</code>,<code>-c</code>,<code>-o</code>,对应的后台工具分别为<code>cpp</code>,<code>ccl</code>,<code>as</code>,<code>ld</code>。</p>
-<p>下面将逐步分析这几个过程以及相关的内容，比如语法检查，代码调试，汇编语言等待。</p>
-<a id="more"></a>
-
-<h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>预处理过程主要是C语言编译器执行各种预处理命令，编译的基本过程(词法分析、语法分析)之前需要先对源代码中头文件的包含、宏定义的扩展、条件编译等命令先行处理，其中以<code>#define</code>,<code>#include</code>,<code>#ifdef ... #endif</code>这三类最为常见，其中<code>#define</code>除了可以单独使用来设置一些常量之外，还可以配合<code>#ifdef ... #endif</code>使用来控制代码块的编译与否，同时也可以避免同一个头文件多次包含，而<code>#include</code>则比较简单，<code>&lt;&gt;</code>或者’” “‘包含头文件即可。下面介绍几个和预处理相关的几个简单内容。</p>
+                <h2 id="记录一次博客的更新"><a href="#记录一次博客的更新" class="headerlink" title="记录一次博客的更新"></a>记录一次博客的更新</h2><p>已经很久没有写博客了，上一次写博客还是在半年前因为课程要求做读书笔记才记的，这半年来发生了很多事情，我的想法与之前也发生了很大的变化，希望能够从现在开始认认真真读几本书，好好写一下博客，记录一下自己的生活，最后希望自己能够考上研究生。</p>
+<p>关于的博客一些TODO：</p>
+<ul>
+<li>加速访问</li>
+<li>弄一个域名</li>
+<li>加上https</li>
+<li>增加产出</li>
+<li>添加评论</li>
+</ul>
+<p>暂时就这些吧</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -628,12 +629,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C</span>
+                                <a href="/tags/Hexo/">
+                                    <span class="chip bg-color">Hexo</span>
                                 </a>
                             
                         </div>
@@ -675,7 +672,7 @@
         repo: 'gitalk',
         owner: 'JoyTsing',
         admin: '["JoyTsing"]',
-        id: 'posts/41703/',
+        id: 'posts/10533/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -698,9 +695,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
                     <a href="/posts/10533/">
                         <div class="card-image">
@@ -718,9 +716,9 @@
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-05
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -733,6 +731,7 @@
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
@@ -751,37 +750,31 @@
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/64955/">
+                    <a href="/posts/41703/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Linux学习笔记(十)">
+                                <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Gcc编译的背后">
                             
-                            <span class="card-title">Linux学习笔记(十)</span>
+                            <span class="card-title">Gcc编译的背后</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                df,du与归档压缩等df与dudf显示可用空间，-h用常见的格式显示出大小
-
-du统计文件或者目录的磁盘使用情况，用得比较少。
-这些命令通常是在要扩容和挂载时候才使用，配合fdisk -l和lvextend来使用。
-
-
-tartar 命令
+                                前言在linux下写代码时，使用gcc只需要输入gcc a.c -o a就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-11
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-04
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <a href="/categories/C/" class="post-category">
+                                    C
                                 </a>
                                     
                                 
@@ -793,6 +786,10 @@ tartar 命令
                             
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C</span>
                                 </a>
                             
                         </div>
@@ -936,7 +933,7 @@ tartar 命令
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
-            <a href="/about" rel="external nofollow noreferrer">JoyTsing</a>
+            <a href="/about" rel="external nofollow noreferrer">Sitoi</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>

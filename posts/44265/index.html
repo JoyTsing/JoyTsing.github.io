@@ -667,13 +667,17 @@ int main() {
     int a[10] = {10,9,8,7,6,5,4,3,2,1};
     selectionSort(a,10);
     for( int i = 0 ; i < 10 ; i ++ )
-        cout<<a[i]<<" "; cout<<endl; return 0; }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></a[i]<<"></algorithm></algorithm></iostream></code></pre>
+        cout<<a[i]<<" ";
+    cout<<endl;
+
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>结果显示:<br>1 2 3 4 5 6 7 8 9 10</p>
 <h3 id="三-使用优化"><a href="#三-使用优化" class="headerlink" title="三. 使用优化"></a>三. 使用优化</h3><p>在介绍其余算法之前，需要对以上代码稍作优化，此优化并非是算法上，而是在于使用上，为了后续讲解使用更加高效。</p>
 <h4 id="1-使用模板（泛型）编写算法"><a href="#1-使用模板（泛型）编写算法" class="headerlink" title="1. 使用模板（泛型）编写算法"></a>1. 使用模板（泛型）编写算法</h4><p>从以上代码可以看出此算法排序只针对于 int 类型，所以<strong>首先进行优化的便是使用模板（泛型）编写算法，这样针对的范围可扩大于浮点型、字符串，甚至于结构体。</strong></p>
 <p>在C++中声明为模板函数非常简单，只需在函数头前加上template<typename t>，再修改参数类型即可：</typename></p>
 <pre class="line-numbers language-C++"><code class="language-C++">//使用模板（泛型）编写算法
-template<typename t>
+template<typename T>
 void selectionSort(T arr[], int n){
 
     for(int i = 0 ; i < n ; i ++){
@@ -684,7 +688,7 @@ void selectionSort(T arr[], int n){
 
         swap( arr[i] , arr[minIndex] );
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="2-随机生成算法测试用例"><a href="#2-随机生成算法测试用例" class="headerlink" title="2. 随机生成算法测试用例"></a>2. 随机生成算法测试用例</h4><p>在优化了以上一点后，查看测试代码发现其中还有一个隐患，即测试的数据是自定义的，且数量过少，为了后续比较不同算法复杂度测试，需要满足随机生成算法测试用例的条件。</p>
 <p>后续还有多种排序算法的复杂度需要做比较，为此创建一个新的 .h 文件SortTestHelper。</p>
 <p>文件中的generateRandomArray辅助函数将随机生成一个int型数组，即返回值是int型指针，其中函数中的3个参数：</p>
@@ -703,7 +707,11 @@ namespace SortTestHelper {
     // 生成有n个元素的随机数组,每个元素的随机范围为[rangeL, rangeR]
     int *generateRandomArray(int n, int rangeL, int rangeR) {
         //使函数健壮，检验rangeL 是否小于rangeR，调用assert函数，需要加载#include <cassert>库
-        assert(rangeL <= ranger); int *arr="new" int[n]; 需要加载#include <ctime>库
+        assert(rangeL <= rangeR);
+
+        int *arr = new int[n];
+
+        //需要加载#include <ctime>库
         srand(time(NULL));
         for (int i = 0; i < n; i++)
             arr[i] = rand() % (rangeR - rangeL + 1) + rangeL;
@@ -711,7 +719,7 @@ namespace SortTestHelper {
     }
 
     // 打印arr数组的所有内容
-    template<typename t>
+    template<typename T>
     void printArray(T arr[], int n) {
 
         for (int i = 0; i < n; i++)
@@ -720,7 +728,7 @@ namespace SortTestHelper {
         return;
     }
 
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></=></cassert></code></pre>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-测试算法性能"><a href="#3-测试算法性能" class="headerlink" title="3. 测试算法性能"></a>3. 测试算法性能</h4><p>接下来需要在测试帮助文件中编写一个辅助函数来比较测试不同算法之间的性能差异，最简单的方式去判断算法性能就是在特定测试集上的执行时间。</p>
 <p>注意，函数testSort中提供的几个参数较为重要</p>
 <ul>
@@ -732,7 +740,7 @@ namespace SortTestHelper {
 <pre class="line-numbers language-C++"><code class="language-C++">【SortTestHelper.h】
 
     // 判断arr数组是否有序
-    template<typename t>
+    template<typename T>
     bool isSorted(T arr[], int n) {
 
         for (int i = 0; i < n - 1; i++)
@@ -743,7 +751,7 @@ namespace SortTestHelper {
     }
 
 // 测试sort排序算法排序arr数组所得到结果的正确性和算法运行时间
-    template<typename t>
+    template<typename T>
     void testSort(const string &sortName, void (*sort)(T[], int), T arr[], int n) {
 
         clock_t startTime = clock();
@@ -755,7 +763,7 @@ namespace SortTestHelper {
         cout << sortName << " : " << double(endTime - startTime) / CLOCKS_PER_SEC << " s" << endl;
 
         return;
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></typename></code></pre>
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>算法测试调用</p>
 <pre class="line-numbers language-C++"><code class="language-C++">int main() {
 
@@ -782,7 +790,7 @@ namespace SortTestHelper {
 <li>插入排序中的外层循环下标不再是从0开始，<strong>而是从1开始（从第二个元素开始对前面的元素进行比较）。</strong></li>
 <li>在每次循环里需要做的是<strong>寻找元素arr[i]前面合适的插入位置。</strong></li>
 </ul>
-<pre class="line-numbers language-C++"><code class="language-C++">template<typename t>
+<pre class="line-numbers language-C++"><code class="language-C++">template<typename T>
 void insertionSort(T arr[], int n){
 
     for( int i = 1 ; i < n ; i ++ ) {
@@ -801,7 +809,7 @@ void insertionSort(T arr[], int n){
       */
     }
     return;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>以上内容实现你会发现其实内循环中的判断条件有两个，<strong>所以可直接改进为写法2，将两个判断条件放在一起。</strong></p>
 <p>选择排序和插入排序的根本区别:</p>
 <p><strong>插入排序的内循环在满足条件的情况下是可以提前结束的！而选择排序必须遍历每一次循环。</strong>所以<strong>插入排序</strong>理论上比选择排序更快一些。</p>
@@ -905,7 +913,7 @@ for(int gap=N/2;gap>=1;gap/=2){
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>标准代码如下：</p>
-<pre class="line-numbers language-C++"><code class="language-C++">template<typename t>
+<pre class="line-numbers language-C++"><code class="language-C++">template<typename T>
 void shellSort(T arr[], int n){
 
     // 计算 increment sequence: 1, 4, 13, 40, 121, 364, 1093...
@@ -928,7 +936,7 @@ void shellSort(T arr[], int n){
 
         h /= 3;
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>是不是发现是如此的相似？</p>
 <h4 id="3-下篇预告"><a href="#3-下篇预告" class="headerlink" title="3. 下篇预告"></a>3. 下篇预告</h4><p>虽然ShellSort是这四种排序算法中性能最优的排序算法，但是在排序算法中的最优解还是O(n*logn)，所以在在下一篇博文中进行讲解，涉及的知识点：</p>
 <ul>
@@ -1305,7 +1313,7 @@ void shellSort(T arr[], int n){
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>

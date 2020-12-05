@@ -621,7 +621,12 @@ int trap(int[] height);
     int l_max = height[0];
     int r_max = height[n - 1];
 
-    while (left <= right) { l_max="max(l_max," height[left]); r_max="max(r_max," height[right]); left++; right--; } }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></=></int></code></pre>
+    while (left <= right) {
+        l_max = max(l_max, height[left]);
+        r_max = max(r_max, height[right]);
+        left++; right--;
+    }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>对于这部分代码，请问l_max和r_max分别表示什么意义呢？<br>很容易理解，<strong>l_max是height[0..left]中最高柱子的高度，r_max是height[right..end]的最高柱子的高度</strong>。</p>
 <p>明白了这一点，直接看解法：<br><img src="/posts/34649/7.png" alt="7"></p>
 <p>你看，其中的核心思想和之前一模一样，换汤不换药。但是细心的读者可能会发现次解法还是有点细节差异：</p>
@@ -830,12 +835,12 @@ Wiki:在计算机科学中，AVL树是最早被发明的自平衡二叉查找树
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
-                                </a>
-                            
                                 <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
                                     <span class="chip bg-color">设计模式</span>
+                                </a>
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
                                 </a>
                             
                         </div>
@@ -1005,7 +1010,7 @@ Wiki:在计算机科学中，AVL树是最早被发明的自平衡二叉查找树
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>

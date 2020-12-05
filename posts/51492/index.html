@@ -618,12 +618,14 @@
             Node *node = q.front();//获取队首元素
             q.pop();
 
-            cout<<node->key<<endl; if( node->left )
+            cout<<node->key<<endl;
+
+            if( node->left )
                 q.push( node->left );
             if( node->right )
                 q.push( node->right );
         }
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></endl;></node-></Node*></code></pre>
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="3-广度、深度优先遍历总结"><a href="#3-广度、深度优先遍历总结" class="headerlink" title="3. 广度、深度优先遍历总结"></a>3. 广度、深度优先遍历总结</h4><p>不论是二分搜索树的深度优先遍历还是广度优先遍历，性能都是很高效的，为O(n)，基本上是最小的了，毕竟“遍历”至少需要每个节点遍历一次。在很多实际运用中可能不需要显示地构建出一棵树，但是需要遍历一次树中节点。</p>
 <p>而之前学过的排序算法例如归并排序、快速排序本质上是一棵二叉树的深度优先遍历过程，此二分搜索树也是通过递归等基本内容构造的一棵复杂的数结构，可见算法与数据结构之间的互相依赖。</p>
 <h2 id="二-二分搜索树的删除"><a href="#二-二分搜索树的删除" class="headerlink" title="二. 二分搜索树的删除"></a>二. 二分搜索树的删除</h2><p>二分搜索树中最复杂的操作——删除节点，其实此过程中的查找需删除节点和删除操作并不复杂，复杂的是如何操作删除之后节点的左右孩子，使得最后整棵树依然保持二分搜索树的性质。</p>
@@ -1386,7 +1388,7 @@ private:
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">76.6k</span>&nbsp;字
+                            class="white-color">76.8k</span>&nbsp;字
                 
                 
                 <script>
