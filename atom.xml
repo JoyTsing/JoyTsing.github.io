@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2020-12-05T12:37:39.632Z</updated>
+  <updated>2020-12-06T03:11:20.686Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>毛概复习</title>
+    <link href="https://joytsing.github.io/posts/6522/"/>
+    <id>https://joytsing.github.io/posts/6522/</id>
+    <published>2020-12-06T03:05:23.000Z</published>
+    <updated>2020-12-06T03:11:20.686Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>先占个位,等到一月份专业课结束差不多了就开始总结复习</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;复习&quot;&gt;&lt;a href=&quot;#复习&quot; class=&quot;headerlink&quot; title=&quot;复习&quot;&gt;&lt;/a&gt;复习&lt;/h2&gt;&lt;p&gt;先占个位,等到一月份专业课结束差不多了就开始总结复习&lt;/p&gt;
+&lt;script&gt;
+        document.querySelector
+      
+    
+    </summary>
+    
+    
+      <category term="UESTC" scheme="https://JoyTsing.github.io/categories/UESTC/"/>
+    
+    
+      <category term="UESTC" scheme="https://JoyTsing.github.io/tags/UESTC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>软件工程复习</title>
+    <link href="https://joytsing.github.io/posts/49397/"/>
+    <id>https://joytsing.github.io/posts/49397/</id>
+    <published>2020-12-06T03:05:05.000Z</published>
+    <updated>2020-12-06T03:11:25.744Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>先占个位，后续早上起得早就先把问题之类的总结一下方便后续复习</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;复习&quot;&gt;&lt;a href=&quot;#复习&quot; class=&quot;headerlink&quot; title=&quot;复习&quot;&gt;&lt;/a&gt;复习&lt;/h2&gt;&lt;p&gt;先占个位，后续早上起得早就先把问题之类的总结一下方便后续复习&lt;/p&gt;
+&lt;script&gt;
+        document.querySele
+      
+    
+    </summary>
+    
+    
+      <category term="UESTC" scheme="https://JoyTsing.github.io/categories/UESTC/"/>
+    
+    
+      <category term="UESTC" scheme="https://JoyTsing.github.io/tags/UESTC/"/>
+    
+      <category term="软件工程" scheme="https://JoyTsing.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>记录博客的一次更新</title>
@@ -483,87 +541,6 @@
       <category term="设计模式" scheme="https://JoyTsing.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
       <category term="C++" scheme="https://JoyTsing.github.io/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++ 定义和使用接口类</title>
-    <link href="https://joytsing.github.io/posts/10571/"/>
-    <id>https://joytsing.github.io/posts/10571/</id>
-    <published>2019-09-23T15:14:39.000Z</published>
-    <updated>2020-12-05T07:18:58.638Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="C-中如何定义接口类"><a href="#C-中如何定义接口类" class="headerlink" title="C++中如何定义接口类?"></a>C++中如何定义接口类?</h3><p>首先给接口类下了定义：接口类应该是只提供方法声明，而自身不提供方法定义的抽象类。接口类自身不能实例化，接口类的方法定义/实现只能由接口类的子类来完成。</p><p>而对于C++，其接口类一般具有以下特征：</p><ul><li>1.最好不要有成员变量，但可以有静态常量（static const或enum）</li><li>2.要有纯虚接口方法</li><li>3.要有虚析构函数，并提供默认实现</li><li>4.不要声明构造函数</li></ul><p>如下就是一个最简单的例子：</p><pre class="line-numbers language-C++"><code class="language-C++">class Testable{public:    static const int START = 1;  // #1    static const int STOP = 2;    virtual void test() = 0;  // #2： 接口方法    virtual ~Testable() {};   // #3： 从C++11开始可以： virtual ~Testable() = default;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> <a id="more"></a><p> 如果成员变量，尤其是可变的成员变量，定义在接口中，等于是把实现细节暴露出来了，不符合接口定义的要求，所以一般不在接口中定义可变的成员变量。</p><blockquote><p>而常量可以定义在接口中，因为有时接口需要返回状态，而这些状态可以定义成常量放在接口中。</p></blockquote><hr><p>由于不能让接口类自身能够实例化，并且需要子类必须实现接口暴露的方法，所以接口方法都要声明成纯虚函数。</p><blockquote><p>声明成纯虚函数意味着接口类自身不需要提供方法的定义，方法的定义需要由接口类的子类提供，并且接口类自身也因此变成了抽象类而不能被实例化。</p></blockquote><hr><p><strong>a).</strong> 在使用接口类的指针访问接口类的子类的实例时，当对接口类的指针做delete时，如果接口类的析构函数不是虚析构函数的话，将只会调用接口类的析构函数，接口类的子类的析构函数将不会被调用，内存泄露将会产生，所以接口类的析构函数必须定义成虚析构函数。</p><p> <strong>b).</strong> 如果接口类的析构函数不提供默认实现，即如果接口类的析构函数是纯虚析构函数的话，接口类的子类将被迫必须提供析构函数的实现，这样对接口类的子类不友好。</p><p><strong>c).</strong> 在C++11中也可以用：  virtual ~Testable() = default; 替代 virtual ~Testable() {};</p><hr><blockquote><p>不要显式定义任何的构造函数，但也不要在接口中加入如下代码来禁止生成构造函数：</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">Testable() = delete;Testable(const Testable&) = delete;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>因为C++的调用机制要求子类的构造函数调用时一定会先调用父类的构造函数，如果禁止生成构造函数，代码编译时会报错。如果程序员不显式的提供构造函数，编译器也会隐式的加上构造函数的，虽然这些构造函数对于接口类来说实际没有什么意义。</p><h3 id="C-中如何定义标识接口（marker-interface）类"><a href="#C-中如何定义标识接口（marker-interface）类" class="headerlink" title="C++中如何定义标识接口（marker interface）类?"></a>C++中如何定义标识接口（marker interface）类?</h3><p>标识接口是没有任何方法和属性的接口。这种接口在java中出现的较多，比如：java.io.Serializable、java.rmi.Remote、java.util.EventListener、java.util.RandomAccess<br>实现代码如下：</p><pre class="line-numbers language-C++"><code class="language-C++">class Testable {public:    virtual ~Testable() = 0 {}; // #5};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>只要对纯虚析构函数提供一个默认实现就可以了。这种对纯虚函数提供实现的写法看似很奇怪，但C++的确是支持的。</p><h3 id="C-：如何正确的使用接口类"><a href="#C-：如何正确的使用接口类" class="headerlink" title="C++：如何正确的使用接口类"></a>C++：如何正确的使用接口类</h3><h4 id="提供接口与实现"><a href="#提供接口与实现" class="headerlink" title="提供接口与实现"></a>提供接口与实现</h4><p>首先，声明一个接口：</p><pre class="line-numbers language-c++"><code class="language-c++">// circle.h// 圆的接口类class Circle {public:    virtual ~Circle() {};    // 接口方法：面积    virtual double area() = 0;};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>通过继承的方式实现这个接口：</p><pre class="line-numbers language-c++"><code class="language-c++">// circle_impl.h#include "circle.h"// 圆的具体实现类class CircleImpl : public Circle {private:    double radius;public:    CircleImpl(double radius);    double area() override;};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-c++"><code class="language-c++">// circle_impl.cpp#include <cmath>#include "circle_impl.h"inline double pi() {    return std::atan(1) * 4;};CircleImpl::CircleImpl(double _radius) : radius(_radius) {};double CircleImpl::area() {    return pi() * radius * radius;};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>最后，通过管理类创建接口派生类的实例，或者销毁接口派生类的实例：</p><pre class="line-numbers language-c++"><code class="language-c++">// circle_manager.h#include "circle.h"// 圆的创建工厂类class CircleManager {public:    static Circle* create(double radius);     // 创建circle实例    static void destroy(Circle* circlePtr);   // 销毁circle实例};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-C++"><code class="language-C++">// circle_manager.cpp#include "circle_manager.h"#include "circle_impl.h"Circle* CircleManager::create(double radius) {    Circle* circlePtr = new CircleImpl(radius);    return circlePtr;};void CircleManager::destroy(Circle* circlePtr) {    delete circlePtr;}; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>代码目录结构：</p><pre class="line-numbers language-c++"><code class="language-c++">proj-+     |-inc-+     |     |-circle.h     |     |-circle_manager.h     |     |-src-+           |-circle_impl.h           |-circle_impl.cpp           |-circle_manager.cpp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>其中inc目录用于存放Circle接口类和Circle管理类的声明，src目录中存放Circle实现类CircleImpl的声明和定义、Circle管理类CircleManager的定义。</p><p>然后，可以将以上代码编译成静态库circle.lib，并和inc目录中的头文件一起提供给外部调用：</p><h3 id="如何使用静态库？"><a href="#如何使用静态库？" class="headerlink" title="如何使用静态库？"></a>如何使用静态库？</h3><p>外部使用者编译时，需要做如下配置：</p><p>1). 把inc目录添加到“附加包含目录”中。</p><p>2). “附加依赖项”中添加circle.lib。</p><p>3). 把circle.lib所在目录的路径添加到“附加库目录”中。</p><p>外部使用者的代码如下：</p><pre class="line-numbers language-c++"><code class="language-c++">// main.cpp#include <iostream>#include "circle_manager.h"#include "circle.h"int main() {    Circle* circlePtr = CircleManager::create(3);    cout << circlePtr->area() <<endl;    CircleManager::destroy(circlePtr);    system("pause");    return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>以上代码只提供给外部circle的接口，circle的实现完全被隐藏了起来，外部将无从知晓，外部使用者只能通过circle管理类生成circle的派生类的实例。外部使用者得到circle派生类的实例后，除了能调用接口暴露的方法area()外，其它什么也做不了，这样就完全达到了使用接口的最终目标。</p><h3 id="如何编译成动态库？"><a href="#如何编译成动态库？" class="headerlink" title="如何编译成动态库？"></a>如何编译成动态库？</h3><pre class="line-numbers language-C"><code class="language-C">// dll_export.h // if windows .dll #ifdef _WINDLL #ifdef DLL_API_EXPORTS #define DLL_API __declspec(dllexport) #else #define DLL_API __declspec(dllimport) #endif // else if Linux or macOS .so #else #define DLL_API #endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>添加此头文件后，代码可以在windows、Linux下都可编译生成动态库，只需在编译时设置不同参数就行了。</p><p>windows： /D “DLL_API_EXPORTS” /D “_WINDLL”</p><p>Linux： 不用配置额外参数</p><p>circle.h和circle_manager.h也要做相应改动：</p><pre class="line-numbers language-C++"><code class="language-C++">// circle.h #pragma once #include "dll_export.h" // 圆的接口类 class DLL_API Circle { public:            virtual ~Circle() {};    // 接口方法：面积             virtual double area() = 0; };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-C++"><code class="language-C++">// circle_manager.h #pragma once #include "circle.h" #include "dll_export.h"  // 圆的创建工厂类 class DLL_API CircleManager { public:     static Circle* create(double radius);     static void destroy(Circle* circlePtr); };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>编译完成后将生成”circle.lib“和”circle.dll“文件：</p><pre class="line-numbers language-C++"><code class="language-C++">proj-+     |-inc-+     |     |-circle.h     |     |-circle_manager.h     |     |-src-+     |     |-circle_impl.h     |     |-circle_impl.cpp     |     |-circle_manager.cpp     |     |-bin-+           |-circle.lib           |-circlr.dll<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="如何使用动态库？"><a href="#如何使用动态库？" class="headerlink" title="如何使用动态库？"></a>如何使用动态库？</h3><p>外部使用者编译时，需要做如下配置：</p><p>1). 代码中添加#pragma comment(lib,”circle.lib”)， 这里是circle.lib，不是circle.dll。</p><p>2). 把inc目录添加到“附加包含目录”中。</p><p>3). “附加依赖项”中添加circle.lib，这里也是circle.lib，不是circle.dll。</p><p>4). 把bin目录所在路径添加到”附加库目录“中。</p><p>新的外部使用者的代码如下：</p><pre class="line-numbers language-C"><code class="language-C">#include <iostream> #include "circle_manager.h" #include "circle.h" #pragma comment(lib,"circle.lib") int main() {    Circle* circlePtr = CircleManager::create(3);    cout << circlePtr->area() << endl;    CircleManager::destroy(circlePtr);    system("pause");    return 0; }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这里有几点需要说明一下：</p><ul><li><p>1、为什么CircleManager类即在提供创建实例的方法又要提供销毁实例的方法？<br>由于编译器的实现方式不同，dll的堆空间可能跟调用方的堆空间不同，它可能是由dll自己单独管理的，所以从dll中创建的实例，最好还是在dll中销毁。</p></li><li><p>2、对动态库的调用本文是通过隐式调用的方式完成的，对动态库的调用也可以使用显式调用的方式，但由于windows和Linux在使用显式调用时的API是不同的，不好提供统一的代码，所以本文没有举例，以后有机会再单独行文介绍。</p></li></ul><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;C-中如何定义接口类&quot;&gt;&lt;a href=&quot;#C-中如何定义接口类&quot; class=&quot;headerlink&quot; title=&quot;C++中如何定义接口类?&quot;&gt;&lt;/a&gt;C++中如何定义接口类?&lt;/h3&gt;&lt;p&gt;首先给接口类下了定义：接口类应该是只提供方法声明，而自身不提供方法定义的抽象类。接口类自身不能实例化，接口类的方法定义/实现只能由接口类的子类来完成。&lt;/p&gt;
-&lt;p&gt;而对于C++，其接口类一般具有以下特征：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1.最好不要有成员变量，但可以有静态常量（static const或enum）&lt;/li&gt;
-&lt;li&gt;2.要有纯虚接口方法&lt;/li&gt;
-&lt;li&gt;3.要有虚析构函数，并提供默认实现&lt;/li&gt;
-&lt;li&gt;4.不要声明构造函数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如下就是一个最简单的例子：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;C++&quot;&gt;class Testable
-{
-public:
-    static const int START = 1;  // #1
-    static const int STOP = 2;
-
-    virtual void test() = 0;  // #2： 接口方法
-
-    virtual ~Testable() {};   // #3： 从C++11开始可以： virtual ~Testable() = default;
-}&lt;/code&gt;&lt;/pre&gt;
-    
-    </summary>
-    
-    
-      <category term="C++" scheme="https://JoyTsing.github.io/categories/C/"/>
-    
-    
-      <category term="设计模式" scheme="https://JoyTsing.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="C++" scheme="https://JoyTsing.github.io/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++ virtual function分析</title>
-    <link href="https://joytsing.github.io/posts/4469/"/>
-    <id>https://joytsing.github.io/posts/4469/</id>
-    <published>2019-09-23T04:40:43.000Z</published>
-    <updated>2020-12-05T08:29:30.245Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h3><p>为了实现C++的多态，C++使用了一种动态绑定的技术。这个技术的核心是虚函数表（下文简称虚表）。本文介绍虚函数表是如何实现动态绑定的。</p><h3 id="二、类的虚表"><a href="#二、类的虚表" class="headerlink" title="二、类的虚表"></a>二、类的虚表</h3><p>每个包含了虚函数的类都包含一个虚表。<br>我们知道，当一个类（A）继承另一个类（B）时，类A会继承类B的函数的调用权。所以如果一个基类包含了虚函数，那么其继承类也可调用这些虚函数，换句话说，一个类继承了包含虚函数的基类，那么这个类也拥有自己的虚表。</p><p>我们来看以下的代码。类A包含虚函数vfunc1，vfunc2，由于类A包含虚函数，故类A拥有一个虚表。</p><pre class="line-numbers language-C++"><code class="language-C++">class A {public:    virtual void vfunc1();    virtual void vfunc2();    void func1();    void func2();private:    int m_data1, m_data2;};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><a id="more"></a><p>类A的虚表如图1所示:<br><img src="/posts/4469/1.png" alt="类A的虚表示意图"></p><p>虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。<br>虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。</p><h3 id="三、虚表指针"><a href="#三、虚表指针" class="headerlink" title="三、虚表指针"></a>三、虚表指针</h3><p>虚表是属于类的，而不是属于某个具体的对象，一个类只需要一个虚表即可。同一个类的所有对象都使用同一个虚表。<br>为了指定对象的虚表，对象内部包含一个虚表的指针，来指向自己所使用的虚表。为了让每个包含虚表的类的对象都拥有一个虚表指针，编译器在类中添加了一个指针，<em>__vptr，用来指向虚表。这样，当类的对象在创建时便拥有了这个指针，且这个指针的值会自动被设置为指向类的虚表。<br>*对象与它的虚表:</em><br><img src="/posts/4469/2.png" alt="对象与它的虚表"></p><p>上面指出，一个继承类的基类如果包含虚函数，那个这个继承类也有拥有自己的虚表，故这个继承类的对象也包含一个虚表指针，用来指向它的虚表。</p><h3 id="四、动态绑定"><a href="#四、动态绑定" class="headerlink" title="四、动态绑定"></a>四、动态绑定</h3><p>说到这里，大家一定会好奇C++是如何利用虚表和虚表指针来实现动态绑定的。我们先看下面的代码。</p><pre class="line-numbers language-C++"><code class="language-C++">class A {public:    virtual void vfunc1();    virtual void vfunc2();    void func1();    void func2();private:    int m_data1, m_data2;};class B : public A {public:    virtual void vfunc1();    void func1();private:    int m_data3;};class C: public B {public:    virtual void vfunc2();    void func2();private:    int m_data1, m_data4;};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>类A是基类，类B继承类A，类C又继承类B。类A，类B，类C，其对象模型如下图3所示。<br><img src="/posts/4469/3.png" alt="类A，类B，类C的对象模型"><br>由于这三个类都有虚函数，故编译器为每个类都创建了一个虚表，即类A的虚表（A vtbl），类B的虚表（B vtbl），类C的虚表（C vtbl）。类A，类B，类C的对象都拥有一个虚表指针，*__vptr，用来指向自己所属类的虚表。<br>类A包括两个虚函数，故A vtbl包含两个指针，分别指向A::vfunc1()和A::vfunc2()。<br>类B继承于类A，故类B可以调用类A的函数，但由于类B重写了B::vfunc1()函数，故B vtbl的两个指针分别指向B::vfunc1()和A::vfunc2()。<br>类C继承于类B，故类C可以调用类B的函数，但由于类C重写了C::vfunc2()函数，故C vtbl的两个指针分别指向B::vfunc1()（指向继承的最近的一个类的函数）和C::vfunc2()。<br>虽然图3看起来有点复杂，但是只要抓住“对象的虚表指针用来指向自己所属类的虚表，虚表中的指针会指向其继承的最近的一个类的虚函数”这个特点，便可以快速将这几个类的对象模型在自己的脑海中描绘出来。</p><p>非虚函数的调用不用经过虚表，故不需要虚表中的指针指向这些函数。</p><p>假设我们定义一个类B的对象。由于bObject是类B的一个对象，故bObject包含一个虚表指针，指向类B的虚表。</p><pre class="line-numbers language-C++"><code class="language-C++">int main() {    B bObject;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>现在，我们声明一个类A的指针p来指向对象bObject。虽然p是基类的指针只能指向基类的部分，但是虚表指针亦属于基类部分，所以p可以访问到对象bObject的虚表指针。bObject的虚表指针指向类B的虚表，所以p可以访问到B vtbl。如图3所示。</p><pre class="line-numbers language-C++"><code class="language-C++">int main(){    B bObject;    A *p = & bObject;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>当我们使用p来调用vfunc1()函数时，会发生什么现象？</p><pre class="line-numbers language-C++"><code class="language-C++">int main(){    B bObject;    A *p = & bObject;    p->vfunc1();}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>程序在执行p-&gt;vfunc1()时，会发现p是个指针，且调用的函数是虚函数，接下来便会进行以下的步骤。<br>首先，根据虚表指针p-&gt;<strong>vptr来访问对象bObject对应的虚表。虽然指针p是基类A<em>类型，但是</em></strong>vptr也是基类的一部分，所以可以通过p-&gt;__vptr可以访问到对象对应的虚表。<br>然后，在虚表中查找所调用的函数对应的条目。由于虚表在编译阶段就可以构造出来了，所以可以根据所调用的函数定位到虚表中的对应条目。对于 p-&gt;vfunc1()的调用，B vtbl的第一项即是vfunc1对应的条目。<br>最后，根据虚表中找到的函数指针，调用函数。从图3可以看到，B vtbl的第一项指向B::vfunc1()，所以 p-&gt;vfunc1()实质会调用B::vfunc1()函数。</p><p>如果p指向类A的对象，情况又是怎么样？</p><pre class="line-numbers language-C++"><code class="language-C++">int main(){    A aObject;    A *p = &aObject;    p->vfunc1();}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>当aObject在创建时，它的虚表指针<strong>vptr已设置为指向A vtbl，这样p-&gt;</strong>vptr就指向A vtbl。vfunc1在A vtbl对应在条目指向了A::vfunc1()函数，所以 p-&gt;vfunc1()实质会调用A::vfunc1()函数。</p><p>可以把以上三个调用函数的步骤用以下表达式来表示：<br><code>(*(p-&gt;__vptr)[n])(p)</code></p><p>可以看到，通过使用这些虚函数表，即使使用的是基类的指针来调用函数，也可以达到正确调用运行中实际对象的虚函数。<br>我们把经过虚表调用虚函数的过程称为动态绑定，其表现出来的现象称为运行时多态。动态绑定区别于传统的函数调用，传统的函数调用我们称之为静态绑定，即函数的调用在编译阶段就可以确定下来了。</p><p>那么，什么时候会执行函数的动态绑定？这需要符合以下三个条件。</p><ul><li>通过指针来调用函数</li><li>指针upcast向上转型（继承类向基类的转换称为upcast，关于什么是upcast，可以参考本文的参考资料）</li><li>调用的是虚函数</li></ul><p>如果一个函数调用符合以上三个条件，编译器就会把该函数调用编译成动态绑定，其函数的调用过程走的是上述通过虚表的机制。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;一、概述&quot;&gt;&lt;a href=&quot;#一、概述&quot; class=&quot;headerlink&quot; title=&quot;一、概述&quot;&gt;&lt;/a&gt;一、概述&lt;/h3&gt;&lt;p&gt;为了实现C++的多态，C++使用了一种动态绑定的技术。这个技术的核心是虚函数表（下文简称虚表）。本文介绍虚函数表是如何实现动态绑定的。&lt;/p&gt;
-&lt;h3 id=&quot;二、类的虚表&quot;&gt;&lt;a href=&quot;#二、类的虚表&quot; class=&quot;headerlink&quot; title=&quot;二、类的虚表&quot;&gt;&lt;/a&gt;二、类的虚表&lt;/h3&gt;&lt;p&gt;每个包含了虚函数的类都包含一个虚表。&lt;br&gt;我们知道，当一个类（A）继承另一个类（B）时，类A会继承类B的函数的调用权。所以如果一个基类包含了虚函数，那么其继承类也可调用这些虚函数，换句话说，一个类继承了包含虚函数的基类，那么这个类也拥有自己的虚表。&lt;/p&gt;
-&lt;p&gt;我们来看以下的代码。类A包含虚函数vfunc1，vfunc2，由于类A包含虚函数，故类A拥有一个虚表。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;C++&quot;&gt;class A {
-public:
-    virtual void vfunc1();
-    virtual void vfunc2();
-    void func1();
-    void func2();
-private:
-    int m_data1, m_data2;
-};&lt;/code&gt;&lt;/pre&gt;
-    
-    </summary>
-    
-    
-      <category term="C++" scheme="https://JoyTsing.github.io/categories/C/"/>
-    
-    
-      <category term="C++" scheme="https://JoyTsing.github.io/tags/C/"/>
-    
-      <category term="虚函数" scheme="https://JoyTsing.github.io/tags/%E8%99%9A%E5%87%BD%E6%95%B0/"/>
-    
-      <category term="虚表" scheme="https://JoyTsing.github.io/tags/%E8%99%9A%E8%A1%A8/"/>
     
   </entry>
   

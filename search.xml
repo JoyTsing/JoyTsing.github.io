@@ -4,6 +4,58 @@
   
     
     <entry>
+      <title>毛概复习</title>
+      <link href="posts/6522/"/>
+      <url>posts/6522/</url>
+      
+        <content type="html"><![CDATA[<h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>先占个位,等到一月份专业课结束差不多了就开始总结复习</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> UESTC </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> UESTC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>软件工程复习</title>
+      <link href="posts/49397/"/>
+      <url>posts/49397/</url>
+      
+        <content type="html"><![CDATA[<h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>先占个位，后续早上起得早就先把问题之类的总结一下方便后续复习</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> UESTC </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> UESTC </tag>
+            
+            <tag> 软件工程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>记录博客的一次更新</title>
       <link href="posts/10533/"/>
       <url>posts/10533/</url>

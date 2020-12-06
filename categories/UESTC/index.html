@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux学习笔记(七), 博客 JoyTsing">
-    <meta name="description" content="tr和sedsedsed命令对文本的处理很强大，并且参数少，容易掌握，sed按顺序逐行读取文件。然后，它执行为该行指定的所有操作，并在完成请求的修改之后的内容显示出来，也可以存放到文件中。完成了一行上的所有操作之后，它读取文件的下一行，然后">
+    <meta name="keywords" content="分类: UESTC, 博客 JoyTsing">
+    <meta name="description" content="分类: UESTC | JoyTsing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Linux学习笔记(七) | JoyTsing</title>
+    <title>分类: UESTC | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -402,622 +402,257 @@
     </nav>
 
 </header>
-
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
         <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">Linux学习笔记(七)</h1>
-                </div>
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                    JoyTsing
+                
+            </div>
+
+            <div class="description center-align">
+                
+                    <span id="subtitle"></span>
+                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
+                    <script>
+                        var typed = new Typed("#subtitle", {
+                            strings: ['everyday is night',''],
+                            startDelay: 600,
+                            typeSpeed: 100,
+                            loop: true,
+                            backSpeed: 90,
+                            showCursor: true
+                        });
+                    </script>
+                
             </div>
         </div>
     </div>
 </div>
 
 
+    <script>
+        $('.bg-cover').css('background-image', 'url(/medias/banner/0.jpg)');
+    </script>
 
-<main class="post-container content">
+    </div>
+</div>
+
+<main class="content">
 
     
-        <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
 
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
+<div id="category-cloud" class="container chip-container">
     <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                        <div class="post-cate">
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                                <a href="/categories/Linux/" class="post-category">
-                                    Linux
-                                </a>
-                            
-                        </div>
-                    
-                </div>
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fa fa-bookmark"></i>&nbsp;&nbsp;文章分类
             </div>
-
-            <div class="post-info">
+            <div class="tag-chips">
                 
-                    <div class="post-date info-break-policy">
-                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-05-08
-                    </div>
-                
-
-                
-                    <div class="post-date info-break-policy">
-                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-12-05
-                    </div>
-                
-
-                
-                    <div class="info-break-policy">
-                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.1k
-                    </div>
-                
-
-                
-                    <div class="info-break-policy">
-                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        4 分
-                    </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-                
-            </div>
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <h2 id="tr和sed"><a href="#tr和sed" class="headerlink" title="tr和sed"></a>tr和sed</h2><h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><p>sed命令对文本的处理很强大，并且参数少，容易掌握，sed按顺序逐行读取文件。然后，它执行为该行指定的所有操作，并在完成请求的修改之后的内容显示出来，也可以存放到文件中。完成了一行上的所有操作之后，它读取文件的下一行，然后重复该过程直到它完成该文件。</p>
-<a id="more"></a>
-
-<p>sed 命令的基本格式如下：</p>
-<p><code>sed [选项] '[脚本命令]' 文件名</code></p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-e 脚本命令</td>
-<td align="left">该选项会将其后跟的脚本命令添加到已有的命令中。</td>
-</tr>
-<tr>
-<td align="left">-f 脚本命令文件</td>
-<td align="left">该选项会将其后文件中的脚本命令添加到已有的命令中。</td>
-</tr>
-<tr>
-<td align="left">-n</td>
-<td align="left">取消默认控制台输出,仅显示处理后的结果</td>
-</tr>
-</tbody></table>
-<p>其中最常使用的使用sed来替换的脚本命令为：</p>
-<p><code>sed -n '[address]s/pattern/replacement/flags'</code></p>
-<p>其中，address 表示指定要操作的具体行，pattern 指的是需要替换的内容，replacement 指的是要替换的新内容。</p>
-<p>address用于决定对哪些行进行编辑。地址的形式可以是数字、正则表达式、或二者的结合。如果没有指定地址，sed将处理输入文件的所有行。</p>
-<p>address是一个数字，则表示行号；是“$”符号，则表示最后一行。address是逗号分隔的，那么需要处理的内容是这两行之间的范围（包括这两行在内）。</p>
-<p>此命令中常用的 flags 标记</p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">n</td>
-<td align="left">1~512 之间的数字，表示指定要替换的字符串出现第几次时才进行替换，例如，一行中有 3 个 A，但用户只想替换第二个 A，这是就用到这个标记；</td>
-</tr>
-<tr>
-<td align="left">g</td>
-<td align="left">对数据中所有匹配到的内容进行替换，如果没有 g，则只会在第一次匹配成功时做替换操作。例如，一行数据中有 3 个 A，则只会替换第一个 A；</td>
-</tr>
-<tr>
-<td align="left">p</td>
-<td align="left">会打印与替换命令中指定的模式匹配的行。此标记通常与 -n 选项一起使用。</td>
-</tr>
-<tr>
-<td align="left">d</td>
-<td align="left">删除行</td>
-</tr>
-</tbody></table>
-<p>像这种比较抽象的命令应该多举几个例子：</p>
-<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p><code>sed '1,3d' test.txt</code>,删除第1~3行</p>
-<p>删除hello.h文件中的空行，保存到hello2.h</p>
-<p><code>sed -e 's/^[[:space:]]*$//g' hello.txt &gt; hello2.txt</code></p>
-<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><p><code>sed 's/old/new/' testfile</code>,把testfile文件中的old替换成new,只替换一次及终止在这一行的操作</p>
-<p><code>sed 's/old/new/g' testfile</code>,用new把文件testfile中的old全部替换掉</p>
-<p><code>sed -n 's/old/new/p' testfile</code>,只打印那些发生替换的行</p>
-<p><code>cat test | sed -ne '2,8s/^zhang/ying/gp'</code>,在第二行，到第八行之间，替换以zhang开头的行，用ying来替换，并显示替换的行</p>
-<p>在一个reference.bib文件中，将所有”…”替换为{…}</p>
-<p><code>sed -e 's/"\([^"]*\)"/{\1}/g' reference.bib</code></p>
-<p>使用下来你会发现其实和vi中的替换很类似，同样都是用 <strong>/</strong> 分割，当然也不一定，比如：</p>
-<p>查找/usr/include/boost目录下的所有头文件，然后将之替换为/usr/local/include/boost路径，输出到header文件</p>
-<p><code>find /usr/include/boost -name "*.h" | sed -e 's:/usr/include/\(.*\):/usr/local/include/\1:g' &gt; header</code></p>
-<p>其中使用的是: 为分隔符</p>
-<h3 id="tr"><a href="#tr" class="headerlink" title="tr"></a>tr</h3><p>tr命令可以对来自标准输入的字符进行替换、压缩和删除。它可以将一组字符变成另一组字符，经常用来编写优美的单行命令，作用很强大。</p>
-<p>用法：</p>
-<p><code>tr [选项]... SET1 [SET2]</code></p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-c</td>
-<td align="left">取代所有不属于第一字符集的字符</td>
-</tr>
-<tr>
-<td align="left">-d</td>
-<td align="left">删除所有属于第一字符集的字符</td>
-</tr>
-<tr>
-<td align="left">-s</td>
-<td align="left">把连续重复的字符以单独一个字符表示</td>
-</tr>
-<tr>
-<td align="left">-t</td>
-<td align="left">削减 SET1 指定范围，使之与 SET2 设定长度相等</td>
-</tr>
-</tbody></table>
-<p>仅在SET1 和SET2 都给出，同时没有-d 选项的时候才会进行替换。利用tr命令将一个dos结尾的\r\n文本文件变换为Unix结尾的\n</p>
-<p><code>tr -d "\r" &lt; a.txt &gt; b.txt</code></p>
-<p><code>tr -s "\r\n" "\n" &lt; a.txt &gt; b.txt</code></p>
-<p>大写字母转小写</p>
-<p><code>echo "TANK" |tr A-Z a-z</code>   #大写字母转小写</p>
-<p><code>cat aaa.txt|tr 'a' 'c'</code>     #字母c替换字母a</p>
-<p><code>cat aaa.txt|tr -d 'a'</code>    #删除所有字母a</p>
-<p><code>cat aaa.txt|tr -s '\n'</code>    #删除空行</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </div>
-            <hr/>
-
-            
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
                     
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                        </div>
+                        
+                        <a href="/categories/C/" title="C++: 6">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #F9EBEA;">C++
+                        <span class="tag-length">6</span>
+                    </span>
+                        </a>
                     
-                </div>
-                <div class="post_share"
-                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-    
-        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
-             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-        <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
-</div>
-
-                </div>
+                        
+                        <a href="/categories/Linux/" title="Linux: 10">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #F5EEF8;">Linux
+                        <span class="tag-length">10</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/C/" title="C: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #D5F5E3;">C
+                        <span class="tag-length">1</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/Algorithms/" title="Algorithms: 8">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #E8F8F5;">Algorithms
+                        <span class="tag-length">8</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/%E6%9D%82%E8%AE%B0/" title="杂记: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #FEF9E7;">杂记
+                        <span class="tag-length">2</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/%E8%AE%A1%E7%BD%91/" title="计网: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #F8F9F9;">计网
+                        <span class="tag-length">1</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/Hexo/" title="Hexo: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #82E0AA;">Hexo
+                        <span class="tag-length">2</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/Algorithm/" title="Algorithm: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #D7BDE2;">Algorithm
+                        <span class="tag-length">1</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/SQL/" title="SQL: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #A3E4D7;">SQL
+                        <span class="tag-length">1</span>
+                    </span>
+                        </a>
+                    
+                        
+                        <a href="/categories/UESTC/" title="UESTC: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                          style="background-color: #85C1E9;">UESTC
+                        <span class="tag-length">2</span>
+                    </span>
+                        </a>
+                    
+                
             </div>
-            
         </div>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div id="gitalk-container" class="card-content"></div>
 </div>
 
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: 'e1e76a75c09daeb96740',
-        clientSecret: 'c090881ff25206a1601027ac3b225def230cdf2f',
-        repo: 'JoyTsing.github.io',
-        owner: 'JoyTsing',
-        admin: '["JoyTsing"]',
-        id: 'posts/28587/',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-            <div class="article col s12 m6" data-aos="fade-up">
-                <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
-                <div class="card">
-                    <a href="/posts/24357/">
-                        <div class="card-image">
-                            
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+                <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                    <div class="card">
+                        <a href="/posts/6522/">
+                            <div class="card-image tag-image">
                                 
-                                <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Linux学习笔记(八)">
-                            
-                            <span class="card-title">Linux学习笔记(八)</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                ShellUnix操作系统分为两个部分：内核和应用，内核是UNIX系统的核心并且驻留内存，日常事务比如直接与硬件通信等都由内核完成。除了内核，有一些基本模块也是驻留内存的，这些模块完成重要的功能，比如输入/输出管理，文件管理内存管理等待。
-
-                            
-                        </div>
-                        <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-08
-                        </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
-                                </a>
-                                    
+                                    <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="毛概复习">
                                 
-                            </span>
-                        </div>
-                    </div>
-                    
-                        <div class="card-action article-tags">
-                            
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-            </div>
-        
-        
-            <div class="article col s12 m6" data-aos="fade-up">
-                <div class="article-badge right-badge text-color">
-                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-                </div>
-                <div class="card">
-                    <a href="/posts/65318/">
-                        <div class="card-image">
-                            
+                                <span class="card-title">毛概复习</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
                                 
-                                <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Linux学习笔记(六)">
-                            
-                            <span class="card-title">Linux学习笔记(六)</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                正则表达式什么是正则表达式
-正则表达式是一组由字母和符号组成的特殊文本，它可以用来从文本中找出满足你想要的格式的句子。
-
-Unix系统偏好于以可读的文本处理，例如vi、emacs、grep、sed、awk都支持正则表达式。
-Posix标准中
-                            
-                        </div>
-                        <div class="publish-info">
+                                    先占个位
+                                
+                            </div>
+                            <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-06
                             </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                <span class="publish-author">
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                        
+                                            <a href="/categories/UESTC/" class="post-category">
+                                    UESTC
                                 </a>
+                                        
                                     
-                                
-                            </span>
+                                </span>
+                            </div>
                         </div>
+
+                        
+                            <div class="card-action article-tags">
+                                
+                                    <a href="/tags/UESTC/">
+                                        <span class="chip bg-color">UESTC</span>
+                                    </a>
+                                
+                            </div>
+                        
                     </div>
-                    
-                        <div class="card-action article-tags">
-                            
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                        </div>
-                    
                 </div>
-            </div>
-        
-    </div>
-</article>
-</div>
+            
+                <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                    <div class="card">
+                        <a href="/posts/49397/">
+                            <div class="card-image tag-image">
+                                
+                                    
+                                    <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="软件工程复习">
+                                
+                                <span class="card-title">软件工程复习</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                    先占个位
+                                
+                            </div>
+                            <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-06
+                            </span>
+                                <span class="publish-author">
+                                    
+                                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                        
+                                            <a href="/categories/UESTC/" class="post-category">
+                                    UESTC
+                                </a>
+                                        
+                                    
+                                </span>
+                            </div>
+                        </div>
 
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-    <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-    <script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-    <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-    <style type="text/css">
-        code[class*="language-"], pre[class*="language-"] {
-            white-space: pre !important;
-        }
-    </style>
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+                        
+                            <div class="card-action article-tags">
+                                
+                                    <a href="/tags/UESTC/">
+                                        <span class="chip bg-color">UESTC</span>
+                                    </a>
+                                
+                                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">
+                                        <span class="chip bg-color">软件工程</span>
+                                    </a>
+                                
+                            </div>
+                        
+                    </div>
+                </div>
+            
         </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-    <div id="floating-toc-btn" class="hide-on-med-and-down">
-        <a class="btn-floating btn-large bg-color">
-            <i class="fa fa-list"></i>
-        </a>
-    </div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4, h5'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4, h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换 TOC 目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-    
-
+    </article>
 </main>
 
 
