@@ -34,9 +34,9 @@
         
     </style>
     <script src="/libs/jquery/jquery.min.js"></script>
-<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="JoyTsing" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="alternate" href="/atom.xml" title="JoyTsing" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -563,21 +563,21 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-12-13
+                        2020-12-16
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.4k
+                        1.8k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        7 分
                     </div>
                 
 
@@ -685,8 +685,25 @@ main<span class="token punctuation">:</span>
         <span class="token punctuation">.</span>size   main<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token operator">-</span>main
         <span class="token punctuation">.</span>ident  <span class="token string">"GCC: (GNU) 4.1.3 20070929 (prerelease) (Ubuntu 4.1.2-16ubuntu2)"</span>
         <span class="token punctuation">.</span>section        <span class="token punctuation">.</span>note<span class="token punctuation">.</span>GNU<span class="token operator">-</span>stack<span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span>@progbits<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里的用的汇编的语法格式是<code>AT&amp;T</code>的格式,在使用IDE的时候是可以更改的(如使用的CLion)</p>
-<h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><h3 id="简述-2"><a href="#简述-2" class="headerlink" title="简述"></a>简述</h3><p>汇编实际上是作为翻译为与机器代码的中间桥梁，汇编还不可以实际上运行</p>
+<p>这里的用的汇编的语法格式是<code>AT&amp;T</code>的格式,在使用IDE进行DEBUG的时候是可以更改的(如使用的<code>CLion</code>)</p>
+<h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><h3 id="简述-2"><a href="#简述-2" class="headerlink" title="简述"></a>简述</h3><p>汇编实际上是作为翻译为与机器代码的中间桥梁，汇编还不可以实际上运行,想要查看中间的汇编代码可以通过<code>gcc -c</code>来查看。</p>
+<h3 id="生成目标代码"><a href="#生成目标代码" class="headerlink" title="生成目标代码"></a>生成目标代码</h3><p>下面来演示一下通过<code>gcc -c</code>和<code>as</code>来产生目标代码：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">$ file hello.s
+hello.s: ASCII assembler program text
+$ gcc -c hello.s   #用gcc把汇编语言编译成目标代码
+$ file hello.o     #file命令用来查看文件类型，目标代码可重定位的(relocatable)，
+                   #需要通过ld进行进一步链接成可执行程序(executable)和共享库(shared)
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+$ as -o hello.o hello.s        #用as把汇编语言编译成目标代码
+$ file hello.o
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>gcc</code>和<code>as</code>默认产生的目标代码都是ELF格式的，这里讨论一下ELF格式的目标代码。</p>
+<blockquote>
+<p>什么是ELF?</p>
+<p>是UNIX系统实验室（<a href="https://baike.baidu.com/item/USL">USL</a>）作为应用程序二进制接口（Application Binary Interface，<a href="https://baike.baidu.com/item/ABI">ABI</a>）而开发和发布的，也是<a href="https://baike.baidu.com/item/Linux/27050">Linux</a>的主要可执行文件格式。</p>
+<p>1999年，被86open项目选为<a href="https://baike.baidu.com/item/x86架构/7470217">x86架构</a>上的类<a href="https://baike.baidu.com/item/Unix操作系统">Unix操作系统</a>的二进制文件标准格式，用来取代<a href="https://baike.baidu.com/item/COFF">COFF</a>。因其可扩展性与灵活性，也可应用在其它处理器、计算机系统架构的操作系统上</p>
+<p>ELF文件由4部分组成，分别是ELF头（ELF header）、程序头表（Program header table）、节（Section）和节头表（Section header table）。实际上，一个文件中不一定包含全部内容，而且它们的位置也未必如同所示这样安排，只有ELF头的位置是固定的，其余各部分的位置、大小等信息由ELF头中的各项值来决定。</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1052,7 +1069,7 @@ tartar 命令
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">78k</span>&nbsp;字
+                            class="white-color">78.4k</span>&nbsp;字
                 
                 
                 <script>
