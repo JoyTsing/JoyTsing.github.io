@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Gcc编译的背后, 博客 JoyTsing">
-    <meta name="description" content="前言在Linux下写代码时，使用gcc只需要输入gcc a.c -o a就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了">
+    <meta name="description" content="前言在linux下写代码时，使用gcc只需要输入gcc a.c -o a就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -563,21 +563,21 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-12-16
+                        2020-12-17
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.2k
+                        2.3k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        12 分
+                        9 分
                     </div>
                 
 
@@ -592,7 +592,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在Linux下写代码时，使用<code>gcc</code>只需要输入<code>gcc a.c -o a</code>就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了这几个过程，通过<code>-v</code>参数就可以查看它的编译细节，想要看某个具体的编译过程，则可以分别使用<code>-E</code>,<code>-S</code>,<code>-c</code>,<code>-o</code>,对应的后台工具分别为<code>cpp</code>,<code>ccl</code>,<code>as</code>,<code>ld</code>。</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在linux下写代码时，使用gcc只需要输入<code>gcc a.c -o a</code>就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了这几个过程，通过<code>-v</code>参数就可以查看它的编译细节，想要看某个具体的编译过程，则可以分别使用<code>-E</code>,<code>-S</code>,<code>-c</code>,<code>-o</code>,对应的后台工具分别为<code>cpp</code>,<code>ccl</code>,<code>as</code>,<code>ld</code>。</p>
 <p>下面将逐步分析这几个过程以及相关的内容，比如语法检查，代码调试，汇编语言等待。</p>
 <a id="more"></a>
 
@@ -629,7 +629,7 @@ int main()
 }
 $ gcc -std=c89 -pedantic-errors hello.c    #默认情况下，gcc是允许在程序中间声明变量的，但是turboc就不支持
 hello.c: In function ‘main’:
-hello.c:5: error: ISO C90 forbids mixed declarations and code<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></stdio.h></stdio.h></code></pre>
+hello.c:5: error: ISO C90 forbids mixed declarations and code<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="编译器优化"><a href="#编译器优化" class="headerlink" title="编译器优化"></a>编译器优化</h2><p>检测语法后就是翻译，<code>gcc</code>提供了<code>-O</code>选项供不同运行平台的用户产生优化过的汇编代码。</p>
 <pre class="line-numbers language-c"><code class="language-c">$ gcc <span class="token operator">-</span>o hello hello<span class="token punctuation">.</span>c         # 采用默认选项，不优化
 $ gcc <span class="token operator">-</span>O2 <span class="token operator">-</span>o hello2 hello<span class="token punctuation">.</span>c    # 优化等次是<span class="token number">2</span>
@@ -688,15 +688,15 @@ main<span class="token punctuation">:</span>
 <p>这里的用的汇编的语法格式是<code>AT&amp;T</code>的格式,在使用IDE进行DEBUG的时候是可以更改的(如使用的<code>CLion</code>)</p>
 <h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><h3 id="简述-2"><a href="#简述-2" class="headerlink" title="简述"></a>简述</h3><p>汇编实际上是作为翻译为与机器代码的中间桥梁，汇编还不可以实际上运行,想要查看中间的汇编代码可以通过<code>gcc -c</code>来查看。</p>
 <h3 id="生成目标代码"><a href="#生成目标代码" class="headerlink" title="生成目标代码"></a>生成目标代码</h3><p>下面来演示一下通过<code>gcc -c</code>和<code>as</code>来产生目标代码：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">file</span> hello.s
+<pre class="line-numbers language-shell"><code class="language-shell">$ file hello.s
 hello.s: ASCII assembler program text
-$ gcc -c hello.s   <span class="token comment" spellcheck="true">#用gcc把汇编语言编译成目标代码</span>
-$ <span class="token function">file</span> hello.o     <span class="token comment" spellcheck="true">#file命令用来查看文件类型，目标代码可重定位的(relocatable)，</span>
-                   <span class="token comment" spellcheck="true">#需要通过ld进行进一步链接成可执行程序(executable)和共享库(shared)</span>
-hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 <span class="token punctuation">(</span>SYSV<span class="token punctuation">)</span>, not stripped
-$ as -o hello.o hello.s        <span class="token comment" spellcheck="true">#用as把汇编语言编译成目标代码</span>
-$ <span class="token function">file</span> hello.o
-hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 <span class="token punctuation">(</span>SYSV<span class="token punctuation">)</span>, not stripped<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+$ gcc -c hello.s   #用gcc把汇编语言编译成目标代码
+$ file hello.o     #file命令用来查看文件类型，目标代码可重定位的(relocatable)，
+                   #需要通过ld进行进一步链接成可执行程序(executable)和共享库(shared)
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+$ as -o hello.o hello.s        #用as把汇编语言编译成目标代码
+$ file hello.o
+hello.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>gcc</code>和<code>as</code>默认产生的目标代码都是ELF格式的，这里讨论一下ELF格式的目标代码。</p>
 <blockquote>
 <p>什么是ELF?</p>
@@ -718,67 +718,6 @@ Section 3
 ...
 Section Headers Table(节区头部表，用于链接可重定位文件成可执行文件或共享库)</code></pre><p>对于可重定位文件，程序头是可选的，而对于可执行文件和共享库文件（动态链接库），节区表则是可选的。可以分别通过 <code>readelf</code> 文件的 <code>-h</code>，<code>-l</code> 和 <code>-S</code> 参数查看 ELF 文件头（ELF Header）、程序头部表（Program Headers Table，段表）和节区表（Section Headers Table）。</p>
 <p>文件头说明了文件的类型，大小，运行平台，节区数目等。</p>
-<h3 id="三种不同类型-ELF-文件比较"><a href="#三种不同类型-ELF-文件比较" class="headerlink" title="三种不同类型 ELF 文件比较"></a>三种不同类型 ELF 文件比较</h3><p>先来通过文件头看看不同ELF的类型。为了说明问题，先来几段代码吧。</p>
-<pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* myprintf.c */</span>
-<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
-
-<span class="token keyword">void</span> <span class="token function">myprintf</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello, world!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/* test.h -- myprintf function declaration */</span>
-
-<span class="token macro property">#<span class="token directive keyword">ifndef</span> _TEST_H_</span>
-<span class="token macro property">#<span class="token directive keyword">define</span> _TEST_H_</span>
-
-<span class="token keyword">void</span> <span class="token function">myprintf</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token macro property">#<span class="token directive keyword">endif</span></span>
-<span class="token comment" spellcheck="true">/* test.c */</span>
-<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"test.h"</span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">myprintf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>下面通过这几段代码来演示通过 <code>readelf -h</code> 参数查看 ELF 的不同类型。期间将演示如何创建动态链接库（即可共享文件）、静态链接库，并比较它们的异同。</p>
-<p>编译产生两个目标文件 <code>myprintf.o</code> 和 <code>test.o</code>，它们都是可重定位文件（REL）：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ gcc -c myprintf.c test.c
-$ readelf -h test.o <span class="token operator">|</span> <span class="token function">grep</span> Type
-  Type:                              REL <span class="token punctuation">(</span>Relocatable file<span class="token punctuation">)</span>
-$ readelf -h myprintf.o <span class="token operator">|</span> <span class="token function">grep</span> Type
-  Type:                              REL <span class="token punctuation">(</span>Relocatable file<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>根据目标代码链接产生可执行文件，这里的文件类型是可执行的(EXEC)：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ gcc -o <span class="token function">test</span> myprintf.o test.o
-$ readelf -h <span class="token function">test</span> <span class="token operator">|</span> <span class="token function">grep</span> Type
-  Type:                              EXEC <span class="token punctuation">(</span>Executable file<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>用 <code>ar</code> 命令创建一个静态链接库，静态链接库也是可重定位文件（REL）：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ ar rcsv libmyprintf.a myprintf.o
-$ readelf -h libmyprintf.a <span class="token operator">|</span> <span class="token function">grep</span> Type
-  Type:                              REL <span class="token punctuation">(</span>Relocatable file<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>可见，静态链接库和可重定位文件类型一样，它们之间唯一不同是前者可以是多个可重定位文件的“集合”。</p>
-<p>静态链接库可直接链接（只需库名，不要前面的 <code>lib</code>），也可用 <code>-l</code> 参数，<code>-L</code> 指定库搜索路径。</p>
-<pre class="line-numbers language-shell"><code class="language-shell">$ gcc -o test test.o -lmyprintf -L./<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>编译产生动态链接库，并支持 <code>major</code> 和 <code>minor</code> 版本号，动态链接库类型为 <code>DYN</code>：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ gcc -Wall myprintf.o -shared -Wl,-soname,libmyprintf.so.0 -o libmyprintf.so.0.0
-$ <span class="token function">ln</span> -sf libmyprintf.so.0.0 libmyprintf.so.0
-$ <span class="token function">ln</span> -sf libmyprintf.so.0 libmyprintf.so
-$ readelf -h libmyprintf.so <span class="token operator">|</span> <span class="token function">grep</span> Type
-  Type:                              DYN <span class="token punctuation">(</span>Shared object file<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>动态链接库编译时和静态链接库类似：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ gcc -o <span class="token function">test</span> test.o -lmyprintf -L./<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>但是执行时需要指定动态链接库的搜索路径，把 <code>LD_LIBRARY_PATH</code> 设为当前目录，指定 <code>test</code> 运行时的动态链接库搜索路径：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ LD_LIBRARY_PATH<span class="token operator">=</span>./ ./test
-$ gcc -static -o <span class="token function">test</span> test.o -lmyprintf -L./<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>在不指定 <code>-static</code> 时会优先使用动态链接库，指定时则阻止使用动态链接库，这时会把所有静态链接库文件加入到可执行文件中，使得执行文件很大，而且加载到内存以后会浪费内存空间，因此不建议这么做。</p>
-<p>经过上面的演示基本可以看出它们之间的不同：</p>
-<ul>
-<li>可重定位文件本身不可以运行，仅仅是作为可执行文件、静态链接库（也是可重定位文件）、动态链接库的 “组件”。</li>
-<li>静态链接库和动态链接库本身也不可以执行，作为可执行文件的“组件”，它们两者也不同，前者也是可重定位文件（只不过可能是多个可重定位文件的集合），并且在链接时加入到可执行文件中去。</li>
-<li>而动态链接库在链接时，库文件本身并没有添加到可执行文件中，只是在可执行文件中加入了该库的名字等信息，以便在可执行文件运行过程中引用库中的函数时由动态链接器去查找相关函数的地址，并调用它们。</li>
-</ul>
-<p>从这个意义上说，动态链接库本身也具有可重定位的特征，含有可重定位的信息。对于什么是重定位？如何进行静态符号和动态符号的重定位，我们将在链接部分和之后的一节中介绍。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1144,7 +1083,7 @@ tartar 命令
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">79.8k</span>&nbsp;字
+                            class="white-color">78.9k</span>&nbsp;字
                 
                 
                 <script>
