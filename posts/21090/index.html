@@ -535,6 +535,10 @@
                                     <span class="chip bg-color">教程</span>
                                 </a>
                             
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -543,8 +547,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/Shell/" class="post-category">
-                                    Shell
+                                <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                             
                         </div>
@@ -570,14 +574,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        216
+                        5.7k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        23 分
                     </div>
                 
 
@@ -592,10 +596,492 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote>
+                <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><blockquote>
 <p>为了系统地学习和总结 Shell 编程，制定了一个 Shell 编程范例的总结计划，不会专门介绍 Shell 的语法， 而是假设对 Shell 编程有了一定的基础。另外，该系列涵盖：数值、逻辑值、字符串、文件、进程、文件系统等所有我们可以操作的“对象”，这个操作对象也将从低级到高级，进而上升到网络层面，整个通过各种方式连接起来的计算机的集合。实际上这也未尝不是在摸索 UNIX 的哲学，那”K.I.S.S”（Keep It Simple, Stupid）蕴藏的巨大能量。</p>
 </blockquote>
-<p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/UI_Shell_and_GUI.jpg" alt="shell"></p>
+<p>###什么是Shell</p>
+<p>首先让我们从下图看看 Shell 在整个操作系统中所处的位置吧，该图的外圆描述了整个操作系统（比如 <code>Debian/Ubuntu/Slackware</code> 等），内圆描述了操作系统的核心（比如 <code>Linux Kernel</code>），而 <code>Shell</code> 和 <code>GUI</code> 一样作为用户和操作系统之间的接口。</p>
+<p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/UI_Shell_and_GUI.jpg" alt="UI_Shell_and_GUI"></p>
+<p><code>GUI</code> 提供了一种图形化的用户接口，使用起来非常简便易学；而 <code>Shell</code> 则为用户提供了一种命令行的接口，接收用户的键盘输入，并分析和执行输入字符串中的命令，然后给用户返回执行结果，使用起来可能会复杂一些，但是由于占用的资源少，而且在操作熟练以后可能会提高工作效率，而且具有批处理的功能，因此在某些应用场合还非常流行。</p>
+<p><code>Shell</code> 作为一种用户接口，它实际上是一个能够解释和分析用户键盘输入，执行输入中的命令，然后返回结果的一个解释程序（Interpreter，例如在 <code>linux</code> 下比较常用的 <code>Bash</code>），我们可以通过下面的命令查看当前的 <code>Shell</code> ：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> <span class="token variable">$SHELL</span>
+/bin/bash
+$ <span class="token function">ls</span> -l /bin/bash
+-rwxr-xr-x 1 root root 702160 2020-06-18 02:33 /bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该解释程序不仅能够解释简单的命令，而且可以解释一个具有特定语法结构的文件，这种文件被称作脚本（Script）。它具体是如何解释这些命令和脚本文件的，这里不深入分析。</p>
+<h3 id="搭建运行环境"><a href="#搭建运行环境" class="headerlink" title="搭建运行环境"></a>搭建运行环境</h3><p>为了方便后面的练习，我们先搭建一个基本运行环境：在一个 Linux 操作系统中，有一个运行有 <code>Bash</code> 的命令行在等待我们键入命令，这个命令行可以是图形界面下的 <code>Terminal</code> （例如 <code>Ubuntu</code> 下非常厉害的 <code>Terminator</code>），也可以是字符界面的 <code>Console</code> （可以用 <code>CTRL+ALT+F1~6</code> 切换），如果你发现当前 <code>Shell</code> 不是 <code>Bash</code>，请用下面的方法替换它：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ chsh <span class="token variable">$USER</span> -s /bin/bash
+$ <span class="token function">su</span> <span class="token variable">$USER</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>或者是简单地键入Bash：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">bash</span>
+$ <span class="token keyword">echo</span> <span class="token variable">$SHELL</span>  <span class="token comment" spellcheck="true"># 确认一下</span>
+/bin/bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>有了基本的运行环境，那么如何来运行用户键入的命令或者是用户编写好的脚本文件呢 <code>?</code></p>
+<p>假设我们编写好了一个 Shell 脚本，叫 <code>test.sh</code> 。</p>
+<p>第一种方法是确保我们执行的命令具有可执行权限，然后直接键入该命令执行它：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">chmod</span> +x /path/to/test.sh
+$ /path/to/test.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>第二种方法是直接把脚本作为 <code>Bash</code> 解释器的参数传入：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">bash</span> /path/to/test.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">source</span> /path/to/test.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">.</span> /path/to/test.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>###基本语法介绍</p>
+<p>先来一个 <code>Hello, World</code> 程序。</p>
+<p>下面来介绍一个 Shell 程序的基本结构，以 <code>Hello, World</code> 为例：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span> -v
+<span class="token comment" spellcheck="true"># test.sh</span>
+<span class="token keyword">echo</span> <span class="token string">"Hello, World"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>把上述代码保存为 <code>test.sh</code>，然后通过上面两种不同方式运行，可以看到如下效果。</p>
+<p>方法一：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">chmod</span> +x test.sh
+$ ./test.sh
+ ./test.sh
+ <span class="token comment" spellcheck="true">#!/bin/bash -v</span>
+
+ <span class="token keyword">echo</span> <span class="token string">"Hello, World"</span>
+ Hello, World<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>方法二：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">bash</span> test.sh
+Hello, World
+
+$ <span class="token function">source</span> test.sh
+Hello, World
+
+$ <span class="token keyword">.</span> test.sh
+Hello, World<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们发现两者运行结果有区别，为什么呢？这里我们需要关注一下 <code>test.sh</code> 文件的内容，它仅仅有两行，第二行打印了 <code>Hello, World</code>，两种方法都达到了目的，但是第一种方法却多打印了脚本文件本身的内容，为什么呢？</p>
+<p>原因在该文件的第一行，当我们直接运行该脚本文件时，该行告诉操作系统使用用<code>#!</code> 符号之后面的解释器以及相应的参数来解释该脚本文件，通过分析第一行，我们发现对应的解释器以及参数是 <code>/bin/bash -v</code>，而 <code>-v</code> 刚好就是要打印程序的源代码；但是我们在用第二种方法时没有给 <code>Bash</code> 传递任何额外的参数，因此，它仅仅解释了脚本文件本身。</p>
+<p>其他语法细节请直接看每一章小结后的附录。</p>
+<h3 id="Shell-程序设计过程"><a href="#Shell-程序设计过程" class="headerlink" title="Shell 程序设计过程"></a>Shell 程序设计过程</h3><p>Shell 语言作为解释型语言，它的程序设计过程跟编译型语言有些区别，其基本过程如下：</p>
+<ul>
+<li>设计算法</li>
+<li>用 Shell 编写脚本程序实现算法</li>
+<li>直接运行脚本程序</li>
+</ul>
+<p>可见它没有编译型语言的”麻烦的”编译和链接过程，不过正是因为这样，它出错时调试起来不是很方便，因为语法错误和逻辑错误都在运行时出现。下面我们简单介绍一下调试方法。</p>
+<h3 id="调试方法介绍"><a href="#调试方法介绍" class="headerlink" title="调试方法介绍"></a>调试方法介绍</h3><p>可以直接参考资料：<a href="http://www.ibm.com/developerworks/cn/linux/l-cn-shell-debug/index.html">Shell 脚本调试技术</a> 或者 <a href="http://www.tinylab.org/bash-debugging-tools/">BASH 的调试手段</a>。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>Shell 语言作为一门解释型语言，可以使用大量的现有工具，包括数值计算、符号处理、文件操作、网络操作等，因此，编写过程可能更加高效，但是因为它是解释型的，需要在执行过程中从磁盘上不断调用外部的程序并进行进程之间的切换，在运行效率方面可能有劣势，所以我们应该根据应用场合选择使用 Shell 或是用其他的语言来编程。</p>
+<h2 id="数值运算"><a href="#数值运算" class="headerlink" title="数值运算"></a>数值运算</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一小节开始，打算结合平时积累和进一步实践，通过一些范例来介绍Shell编程。因为范例往往能够给人以学有所用的感觉，而且给人以动手实践的机会，从而激发人的学习热情。</p>
+<p>考虑到易读性，这些范例将非常简单，但是实用，希望它们能够成为我们解决日常问题的参照物或者是“茶余饭后”的小点心，当然这些“点心”肯定还有值得探讨、优化的地方。</p>
+<p>概要：</p>
+<ul>
+<li>目的：享受用 Shell 解决问题的乐趣；和朋友们一起交流和探讨。</li>
+<li>读者：熟悉 Linux 基本知识，如文件系统结构、常用命令行工具、Shell 编程基础等。</li>
+<li>补充：看范例时，可参考<a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&amp;tid=2198159">《Shell基础十二篇》</a>和<a href="http://bbs.chinaunix.net/thread-218853-1-1.html">《Shell十三问》</a>。</li>
+<li>环境：如没特别说明，该系列使用的 Shell 将特指 Bash，版本在 3.1.17 以上。</li>
+<li>说明：该系列不是依据 Shell 语法组织，而是面向某些潜在的操作对象和操作本身，它们反应了现实应用。当然，在这个过程中肯定会涉及到 Shell 的语法。</li>
+</ul>
+<p>这一小节打算讨论一下 Shell 编程中的基本数值运算，这类运算包括：</p>
+<ul>
+<li>数值（包括整数和浮点数）间的加、减、乘、除、求幂、求模等</li>
+<li>产生指定范围的随机数</li>
+<li>产生指定范围的数列</li>
+</ul>
+<p>Shell 本身可以做整数运算，复杂一些的运算要通过外部命令实现，比如 <code>expr</code>，<code>bc</code>，<code>awk</code> 等。另外，可通过 <code>RANDOM</code> 环境变量产生一个从 0 到 32767 的随机数，一些外部工具，比如 <code>awk</code> 可以通过 <code>rand()</code> 函数产生随机数。而 <code>seq</code> 命令可以用来产生一个数列。下面对它们分别进行介绍。</p>
+<h3 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h3><h4 id="范例：对某个数加-1"><a href="#范例：对某个数加-1" class="headerlink" title="范例：对某个数加 1"></a>范例：对某个数加 1</h4><pre class="line-numbers language-bash"><code class="language-bash">$ i<span class="token operator">=</span>0<span class="token punctuation">;</span>
+$ <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">++</span><span class="token punctuation">))</span></span>
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+1
+
+$ <span class="token keyword">let</span> i++
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+2
+
+$ <span class="token function">expr</span> <span class="token variable">$i</span> + 1
+3
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+2
+
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span> 1 <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{printf <span class="token variable">$1</span>+<span class="token variable">$2</span>}'</span>
+3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明： <code>expr</code> 之后的 <code>$i</code>，<code>+</code>，1 之间有空格分开。如果进行乘法运算，需要对运算符进行转义，否则 Shell 会把乘号解释为通配符，导致语法错误； <code>awk</code> 后面的 <code>$1</code> 和 <code>$2</code> 分别指 <code>$i</code> 和 1，即从左往右的第 1 个和第 2 个数。</p>
+<p>用 Shell 的内置命令查看各个命令的类型如下：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">type</span> <span class="token function">type</span>
+<span class="token function">type</span> is a shell <span class="token function">builtin</span>
+$ <span class="token function">type</span> <span class="token keyword">let</span>
+<span class="token keyword">let</span> is a shell <span class="token function">builtin</span>
+$ <span class="token function">type</span> <span class="token function">expr</span>
+<span class="token function">expr</span> is hashed <span class="token punctuation">(</span>/usr/bin/expr<span class="token punctuation">)</span>
+$ <span class="token function">type</span> <span class="token function">bc</span>
+<span class="token function">bc</span> is hashed <span class="token punctuation">(</span>/usr/bin/bc<span class="token punctuation">)</span>
+$ <span class="token function">type</span> <span class="token function">awk</span>
+<span class="token function">awk</span> is /usr/bin/awk<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>从上述演示可看出： <code>let</code> 是 Shell 内置命令，其他几个是外部命令，都在 <code>/usr/bin</code> 目录下。而 <code>expr</code> 和 <code>bc</code> 因为刚用过，已经加载在内存的 <code>hash</code> 表中。这将有利于我们理解在上一章介绍的脚本多种执行方法背后的原理。</p>
+<p>说明：如果要查看不同命令的帮助，对于 <code>let</code> 和 <code>type</code> 等 Shell 内置命令，可以通过 Shell 的一个内置命令 <code>help</code> 来查看相关帮助，而一些外部命令可以通过 Shell 的一个外部命令 <code>man</code> 来查看帮助，用法诸如 <code>help let</code>，<code>man expr</code> 等。</p>
+<h4 id="范例：从-1-加到某个数"><a href="#范例：从-1-加到某个数" class="headerlink" title="范例：从 1 加到某个数"></a>范例：从 1 加到某个数</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># calc.sh</span>
+
+i<span class="token operator">=</span>0<span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token variable">$i</span> -lt 10000 <span class="token punctuation">]</span>
+<span class="token keyword">do</span>
+    <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">++</span><span class="token punctuation">))</span></span>
+<span class="token keyword">done</span>
+<span class="token keyword">echo</span> <span class="token variable">$i</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：这里通过 <code>while [ 条件表达式 ]; do .... done</code> 循环来实现。<code>-lt</code> 是小于号 <code>&lt;</code>，具体见 <code>test</code> 命令的用法：<code>help test</code>。</p>
+<p>如何执行该脚本？</p>
+<p>办法一：直接把脚本文件当成子 Shell （Bash）的一个参数传入</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">bash</span> calc.sh
+$ <span class="token function">type</span> <span class="token function">bash</span>
+<span class="token function">bash</span> is hashed <span class="token punctuation">(</span>/bin/bash<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>办法二：是通过 <code>bash</code> 的内置命令 <code>.</code> 或 <code>source</code> 执行</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">.</span> ./calc.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">source</span> ./calc.sh
+$ <span class="token function">type</span> <span class="token keyword">.</span>
+<span class="token keyword">.</span> is a shell <span class="token function">builtin</span>
+$ <span class="token function">type</span> <span class="token function">source</span>
+<span class="token function">source</span> is a shell <span class="token function">builtin</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>办法三：是修改文件为可执行，直接在当前 Shell 下执行</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">chmod</span> ./calc.sh
+$ ./calc.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>下面，逐一演示用其他方法计算变量加一，即把 <code>((i++))</code> 行替换成下面的某一个：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">let</span> i++<span class="token punctuation">;</span>
+i<span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">expr</span> $i + 1<span class="token variable">)</span></span>
+i<span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token keyword">echo</span> $i+1<span class="token operator">|</span><span class="token function">bc</span><span class="token variable">)</span></span>
+i<span class="token operator">=</span><span class="token punctuation">$(</span>echo <span class="token string">"<span class="token variable">$i</span> 1"</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{printf <span class="token variable">$1</span>+<span class="token variable">$2</span>;}'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>比较计算时间如下：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">time</span> calc.sh
+10000
+
+real    0m1.319s
+user    0m1.056s
+sys     0m0.036s
+$ <span class="token function">time</span> calc_let.sh
+10000
+
+real    0m1.426s
+user    0m1.176s
+sys     0m0.032s
+$  <span class="token function">time</span> calc_expr.sh
+1000
+
+real    0m27.425s
+user    0m5.060s
+sys     0m14.177s
+$ <span class="token function">time</span> calc_bc.sh
+1000
+
+real    0m56.576s
+user    0m9.353s
+sys     0m24.618s
+$ <span class="token function">time</span> ./calc_awk.sh
+100
+
+real    0m11.672s
+user    0m2.604s
+sys     0m2.660s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明： <code>time</code> 命令可以用来统计命令执行时间，这部分时间包括总的运行时间，用户空间执行时间，内核空间执行时间，它通过 <code>ptrace</code> 系统调用实现。</p>
+<p>通过上述比较可以发现 <code>(())</code> 的运算效率最高。而 <code>let</code> 作为 Shell 内置命令，效率也很高，但是 <code>expr</code>，<code>bc</code>，<code>awk</code> 的计算效率就比较低。所以，在 Shell 本身能够完成相关工作的情况下，建议优先使用 Shell 本身提供的功能。但是 Shell 本身无法完成的功能，比如浮点运算，所以就需要外部命令的帮助。另外，考虑到 Shell 脚本的可移植性，在性能不是很关键的情况下，不要使用某些 Shell 特有的语法。</p>
+<p><code>let</code>，<code>expr</code>，<code>bc</code> 都可以用来求模，运算符都是 <code>%</code>，而 <code>let</code> 和 <code>bc</code> 可以用来求幂，运算符不一样，前者是 <code>**</code>，后者是 <code>^</code> 。例如：</p>
+<h4 id="范例：求模"><a href="#范例：求模" class="headerlink" title="范例：求模"></a>范例：求模</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">expr</span> 5 % 2
+1
+
+$ <span class="token keyword">let</span> i<span class="token operator">=</span>5%2
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+1
+
+$ <span class="token keyword">echo</span> 5 % 2 <span class="token operator">|</span> <span class="token function">bc</span>
+1
+
+$ <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">5</span><span class="token operator">%</span><span class="token number">2</span><span class="token punctuation">))</span></span>
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="范例：求幂"><a href="#范例：求幂" class="headerlink" title="范例：求幂"></a>范例：求幂</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">let</span> i<span class="token operator">=</span>5**2
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+25
+
+$ <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">5</span><span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">))</span></span>
+$ <span class="token keyword">echo</span> <span class="token variable">$i</span>
+
+25
+$ <span class="token keyword">echo</span> <span class="token string">"5^2"</span> <span class="token operator">|</span> <span class="token function">bc</span>
+25<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="范例：进制转换"><a href="#范例：进制转换" class="headerlink" title="范例：进制转换"></a>范例：进制转换</h4><p>进制转换也是比较常用的操作，可以用 <code>Bash</code> 的内置支持也可以用 <code>bc</code> 来完成，例如把 8 进制的 11 转换为 10 进制，则可以：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> <span class="token string">"obase=10;ibase=8;11"</span> <span class="token operator">|</span> <span class="token function">bc</span> -l
+9
+
+$ <span class="token keyword">echo</span> <span class="token punctuation">$((</span>8<span class="token comment" spellcheck="true">#11))</span>
+9<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面都是把某个进制的数转换为 10 进制的，如果要进行任意进制之间的转换还是 <code>bc</code> 比较灵活，因为它可以直接用 <code>ibase</code> 和 <code>obase</code> 分别指定进制源和进制转换目标。</p>
+<h4 id="范例：ascii-字符编码"><a href="#范例：ascii-字符编码" class="headerlink" title="范例：ascii 字符编码"></a>范例：ascii 字符编码</h4><p>如果要把某些字符串以特定的进制表示，可以用 <code>od</code> 命令，例如默认的分隔符 <code>IFS</code> 包括空格、 <code>TAB</code> 以及换行，可以用 <code>man ascii</code> 佐证。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> -n <span class="token string">"<span class="token variable">$IFS</span>"</span> <span class="token operator">|</span> od -c
+0000000      t  n
+0000003
+$ <span class="token keyword">echo</span> -n <span class="token string">"<span class="token variable">$IFS</span>"</span> <span class="token operator">|</span> od -b
+0000000 040 011 012
+0000003<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h3><p><code>let</code> 和 <code>expr</code> 都无法进行浮点运算，但是 <code>bc</code> 和 <code>awk</code> 可以。</p>
+<h4 id="范例：求-1-除以-13，保留-3-位有效数字"><a href="#范例：求-1-除以-13，保留-3-位有效数字" class="headerlink" title="范例：求 1 除以 13，保留 3 位有效数字"></a>范例：求 1 除以 13，保留 3 位有效数字</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> <span class="token string">"scale=3; 1/13"</span>  <span class="token operator">|</span> <span class="token function">bc</span>
+.076
+
+$ <span class="token keyword">echo</span> <span class="token string">"1 13"</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{printf("%0.3f\n",<span class="token variable">$1</span>/<span class="token variable">$2</span>)}'</span>
+0.077<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明： <code>bc</code> 在进行浮点运算时需指定精度，否则默认为 0，即进行浮点运算时，默认结果只保留整数。而 <code>awk</code> 在控制小数位数时非常灵活，仅仅通过 <code>printf</code> 的格式控制就可以实现。</p>
+<p>补充：在用 <code>bc</code> 进行运算时，如果不用 <code>scale</code> 指定精度，而在 <code>bc</code> 后加上 <code>-l</code> 选项，也可以进行浮点运算，只不过这时的默认精度是 20 位。例如：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> 1/13100 <span class="token operator">|</span> <span class="token function">bc</span> -l
+.00007633587786259541<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="范例：余弦值转角度"><a href="#范例：余弦值转角度" class="headerlink" title="范例：余弦值转角度"></a>范例：余弦值转角度</h4><p>用 <code>bc -l</code> 计算，可以获得高精度：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">export</span> cos<span class="token operator">=</span>0.996293<span class="token punctuation">;</span> <span class="token keyword">echo</span> <span class="token string">"scale=100; a(sqrt(1-<span class="token variable">$cos</span>^2)/<span class="token variable">$cos</span>)*180/(a(1)*4)"</span> <span class="token operator">|</span> <span class="token function">bc</span> -l
+4.934954755411383632719834036931840605159706398655243875372764917732
+5495504159766011527078286004072131<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>当然也可以用 <code>awk</code> 来计算：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> 0.996293 <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{ printf("%s\n", atan2(sqrt(1-<span class="token variable">$1</span>^2),<span class="token variable">$1</span>)*180/3.1415926535);}'</span>
+4.93495<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="范例：有一组数据，求人均月收入最高家庭"><a href="#范例：有一组数据，求人均月收入最高家庭" class="headerlink" title="范例：有一组数据，求人均月收入最高家庭"></a>范例：有一组数据，求人均月收入最高家庭</h4><p>在这里随机产生了一组测试数据，文件名为 <code>income.txt</code>。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">1 3 4490
+2 5 3896
+3 4 3112
+4 4 4716
+5 4 4578
+6 6 5399
+7 3 5089
+8 6 3029
+9 4 6195
+10 5 5145<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：上面的三列数据分别是家庭编号、家庭人数、家庭月总收入。</p>
+<p>分析：为了求月均收入最高家庭，需要对后面两列数进行除法运算，即求出每个家庭的月均收入，然后按照月均收入排序，找出收入最高家庭。</p>
+<p>实现：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># gettopfamily.sh</span>
+
+<span class="token punctuation">[</span> $<span class="token comment" spellcheck="true"># -lt 1 ] &amp;&amp; echo "please input the income file" &amp;&amp; exit -1</span>
+<span class="token punctuation">[</span> <span class="token operator">!</span> -f <span class="token variable">$1</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$1</span> is not a file"</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">exit</span> -1
+
+income<span class="token operator">=</span><span class="token variable">$1</span>
+<span class="token function">awk</span> <span class="token string">'{
+    printf("%d %0.2f\n", <span class="token variable">$1</span>, <span class="token variable">$3</span>/<span class="token variable">$2</span>);
+}'</span> <span class="token variable">$income</span> <span class="token operator">|</span> <span class="token function">sort</span> -k 2 -n -r<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><code>[ $# -lt 1 ]</code>：要求至少输入一个参数，<code>$#</code> 是 Shell 中传入参数的个数</li>
+<li><code>[ ! -f $1 ]</code>：要求输入参数是一个文件，<code>-f</code> 的用法见 <code>test</code> 命令，<code>help test</code></li>
+<li><code>income=$1</code>：把输入参数赋给 income 变量，再作为 <code>awk</code> 的参数，即需处理的文件</li>
+<li><code>awk</code>：用文件第三列除以第二列，求出月均收入，考虑到精确性，保留了两位精度</li>
+<li><code>sort -k 2 -n -r</code>：这里对结果的 <code>awk</code> 结果的第二列 <code>-k 2</code>，即月均收入进行排序，按照数字排序 <code>-n</code>，并按照递减的顺序排序 <code>-r</code>。</li>
+</ul>
+<p>演示：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ ./gettopfamily.sh income.txt
+7 1696.33
+9 1548.75
+1 1496.67
+4 1179.00
+5 1144.50
+10 1029.00
+6 899.83
+2 779.20
+3 778.00
+8 504.83<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>补充：之前的 <code>income.txt</code> 数据是随机产生的。在做一些实验时，往往需要随机产生一些数据，在下一小节，我们将详细介绍它。这里是产生 <code>income.txt</code> 数据的脚本：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># genrandomdata.sh</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> 1 10<span class="token variable">)</span></span>
+<span class="token keyword">do</span>
+    <span class="token keyword">echo</span> <span class="token variable">$i</span> <span class="token variable"><span class="token variable">$((</span>$RANDOM<span class="token operator">/</span><span class="token number">8192</span><span class="token operator">+</span><span class="token number">3</span><span class="token variable">))</span></span> <span class="token variable"><span class="token variable">$((</span>RANDOM<span class="token operator">/</span><span class="token number">10</span><span class="token operator">+</span><span class="token number">3000</span><span class="token variable">))</span></span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：上述脚本中还用到<code>seq</code>命令产生从1到10的一列数，这个命令的详细用法在该篇最后一节也会进一步介绍。</p>
+<h3 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h3><p>环境变量 <code>RANDOM</code> 产生从 0 到 32767 的随机数，而 <code>awk</code> 的 <code>rand()</code> 函数可以产生 0 到 1 之间的随机数。</p>
+<h4 id="范例：获取一个随机数"><a href="#范例：获取一个随机数" class="headerlink" title="范例：获取一个随机数"></a>范例：获取一个随机数</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> <span class="token variable">$RANDOM</span>
+81
+
+$ <span class="token keyword">echo</span> <span class="token string">""</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{srand(); printf("%f", rand());}'</span>
+0.237788<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明： <code>srand()</code> 在无参数时，采用当前时间作为 <code>rand()</code> 随机数产生器的一个 <code>seed</code> 。</p>
+<h4 id="范例：随机产生一个从-0-到-255-之间的数字"><a href="#范例：随机产生一个从-0-到-255-之间的数字" class="headerlink" title="范例：随机产生一个从 0 到 255 之间的数字"></a>范例：随机产生一个从 0 到 255 之间的数字</h4><p>可以通过 <code>RANDOM</code> 变量的缩放和 <code>awk</code> 中 <code>rand()</code> 的放大来实现。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">expr</span> <span class="token variable">$RANDOM</span> / 128
+
+$ <span class="token keyword">echo</span> <span class="token string">""</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{srand(); printf("%d\n", rand()*255);}'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>思考：如果要随机产生某个 IP 段的 IP 地址，该如何做呢？看例子：友善地获取一个可用的 IP 地址。</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># getip.sh -- get an usable ipaddress automatically</span>
+<span class="token comment" spellcheck="true"># author: falcon &amp;lt;zhangjinw@gmail.com></span>
+<span class="token comment" spellcheck="true"># update: Tue Oct 30 23:46:17 CST 2007</span>
+
+<span class="token comment" spellcheck="true"># set your own network, default gateway, and the time out of "ping" command</span>
+net<span class="token operator">=</span><span class="token string">"192.168.1"</span>
+default_gateway<span class="token operator">=</span><span class="token string">"192.168.1.1"</span>
+over_time<span class="token operator">=</span>2
+
+<span class="token comment" spellcheck="true"># check the current ipaddress</span>
+<span class="token function">ping</span> -c 1 <span class="token variable">$default_gateway</span> -W <span class="token variable">$over_time</span>
+<span class="token punctuation">[</span> <span class="token variable">$?</span> -eq 0 <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">echo</span> <span class="token string">"the current ipaddress is okey!"</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">exit</span> -1<span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token keyword">:</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+    <span class="token comment" spellcheck="true"># clear the current configuration</span>
+    <span class="token function">ifconfig</span> eth0 down
+    <span class="token comment" spellcheck="true"># configure the ip address of the eth0</span>
+    <span class="token function">ifconfig</span> eth0 \
+        <span class="token variable">$net</span><span class="token keyword">.</span><span class="token variable"><span class="token variable">$((</span>$RANDOM <span class="token operator">/</span><span class="token number">130</span> <span class="token operator">+</span><span class="token number">2</span><span class="token variable">))</span></span> \
+        up
+    <span class="token comment" spellcheck="true"># configure the default gateway</span>
+    route add default gw <span class="token variable">$default_gateway</span>
+    <span class="token comment" spellcheck="true"># check the new configuration</span>
+    <span class="token function">ping</span> -c 1 <span class="token variable">$default_gateway</span> -W <span class="token variable">$over_time</span>
+    <span class="token comment" spellcheck="true"># if work, finish</span>
+    <span class="token punctuation">[</span> <span class="token variable">$?</span> -eq 0 <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">break</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：如果你的默认网关地址不是 <code>192.168.1.1</code>，请自行配置 <code>default_gateway</code>（可以用 <code>route -n</code> 命令查看），因为用 <code>ifconfig</code> 配置地址时不能配置为网关地址，否则你的IP地址将和网关一样，导致整个网络不能正常工作。</p>
+<h3 id="其他运算"><a href="#其他运算" class="headerlink" title="其他运算"></a>其他运算</h3><p>其实通过一个循环就可以产生一系列数，但是有相关工具为什么不用呢！<code>seq</code> 就是这么一个小工具，它可以产生一系列数，你可以指定数的递增间隔，也可以指定相邻两个数之间的分割符。</p>
+<h4 id="范例：获取一系列数"><a href="#范例：获取一系列数" class="headerlink" title="范例：获取一系列数"></a>范例：获取一系列数</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">seq</span> 5
+1
+2
+3
+4
+5
+$ <span class="token function">seq</span> 1 5
+1
+2
+3
+4
+5
+$ <span class="token function">seq</span> 1 2 5
+1
+3
+5
+$ <span class="token function">seq</span> -s: 1 2 5
+1:3:5
+$ <span class="token function">seq</span> 1 2 14
+1
+3
+5
+7
+9
+11
+13
+$ <span class="token function">seq</span> -w 1 2 14
+01
+03
+05
+07
+09
+11
+13
+$ <span class="token function">seq</span> -s: -w 1 2 14
+01:03:05:07:09:11:13
+$ <span class="token function">seq</span> -f <span class="token string">"0x%g"</span> 1 5
+0x1
+0x2
+0x3
+0x4
+0x5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>一个比较典型的使用 <code>seq</code> 的例子，构造一些特定格式的链接，然后用 <code>wget</code> 下载这些内容：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">for</span> i <span class="token keyword">in</span> `seq -f<span class="token string">"http://thns.tsinghua.edu.cn/thnsebooks/ebook73/%02g.pdf"</span> 1 21`<span class="token punctuation">;</span><span class="token keyword">do</span> <span class="token function">wget</span> -c <span class="token variable">$i</span><span class="token punctuation">;</span> <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token variable"><span class="token variable">`</span><span class="token function">seq</span> -w 1 21<span class="token variable">`</span></span><span class="token punctuation">;</span><span class="token keyword">do</span> <span class="token function">wget</span> -c <span class="token string">"http://thns.tsinghua.edu.cn/thnsebooks/ebook73/<span class="token variable">$i</span>"</span><span class="token punctuation">;</span> <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>补充：在 <code>Bash</code> 版本 3 以上，在 <code>for</code> 循环的 <code>in</code> 后面，可以直接通过 <code>{1..5}</code> 更简洁地产生自 1 到 5 的数字（注意，1 和 5 之间只有两个点），例如：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token punctuation">{</span>1<span class="token punctuation">..</span>5<span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token keyword">do</span> <span class="token keyword">echo</span> -n <span class="token string">"<span class="token variable">$i</span> "</span><span class="token punctuation">;</span> <span class="token keyword">done</span>
+1 2 3 4 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="范例：统计字符串中各单词出现次数"><a href="#范例：统计字符串中各单词出现次数" class="headerlink" title="范例：统计字符串中各单词出现次数"></a>范例：统计字符串中各单词出现次数</h4><p>我们先给单词一个定义：由字母组成的单个或者多个字符系列。</p>
+<p>首先，统计每个单词出现的次数：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">wget</span> -c http://tinylab.org
+$ <span class="token function">cat</span> index.html <span class="token operator">|</span> <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>接着，统计出现频率最高的前10个单词：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">wget</span> -c http://tinylab.org
+$ <span class="token function">cat</span> index.html <span class="token operator">|</span> <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">sort</span> -n -k 1 -r <span class="token operator">|</span> <span class="token function">head</span> -10
+    524 a
+    238 tag
+    205 href
+    201 class
+    193 http
+    189 org
+    175 tinylab
+    174 www
+    146 div
+    128 title<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><code>cat index.html</code>: 输出 index.html 文件里的内容</li>
+<li><code>sed -e "s/[^a-zA-Z]/\n/g"</code>: 把非字母字符替换成空格，只保留字母字符</li>
+<li><code>grep -v ^$</code>: 去掉空行</li>
+<li><code>sort</code>: 排序</li>
+<li><code>uniq -c</code>：统计相同行的个数，即每个单词的个数</li>
+<li><code>sort -n -k 1 -r</code>：按照第一列 <code>-k 1</code> 的数字 <code>-n</code> 逆序 <code>-r</code> 排序</li>
+<li><code>head -10</code>：取出前十行</li>
+</ul>
+<h4 id="范例：统计指定单词出现次数"><a href="#范例：统计指定单词出现次数" class="headerlink" title="范例：统计指定单词出现次数"></a>范例：统计指定单词出现次数</h4><p>可以考虑采取两种办法：</p>
+<ul>
+<li>只统计那些需要统计的单词</li>
+<li>用上面的算法把所有单词的个数都统计出来，然后再返回那些需要统计的单词给用户</li>
+</ul>
+<p>不过，这两种办法都可以通过下面的结构来实现。先看办法一：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># statistic_words.sh</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">[</span> $<span class="token comment" spellcheck="true"># -lt 1 ]; then</span>
+    <span class="token keyword">echo</span> <span class="token string">"Usage: basename <span class="token variable">$0</span> FILE WORDS ...."</span>
+    <span class="token keyword">exit</span> -1
+<span class="token keyword">fi</span>
+
+FILE<span class="token operator">=</span><span class="token variable">$1</span>
+<span class="token punctuation">((</span>WORDS_NUM<span class="token operator">=</span>$<span class="token comment" spellcheck="true">#-1))</span>
+
+<span class="token keyword">for</span> n <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> $WORDS_NUM<span class="token variable">)</span></span>
+<span class="token keyword">do</span>
+    <span class="token function">shift</span>
+    <span class="token function">cat</span> <span class="token variable">$FILE</span> <span class="token operator">|</span> <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> \
+        <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">grep</span> ^<span class="token variable">$1</span>$ <span class="token operator">|</span> <span class="token function">uniq</span> -c
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><code>if 条件部分</code>：要求至少两个参数，第一个单词文件，之后参数为要统计的单词</li>
+<li><code>FILE=$1</code>: 获取文件名，即脚本之后的第一个字符串</li>
+<li><code>((WORDS_NUM=$#-1))</code>：获取单词个数，即总的参数个数 <code>$#</code> 减去文件名参数（1个）</li>
+<li><code>for 循环部分</code>：首先通过 <code>seq</code> 产生需要统计的单词个数系列，<code>shift</code> 是 Shell 内置变量（请通过 <code>help shift</code> 获取帮助)，它把用户从命令行中传入的参数依次往后移动位置，并把当前参数作为第一个参数即 <code>$1</code>，这样通过 <code>$1</code>就可以遍历用户所有输入的单词（仔细一想，这里貌似有数组下标的味道）。你可以考虑把 <code>shift</code> 之后的那句替换成 <code>echo $1</code> 测试 <code>shift</code> 的用法</li>
+</ul>
+<p>演示：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">chmod</span> +x statistic_words.sh
+$ ./statistic_words.sh index.html tinylab linux python
+    175 tinylab
+     43 linux
+      3 python<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再看办法二，我们只需要修改 <code>shift</code> 之后的那句即可：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># statistic_words.sh</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">[</span> $<span class="token comment" spellcheck="true"># -lt 1 ]; then</span>
+    <span class="token keyword">echo</span> <span class="token string">"ERROR: you should input 2 words at least"</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token string">"Usage: basename <span class="token variable">$0</span> FILE WORDS ...."</span>
+    <span class="token keyword">exit</span> -1
+<span class="token keyword">fi</span>
+
+FILE<span class="token operator">=</span><span class="token variable">$1</span>
+<span class="token punctuation">((</span>WORDS_NUM<span class="token operator">=</span>$<span class="token comment" spellcheck="true">#-1))</span>
+
+<span class="token keyword">for</span> n <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> $WORDS_NUM<span class="token variable">)</span></span>
+<span class="token keyword">do</span>
+    <span class="token function">shift</span>
+    <span class="token function">cat</span> <span class="token variable">$FILE</span> <span class="token operator">|</span> <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> \
+        <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">" <span class="token variable">$1</span>$"</span>
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>演示：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ ./statistic_words.sh index.html tinylab linux python
+    175 tinylab
+     43 linux
+      3 python<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：很明显，办法一的效率要高很多，因为它提前找出了需要统计的单词，然后再统计，而后者则不然。实际上，如果使用 <code>grep</code> 的 <code>-E</code> 选项，我们无须引入循环，而用一条命令就可以搞定：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">cat</span> index.html <span class="token operator">|</span> <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">grep</span> -E <span class="token string">"^tinylab$|^linux$"</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c
+     43 linux
+    175 tinylab<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>或者</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">cat</span> index.html <span class="token operator">|</span> <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">egrep</span>  <span class="token string">"^tinylab$|^linux$"</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c
+     43 linux
+    175 tinylab<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>说明：需要注意到 <code>sed</code> 命令可以直接处理文件，而无需通过 <code>cat</code> 命令输出以后再通过管道传递，这样可以减少一个不必要的管道操作，所以上述命令可以简化为：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sed</span> -e <span class="token string">"s/[^a-zA-Z]/\n/g"</span> index.html <span class="token operator">|</span> <span class="token function">grep</span> -v ^$ <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">egrep</span>  <span class="token string">"^tinylab$|^linux$"</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c
+     43 linux
+    175 tinylab<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>所以，可见这些命令 <code>sed</code>，<code>grep</code>，<code>uniq</code>，<code>sort</code> 是多么有用，它们本身虽然只完成简单的功能，但是通过一定的组合，就可以实现各种五花八门的事情啦。对了，统计单词还有个非常有用的命令 <code>wc -w</code>，需要用到的时候也可以用它。</p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>到这里，Shell 编程范例之数值计算就结束啦。该篇主要介绍了：</p>
+<ul>
+<li>Shell 编程中的整数运算、浮点运算、随机数的产生、数列的产生</li>
+<li>Shell 的内置命令、外部命令的区别，以及如何查看他们的类型和帮助</li>
+<li>Shell 脚本的几种执行办法</li>
+<li>几个常用的 Shell 外部命令： <code>sed</code>，<code>awk</code>，<code>grep</code>，<code>uniq</code>，<code>sort</code> 等</li>
+<li>范例：数字递增；求月均收入；自动获取 <code>IP</code> 地址；统计单词个数</li>
+<li>其他：相关用法如命令列表，条件测试等在上述范例中都已涉及，请认真阅读之</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -633,6 +1119,10 @@
                             
                                 <a href="/tags/%E6%95%99%E7%A8%8B/">
                                     <span class="chip bg-color">教程</span>
+                                </a>
+                            
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
                                 </a>
                             
                         </div>
@@ -697,43 +1187,41 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-                </div>
+                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
                 <div class="card">
-                    <a href="/posts/21090/">
+                    <a href="/posts/50641/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Shell编程小结">
+                                <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Shell基础学习">
                             
-                            <span class="card-title">Shell编程小结</span>
+                            <span class="card-title">Shell基础学习</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Keep It Simple, Stupid
+                                之前也有一些关于这方面的笔记，但过于零碎，特地整理。
                             
                         </div>
                         <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-18
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-18
+                        </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Shell/" class="post-category">
-                                    Shell
+                                        <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
-
                     
                         <div class="card-action article-tags">
                             
@@ -743,6 +1231,10 @@
                             
                                 <a href="/tags/%E6%95%99%E7%A8%8B/">
                                     <span class="chip bg-color">教程</span>
+                                </a>
+                            
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
                                 </a>
                             
                         </div>
@@ -961,7 +1453,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">72.6k</span>&nbsp;字
+                            class="white-color">80.4k</span>&nbsp;字
                 
                 
                 <script>

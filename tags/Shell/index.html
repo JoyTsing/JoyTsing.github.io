@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="记录博客的一次更新, 博客 JoyTsing">
-    <meta name="description" content="记录一次博客的更新已经很久没有写博客了，上一次写博客还是在半年前因为课程要求做读书笔记才记的，这半年来发生了很多事情，我的想法与之前也发生了很大的变化，希望能够从现在开始认认真真读几本书，好好写一下博客，记录一下自己的生活，最后希望自己能够">
+    <meta name="keywords" content="标签: Shell, 博客 JoyTsing">
+    <meta name="description" content="标签: Shell | JoyTsing">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>记录博客的一次更新 | JoyTsing</title>
+    <title>标签: Shell | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -402,530 +402,286 @@
     </nav>
 
 </header>
-
-
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
         <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">记录博客的一次更新</h1>
-                </div>
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                    JoyTsing
+                
+            </div>
+
+            <div class="description center-align">
+                
+                    <span id="subtitle"></span>
+                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
+                    <script>
+                        var typed = new Typed("#subtitle", {
+                            strings: ['everyday is night',''],
+                            startDelay: 600,
+                            typeSpeed: 100,
+                            loop: true,
+                            backSpeed: 90,
+                            showCursor: true
+                        });
+                    </script>
+                
             </div>
         </div>
     </div>
 </div>
 
 
+    <script>
+        $('.bg-cover').css('background-image', 'url(/medias/banner/0.jpg)');
+    </script>
 
-<main class="post-container content">
+    </div>
+</div>
+
+<main class="content">
 
     
-        <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
 
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-
-        position: absolute;
-        right: 23.5vw;
-        display: block;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
+<div id="tags" class="container chip-container">
     <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Hexo/">
-                                    <span class="chip bg-color">Hexo</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                        <div class="post-cate">
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                                <a href="/categories/Hexo/" class="post-category">
-                                    Hexo
-                                </a>
-                            
-                        </div>
-                    
-                </div>
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fa fa-tags"></i>&nbsp;&nbsp;文章标签
             </div>
-
-            <div class="post-info">
+            <div class="tag-chips">
                 
-                    <div class="post-date info-break-policy">
-                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-12-05
-                    </div>
-                
-
-                
-                    <div class="post-date info-break-policy">
-                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2020-12-05
-                    </div>
-                
-
-                
-                    <div class="info-break-policy">
-                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        200
-                    </div>
-                
-
-                
-                    <div class="info-break-policy">
-                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
-                    </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-                
-            </div>
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <h2 id="记录一次博客的更新"><a href="#记录一次博客的更新" class="headerlink" title="记录一次博客的更新"></a>记录一次博客的更新</h2><p>已经很久没有写博客了，上一次写博客还是在半年前因为课程要求做读书笔记才记的，这半年来发生了很多事情，我的想法与之前也发生了很大的变化，希望能够从现在开始认认真真读几本书，好好写一下博客，记录一下自己的生活，最后希望自己能够考上研究生。</p>
-<p>关于的博客一些TODO：</p>
-<ul>
-<li>加速访问</li>
-<li>弄一个域名</li>
-<li>加上https</li>
-<li>增加产出</li>
-</ul>
-<p>暂时就这些吧</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </div>
-            <hr/>
-
-            
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
                     
-                        <div class="article-tag">
-                            
-                                <a href="/tags/Hexo/">
-                                    <span class="chip bg-color">Hexo</span>
-                                </a>
-                            
-                        </div>
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="设计模式" style="background-color: #F9EBEA;">设计模式
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
                     
-                </div>
-                <div class="post_share"
-                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-<div id="article-share">
-    
-        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
-             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-        <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
-</div>
-
-                </div>
+                    <a href="/tags/C/" title="C++: 15">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="C++" style="background-color: #F5EEF8;">C++
+                        <span class="tag-length">15</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E8%99%9A%E5%87%BD%E6%95%B0/" title="虚函数: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="虚函数" style="background-color: #D5F5E3;">虚函数
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E8%99%9A%E8%A1%A8/" title="虚表: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="虚表" style="background-color: #E8F8F5;">虚表
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/Linux/" title="Linux: 13">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="Linux" style="background-color: #FEF9E7;">Linux
+                        <span class="tag-length">13</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/C/" title="C: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="C" style="background-color: #F8F9F9;">C
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/Play-with-Algorithms/" title="Play-with-Algorithms: 8">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="Play-with-Algorithms" style="background-color: #82E0AA;">Play-with-Algorithms
+                        <span class="tag-length">8</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E6%9D%82%E8%AE%B0/" title="杂记: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="杂记" style="background-color: #D7BDE2;">杂记
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E8%AE%A1%E7%BD%91%E7%BB%9C/" title="计算计网络: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="计算计网络" style="background-color: #A3E4D7;">计算计网络
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/TCP-IP/" title="TCP/IP: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="TCP/IP" style="background-color: #85C1E9;">TCP/IP
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/Hexo/" title="Hexo: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="Hexo" style="background-color: #F8C471;">Hexo
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/Leetcode/" title="Leetcode: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="Leetcode" style="background-color: #F9E79F;">Leetcode
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E6%95%99%E7%A8%8B/" title="教程: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="教程" style="background-color: #D5F5E3;">教程
+                        <span class="tag-length">3</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" title="贪吃蛇: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="贪吃蛇" style="background-color: #D5F5E3;">贪吃蛇
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/UESTC/" title="UESTC: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="UESTC" style="background-color: #F5EEF8;">UESTC
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          data-tagname="软件工程" style="background-color: #85C1E9;">软件工程
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+                
+                    
+                    <a href="/tags/Shell/" title="Shell: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                          data-tagname="Shell" style="background-color: #82E0AA;">Shell
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+                
             </div>
-            
         </div>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div id="gitalk-container" class="card-content"></div>
 </div>
 
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: 'e1e76a75c09daeb96740',
-        clientSecret: 'c090881ff25206a1601027ac3b225def230cdf2f',
-        repo: 'JoyTsing.github.io',
-        owner: 'JoyTsing',
-        admin: '["JoyTsing"]',
-        id: 'posts/10533/',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-            <div class="article col s12 m6" data-aos="fade-up">
-                <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
-                <div class="card">
-                    <a href="/posts/49397/">
-                        <div class="card-image">
-                            
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+                
+                <div class="article tag-post col s12 m6 l4" data-tags="Linux, 教程, Shell" data-aos="fade-up">
+                    <div class="card">
+                        <a href="/posts/50641/">
+                            <div class="card-image tag-image">
                                 
-                                <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="软件工程复习">
-                            
-                            <span class="card-title">软件工程复习</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                先占个位
-                            
-                        </div>
-                        <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-06
-                        </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/UESTC/" class="post-category">
-                                    UESTC
-                                </a>
-                                    
+                                    <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Shell基础学习">
                                 
-                            </span>
-                        </div>
-                    </div>
-                    
-                        <div class="card-action article-tags">
-                            
-                                <a href="/tags/UESTC/">
-                                    <span class="chip bg-color">UESTC</span>
-                                </a>
-                            
-                                <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">
-                                    <span class="chip bg-color">软件工程</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-            </div>
-        
-        
-            <div class="article col s12 m6" data-aos="fade-up">
-                <div class="article-badge right-badge text-color">
-                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-                </div>
-                <div class="card">
-                    <a href="/posts/41703/">
-                        <div class="card-image">
-                            
-                                
-                                <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Gcc编译的背后">
-                            
-                            <span class="card-title">Gcc编译的背后</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                前言在linux下写代码时，使用gcc只需要输入gcc a.c -o a就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了
-                            
-                        </div>
-                        <div class="publish-info">
+                                <span class="card-title">Shell基础学习</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-04
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-18
                             </span>
-                            <span class="publish-author">
-                                
-                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                <span class="publish-author">
                                     
-                                        <a href="/categories/C/" class="post-category">
-                                    C
+                                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                        
+                                            <a href="/categories/Linux/" class="post-category">
+                                Linux
                                 </a>
+                                        
                                     
-                                
-                            </span>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    
-                        <div class="card-action article-tags">
-                            
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C</span>
-                                </a>
-                            
-                        </div>
-                    
                 </div>
-            </div>
-        
-    </div>
-</article>
-</div>
-
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-    <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-    <script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-    <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-    <style type="text/css">
-        code[class*="language-"], pre[class*="language-"] {
-            white-space: pre !important;
-        }
-    </style>
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+            
+                
+                <div class="article tag-post col s12 m6 l4" data-tags="Linux, 教程, Shell" data-aos="fade-up">
+                    <div class="card">
+                        <a href="/posts/21090/">
+                            <div class="card-image tag-image">
+                                
+                                    
+                                    <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Shell编程小结">
+                                
+                                <span class="card-title">Shell编程小结</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-18
+                            </span>
+                                <span class="publish-author">
+                                    
+                                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                        
+                                            <a href="/categories/Linux/" class="post-category">
+                                Linux
+                                </a>
+                                        
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
         </div>
-    </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-    <div id="floating-toc-btn" class="hide-on-med-and-down">
-        <a class="btn-floating btn-large bg-color">
-            <i class="fa fa-list"></i>
-        </a>
-    </div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4, h5'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4, h5').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换 TOC 目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-    
-
+    </article>
 </main>
 
 
@@ -934,7 +690,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
-            <a href="/about" rel="external nofollow noreferrer">Sitoi</a>
+            <a href="/about" rel="external nofollow noreferrer">JoyTsing</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
