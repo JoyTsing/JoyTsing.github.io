@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2020-12-18T08:49:12.339Z</updated>
+  <updated>2020-12-18T08:54:56.665Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://joytsing.github.io/posts/21090/"/>
     <id>https://joytsing.github.io/posts/21090/</id>
     <published>2020-12-18T08:39:51.000Z</published>
-    <updated>2020-12-18T08:49:12.339Z</updated>
+    <updated>2020-12-18T08:54:56.665Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote><p>为了系统地学习和总结 Shell 编程，制定了一个 Shell 编程范例的总结计划，不会专门介绍 Shell 的语法， 而是假设读者对 Shell 编程有了一定的基础。另外，该系列涵盖：数值、逻辑值、字符串、文件、进程、文件系统等所有我们可以操作的“对象”，这个操作对象也将从低级到高级，进而上升到网络层面，整个通过各种方式连接起来的计算机的集合。实际上这也未尝不是在摸索 UNIX 的哲学，那”K.I.S.S”（Keep It Simple, Stupid）蕴藏的巨大能量。</p></blockquote><p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/UI_Shell_and_GUI.jpg" alt="shell"></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote><p>为了系统地学习和总结 Shell 编程，制定了一个 Shell 编程范例的总结计划，不会专门介绍 Shell 的语法， 而是假设对 Shell 编程有了一定的基础。另外，该系列涵盖：数值、逻辑值、字符串、文件、进程、文件系统等所有我们可以操作的“对象”，这个操作对象也将从低级到高级，进而上升到网络层面，整个通过各种方式连接起来的计算机的集合。实际上这也未尝不是在摸索 UNIX 的哲学，那”K.I.S.S”（Keep It Simple, Stupid）蕴藏的巨大能量。</p></blockquote><p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/UI_Shell_and_GUI.jpg" alt="shell"></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
     <summary type="html">
     
