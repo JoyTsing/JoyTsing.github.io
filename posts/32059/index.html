@@ -574,14 +574,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        12.6k
+                        16.9k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        48 分
+                        63 分
                     </div>
                 
 
@@ -1135,6 +1135,175 @@ $ <span class="token function">jobs</span>            <span class="token comment
 <h4 id="范例：启动停止的进程并运行在后台"><a href="#范例：启动停止的进程并运行在后台" class="headerlink" title="范例：启动停止的进程并运行在后台"></a>范例：启动停止的进程并运行在后台</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">bg</span> %1
 <span class="token punctuation">[</span>2<span class="token punctuation">]</span>+ <span class="token function">sleep</span> 50 <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>不过，要在命令行下使用作业控制，需要当前 Shell，内核终端驱动等对作业控制支持才行。</p>
+<h2 id="网络操作"><a href="#网络操作" class="headerlink" title="网络操作"></a>网络操作</h2><h3 id="前言-1"><a href="#前言-1" class="headerlink" title="前言"></a>前言</h3><p>前面章节已经介绍了Shell编程范例之数值、布尔值、字符串、文件、文件系统、进程等的操作。这些内容基本覆盖了网络中某个独立机器正常工作的“方方面面”，现在需要把视角从单一的机器延伸到这些机器通过各种网络设备和协议连接起来的网络世界，分析网络拓扑结构、网络工作原理、了解各种常见网络协议、各种常见硬件工作原理、网络通信与安全相关软件以及工作原理分析等。</p>
+<p>不过，因为网络相关的问题确实太复杂了，这里不可能介绍具体，因此如果想了解更多细节，还是建议参考相关资料。但Linux是一个网络原理学习和实践的好平台，不仅因为它本身对网络体系结构的实现是开放源代码的，而且各种相关的分析工具和函数库数不胜数，因此千万不要错过通过它来做相关的实践工作。</p>
+<h3 id="网络原理介绍"><a href="#网络原理介绍" class="headerlink" title="网络原理介绍"></a>网络原理介绍</h3><h4 id="我们的网络世界"><a href="#我们的网络世界" class="headerlink" title="我们的网络世界"></a>我们的网络世界</h4><p>在进行所有介绍之前，来直观地感受一下那个真真实实存在的网络世界吧。当我在 Linux 下通过 <code>Web</code> 编辑器写这篇 Blog 时，一边用 <code>mplayer</code> 听着远程音乐，累了时则打开兰大的网络 <code>TV</code> 频道开始看看凤凰卫视……这些“现代化”的生活，我想，如果没有网络，将变得无法想象。</p>
+<p>下面来构想一下这样一个网络世界的优美图画：</p>
+<blockquote>
+<p>一边盯着显示器，一边敲击着键盘，一边挂着耳机。</p>
+<p>主机电源灯灿烂得很，发着绿光，这时很容易想象主机背后的那个网卡位置肯定有两个不同颜色的灯光在闪烁，它显示着主机正在与计算机网络世界打着交道。</p>
+<p>就在实验室的某个角落，有一个交换机上的一个网口的网线连到主机上，这个交换机接到了一个局域网的网关上，然后这个网关再接到了信息楼的某个路由器上，再转接到学校网络中心的另外一个路由器上……</p>
+<p>期间，有一个路由器连接到了这个 Blog 服务器上，而另外一个则可能连到了那个网络 <code>TV</code> 服务器上，还有呢，另外一些则连接到了电信网络里头的某个音乐服务器上……</p>
+</blockquote>
+<p>下面用 <code>dia</code> 绘制一个简单的“网络地图”：</p>
+<p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/Network_Architecture.jpg" alt="Network_Architecture"></p>
+<p>该图把一些最常见的网络设备和网络服务基本都呈现出来了，包括本地主机、路由、交换机、网桥，域名服务器，万维网服务，视频服务，防火墙服务，动态 <code>IP</code> 地址服务等。其中各种设备构成了整个物理网络，而网络服务则是构建在这些设备上的各种网络应用。</p>
+<p>现在的网络应用越来越丰富多样，比如即时聊天（<code>IM</code>）、 <code>p2p</code> 资源共享、网络搜索等，它们是如何实现的，它们如何构建在各种各样的网络设备之上，并且能够安全有效的工作呢？这取决于这背后逐步完善的网络体系结构和各种相关网络协议的开发、实现和应用。</p>
+<h4 id="网络体系结构和网络协议介绍"><a href="#网络体系结构和网络协议介绍" class="headerlink" title="网络体系结构和网络协议介绍"></a>网络体系结构和网络协议介绍</h4><p>那么网络体系结构是怎么样的呢？涉及到哪些相关的网络协议呢？什么又是网络协议呢？</p>
+<p>在《计算机网络——自顶向下的方法》一书中非常巧妙地给出了网络体系结构分层的比喻，把网络中各层跟交通运输体系中的各个环节对照起来，让人通俗易懂。在交通运输体系中，运输的是人和物品，在计算机网络体系中，运输的是电子数据。考虑到交通运输网络和计算机网络中最终都可以划归为点对点的信息传输。这里考虑两点之间的信息传递过程，得到这样一个对照关系，见下图：</p>
+<p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/Network_Layer_Compare.jpg" alt="Network_Layer_Compare"></p>
+<p>对照上图，更容易理解右侧网络体系结构的分层原理（如果比照一封信发出到收到的这一中间过程可能更容易理解），上图右侧是 <code>TCP/IP</code> 网络体系结构的一个网络分层示意图，在把数据发送到网络之前，在各层中需要进行各种“打包”的操作，而从网络接收到数据后，就需要进行“解包”操作，最终把纯粹的数据信息给提取出来。这种分层的方式是为了传输数据的需要，也是两个主机之间如何建立连接以及如何保证数据传输的完整性和可靠性的需要。通过把各种需要分散在不同的层次，使得整个体系结构更加清晰和明了。这些“需求”具体通过各种对应的协议来规范，这些规范统成为网络协议。</p>
+<p>关于 <code>OSI</code> 模型（7 层）比照 <code>TCP/IP</code> 模型（4 层）的协议栈可以从下图（来自网络）看个明了：</p>
+<p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/Network_Layer_OSI.jpg" alt="Network_Layer_OSI"></p>
+<p>而下图（来自网络）则更清晰地体现了 <code>TCP/IP</code> 分层模型。</p>
+<p><img src="https://tinylab.gitbooks.io/shellbook/content/zh/chapters/pic/Network_Layer_TCP_IP.jpg" alt="Network_Layer_TCP_IP"></p>
+<p>上面介绍了网络原理方面的基本内容，如果想了解更多网络原理和操作系统对网络支持的实现，可以考虑阅读后面的参考资料。下面将做一些实践，即在 Linux 下如何联网，如何用 Linux 搭建各种网络服务，并进行网络安全方面的考量以及基本的网络编程和开发的介绍。</p>
+<h3 id="Linux-下网络“实战”"><a href="#Linux-下网络“实战”" class="headerlink" title="Linux 下网络“实战”"></a>Linux 下网络“实战”</h3><h4 id="如何把我们的-Linux-主机接入网络"><a href="#如何把我们的-Linux-主机接入网络" class="headerlink" title="如何把我们的 Linux 主机接入网络"></a>如何把我们的 Linux 主机接入网络</h4><p>如果要让一个系统能够联网，首先当然是搭建好物理网络了。接入网络的物理方式还是蛮多的，比如直接用网线接入以太网，用无线网卡上网，用 <code>ADSL</code> 拨号上网……</p>
+<p>对于用以太网网卡接入网络的常见方式，在搭建好物理网络并确保连接正常后，可以通过配置 <code>IP</code> 地址和默认网关来接入网络，这个可以通过手工配置和动态获取两种方式。</p>
+<h5 id="范例：通过dhclient获取IP地址"><a href="#范例：通过dhclient获取IP地址" class="headerlink" title="范例：通过dhclient获取IP地址"></a>范例：通过dhclient获取IP地址</h5><p>如果所在的局域网有 <code>DHCP</code> 服务，那么可以这么获取，<code>N</code> 是设备名称，如果只有一块网卡，一般是 0 或者 1 。</p>
+<pre><code>$ dhclient ethN</code></pre><h5 id="范例：静态配置IP地址"><a href="#范例：静态配置IP地址" class="headerlink" title="范例：静态配置IP地址"></a>范例：静态配置IP地址</h5><p>当然，也可以考虑采用静态配置的方式，<code>ip_address</code> 是本地主机的 <code>IP</code> 地址，<code>gw_ip_address</code> 是接入网络的网关的 <code>IP</code> 地址。</p>
+<pre><code>$ ifconfig eth0 ip_address on
+$ route add deafult gw gw_ip_address</code></pre><p>如果上面不工作，记得通过 <code>ifconfig/mii-tool/ethtool</code> 等工具检查网卡是否有被驱动起来，然后通过 <code>lspci/dmesg</code> 等检查网卡类型（或者通过主板手册和独立网卡自带的手册查看），接着安装或者编译相关驱动，最后把驱动通过 <code>insmod/modprobe</code> 等工具加载到内核中。</p>
+<h4 id="用-Linux-搭建网桥"><a href="#用-Linux-搭建网桥" class="headerlink" title="用 Linux 搭建网桥"></a>用 Linux 搭建网桥</h4><p>网桥工作在 <code>OSI</code> 模型的第二层，即数据链路层，它只需要知道目标主机的 <code>MAC</code> 地址就可以工作。 Linux 内核在 <code>2.2</code> 开始就已经支持了这个功能，具体怎么配置看看后续<a href="http://www.ibm.com/developerworks/cn/linux/kernel/l-netbr/index.html">参考资料</a>吧。如果要把 Linux 主机配置成一个网桥，至少需要两个网卡。</p>
+<p>网桥的作用相当于一根网线，用户无须关心里头有什么东西，把它的两个网口连接到两个主机上就可以让这两个主机支持相互通信。不过它比网线更厉害，如果配上防火墙，就可以隔离连接在它两端的网段（注意这里是网络，因为它不识别 <code>IP</code>），另外，如果这个网桥有多个网口，那么可以实现一个功能复杂的交换机，而如果有效组合多个网桥，则有可能实现一个复杂的可实现流量控制和负载平衡的防火墙系统。</p>
+<h4 id="用-Linux-做路由"><a href="#用-Linux-做路由" class="headerlink" title="用 Linux 做路由"></a>用 Linux 做路由</h4><p>路由工作在 <code>OSI</code> 模型的第三层，即网络层，通过 <code>router</code> 可以配置 Linux 的路由，当然，Linux 下也有很多工具支持动态路由的。相关的资料在网路中铺天盖地，由于时间关系，这里不做介绍。</p>
+<h4 id="用-Linux-搭建各种常规的网络服务"><a href="#用-Linux-搭建各种常规的网络服务" class="headerlink" title="用 Linux 搭建各种常规的网络服务"></a>用 Linux 搭建各种常规的网络服务</h4><p>需要什么网络服务呢？</p>
+<ul>
+<li>给局域网弄个 <code>DHCP</code> 服务器，那就弄个 <code>dhcpd</code>，看看<a href="http://tldp.org/HOWTO/DHCP/">参考资料</a>；</li>
+<li>如果想弄个邮件发送服务器，那就安装个 <code>sendmail</code> 或者 <code>exim4</code> ；</li>
+<li>如果再想弄个邮件列表服务器呢，那就装个 <code>mailman</code> ；</li>
+<li>如果想弄个接收邮件的服务器呢，那就安装个 <code>pop3</code> 服务器；</li>
+<li>如果想弄个 <code>web</code> 站点，那就弄个 <code>apache</code> 或者 <code>nginx</code> 服务器；</li>
+<li>如果想弄上防火墙服务，那么通过 <code>iptables</code> 工具配置 <code>netfilter</code> 就可以</li>
+</ul>
+<p>What’s more？如果你能想到，Linux上基本都有相应的实现。</p>
+<h4 id="Linux-下网络问题诊断与维护"><a href="#Linux-下网络问题诊断与维护" class="headerlink" title="Linux 下网络问题诊断与维护"></a>Linux 下网络问题诊断与维护</h4><p>如果出现网络问题，不要惊慌，逐步检查网络的各个层次：物理链接、链路层、网络层直到应用层，熟悉使用各种如下的工具，包括 <code>ethereal/tcpdump</code>，<code>hping</code>，<code>nmap</code>，<code>netstat</code>，<code>netpipe</code>，<code>netperf</code>，<code>vnstat</code>，<code>ntop</code> 等。</p>
+<p>关于这些工具的详细用法和网络问题诊断和维护的相关知识，请看后续相关资料。</p>
+<h3 id="Linux-下网络编程与开发"><a href="#Linux-下网络编程与开发" class="headerlink" title="Linux 下网络编程与开发"></a>Linux 下网络编程与开发</h3><p>如果想做网络编程开发，比如：</p>
+<ul>
+<li>要实现一个客户端 <code>/</code> 服务器架构的应用，可以采用 Linux 下的 <code>socket</code> 编程了；</li>
+<li>如果想写一个数据包抓获和协议分析的程序，可以采用 <code>libpap</code> 等函数库；</li>
+<li>如果想实现某个协议呢，那就可以参考相关的 <code>RFC</code> 文档，并通过 <code>socket</code> 编程来实现。</li>
+</ul>
+<p>这个可以参考相关的 <code>Linux socket</code> 编程等资料。</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>本来介绍网络相关的一些基本内容，但因时间关系，没有详述，更多细节请参考相关资料。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>计算机网络——自上而下的分析方法</li>
+<li>Linux 网络体系结构（清华大学出版社出版）</li>
+<li>Linux 系统故障诊断与排除 第13章 网络问题（人民邮电出版社）</li>
+<li>在 Linux 下用 ADSL 拨号上网</li>
+<li>Linux 下无线网络相关资料收集</li>
+<li><a href="http://www.ibm.com/developerworks/cn/linux/kernel/l-netbr/index.html">Linux网桥的实现分析与使用</a></li>
+<li><a href="http://tldp.org/HOWTO/DHCP/">DHCP mini howto</a></li>
+<li>最佳的 75 个安全工具</li>
+<li>网络管理员必须掌握的知识</li>
+<li>Linux 上检测 rootkit 的两种工具: Rootkit Hunter 和 Chkrootkit</li>
+<li>数据包抓获与 ip 协议的简单分析（基于 pcap 库）</li>
+<li><a href="http://www.ietf.org/rfc">RFC</a></li>
+<li><a href="http://zhoulifa.bokee.com/4640913.html">HTTP 协议的 C 语言编程实现实例</a></li>
+</ul>
+<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><p>在实际使用中，Linux 系统首先是面向用户的系统，所有之前介绍的内容全部是提供给不同的用户使用的。实际使用中常常碰到各类用户操作，所以这里添加一个独立的章节来介绍。</p>
+<p>Linux 支持多用户，也就是说允许不同的人使用同一个系统，每个人有一个属于自己的帐号。而且允许大家设置不同的认证密码，确保大家的私有信息得到保护。另外，为了确保整个系统的安全，用户权限又做了进一步划分，包括普通用户和系统管理员。普通用户只允许访问自己账户授权下的信息，而系统管理员才能访问所有资源。普通用户如果想行使管理员的职能，必须获得系统管理员的许可。</p>
+<p>为避免分散注意力，咱们不去介绍背后的那些数据文件： <code>/etc/passwd</code>，<code>/etc/shadow</code>，<code>/etc/group</code>，<code>/etc/gshadow</code></p>
+<p>如果确实有需要，大家可通过如下命令查看帮助： <code>man 5 passwd</code>，<code>man shadow</code>, <code>man group</code> 和 <code>man gshadow</code></p>
+<p>下面我们分如下几个部分来介绍：</p>
+<ul>
+<li>用户帐号</li>
+<li>用户口令</li>
+<li>用户组别</li>
+<li>用户和组</li>
+<li>用户切换</li>
+</ul>
+<h3 id="用户帐号"><a href="#用户帐号" class="headerlink" title="用户帐号"></a>用户帐号</h3><p>帐号操作主要是增、删、改、禁。Linux 系统提供了底层的 <code>useradd</code>, <code>userdel</code> 和 <code>usermod</code> 来完成相关操作，也提供了进一步的简化封装：<code>adduser</code>, <code>deluser</code>。为了避免混淆，咱们这里只介绍最底层的指令，这些指令设计上已经够简洁明了方便。</p>
+<p>由于只有系统管理员才能创建新用户，请确保以 root 帐号登录或者可以通过 sudo 切换为管理员帐号。</p>
+<h4 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h4><p>创建家目录并指定登录 Shell：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># useradd -s /bin/bash -m test</span>
+<span class="token comment" spellcheck="true"># groups test</span>
+<span class="token function">test</span> <span class="token keyword">:</span> <span class="token function">test</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>并加入所属组：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># useradd -s /bin/bash -m -G docker test</span>
+<span class="token comment" spellcheck="true"># groups test</span>
+<span class="token function">test</span> <span class="token keyword">:</span> <span class="token function">test</span> docker<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>删除用户以及家目录等：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># userdel -r test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><p>常常用来修改默认的 Shell：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># usermod -s /bin/bash test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者把用户加入某个新安装软件所属的组：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># usermod -a -G docker test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改登录用户名并搬到新家：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># usermod -d /home/new_test -m -l new_test test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="禁用"><a href="#禁用" class="headerlink" title="禁用"></a>禁用</h4><p>如果想禁用某个帐号：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># usermod -L test</span>
+<span class="token comment" spellcheck="true"># usermod --expiredate 1 test</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="用户口令"><a href="#用户口令" class="headerlink" title="用户口令"></a>用户口令</h3><p>口令操作主要是设置、删除、修改和禁用。Linux 系统提供了 <code>passwd</code> 命令来管理用户口令。</p>
+<h4 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h4><p>设置用户 test 的初始密码：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">passwd</span> <span class="token function">test</span>
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h4><p>让用户 test 无须密码登录（密码为空）：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">passwd</span> -d <span class="token function">test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这个很方便某些安全无关紧要的条件下（比如已登录主机中的虚拟机），可避免每次频繁输入密码。</p>
+<h4 id="修改-1"><a href="#修改-1" class="headerlink" title="修改"></a>修改</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">passwd</span> <span class="token function">test</span>
+Changing password <span class="token keyword">for</span> test.
+<span class="token punctuation">(</span>current<span class="token punctuation">)</span> UNIX password:
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="禁用-1"><a href="#禁用-1" class="headerlink" title="禁用"></a>禁用</h4><p>禁止用户通过密码登录：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">passwd</span> -l user<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>为了安全起见或者为了避免暴力破解，我们通常可以禁用密码登录，而只允许通过 SSH Key 登录。</p>
+<p>如果要真地禁用整个帐号的使用，需要用上一节提到的 <code>usermod --expiredate 1</code>。</p>
+<h3 id="用户组别"><a href="#用户组别" class="headerlink" title="用户组别"></a>用户组别</h3><p>类似帐号，主要操作也是增、删、改。</p>
+<p>Linux 系统提供了底层的 <code>groupadd</code>, <code>groupdel</code> 和 <code>groupmod</code> 来完成相关操作，也提供了进一步的简化封装：<code>addgroup</code>, <code>delgroup</code>。</p>
+<p>用户组别通常用来管理不同的资源，确保只有某个组别的用户才可以访问某类资源。当然，实际案例中，有些软件也为自己定义一个组别，只有该组别的用户才能访问该软件的一些功能。</p>
+<h4 id="添加-1"><a href="#添加-1" class="headerlink" title="添加"></a>添加</h4><p>添加一个新组别：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># groupadd test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="删除-2"><a href="#删除-2" class="headerlink" title="删除"></a>删除</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># groupdel test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="修改-2"><a href="#修改-2" class="headerlink" title="修改"></a>修改</h4><p>修改组别名：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># groupmod -n new_test test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="用户和组"><a href="#用户和组" class="headerlink" title="用户和组"></a>用户和组</h3><p>用户和组别不能独立存在，<code>gpasswd</code> 可以用来处理两者的关系。</p>
+<h4 id="增加"><a href="#增加" class="headerlink" title="增加"></a>增加</h4><p>从 docker 组中增加用户 test（等同于把 test 增加到 docker 组中）：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># gpasswd -a test docker</span>
+
+或
+
+<span class="token comment" spellcheck="true"># usermod -a -G docker test</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="删除-3"><a href="#删除-3" class="headerlink" title="删除"></a>删除</h4><p>从 test 组中删除用户 test：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># gpasswd -d test test</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="用户切换"><a href="#用户切换" class="headerlink" title="用户切换"></a>用户切换</h3><p>由于支持多用户，那么在登录一个帐号后，可能需要切换到另外一个帐号下，可以通过 <code>su</code> 命令完成，而 <code>sudo</code> 则可以用来作为另外一个用户来执行命令。</p>
+<h4 id="切换帐号"><a href="#切换帐号" class="headerlink" title="切换帐号"></a>切换帐号</h4><p>切换到 Root 并启用 Bash：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">su</span> -s /bin/bash -
+root@falcon-desktop:~<span class="token comment" spellcheck="true">#</span>
+
+或者
+
+$ <span class="token function">sudo</span> -s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>切换到普通用户：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">su</span> -s /bin/bash - <span class="token function">test</span>
+test@falcon-desktop:~$ 
+
+或者
+
+$ <span class="token function">sudo</span> -i -u <span class="token function">test</span> 
+test@falcon-desktop:~$ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="免密码切到-Root"><a href="#免密码切到-Root" class="headerlink" title="免密码切到 Root"></a>免密码切到 Root</h4><p>首先得把用户加入到 sudo 用户组：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># usermod -a -G sudo falcon</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>否则，会看到如下信息：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> -s
+<span class="token punctuation">[</span>sudo<span class="token punctuation">]</span> password <span class="token keyword">for</span> test: 
+<span class="token function">test</span> is not <span class="token keyword">in</span> the sudoers file.  This incident will be reported.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>加入 sudo 用户组以后：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> -s
+<span class="token punctuation">[</span>sudo<span class="token punctuation">]</span> password <span class="token keyword">for</span> test: <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>要实现免密切换，需要先修改 <code>/etc/sudoers</code>，加入如下一行：</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">test</span> ALL<span class="token operator">=</span><span class="token punctuation">(</span>ALL<span class="token punctuation">)</span> NOPASSWD: ALL<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者在 <code>/etc/sudoers.d/</code> 下创建一个文件并加入上述内容。</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># echo "test ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/test</span>
+<span class="token comment" spellcheck="true"># chmod 440 /etc/sudoers.d/test</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到这里，整个复习系列就要结束了，作为总结篇，主要回顾一下各个小节的主要内容，并总结出 Shell 编程的一些常用框架和相关注意事项等。</p>
+<h3 id="正确使用-source-和"><a href="#正确使用-source-和" class="headerlink" title="正确使用 source 和 ."></a>正确使用 <code>source</code> 和 <code>.</code></h3><p>仅使用 <code>source</code> 和 <code>.</code> 来执行你的环境配置等功能，建议不要用于其它用途。 在Shell中使用脚本时，使用 <code>bash your_script.sh</code> 而不是 <code>source your_script.sh</code> 或 <code>. your_script.sh</code>。</p>
+<p>当使用 <code>bash</code> 的时候，当前的Shell会创建一个新的子进程执行你的脚本；当使用 <code>source</code> 和 <code>.</code> 时，当前的Shell会直接解释执行 <code>your_script.sh</code> 中的代码。如果 <code>your_script.sh</code> 中包含了类似 <code>exit 0</code> 这样的代码，使用<code>source</code> 和 <code>.</code> 执行会导致当前Shell意外地退出。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1516,7 +1685,7 @@ $ <span class="token function">jobs</span>            <span class="token comment
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">110.8k</span>&nbsp;字
+                            class="white-color">115.1k</span>&nbsp;字
                 
                 
                 <script>
