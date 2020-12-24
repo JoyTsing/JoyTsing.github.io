@@ -732,7 +732,7 @@ Dynamic section at offset 0x4ac contains 20 entries:
  0x6ffffffe (VERNEED)                    0x8048218
  0x6fffffff (VERNEEDNUM)                 1
  0x6ffffff0 (VERSYM)                     0x804820c
- 0x00000000 (NULL)                       0x0</code></pre><p>发现 <code>0x8049578</code> 地址和 <code>0x804958c</code> 地址比较近，通过资料 <a href="http://162.105.203.48/web/gaikuang/submission/TN05.ELF.Format.Summary.pdf">[8]</a> 查到前者正好是 <code>.got.plt</code> （即过程链接表）对应的全局偏移表的入口地址。难道 <code>0x804958c</code> 正好位于 <code>.got.plt</code> 节区中？</p>
+ 0x00000000 (NULL)                       0x0</code></pre><p>发现 <code>0x8049578</code> 地址和 <code>0x804958c</code> 地址比较近，前者正好是 <code>.got.plt</code> （即过程链接表）对应的全局偏移表的入口地址。难道 <code>0x804958c</code> 正好位于 <code>.got.plt</code> 节区中？</p>
 <h3 id="全局偏移表（got）"><a href="#全局偏移表（got）" class="headerlink" title="全局偏移表（got）"></a>全局偏移表（got）</h3><p>现在进入全局偏移表看看，</p>
 <pre><code>$ readelf -x .got.plt test
 
@@ -785,7 +785,7 @@ Hex dump of section '.got.plt':
 
 Hex dump of section '.got.plt':
   0x08049578 ac940408 00000000 00000000 86820408 ................
-  0x08049588 96820408 a6820408                   ........</code></pre><p>比较全局偏移表中 <code>0x08049584</code> 处开始的数据和过程链接表第二项开始的连续三项中 <code>push</code> 指定所在的地址，不难发现，它们是对应的。而 <code>0x0804958c</code> 即 <code>push 0x10</code> 对应的地址我们刚才提到过（下一节会进一步分析），其他几项的作用类似，都是跳回到过程链接表的 <code>push</code> 指令处，随后就跳转到过程链接表的第一项，以便解析相应的符号（实际上过程链接表的第一个表项是进入动态链接器，而之前的连续两个指令则传送了需要解析的符号等信息）。另外 <code>0x08049578</code> 和 <code>0x08049580</code> 处分别存放有传递给动态链接库的相关信息和动态链接器本身的入口地址。但是还有一个地址 <code>0x08049578</code>，这个地址刚好是 <code>.dynamic</code> 的入口地址，该节区存放了和动态链接过程相关的信息，资料 <a href="http://162.105.203.48/web/gaikuang/submission/TN05.ELF.Format.Summary.pdf">[8]</a> 提到这个表项实际上保留给动态链接器自己使用的，以便在不依赖其他程序的情况下对自己进行初始化，所以下面将不再关注该表项。</p>
+  0x08049588 96820408 a6820408                   ........</code></pre><p>比较全局偏移表中 <code>0x08049584</code> 处开始的数据和过程链接表第二项开始的连续三项中 <code>push</code> 指定所在的地址，不难发现，它们是对应的。而 <code>0x0804958c</code> 即 <code>push 0x10</code> 对应的地址我们刚才提到过（下一节会进一步分析），其他几项的作用类似，都是跳回到过程链接表的 <code>push</code> 指令处，随后就跳转到过程链接表的第一项，以便解析相应的符号（实际上过程链接表的第一个表项是进入动态链接器，而之前的连续两个指令则传送了需要解析的符号等信息）。另外 <code>0x08049578</code> 和 <code>0x08049580</code> 处分别存放有传递给动态链接库的相关信息和动态链接器本身的入口地址。但是还有一个地址 <code>0x08049578</code>，这个地址刚好是 <code>.dynamic</code> 的入口地址，该节区存放了和动态链接过程相关的信息，这个表项实际上保留给动态链接器自己使用的，以便在不依赖其他程序的情况下对自己进行初始化，所以下面将不再关注该表项。</p>
 <pre><code>$ objdump -D test | grep 080494ac
 080494ac &lt;_DYNAMIC&gt;:</code></pre><h3 id="重定位表"><a href="#重定位表" class="headerlink" title="重定位表"></a>重定位表</h3><p>这里主要接着上面的 <code>push 0x10</code> 指令来分析。重定位表包含如何修改其他节区的信息，以便动态链接器对某些节区内的符号地址进行重定位（修改为新的地址）。那到底重定位表项提供了什么样的信息呢？</p>
 <ul>
@@ -813,7 +813,7 @@ Symbol table '.dynsym' contains 5 entries:
      2: 00000000   410 FUNC    GLOBAL DEFAULT  UND __libc_start_main@GLIBC_2.0 (2)
      3: 08048474     4 OBJECT  GLOBAL DEFAULT   14 _IO_stdin_used
      4: 00000000    57 FUNC    GLOBAL DEFAULT  UND printf@GLIBC_2.0 (2)</code></pre><p>也就是说在执行过程链接表中的第一项的跳转指令（<code>jmp *0x8049580</code>）调用动态链接器以后，动态链接器因为有了 <code>push 0x10</code>，从而可以通过该重定位表项中的 <code>r_info</code> 找到对应符号（<code>printf</code>）在符号表（<code>.dynsym</code>）中的相关信息。</p>
-<p>除此之外，符号表中还有 <code>Offset(r_offset)</code> 以及 <code>Type</code> 这两个重要信息，前者表示该重定位操作后可能影响的地址 <code>0804958c</code>，这个地址刚好是 <code>got</code> 表项的最后一项，原来存放的是 <code>push 0x10</code> 指令的地址。这意味着，该地址处的内容将被修改，而如何修改呢？根据 <code>Type</code> 类型 <code>R_386_JUMP_SLOT</code>，通过资料 <a href="http://162.105.203.48/web/gaikuang/submission/TN05.ELF.Format.Summary.pdf">[8]</a> 查找到该类型对应的说明如下（原资料有误，下面做了修改）：链接编辑器创建这种重定位类型主要是为了支持动态链接。其偏移地址成员给出过程链接表项的位置。动态链接器修改全局偏移表项的内容，把控制传输给指定符号的地址。</p>
+<p>除此之外，符号表中还有 <code>Offset(r_offset)</code> 以及 <code>Type</code> 这两个重要信息，前者表示该重定位操作后可能影响的地址 <code>0804958c</code>，这个地址刚好是 <code>got</code> 表项的最后一项，原来存放的是 <code>push 0x10</code> 指令的地址。这意味着，该地址处的内容将被修改，而如何修改呢？根据 <code>Type</code> 类型 <code>R_386_JUMP_SLOT</code>，链接编辑器创建这种重定位类型主要是为了支持动态链接。其偏移地址成员给出过程链接表项的位置。动态链接器修改全局偏移表项的内容，把控制传输给指定符号的地址。</p>
 <p>这说明，动态链接器将根据该类型对全局偏移表中的最后一项，即 <code>0804958c</code> 地址处的内容进行修改，修改为符号的实际地址，即 <code>printf</code> 函数在动态链接库的内存映像中的地址。</p>
 <p>到这里，动态链接的宏观过程似乎已经了然于心，不过一些细节还是不太清楚。</p>
 <p>下面先介绍动态链接库的创建，隐式调用和显示调用，接着进一步澄清上面还不太清楚的细节，即全局偏移表中第二项到底传递给了动态链接器什么信息？第三项是否就是动态链接器的地址？并讨论通过设置 <code>LD_BIND_NOW</code> 而不采用默认的 lazy mode 进行动态链接和采用 lazy mode 动态链接的区别？</p>
@@ -1023,7 +1023,7 @@ Dump of assembler code for function puts:
 <p>从演示中不难发现，当符号被使用到时才进行重定位。因为通过调试发现在执行 <code>printf</code> 之后，<code>GOT</code> 表项的最后一项才被修改为 <code>printf</code> （确切的说是 <code>puts</code>）的地址。这就是所谓的 <code>lazy mode</code> 动态符号链接方式。</p>
 <p>除此之外，我们容易发现 <code>GOT</code> 表第三项确实是 <code>ld-linux.so</code> 中的某个函数地址，并且发现在执行 <code>printf</code> 语句之前，先进入了 <code>ld-linux.so</code> 的 <code>_dl_runtime_resolve</code> 函数，而且在它返回之后，<code>GOT</code> 表的最后一项才变为 <code>printf</code> （<code>puts</code>）的地址。</p>
 <p>本来打算通过第一个断点确认第二次调用 <code>printf</code> 时不再需要进行动态符号链接的，不过因为 <code>gcc</code> 把第一个替换成了 <code>puts</code>，所以这里没有办法继续调试。如果想确认这个，你可以通过写两个一样的 <code>printf</code> 语句看看。实际上第一次链接以后，<code>GOT</code> 表的第三项已经修改了，当下次再进入过程链接表，并执行 <code>jmp *(全局偏移表中某一个地址)</code> 指令时，<code>*(全局偏移表中某一个地址)</code> 已经被修改为了对应符号的实际地址，这样 <code>jmp</code> 语句会自动跳转到符号的地址处运行，执行具体的函数代码，因此无须再进行重定位。</p>
-<p>到现在 <code>GOT</code> 表中只剩下第二项还没有被确认，通过资料 <a href="http://elfhack.whitecell.org/mydocs/ELF_symbol_resolve_process1.txt">[3]</a> 我们发现，该项指向一个 <code>link_map</code> 类型的数据，是一个鉴别信息，具体作用对我们来说并不是很重要，如果想了解，请参考资料 <a href="http://www.muppetlabs.com/~breadbox/software/ELF.txt">[16]</a> 。</p>
+<p>到现在 <code>GOT</code> 表中只剩下第二项还没有被确认，该项指向一个 <code>link_map</code> 类型的数据，是一个鉴别信息，具体作用对我们来说并不是很重要。</p>
 <p>下面通过设置 <code>LD_BIND_NOW</code> 再运行一下 <code>got</code> 程序并查看结果，比较它与默认的动态链接方式（<code>lazy mode</code>）的异同。</p>
 <ul>
 <li><p>设置 <code>LD_BIND_NOW</code> 环境变量的运行结果</p>
@@ -1414,7 +1414,7 @@ Dump of assembler code for function puts:
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">153.7k</span>&nbsp;字
+                            class="white-color">173.4k</span>&nbsp;字
                 
                 
                 <script>
