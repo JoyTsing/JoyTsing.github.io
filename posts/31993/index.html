@@ -570,14 +570,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.2k
+                        3.5k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        8 分
+                        13 分
                     </div>
                 
 
@@ -663,7 +663,128 @@ uint16_t memory[UINT16_MAX];<span aria-hidden="true" class="line-numbers-rows"><
     FL_NEG <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">/* N */</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>现在我们完成了虚拟机硬件部分的设置。</p>
-<h2 id="汇编示例"><a href="#汇编示例" class="headerlink" title="汇编示例"></a>汇编示例</h2><script>
+<h2 id="汇编示例"><a href="#汇编示例" class="headerlink" title="汇编示例"></a>汇编示例</h2><p>现在，让我们看一下LC-3的汇编程序，以了解虚拟机的实际运行的情况。 现在还不需要知道如何编写汇编程序或了解正在发生的一切。 只需尝试了解正在发生的事情即可。 这是一个简单的“ Hello World”：</p>
+<pre class="line-numbers language-assembly"><code class="language-assembly">.ORIG x3000                        ; this is the address in memory where the program will be loaded
+LEA R0, HELLO_STR                  ; load the address of the HELLO_STR string into R0
+PUTs                               ; output the string pointed to by R0 to the console
+HALT                               ; halt the program
+HELLO_STR .STRINGZ "Hello World!"  ; store this string here in the program
+.END                               ; mark the end of the file<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就像在C语言中一样，该程序从顶部开始，一次执行一个语句。 但是，与C不同，没有嵌套的作用域{}或控制结构，例如if或while； 只是陈述的列出要执行的清单，这使得执行起来更加容易。</p>
+<p>请注意，某些语句的名称与我们之前定义的操作码相匹配。 先前，我们了解到每条指令都是16位，但是每一行看起来都是不同数量的字符。 这种不一致是怎么实现的？</p>
+<p>这是因为我们正在读取的代码是以<code>汇编</code>形式编写的，汇编语言是一种助记符的形式，以纯文本编码。 称为<code>汇编程序</code>的工具用于将每一行文本转换为虚拟机可以理解的16位二进制指令。 这种二进制形式本质上是一个16位指令的数组，称为机器代码，是虚拟机实际运行的形式。</p>
+<p><img src="https://justinmeiners.github.io/lc3-vm/img/assembler.gif" alt="assembler"></p>
+<blockquote>
+<p><strong>NOTE:</strong>  尽管编译器和汇编器在开发中扮演相似的角色，但它们并不相同。 汇编器仅将程序员在文本中编写的内容编码为二进制，然后将符号替换为二进制表示形式并将其打包为指令。</p>
+</blockquote>
+<p><code>.ORIG</code>和<code>.STRINGZ</code>看起来像指令，但实际上并非如此， 它们是伪指令（assembler directives），可生成一段代码或数据（像宏一样）。 例如，<code>.STRINGZ</code>在程序二进制文件的写入位置插入一个字符串。</p>
+<pre class="line-numbers language-assembly"><code class="language-assembly">AND R0, R0, 0                      ; clear R0
+LOOP                               ; label at the top of our loop
+ADD R0, R0, 1                      ; add 1 to R0 and store back in R0
+ADD R1, R0, -10                    ; subtract 10 from R0 and store back in R1
+BRn LOOP                           ; go back to LOOP if the result was negative
+... ; R0 is now 10!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><strong>NOTE:</strong>本教程不需要学习编写汇编。 但是如果有兴趣，可以使用<a href="http://highered.mheducation.com/sites/0072467509/student_view0/lc-3_simulator.html">LC-3工具</a>编写和汇编自己的LC-3程序。</p>
+</blockquote>
+<h2 id="执行程序"><a href="#执行程序" class="headerlink" title="执行程序"></a>执行程序</h2><p>前面的示例只是为了解虚拟机的功能。 编写虚拟机不需要精通汇编程序。 只要遵循正确的步骤来阅读和执行指令，无论它多么复杂，任何LC-3程序都将正确运行。 从理论上讲，它甚至可以运行Web浏览器或Linux之类的操作系统！</p>
+<p>如果深入考虑过这个特性，那么这是一个哲学上非凡的想法。 程序本身可以执行我们从未预料到并且可能无法理解的各种智能操作，但是与此同时，它们可以执行的所有操作仅限于我们将要编写的简单代码！ 我们同时了解每个程序的工作原理，但同时却对它一无所知。 图灵观察到了这个奇妙的想法：</p>
+<blockquote>
+<p>“The view that machines cannot give rise to surprises is due, I believe, to a fallacy to which philosophers and mathematicians are particularly subject. This is the assumption that as soon as a fact is presented to a mind all consequences of that fact spring into the mind simultaneously with it. It is a very useful assumption under many circumstances, but one too easily forgets that it is false.” — <a href="https://academic.oup.com/mind/article-pdf/LIX/236/433/9866119/433.pdf">Alan M. Turing</a></p>
+</blockquote>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p>下面是我们需要编写的：</p>
+<ol>
+<li>从PC寄存器地址的存储器中加载一条指令。</li>
+<li>递增PC寄存器。</li>
+<li>查看操作码以确定应执行的指令类型。</li>
+<li>使用指令中的参数执行指令。</li>
+<li>返回步骤1。</li>
+</ol>
+<p>你可能想知道，“如果循环不断增加PC，而我们又没有<code>if</code>或者<code>while</code>，那它不会很快用完指令吗？” 答案是不会，正如我们之前提到的，一些类似于<code>goto</code>的指令通过在PC上跳转来改变执行流程。</p>
+<p>让我们开始在主循环中概述此过程：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token punctuation">{</span>Load Arguments<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span>
+    <span class="token punctuation">{</span>Setup<span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/* set the PC to starting position */</span>
+    <span class="token comment" spellcheck="true">/* 0x3000 is the default */</span>
+    <span class="token keyword">enum</span> <span class="token punctuation">{</span> PC_START <span class="token operator">=</span> <span class="token number">0x3000</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">=</span> PC_START<span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> running <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>running<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">/* FETCH */</span>
+        uint16_t instr <span class="token operator">=</span> <span class="token function">mem_read</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        uint16_t op <span class="token operator">=</span> instr <span class="token operator">&gt;&gt;</span> <span class="token number">12</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>op<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">case</span> OP_ADD<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>ADD<span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_AND<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>AND<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_NOT<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>NOT<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_BR<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>BR<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_JMP<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>JMP<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_JSR<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>JSR<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_LD<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>LD<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_LDI<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>LDI<span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_LDR<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>LDR<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_LEA<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>LEA<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_ST<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>ST<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_STI<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>STI<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_STR<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>STR<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_TRAP<span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>TRAP<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> OP_RES<span class="token punctuation">:</span>
+            <span class="token keyword">case</span> OP_RTI<span class="token punctuation">:</span>
+            <span class="token keyword">default</span><span class="token punctuation">:</span>
+                <span class="token punctuation">{</span>BAD OPCODE<span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">}</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">{</span>Shutdown<span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>除了使用命令行直接输入命令外，我们也希望能够给出一个或者多个加载的路径给虚拟机直接执行。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/* show usage string */</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"lc3 [image-file1] ...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> argc<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">read_image</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"failed to load image: %s\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="实现指令"><a href="#实现指令" class="headerlink" title="实现指令"></a>实现指令</h2><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1038,7 +1159,7 @@ uint16_t memory[UINT16_MAX];<span aria-hidden="true" class="line-numbers-rows"><
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">175.6k</span>&nbsp;字
+                            class="white-color">176.9k</span>&nbsp;字
                 
                 
                 <script>
