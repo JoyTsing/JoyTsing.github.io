@@ -570,14 +570,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        5.8k
+                        6.9k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        22 分
+                        27 分
                     </div>
                 
 
@@ -897,9 +897,9 @@ BRn LOOP                           ; go back to LOOP if the result was negative
 <p>就像之前说的那样，这条指令使用了许多从<code>ADD</code>学到的代码和知识。 在剩下的几个指令的实现中也是同样道理。</p>
 <p>现在，可以去把switch中的剩余case给实现完整。 请遵循<a href="https://justinmeiners.github.io/lc3-vm/supplies/lc3-isa.pdf">规范</a>来完成其他指令。 之前指定的两个操作码将不使用，它们是<code>OP_RTI</code>和<code>OP_RES</code>。 您可以忽略两个指令的实现或者执行这两个指令时抛出错误。 完成后，您的VM的大部分将完成！</p>
 <h2 id="指令实现"><a href="#指令实现" class="headerlink" title="指令实现"></a>指令实现</h2><p>如果遇到困难，本节包含其余说明的完整实现。</p>
-<h3 id="RTI-amp-RES"><a href="#RTI-amp-RES" class="headerlink" title="RTI &amp; RES"></a>RTI &amp; RES</h3><p>(these are unused)</p>
+<h3 id="RTI-amp-RES"><a href="#RTI-amp-RES" class="headerlink" title="RTI &amp; RES"></a>RTI &amp; RES</h3><p>(不会用到)</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token function">abort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="Bitwise-and"><a href="#Bitwise-and" class="headerlink" title="Bitwise and"></a><a href="https://en.wikipedia.org/wiki/Bitwise_operation#AND">Bitwise and</a></h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Bitwise-and-AND"><a href="#Bitwise-and-AND" class="headerlink" title="Bitwise and(AND)"></a><a href="https://en.wikipedia.org/wiki/Bitwise_operation#AND">Bitwise and</a>(AND)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t r1 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t imm_flag <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x1</span><span class="token punctuation">;</span>
@@ -916,14 +916,14 @@ BRn LOOP                           ; go back to LOOP if the result was negative
     <span class="token punctuation">}</span>
     <span class="token function">update_flags</span><span class="token punctuation">(</span>r0<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Bitwise-not"><a href="#Bitwise-not" class="headerlink" title="Bitwise not"></a><a href="https://en.wikipedia.org/wiki/Bitwise_operation#NOT">Bitwise not</a></h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Bitwise-not-NOT"><a href="#Bitwise-not-NOT" class="headerlink" title="Bitwise not(NOT)"></a><a href="https://en.wikipedia.org/wiki/Bitwise_operation#NOT">Bitwise not</a>(NOT)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t r1 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
 
     reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">~</span>reg<span class="token punctuation">[</span>r1<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token function">update_flags</span><span class="token punctuation">(</span>r0<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Branch-BR"><a href="#Branch-BR" class="headerlink" title="Branch(BR)"></a>Branch(BR)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t pc_offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x1FF</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     uint16_t cond_flag <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>cond_flag <span class="token operator">&amp;</span> reg<span class="token punctuation">[</span>R_COND<span class="token punctuation">]</span><span class="token punctuation">)</span>
@@ -931,13 +931,13 @@ BRn LOOP                           ; go back to LOOP if the result was negative
         reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> pc_offset<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Jump"><a href="#Jump" class="headerlink" title="Jump"></a>Jump</h3><p><code>RET</code> is listed as a separate instruction in the specification, since it is a different keyword in assembly. However, it is actually a special case of <code>JMP</code>. <code>RET</code> happens whenever <code>R1</code> is 7.</p>
+<h3 id="Jump-JMP"><a href="#Jump-JMP" class="headerlink" title="Jump(JMP)"></a>Jump(JMP)</h3><p><code>RET</code>在LC-3中被列为单独的指令，因为它是汇编中的另一个关键字。 但是，实际上这是<code>JMP</code>的特例。 只要<code>R1</code>为7，就会发生<code>RET</code>。</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">/* Also handles RET */</span>
     uint16_t r1 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">=</span> reg<span class="token punctuation">[</span>r1<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Jump-Register"><a href="#Jump-Register" class="headerlink" title="Jump Register"></a>Jump Register</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Jump-Register-JSR"><a href="#Jump-Register-JSR" class="headerlink" title="Jump Register(JSR)"></a>Jump Register(JSR)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t long_flag <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">;</span>
     reg<span class="token punctuation">[</span>R_R7<span class="token punctuation">]</span> <span class="token operator">=</span> reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>long_flag<span class="token punctuation">)</span>
@@ -952,42 +952,132 @@ BRn LOOP                           ; go back to LOOP if the result was negative
     <span class="token punctuation">}</span>
     <span class="token keyword">break</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Load-LD"><a href="#Load-LD" class="headerlink" title="Load(LD)"></a>Load(LD)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t pc_offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x1FF</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mem_read</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">+</span> pc_offset<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">update_flags</span><span class="token punctuation">(</span>r0<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Load-Register"><a href="#Load-Register" class="headerlink" title="Load Register"></a>Load Register</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Load-Register-LDR"><a href="#Load-Register-LDR" class="headerlink" title="Load Register(LDR)"></a>Load Register(LDR)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t r1 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mem_read</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>r1<span class="token punctuation">]</span> <span class="token operator">+</span> offset<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">update_flags</span><span class="token punctuation">(</span>r0<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Load-Effective-Address"><a href="#Load-Effective-Address" class="headerlink" title="Load Effective Address"></a>Load Effective Address</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Load-Effective-Address-LEA"><a href="#Load-Effective-Address-LEA" class="headerlink" title="Load Effective Address(LEA)"></a>Load Effective Address(LEA)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t pc_offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x1FF</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span> <span class="token operator">=</span> reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">+</span> pc_offset<span class="token punctuation">;</span>
     <span class="token function">update_flags</span><span class="token punctuation">(</span>r0<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Store-ST"><a href="#Store-ST" class="headerlink" title="Store(ST)"></a>Store(ST)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t pc_offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x1FF</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">mem_write</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">+</span> pc_offset<span class="token punctuation">,</span> reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Store-Indirect"><a href="#Store-Indirect" class="headerlink" title="Store Indirect"></a>Store Indirect</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Store-Indirect-STI"><a href="#Store-Indirect-STI" class="headerlink" title="Store Indirect(STI)"></a>Store Indirect(STI)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t pc_offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x1FF</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">mem_write</span><span class="token punctuation">(</span><span class="token function">mem_read</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>R_PC<span class="token punctuation">]</span> <span class="token operator">+</span> pc_offset<span class="token punctuation">)</span><span class="token punctuation">,</span> reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Store-Register"><a href="#Store-Register" class="headerlink" title="Store Register"></a>Store Register</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+<h3 id="Store-Register-STR"><a href="#Store-Register-STR" class="headerlink" title="Store Register(STR)"></a>Store Register(STR)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
     uint16_t r0 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t r1 <span class="token operator">=</span> <span class="token punctuation">(</span>instr <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">;</span>
     uint16_t offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">mem_write</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>r1<span class="token punctuation">]</span> <span class="token operator">+</span> offset<span class="token punctuation">,</span> reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Trap的用法"><a href="#Trap的用法" class="headerlink" title="Trap的用法"></a>Trap的用法</h2><script>
+<h2 id="trap-routines"><a href="#trap-routines" class="headerlink" title="trap routines"></a>trap routines</h2><p>LC-3提供了一些预定义的例程(predefined routines)，用于执行常见任务并与I / O设备进行交互。 例如，有一些例程可以从键盘获取输入并在控制台上显示字符串。 这些称为<em>trap routines</em>，您可以将其视为LC-3或操作系统的API。 每个<em>trap routines</em>都分配有一个标识它的<em>trap code</em>（类似于操作码）。 如果想要执行其中一个，用所需例程的 <em>trap code</em>调用TRAP指令。</p>
+<p><img src="https://justinmeiners.github.io/lc3-vm/img/trap_layout.gif" alt="trap_layout"></p>
+<p>为每个trap code定义一个枚举：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">enum</span>
+<span class="token punctuation">{</span>
+    TRAP_GETC <span class="token operator">=</span> <span class="token number">0x20</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true">/* get character from keyboard, not echoed onto the terminal */</span>
+    TRAP_OUT <span class="token operator">=</span> <span class="token number">0x21</span><span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">/* output a character */</span>
+    TRAP_PUTS <span class="token operator">=</span> <span class="token number">0x22</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true">/* output a word string */</span>
+    TRAP_IN <span class="token operator">=</span> <span class="token number">0x23</span><span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">/* get character from keyboard, echoed onto the terminal */</span>
+    TRAP_PUTSP <span class="token operator">=</span> <span class="token number">0x24</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">/* output a byte string */</span>
+    TRAP_HALT <span class="token operator">=</span> <span class="token number">0x25</span>   <span class="token comment" spellcheck="true">/* halt the program */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>你可能想知道为什么指令中不包含陷阱代码。 这是因为陷阱代码实际上并未向LC-3引入任何新功能，而只是提供了一种方便的方式来执行任务（类似于C中的系统功能）。 在官方的LC-3仿真器中，陷阱例程以汇编形式编写。 调用陷阱代码时，会将PC移至该代码的地址。 CPU执行该过程的指令，完成后，将PC重置为调用陷阱的位置。</p>
+<blockquote>
+<p>注意：这就是为什么程序从地址0x3000而不是0x0开始的原因。 低位地址留空，以留出陷阱例程代码的空间。</p>
+</blockquote>
+<p>其实并没有任何关于必须如何执行trap routines的规定，只有应该执行的trap routines应该实现什么。 在我们的虚拟机中，我们将通过用C编写它们来做一些稍有不同的事情。调用trap routines时，将调用C函数。 完成后，执行将返回指令。</p>
+<p>即使trap routines可以用汇编语言编写，而且这实际上是一台LC-3计算机的工作方式，但这并不是最适合虚拟机的方法。 除了编写自己的原始I / O例程，我们还可以利用OS上可用的例程。 这将使VM在我们的计算机上更好地运行，简化代码，并为可移植性提供更高级别的抽象。</p>
+<blockquote>
+<p>注意：从键盘获取输入就是一个具体示例。 汇编版本使用循环来连续检查键盘的输入。 这会浪费大量的CPU时间！ 使用适当的OS输入功能可使程序进入休眠状态，直到接收到输入为止。</p>
+</blockquote>
+<p>在操作码有关<strong>Trap</strong>的switch case中，添加一个switch：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">switch</span> <span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">case</span> TRAP_GETC<span class="token punctuation">:</span>
+        <span class="token punctuation">{</span>TRAP GETC<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> TRAP_OUT<span class="token punctuation">:</span>
+        <span class="token punctuation">{</span>TRAP OUT<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> TRAP_PUTS<span class="token punctuation">:</span>
+        <span class="token punctuation">{</span>TRAP PUTS<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> TRAP_IN<span class="token punctuation">:</span>
+        <span class="token punctuation">{</span>TRAP IN<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> TRAP_PUTSP<span class="token punctuation">:</span>
+        <span class="token punctuation">{</span>TRAP PUTSP<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> TRAP_HALT<span class="token punctuation">:</span>
+        <span class="token punctuation">{</span>TRAP HALT<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>与其他指令一样，接下来将演示如何实现单个陷阱例程，并将其余部分可以由自己实现。</p>
+<h3 id="PUTS"><a href="#PUTS" class="headerlink" title="PUTS"></a>PUTS</h3><p><code>PUTS</code>的trap code用于输出以空值结尾的字符串（类似于C中的<code>printf</code>）。</p>
+<p>要显示一个字符串，我们必须给trap routine一个要显示的字符串。 这是通过在开始自陷(trap)之前将第一个字符的地址存储在<code>R0</code>中来完成的。</p>
+<blockquote>
+<p>将一串ASCII字符写入控制台显示屏。 这些字符存储在在连续的存储位置中，每个存储位置一个字符，从<code>R0</code>中指定的地址开始。 写入终止于在存储单元中出现<code>x0000</code>。</p>
+</blockquote>
+<p>请注意，与C字符串不同，字符不是存储在单个字节中，而是存储在<em>单个存储位置</em>中。 LC-3中的存储位置为16位，因此字符串中的每个字符均为16位宽。 要使用C函数显示此内容，我们需要将每个值转换为char并分别输出。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/* one char per word */</span>
+    uint16_t<span class="token operator">*</span> c <span class="token operator">=</span> memory <span class="token operator">+</span> reg<span class="token punctuation">[</span>R_R0<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">*</span>c<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">putc</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token operator">*</span>c<span class="token punctuation">,</span> <span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>c<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这就是例程的全部内容。 如果熟悉C的话那么trap routines非常简单。接下来请实施其他例程。 </p>
+<h2 id="Trap-Routine-实现"><a href="#Trap-Routine-实现" class="headerlink" title="Trap Routine 实现"></a>Trap Routine 实现</h2><p>本节包含其余Trap Routine的完整实现。</p>
+<h3 id="Input-Character-GETC"><a href="#Input-Character-GETC" class="headerlink" title="Input Character(GETC)"></a>Input Character(GETC)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token comment" spellcheck="true">/* read a single ASCII char */</span>
+reg<span class="token punctuation">[</span>R_R0<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>uint16_t<span class="token punctuation">)</span><span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="Output-Character-OUT"><a href="#Output-Character-OUT" class="headerlink" title="Output Character(OUT)"></a>Output Character(OUT)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token function">putc</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span>reg<span class="token punctuation">[</span>R_R0<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="Prompt-for-Input-Character-IN"><a href="#Prompt-for-Input-Character-IN" class="headerlink" title="Prompt for Input Character(IN)"></a>Prompt for Input Character(IN)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Enter a character: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> c <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">putc</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    reg<span class="token punctuation">[</span>R_R0<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>uint16_t<span class="token punctuation">)</span>c<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Output-String-PUTSP"><a href="#Output-String-PUTSP" class="headerlink" title="Output String(PUTSP)"></a>Output String(PUTSP)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/* one char per byte (two bytes per word)
+       here we need to swap back to
+       big endian format */</span>
+    uint16_t<span class="token operator">*</span> c <span class="token operator">=</span> memory <span class="token operator">+</span> reg<span class="token punctuation">[</span>R_R0<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">*</span>c<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">char</span> char1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">*</span>c<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">;</span>
+        <span class="token function">putc</span><span class="token punctuation">(</span>char1<span class="token punctuation">,</span> <span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">char</span> char2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">*</span>c<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>char2<span class="token punctuation">)</span> <span class="token function">putc</span><span class="token punctuation">(</span>char2<span class="token punctuation">,</span> <span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>c<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Halt-Program-HALT"><a href="#Halt-Program-HALT" class="headerlink" title="Halt Program(HALT)"></a>Halt Program(HALT)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"HALT"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+running <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1362,7 +1452,7 @@ BRn LOOP                           ; go back to LOOP if the result was negative
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">179.2k</span>&nbsp;字
+                            class="white-color">180.3k</span>&nbsp;字
                 
                 
                 <script>
