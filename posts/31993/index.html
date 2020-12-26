@@ -570,14 +570,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        6.9k
+                        8.4k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        27 分
+                        33 分
                     </div>
                 
 
@@ -987,7 +987,7 @@ BRn LOOP                           ; go back to LOOP if the result was negative
     uint16_t offset <span class="token operator">=</span> <span class="token function">sign_extend</span><span class="token punctuation">(</span>instr <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">mem_write</span><span class="token punctuation">(</span>reg<span class="token punctuation">[</span>r1<span class="token punctuation">]</span> <span class="token operator">+</span> offset<span class="token punctuation">,</span> reg<span class="token punctuation">[</span>r0<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="trap-routines"><a href="#trap-routines" class="headerlink" title="trap routines"></a>trap routines</h2><p>LC-3提供了一些预定义的例程(predefined routines)，用于执行常见任务并与I / O设备进行交互。 例如，有一些例程可以从键盘获取输入并在控制台上显示字符串。 这些称为<em>trap routines</em>，您可以将其视为LC-3或操作系统的API。 每个<em>trap routines</em>都分配有一个标识它的<em>trap code</em>（类似于操作码）。 如果想要执行其中一个，用所需例程的 <em>trap code</em>调用TRAP指令。</p>
+<h2 id="Trap-Routine"><a href="#Trap-Routine" class="headerlink" title="Trap Routine"></a>Trap Routine</h2><p>LC-3提供了一些预定义的例程(predefined routines)，用于执行常见任务并与I / O设备进行交互。 例如，有一些例程可以从键盘获取输入并在控制台上显示字符串。 这些称为<em>trap routines</em>，您可以将其视为LC-3或操作系统的API。 每个<em>trap routines</em>都分配有一个标识它的<em>trap code</em>（类似于操作码）。 如果想要执行其中一个，用所需例程的 <em>trap code</em>调用TRAP指令。</p>
 <p><img src="https://justinmeiners.github.io/lc3-vm/img/trap_layout.gif" alt="trap_layout"></p>
 <p>为每个trap code定义一个枚举：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">enum</span>
@@ -1077,6 +1077,198 @@ reg<span class="token punctuation">[</span>R_R0<span class="token punctuation">]
 <h3 id="Halt-Program-HALT"><a href="#Halt-Program-HALT" class="headerlink" title="Halt Program(HALT)"></a>Halt Program(HALT)</h3><pre class="line-numbers language-c"><code class="language-c"><span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"HALT"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 running <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="程序加载"><a href="#程序加载" class="headerlink" title="程序加载"></a>程序加载</h2><p>我们已经学习了很多关于从内存中加载和执行指令的知识，但是指令首先是如何进入内存的呢？ 将汇编程序转换为机器代码时，结果是一个包含指令和数据数组的文件。 只需将内容直接复制到内存中的地址中即可加载该文件。</p>
+<p>程序文件的前16位指定程序应在内存中启动的地址。 此地址称为<code>原点(origin)</code>。 必须先读取它，然后才能从起始地址开始将其余数据从文件读取到内存中。</p>
+<p>这是用于将LC-3程序读入内存的代码：</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">read_image_file</span><span class="token punctuation">(</span>FILE<span class="token operator">*</span> file<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/* the origin tells us where in memory to place the image */</span>
+    uint16_t origin<span class="token punctuation">;</span>
+    <span class="token function">fread</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>origin<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>origin<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    origin <span class="token operator">=</span> <span class="token function">swap16</span><span class="token punctuation">(</span>origin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* we know the maximum file size so we only need one fread */</span>
+    uint16_t max_read <span class="token operator">=</span> UINT16_MAX <span class="token operator">-</span> origin<span class="token punctuation">;</span>
+    uint16_t<span class="token operator">*</span> p <span class="token operator">=</span> memory <span class="token operator">+</span> origin<span class="token punctuation">;</span>
+    size_t read <span class="token operator">=</span> <span class="token function">fread</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>uint16_t<span class="token punctuation">)</span><span class="token punctuation">,</span> max_read<span class="token punctuation">,</span> file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* swap to little endian */</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>read<span class="token operator">--</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">swap16</span><span class="token punctuation">(</span><span class="token operator">*</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意，在每个加载的值上调用了<code>swap16</code>。 因为LC-3程序是大端的，但是我们使用的大多数现代计算机都是小端。 因此我们需要交换每个已加载的uint16。 （如果碰巧使用的是奇怪的计算机（例如PPC），则不应进行交换。）</p>
+<pre class="line-numbers language-c"><code class="language-c">uint16_t <span class="token function">swap16</span><span class="token punctuation">(</span>uint16_t x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p><strong>NOTE：</strong> 字节顺序是指如何解释整数的字节。 在小字节序中，第一个字节是最低有效数字，在大字节序中，它是相反的。 据我所知，该决定主要是任意的。 不同的公司做出不同的决定，所以现在我们有了不同的实现方式。 您不需要了解有关此项目的字节序的其他信息。</p>
+</blockquote>
+<p>还可以为<code>read_image_file</code>添加一个便捷函数，该函数采用字符串路径；</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">read_image</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> image_path<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    FILE<span class="token operator">*</span> file <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span>image_path<span class="token punctuation">,</span> <span class="token string">"rb"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>file<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token function">read_image_file</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">fclose</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="存储器映射寄存器"><a href="#存储器映射寄存器" class="headerlink" title="存储器映射寄存器"></a>存储器映射寄存器</h2><p>有时无法从普通寄存器表访问某些特殊寄存器。 此时需要为它们在存储器中保留一个特殊的地址。 要读写这些寄存器，只需读写它们的存储位置。 这些称为存储器映射寄存器。 它们通常用于与特殊的硬件设备进行交互。</p>
+<p>LC-3具有两个需要实现的存储器映射寄存器。 它们是键盘状态寄存器（<code>KBSR</code>）和键盘数据寄存器（<code>KBDR</code>）。 <code>KBSR</code>指示是否已按下某个键，<code>KBDR</code>标识已按下哪个键。</p>
+<p>尽管可以使用<code>GETC</code>请求键盘输入，但这会阻塞住直到收到输入。 <code>KBSR</code>和<code>KBDR</code>允许您轮询设备的状态并继续执行，因此程序可以在等待输入时保持响应状态。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">enum</span><span class="token punctuation">{</span>
+    MR_KBSR <span class="token operator">=</span> <span class="token number">0xFE00</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">/* keyboard status */</span>
+    MR_KBDR <span class="token operator">=</span> <span class="token number">0xFE02</span>  <span class="token comment" spellcheck="true">/* keyboard data */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>存储器映射寄存器使访存更加复杂。 我们不能直接读写存储阵列，而必须调用setter和getter函数。 从<code>KBSR</code>读取内存时，getter将检查键盘并更新两个存储位置。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">mem_write</span><span class="token punctuation">(</span>uint16_t address<span class="token punctuation">,</span> uint16_t val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    memory<span class="token punctuation">[</span>address<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+uint16_t <span class="token function">mem_read</span><span class="token punctuation">(</span>uint16_t address<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>address <span class="token operator">==</span> MR_KBSR<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check_key</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            memory<span class="token punctuation">[</span>MR_KBSR<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            memory<span class="token punctuation">[</span>MR_KBDR<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            memory<span class="token punctuation">[</span>MR_KBSR<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> memory<span class="token punctuation">[</span>address<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样就完成了虚拟机的最后一个组件！ 只要您实现了其余的trap routines和指令，几乎就可以运行了。</p>
+<pre><code>{Memory Mapped Registers}
+{TRAP Codes}
+
+{Memory Storage}
+{Register Storage}
+
+{Sign Extend}
+{Swap}
+{Update Flags}
+{Read Image File}
+{Read Image}
+{Check Key}
+{Memory Access}
+{Input Buffering}
+{Handle Interrupt}
+
+{Main Loop}</code></pre><h2 id="平台特性-Unix"><a href="#平台特性-Unix" class="headerlink" title="平台特性(Unix)"></a>平台特性(Unix)</h2><p>本节包含一些繁琐的细节，这些细节对于使用键盘和使功能表现良好而言是必需的。 这些不是必须学习的，不与学习虚拟机有关。 随时复制粘贴！</p>
+<p>注意：跳至下一部分，以获取这些功能的Windows版本。</p>
+<pre class="line-numbers language-c"><code class="language-c">uint16_t <span class="token function">check_key</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    fd_set readfds<span class="token punctuation">;</span>
+    <span class="token function">FD_ZERO</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>readfds<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FD_SET</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> <span class="token operator">&amp;</span>readfds<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">struct</span> timeval timeout<span class="token punctuation">;</span>
+    timeout<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    timeout<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>readfds<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>timeout<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这是Unix专用代码，用于设置终端输入。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> termios original_tio<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">disable_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">tcgetattr</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> <span class="token operator">&amp;</span>original_tio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> termios new_tio <span class="token operator">=</span> original_tio<span class="token punctuation">;</span>
+    new_tio<span class="token punctuation">.</span>c_lflag <span class="token operator">&amp;</span><span class="token operator">=</span> <span class="token operator">~</span>ICANON <span class="token operator">&amp;</span> <span class="token operator">~</span>ECHO<span class="token punctuation">;</span>
+    <span class="token function">tcsetattr</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> TCSANOW<span class="token punctuation">,</span> <span class="token operator">&amp;</span>new_tio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">restore_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">tcsetattr</span><span class="token punctuation">(</span>STDIN_FILENO<span class="token punctuation">,</span> TCSANOW<span class="token punctuation">,</span> <span class="token operator">&amp;</span>original_tio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">handle_interrupt</span><span class="token punctuation">(</span><span class="token keyword">int</span> signal<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">restore_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> handle_interrupt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">disable_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>当程序中断时，我们希望将终端设置恢复为正常。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">restore_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<span class="token comment" spellcheck="true">/* unix */</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h></span></span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/termios.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/mman.h></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="平台特性-Windows"><a href="#平台特性-Windows" class="headerlink" title="平台特性(Windows)"></a>平台特性(Windows)</h2><p>本节包含一些繁琐的细节，这些细节对于使用键盘和使功能表现良好而言是必需的。 这些不是必须学习的，不与学习虚拟机有关。 随时复制粘贴！</p>
+<p>注意：如果已经包含Unix版本，请不要添加这些版本！</p>
+<pre class="line-numbers language-c"><code class="language-c">uint16_t <span class="token function">check_key</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">WaitForSingleObject</span><span class="token punctuation">(</span>hStdin<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token operator">==</span> WAIT_OBJECT_0 <span class="token operator">&amp;&amp;</span> <span class="token function">_kbhit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c">DWORD fdwMode<span class="token punctuation">,</span> fdwOldMode<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">disable_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    hStdin <span class="token operator">=</span> <span class="token function">GetStdHandle</span><span class="token punctuation">(</span>STD_INPUT_HANDLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">GetConsoleMode</span><span class="token punctuation">(</span>hStdin<span class="token punctuation">,</span> <span class="token operator">&amp;</span>fdwOldMode<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* save old mode */</span>
+    fdwMode <span class="token operator">=</span> fdwOldMode
+            <span class="token operator">^</span> ENABLE_ECHO_INPUT  <span class="token comment" spellcheck="true">/* no input echo */</span>
+            <span class="token operator">^</span> ENABLE_LINE_INPUT<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* return when one or
+                                    more characters are available */</span>
+    <span class="token function">SetConsoleMode</span><span class="token punctuation">(</span>hStdin<span class="token punctuation">,</span> fdwMode<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* set new mode */</span>
+    <span class="token function">FlushConsoleInputBuffer</span><span class="token punctuation">(</span>hStdin<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* clear buffer */</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">restore_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">SetConsoleMode</span><span class="token punctuation">(</span>hStdin<span class="token punctuation">,</span> fdwOldMode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> handle_interrupt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">disable_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>当程序中断时，我们希望将终端设置恢复为正常。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token function">restore_input_buffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h></span> </span><span class="token comment" spellcheck="true">// uint16_t</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span>  </span><span class="token comment" spellcheck="true">// FILE</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span> </span><span class="token comment" spellcheck="true">// SIGINT</span>
+<span class="token comment" spellcheck="true">/* windows only */</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;conio.h></span>  </span><span class="token comment" spellcheck="true">// _kbhit</span>
+
+HANDLE hStdin <span class="token operator">=</span> INVALID_HANDLE_VALUE<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="运行虚拟机"><a href="#运行虚拟机" class="headerlink" title="运行虚拟机"></a>运行虚拟机</h2><p>现在可以构建并运行LC-3 VM！</p>
+<ol>
+<li><p>使用您最喜欢的C编译器进行编译。 对于<code>gcc：$ gcc lc3.c -o lc3</code></p>
+</li>
+<li><p>下载2048或Rogue的汇编版本。</p>
+</li>
+<li><p>使用obj文件作为参数运行程序：</p>
+</li>
+<li><p>$ lc3 path/to/2048.obj</p>
+</li>
+</ol>
+<p>玩2048！</p>
+<pre><code>Control the game using WASD keys.
+Are you on an ANSI terminal (y/n)? y
++--------------------------+
+|                          |
+|                          |
+|                          |
+|                     2    |
+|                          |
+|   2                      |
+|                          |
+|                          |
+|                          |
++--------------------------+</code></pre><h3 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h3><p>如果程序无法正常运行，则可能是因为对指令的编程不正确。 这可能很难调试。 我建议通读LC-3程序的汇编源代码，同时使用调试器一次遍历虚拟机的指令。 在阅读程序集时，请确保虚拟机按照您期望的说明进行操作。 如果出现差异，则知道引起该问题的原因。 重新阅读其说明说并仔细检查代码。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1452,7 +1644,7 @@ running <span class="token operator">=</span> <span class="token number">0</span
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">180.3k</span>&nbsp;字
+                            class="white-color">181.8k</span>&nbsp;字
                 
                 
                 <script>
