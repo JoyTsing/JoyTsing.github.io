@@ -570,14 +570,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        5.3k
+                        6.2k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        18 分
+                        20 分
                     </div>
                 
 
@@ -1059,7 +1059,63 @@
 <li>瀑布、<code>演化</code>、增量模型是常用的三种软件过程模型</li>
 </ol>
 </blockquote>
-<h3 id="第三章-1"><a href="#第三章-1" class="headerlink" title="第三章"></a>第三章</h3><script>
+<h3 id="第三章-1"><a href="#第三章-1" class="headerlink" title="第三章"></a>第三章</h3><p>21.软件需求的定义</p>
+<ul>
+<li>软件需求表达了对解决现实世界中某类问题的产品的要求和约束</li>
+</ul>
+<p>22.功能性需求和非功能性需求的定义和区别（理解例子）</p>
+<blockquote>
+<p>设计问题和需求问题，举例非功能性需求5个</p>
+</blockquote>
+<ul>
+<li>功能性需求：描述软件执行时的功能</li>
+<li>非功能性需求：指解决问题时的约束，非功能性需求有时也称为限制或质量需求<ul>
+<li>非功能性需求可进一步被分为性能要求、可维护性要求、安全需求、可靠性要求、可移植性要求、 ……  </li>
+</ul>
+</li>
+</ul>
+<p>23.需求分析的4个步骤和定义</p>
+<ul>
+<li><code>需求获取</code>指的是软件需求的来源以及软件工程师收集这些软件需求的方法</li>
+<li><code>需求分析</code>产生操作规格参数表，指明与其他系统元件的软件接口，确定软件必须遵循的约束</li>
+<li><code>需求定义</code>即编写《 软件需求规格说明书》</li>
+<li><code>需求验证</code>即检查需求的正确性、完整性、非二义性、内部和外部的连贯性  </li>
+</ul>
+<p>24.需求分析的主要任务</p>
+<ul>
+<li>准确地定义未来系统的目标，确定为了满足用户的需求系统需要做什么，并用需求规格说明书规范的形式准确地表达用户需求</li>
+</ul>
+<p>25.结构化分析建立哪三种模型？核心是面向什么？分别对应什么建模？</p>
+<ul>
+<li>核心是<code>数据字典</code></li>
+<li>围绕这个核心，有3种图： <code>数据流图</code>（ DFD，用于<code>功能建模</code>）、<code>实体-关系图</code>（ ER图，用于<code>数据建模</code>）、 <code>状态转换图</code>（ STD，用于<code>行为建模</code>）</li>
+</ul>
+<p>26.数据流图4种符号(只考填空)，数据流图至少有<code>一个输入数据流</code>和<code>一个输出数据流</code></p>
+<p><img src="/posts/49397/1.png" alt="数据流图符号"></p>
+<p>27.结构化分析方法的策略是：<code>自顶向下逐步求精</code></p>
+<p>28.UML图有：<code>部署图</code>、<code>活动图</code>、<code>顺序或时序图</code>、<code>用例图</code>、<code>交互图</code>、<code>类图</code></p>
+<p>29.UML动态模型的描述工具有哪三种图：<code>顺序图</code>、<code>活动图</code>、<code>状态图</code></p>
+<p>30.用例图的绘制（填空加大题），用例图有哪些元素</p>
+<ul>
+<li>元素：<code>用例</code>、<code>参与者</code>、<code>系统</code>、<code>用例之间关系</code></li>
+</ul>
+<p>31.用例图的用途：<code>用于需求的获取，定义和分析</code></p>
+<p>32.<strong>UML中哪些是系统的参与者，可以提出哪些问题来确定？</strong></p>
+<ul>
+<li>谁或者什么为系统提供输入？</li>
+<li>谁或者什么接收系统的输出？</li>
+<li>需要与其他系统连接的接口吗？</li>
+<li>是否存在在预定的时间自动触发的事件？</li>
+<li>谁将维护系统中的信息？  </li>
+</ul>
+<p>33.顺序图的组成元素：<code>类角色（参与者）</code>、<code>对象</code>、<code>激活期</code>、<code>生命线</code>、<code>消息</code></p>
+<p>34.<strong>什么是用例图，它的作用是什么？内容是什么</strong></p>
+<ul>
+<li>用例图是体现一组用例、参与者和它们之间关系的图，从用户角度而不是开发者角度来描述，体现对软件开发产品的需求，分析产品所需的功能和动态行为</li>
+<li>用例图对需求建模是至关重要的，其正确与否直接影响到客户对最终产品的满意度</li>
+<li>内容包括了参与者、用例与拓展的泛化关系</li>
+</ul>
+<h3 id="第四章-1"><a href="#第四章-1" class="headerlink" title="第四章"></a>第四章</h3><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1418,7 +1474,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">187.1k</span>&nbsp;字
+                            class="white-color">187.9k</span>&nbsp;字
                 
                 
                 <script>
