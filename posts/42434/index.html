@@ -620,7 +620,7 @@ public:
 offsetof(Base1, base1_1):0
 
 offsetof(Base1, base1_2):4</code></pre><p>可知对象布局:</p>
-<p><img src="/1.png" alt="1"></p>
+<p><img src="/posts/42434/1.png" alt="1"></p>
 <p>可以看到, 成员变量是按照定义的顺序来保存的, 最先声明的在最上边, 然后依次保存!<br>类对象的大小就是所有成员变量大小之和.</p>
 <h4 id="2-没有虚函数的对象"><a href="#2-没有虚函数的对象" class="headerlink" title="2. 没有虚函数的对象"></a>2. 没有虚函数的对象</h4><p>类实现如下:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class Base1
@@ -651,7 +651,7 @@ public:
 
 offsetof(Base1, base1_1):4
 
-offsetof(Base1, base1_2):8</code></pre><p>咦? 多了4个字节? 且 base1_1 和 base1_2 的偏移都各自向后多了4个字节!<br>说明类对象的最前面被多加了4个字节的”东东”, what’s it?<br>现在, 我们通过VS2013来瞧瞧类Base1的变量b1的内存布局情况:<br>(由于我没有写构造函数, 所以变量的数据没有根据, 但虚函数是编译器为我们构造的, 数据正确!)<br>(Debug模式下, 未初始化的变量值为0xCCCCCCCC, 即:-858983460)<br><img src="/2.png" alt="2"></p>
+offsetof(Base1, base1_2):8</code></pre><p>咦? 多了4个字节? 且 base1_1 和 base1_2 的偏移都各自向后多了4个字节!<br>说明类对象的最前面被多加了4个字节的”东东”, what’s it?<br>现在, 我们通过VS2013来瞧瞧类Base1的变量b1的内存布局情况:<br>(由于我没有写构造函数, 所以变量的数据没有根据, 但虚函数是编译器为我们构造的, 数据正确!)<br>(Debug模式下, 未初始化的变量值为0xCCCCCCCC, 即:-858983460)<br><img src="/posts/42434/2.png" alt="2"></p>
 <p>看到没? base1_1前面多了一个变量 __vfptr(常说的虚函数表vtable指针), 其类型为void*<em>, 这说明它是一个void</em>指针(注意:不是数组).</p>
 <p>再看看[0]元素, 其类型为void*, 其值为 ConsoleApplication2.exe!Base1::base1_fun1(void), 这是什么意思呢? 如果对WinDbg比较熟悉, 那么应该知道这是一种惯用表示手法, 她就是指 Base1::base1_fun1() 函数的地址.</p>
 <p>可得, __vfptr的定义伪代码大概如下:</p>
@@ -674,7 +674,7 @@ const void**  __vfptr = &__fun[0];<span aria-hidden="true" class="line-numbers-r
 <li><p>注意到<strong>vfptr前面的const修饰. 她修饰的是那个虚函数表, 而不是</strong>vfptr.</p>
 </li>
 </ol>
-<p>现在的对象布局如下:<br><img src="/3.png" alt="3"></p>
+<p>现在的对象布局如下:<br><img src="/posts/42434/3.png" alt="3"></p>
 <p>虚函数指针__vfptr位于所有的成员变量之前定义.</p>
 <p>注意到: 我并未在此说明__vfptr的具体指向, 只是说明了现在类对象的布局情况.<br>接下来看一个稍微复杂一点的情况, 我将清楚地描述虚函数表的构成.</p>
 <h4 id="4-拥有多个虚函数的类对象"><a href="#4-拥有多个虚函数的类对象" class="headerlink" title="4.拥有多个虚函数的类对象"></a>4.拥有多个虚函数的类对象</h4><p>和前面一个例子差不多, 只是再加了一个虚函数. 定义如下:</p>
@@ -687,13 +687,13 @@ public:
     virtual void base1_fun1() {}
     virtual void base1_fun2() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>大小以及偏移信息如下:<br><img src="/4.png" alt="4"><br>有情况!? 多了一个虚函数, 类对象大小却依然是12个字节!</p>
-<p>再来看看VS形象的表现:<br><img src="/5.png" alt="5"></p>
+<p>大小以及偏移信息如下:<br><img src="/posts/42434/4.png" alt="4"><br>有情况!? 多了一个虚函数, 类对象大小却依然是12个字节!</p>
+<p>再来看看VS形象的表现:<br><img src="/posts/42434/5.png" alt="5"></p>
 <p>呀, __vfptr所指向的函数指针数组中出现了第2个元素, 其值为Base1类的第2个虚函数base1_fun2()的函数地址.</p>
 <p>现在, 虚函数指针以及虚函数表的伪定义大概如下:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">void* __fun[] = { &Base1::base1_fun1, &Base1::base1_fun2 };
 const void** __vfptr = &__fun[0];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>前面已经提到过: <strong>vfptr只是一个指针, 她指向一个数组, 并且: 这个数组没有包含到类定义内部, 那么她们之间是怎样一个关系呢?<br>不妨, 我们再定义一个类的变量b2, 现在再来看看</strong>vfptr的指向:<br><img src="/6.png" alt="6"></p>
+<p>前面已经提到过: <strong>vfptr只是一个指针, 她指向一个数组, 并且: 这个数组没有包含到类定义内部, 那么她们之间是怎样一个关系呢?<br>不妨, 我们再定义一个类的变量b2, 现在再来看看</strong>vfptr的指向:<br><img src="/posts/42434/6.png" alt="6"></p>
 <p>通过Watch 1窗口我们看到:</p>
 <ol>
 <li><p>b1和b2是类的两个变量, 理所当然, 她们的地址是不同的(见 &amp;b1 和 &amp;b2)</p>
@@ -703,7 +703,7 @@ const void** __vfptr = &__fun[0];<span aria-hidden="true" class="line-numbers-ro
 </ol>
 <p>由此我们可以总结出:</p>
 <p>同一个类的不同实例共用同一份虚函数表, 她们都通过一个所谓的虚函数表指针__vfptr(定义为void**类型)指向该虚函数表.</p>
-<p>是时候该展示一下类对象的内存布局情况了:<br><img src="/7.png" alt="7"></p>
+<p>是时候该展示一下类对象的内存布局情况了:<br><img src="/posts/42434/7.png" alt="7"></p>
 <p>不出意外, 很清晰明了地展示出来了吧? :-) hoho~~</p>
 <p>那么问题就来了! 这个虚函数表保存在哪里呢? 其实, 我们无需过分追究她位于哪里, 重点是:</p>
 <ol>
@@ -728,8 +728,8 @@ public:
     int derive1_1;
     int derive1_2;
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>我们再来看看现在的内存布局(定义为Derive1 d1):<br><img src="/8.png" alt="8"><br>没错! 基类在上边, 继承类的成员在下边依次定义! 展开来看看:<br><img src="/9.png" alt="9"><br>经展开后来看, 前面部分完全就是Base1的东西: 虚函数表指针+成员变量定义.<br>并且, Base1的虚函数表的[0][1]两项还是其本身就拥有的函数: base1_fun1() 和 base1_fun2().</p>
-<p>现在类的布局情况应该是下面这样:<br><img src="/10.png" alt="10"></p>
+<p>我们再来看看现在的内存布局(定义为Derive1 d1):<br><img src="/posts/42434/8.png" alt="8"><br>没错! 基类在上边, 继承类的成员在下边依次定义! 展开来看看:<br><img src="/posts/42434/9.png" alt="9"><br>经展开后来看, 前面部分完全就是Base1的东西: 虚函数表指针+成员变量定义.<br>并且, Base1的虚函数表的[0][1]两项还是其本身就拥有的函数: base1_fun1() 和 base1_fun2().</p>
+<p>现在类的布局情况应该是下面这样:<br><img src="/posts/42434/10.png" alt="10"></p>
 <h4 id="6-本身不存在虚函数-不严谨-但存在基类虚函数覆盖的单继承类的内存布局"><a href="#6-本身不存在虚函数-不严谨-但存在基类虚函数覆盖的单继承类的内存布局" class="headerlink" title="6.本身不存在虚函数(不严谨)但存在基类虚函数覆盖的单继承类的内存布局"></a>6.本身不存在虚函数(不严谨)但存在基类虚函数覆盖的单继承类的内存布局</h4><p>标题<code>本身不存在虚函数</code>的说法有些不严谨, 我的意思是说: 除经过继承而得来的基类虚函数以外, 自身没有再定义其它的虚函数.</p>
 <p>Ok, 既然存在基类虚函数覆盖, 那么来看看接下来的代码会产生何种影响:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class Base1
@@ -751,9 +751,9 @@ public:
     // 覆盖基类函数
     virtual void base1_fun1() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可以看到, Derive1类 重写了Base1类的base1_fun1()函数, 也就是常说的虚函数覆盖. 现在是怎样布局的呢?<br><img src="/11.png" alt="11"><br>特别注意我高亮的那一行: 原本是Base1::base1_fun1(), 但由于<strong>继承类重写</strong>了基类Base1的此方法, 所以现在变成了Derive1::base1_fun1()!</p>
+<p>可以看到, Derive1类 重写了Base1类的base1_fun1()函数, 也就是常说的虚函数覆盖. 现在是怎样布局的呢?<br><img src="/posts/42434/11.png" alt="11"><br>特别注意我高亮的那一行: 原本是Base1::base1_fun1(), 但由于<strong>继承类重写</strong>了基类Base1的此方法, 所以现在变成了Derive1::base1_fun1()!</p>
 <p>那么, 无论是通过Derive1的指针还是Base1的指针来调用此方法, 调用的都将是被继承类重写后的那个方法(函数), 多态发生鸟!!!</p>
-<p>那么新的布局图:<br><img src="/12.png" alt="12"></p>
+<p>那么新的布局图:<br><img src="/posts/42434/12.png" alt="12"></p>
 <h4 id="7-定义了基类没有的虚函数的单继承的类对象布局"><a href="#7-定义了基类没有的虚函数的单继承的类对象布局" class="headerlink" title="7.定义了基类没有的虚函数的单继承的类对象布局"></a>7.定义了基类没有的虚函数的单继承的类对象布局</h4><p>说明一下: 由于前面一种情况只会造成覆盖基类虚函数表的指针, 所以接下来我不再同时讨论虚函数覆盖的情况.</p>
 <p>继续贴代码:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class Base1
@@ -774,7 +774,7 @@ public:
 
     virtual void derive1_fun1() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>和第5类不同的是多了一个自身定义的虚函数. 和第6类不同的是没有基类虚函数的覆盖.<br><img src="/13.png" alt="13"><br>咦, 有没有发现问题? 表面上看来几乎和第5种情况完全一样? 为嘛呢?<br>现在继承类明明定义了自身的虚函数, 但不见了??<br>那么, 来看看类对象的大小, 以及成员偏移情况吧:<br><img src="/14.png" alt="14"><br>居然没有变化!!! 前面12个字节是Base1的, 有没有觉得很奇怪?</p>
+<p>和第5类不同的是多了一个自身定义的虚函数. 和第6类不同的是没有基类虚函数的覆盖.<br><img src="/posts/42434/13.png" alt="13"><br>咦, 有没有发现问题? 表面上看来几乎和第5种情况完全一样? 为嘛呢?<br>现在继承类明明定义了自身的虚函数, 但不见了??<br>那么, 来看看类对象的大小, 以及成员偏移情况吧:<br><img src="/posts/42434/14.png" alt="14"><br>居然没有变化!!! 前面12个字节是Base1的, 有没有觉得很奇怪?</p>
 <p>好吧, 既然表面上没办法了, 我们就只能从汇编入手了, 来看看调用derive1_fun1()时的代码:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">Derive1 d1;
 Derive1* pd1 = &d1;
@@ -794,7 +794,7 @@ pd1->derive1_fun1();<span aria-hidden="true" class="line-numbers-rows"><span></s
 <li>由于Base1只知道自己的两个虚函数索引[0][1], 所以就算在后面加上了[2], Base1根本不知情, 不会对她造成任何影响.</li>
 <li>如果<strong>基类没有虚函数</strong>呢? 这个问题我们留到第9小节再来讨论!</li>
 </ol>
-<p>最新的类对象布局表示:<br><img src="/15.png" alt="15"></p>
+<p>最新的类对象布局表示:<br><img src="/posts/42434/15.png" alt="15"></p>
 <h4 id="8-多继承且存在虚函数覆盖同时又存在自身定义的虚函数的类对象布局"><a href="#8-多继承且存在虚函数覆盖同时又存在自身定义的虚函数的类对象布局" class="headerlink" title="8.多继承且存在虚函数覆盖同时又存在自身定义的虚函数的类对象布局"></a>8.多继承且存在虚函数覆盖同时又存在自身定义的虚函数的类对象布局</h4><p>真快, 该看看多继承了, 多继承很常见, 特别是接口类中!</p>
 <p>依然写点小类玩玩:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class Base1
@@ -833,7 +833,7 @@ public:
     virtual void derive1_fun2() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>代码变得越来越长啦! 为了代码结构清晰, 我尽量简化定义.</p>
-<p>初步了解一下对象大小及偏移信息:<br><img src="/16.png" alt="16"><br>貌似, 若有所思? 不管, 来看看VS再想:<br><img src="/17.png" alt="17"></p>
+<p>初步了解一下对象大小及偏移信息:<br><img src="/posts/42434/16.png" alt="16"><br>貌似, 若有所思? 不管, 来看看VS再想:<br><img src="/posts/42434/17.png" alt="17"></p>
 <p>哇, 不摆了! 一丝不挂啊! :-)<br>结论:</p>
 <ol>
 <li><p>按照基类的声明顺序, 基类的成员依次分布在继承中.</p>
@@ -859,7 +859,7 @@ pd1->derive1_fun2();<span aria-hidden="true" class="line-numbers-rows"><span></s
 <p>第2行: 取d1的地址<br>第3行: 取Base1::__vfptr的值!!<br>第6行: 0x0C, 也就是第4个元素(下标为[3])</p>
 <p>结论:</p>
 <p>Derive1的虚函数表依然是保存到第1个拥有虚函数表的那个基类的后面的.</p>
-<p>看看现在的类对象布局图:<br><img src="/18.png" alt="18"></p>
+<p>看看现在的类对象布局图:<br><img src="/posts/42434/18.png" alt="18"></p>
 <p>如果第1个基类没有虚函数表呢? 进入第9节!</p>
 <h4 id="9-如果第1个直接基类没有虚函数-表"><a href="#9-如果第1个直接基类没有虚函数-表" class="headerlink" title="9.如果第1个直接基类没有虚函数(表)"></a>9.如果第1个直接基类没有虚函数(表)</h4><p>这次的代码应该比上一个要稍微简单一些, 因为把第1个类的虚函数给去掉!</p>
 <pre class="line-numbers language-c++"><code class="language-c++">class Base1
@@ -890,8 +890,8 @@ public:
     virtual void derive1_fun1() {}
     virtual void derive1_fun2() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>来看看VS的布局:<br><img src="/19.png" alt="19"><br>这次相对前面一次的图来说还要简单啦! Base1已经没有虚函数表了! (真实情况并非完全这样, 请继续往下看!)</p>
-<p>现在的大小及偏移情况: 注意: <code>sizeof(Base1) == 8</code>;<br><img src="/20.png" alt="20"></p>
+<p>来看看VS的布局:<br><img src="/posts/42434/19.png" alt="19"><br>这次相对前面一次的图来说还要简单啦! Base1已经没有虚函数表了! (真实情况并非完全这样, 请继续往下看!)</p>
+<p>现在的大小及偏移情况: 注意: <code>sizeof(Base1) == 8</code>;<br><img src="/posts/42434/20.png" alt="20"></p>
 <p>重点是看虚函数的位置, 进入函数调用(和前一次是一样的):</p>
 <pre class="line-numbers language-c++"><code class="language-c++">Derive1 d1;
 Derive1* pd1 = &d1;
@@ -905,14 +905,14 @@ pd1->derive1_fun2();<span aria-hidden="true" class="line-numbers-rows"><span></s
 012E4BB0  mov         eax,dword ptr [edx+0Ch]  
 012E4BB3  call        eax<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这段汇编代码和前面一个完全一样!, 那么问题就来了! Base1 已经没有虚函数表了, 为什么还是把b1的第1个元素当作__vfptr呢?<br>不难猜测: 当前的布局已经发生了变化, 有虚函数表的基类放在对象内存前面!? , 不过事实是否属实? 需要仔细斟酌.</p>
-<p>我们可以通过对基类成员变量求偏移来观察:<br><img src="/21.png" alt="21"><br>可以看到:</p>
+<p>我们可以通过对基类成员变量求偏移来观察:<br><img src="/posts/42434/21.png" alt="21"><br>可以看到:</p>
 <pre><code>&amp;d1==0x~d4
 &amp;d1.Base1::__vfptr==0x~d4
 &amp;d1.base2_1==0x~d8
 &amp;d1.base2_2==0x~dc
 &amp;d1.base1_1==0x~e0
 &amp;d1.base1_2==0x~e4</code></pre><p>所以不难验证: 我们前面的推断是正确的, 谁有虚函数表, 谁就放在前面!</p>
-<p>现在类的布局情况:<br><img src="/22.png" alt="22"><br>那么, 如果两个基类都没有虚函数表呢?</p>
+<p>现在类的布局情况:<br><img src="/posts/42434/22.png" alt="22"><br>那么, 如果两个基类都没有虚函数表呢?</p>
 <h4 id="10-What-if-两个基类都没有虚函数表"><a href="#10-What-if-两个基类都没有虚函数表" class="headerlink" title="10.What if 两个基类都没有虚函数表"></a>10.What if 两个基类都没有虚函数表</h4><p>代码如下:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class Base1
 {
@@ -939,9 +939,9 @@ public:
     virtual void derive1_fun1() {}
     virtual void derive1_fun2() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>现在先来看看VS的基本布局:<br><img src="/23.png" alt="23"><br>可以看到, 现在__vfptr已经独立出来了, 不再属于Base1和Base2!</p>
-<p>看看求偏移情况:<br><img src="/24.png" alt="24"><br>Ok, 问题解决! 注意高亮的那两行, <code>&amp;d1==&amp;d1.__vfptr</code>, 说明虚函数始终在最前面!</p>
-<p>不用再废话, 相信大家对这种情况已经有底了.<br><img src="/25.png" alt="25"></p>
+<p>现在先来看看VS的基本布局:<br><img src="/posts/42434/23.png" alt="23"><br>可以看到, 现在__vfptr已经独立出来了, 不再属于Base1和Base2!</p>
+<p>看看求偏移情况:<br><img src="/posts/42434/24.png" alt="24"><br>Ok, 问题解决! 注意高亮的那两行, <code>&amp;d1==&amp;d1.__vfptr</code>, 说明虚函数始终在最前面!</p>
+<p>不用再废话, 相信大家对这种情况已经有底了.<br><img src="/posts/42434/25.png" alt="25"></p>
 <h4 id="11-如果有三个基类-虚函数表分别是有-没有-有"><a href="#11-如果有三个基类-虚函数表分别是有-没有-有" class="headerlink" title="11.如果有三个基类: 虚函数表分别是有, 没有, 有!"></a>11.如果有三个基类: 虚函数表分别是有, 没有, 有!</h4><p>这种情况其实已经无需再讨论了, 作为一个完结篇….</p>
 <p>上代码:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class Base1
@@ -982,7 +982,7 @@ public:
     virtual void derive1_fun1() {}
     virtual void derive1_fun2() {}
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>只需要看看偏移就行了:<br><img src="/26.png" alt="26"><br>只需知道: 谁有虚函数表, 谁就往前靠!</p>
+<p>只需要看看偏移就行了:<br><img src="/posts/42434/26.png" alt="26"><br>只需知道: 谁有虚函数表, 谁就往前靠!</p>
 <h3 id="C-中父子对象指针间的转换与函数调用"><a href="#C-中父子对象指针间的转换与函数调用" class="headerlink" title="C++中父子对象指针间的转换与函数调用"></a>C++中父子对象指针间的转换与函数调用</h3><p>讲了那么多布局方面的东东, 终于到了尾声, 好累呀!!!</p>
 <p>通过前面的讲解内容, 大家至少应该明白了各类情况下类对象的内存布局了. 如果还不会…..呃….. !@#$%^&amp;*</p>
 <p>进入正题~</p>
@@ -1090,7 +1090,7 @@ public:
 <p>调用方式如下:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">Derive1 d1;
 foo(&d1, &d1, &d1, &d1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>输出结果:<br><img src="/27.png" alt="27"><br>可以看到输出结果全部正确(当然了! :-), 哈哈~<br>同时注意到 pb3-&gt;base3_fun1() 的多态效果哦!</p>
+<p>输出结果:<br><img src="/posts/42434/27.png" alt="27"><br>可以看到输出结果全部正确(当然了! :-), 哈哈~<br>同时注意到 pb3-&gt;base3_fun1() 的多态效果哦!</p>
 <h4 id="用C语言来模拟"><a href="#用C语言来模拟" class="headerlink" title="用C语言来模拟"></a>用C语言来模拟</h4><p>必须要把前面的理解了, 才能看懂下面的代码!</p>
 <p>为了有别于已经完成的C++的类, 我们分别在类前面加一个大写的C以示区分(平常大家都是习惯在C++写的类前面加C, 今天恰好反过来, 哈哈).</p>
 <p><strong>C语言无法实现的部分</strong><br>C/C++是两个语言, 有些语言特性是C++专有的, 我们无法实现! 不过, 这里我是指调用约定, 我们应该把她排除在外.</p>
@@ -1214,7 +1214,7 @@ Base2<span class="token operator">*</span> pb2 <span class="token operator">=</s
 Base3<span class="token operator">*</span> pb3 <span class="token operator">=</span> reinterpret_cast<span class="token operator">&lt;</span>Base3<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p <span class="token operator">+</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>CBase1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 Derive1<span class="token operator">*</span> pd1 <span class="token operator">=</span> reinterpret_cast<span class="token operator">&lt;</span>Derive1<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>真正调用:</p>
-<pre><code>foo(pb1, pb2, pb3, pd1);</code></pre><p>调用结果:<br><img src="/28.png" alt="28"></p>
+<pre><code>foo(pb1, pb2, pb3, pd1);</code></pre><p>调用结果:<br><img src="/posts/42434/28.png" alt="28"></p>
 <p><strong>结果相当正确!!!</strong></p>
 <p>原文链接：<a href="https://blog.twofei.com/496/">https://blog.twofei.com/496/</a></p>
 

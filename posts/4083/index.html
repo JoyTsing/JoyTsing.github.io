@@ -663,7 +663,7 @@ bash收到错误，然后打开文件头部，发现是脚本
 <h5 id="给脚本文件传递位置参数"><a href="#给脚本文件传递位置参数" class="headerlink" title="给脚本文件传递位置参数"></a>给脚本文件传递位置参数</h5><pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
 <span class="token keyword">echo</span> <span class="token string">"Language: <span class="token variable">$1</span>"</span>
 <span class="token keyword">echo</span> <span class="token string">"URL: <span class="token variable">$2</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>运行并附带参数：<br><img src="/1.png"></p>
+<p>运行并附带参数：<br><img src="/posts/4083/1.png"></p>
 <h4 id="给函数传递位置参数"><a href="#给函数传递位置参数" class="headerlink" title="给函数传递位置参数"></a>给函数传递位置参数</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
 <span class="token comment" spellcheck="true">#定义函数</span>
 <span class="token keyword">function</span> func<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
@@ -672,7 +672,7 @@ bash收到错误，然后打开文件头部，发现是脚本
 <span class="token punctuation">}</span>
 <span class="token comment" spellcheck="true">#调用函数</span>
 func shell https://github.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<img src="/2.png">
+<img src="/posts/4083/2.png">
 
 <h4 id="特殊参数"><a href="#特殊参数" class="headerlink" title="特殊参数"></a>特殊参数</h4><table>
 <thead>
@@ -729,7 +729,7 @@ func shell https://github.com<span aria-hidden="true" class="line-numbers-rows">
 <span class="token keyword">do</span>
     <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$var</span>"</span>
 <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/3.png" alt="例子"></p>
+<p><img src="/posts/4083/3.png" alt="例子"></p>
 <p>$? 获取上一个命令的退出状态,所谓退出状态，就是上一个命令执行后的返回结果。退出状态是一个数字，一般情况下，大部分命令执行成功会返回 0，失败返回 1，这和C语言的 main() 函数是类似的,除了用于获取上一个命令退出状态外，还可以用来获取函数的返回值。这里仅讲获取函数的返回值，前一种情况类比即可。</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token comment" spellcheck="true">#得到两个数相加的和</span>

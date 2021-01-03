@@ -624,7 +624,7 @@ Set Set::operator |(const Set &s)const{
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
 <p> 所以之前出错的写法 s = s1|s2，就出现了这样的结果：</p>
-<p><img src="/%E7%94%B1Set%E4%BD%9C%E4%B8%9A%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/2.png" alt="错误原因"></p>
+<p><img src="/posts/12550/2.png" alt="错误原因"></p>
 <p> 虽然解决方法已经找出来了，就是集合合并的时候返回的是Set的引用即可，但是为什么会发生这种匪夷所思的情况？先上一篇博客康康</p>
 <h3 id="C-：对象的赋值和复制"><a href="#C-：对象的赋值和复制" class="headerlink" title="C++：对象的赋值和复制"></a>C++：对象的赋值和复制</h3><h4 id="3-6-1-对象赋值语句"><a href="#3-6-1-对象赋值语句" class="headerlink" title="3.6.1 对象赋值语句"></a>3.6.1 对象赋值语句</h4><p>如同基本类型赋值语句一样，同类型的对象之间也可以进行赋值，即一个对象的值可以赋给另一个对象。这里所指的对象的赋值是指对其中的数据成员赋值，而不对成员函数赋值。例如：A和B是同一类的两个对象，那么下述对象赋值语句B=A；就能把对象A的数据成员的值逐位复制给对象B</p>
 <pre class="line-numbers language-C++"><code class="language-C++">//例3.24 对象赋值语句示例
@@ -795,8 +795,8 @@ int main()
 <blockquote>
 <p>  这里的描述符合我们遇到的这个情况，也就是=赋值，和函数返回时出现的问题，因为按照c++语法，只有用一个新的对象 Class newObj = oldOject 时，才会调用这个类的“拷贝构造函数”，把oldOject 的所有成员变量复制给newObj ，如果是用一个已存在的对象 existObj = oldObject，则不会调用“拷贝构造函数”。<br>   对比 Set tmp = s1|s2 和 s = s1|s2 ，发现主要是函数返回时，前者只销毁了函数内的局部变量re，后者销毁re还销毁了作为返回值的Set对象，这是编译器识别了Set tmp = s1|s2，认为需要替你保留返回值，所以没销毁，而s = s1|s2 这种写法应该本身就是不被语法认可的。<br>   同理，你可以观察(s1|s2).Show() 这种写法，发现返回值是在Show()方法调用后，才被销毁的，所以就能归功到编译器了，是编译器识别了 | 方法被调用的地方的需求，然后对返回值采取了不同的操作。<br>   等学了编译原理，和c++ 的调用惯例就能深刻理解了</p>
 </blockquote>
-<p>   <img src="/%E7%94%B1Set%E4%BD%9C%E4%B8%9A%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/3.png" alt="赋值"></p>
-<p>   <img src="/%E7%94%B1Set%E4%BD%9C%E4%B8%9A%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/4.png" alt="(s1|s2).Show()"></p>
+<p>   <img src="/posts/12550/3.png" alt="赋值"></p>
+<p>   <img src="/posts/12550/4.png" alt="(s1|s2).Show()"></p>
 <p>最后有两个类似的例子，以供参考</p>
 <hr>
 <pre class="line-numbers language-C++"><code class="language-C++">//例3.27  演示调用拷贝构造函数的3中情况

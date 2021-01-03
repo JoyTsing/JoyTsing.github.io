@@ -595,7 +595,7 @@
 
 <p>首先先给root账户设置密码：<code>sudo passwd root</code></p>
 <p>然后解锁root账户：<code>sudo passwd --unlook root</code>，即开启了root用户，同时也算第一次输入passwd命令。</p>
-<img src="/1.png">
+<img src="/posts/24335/1.png">
 
 <p>既然知道如何登入了,就需要知道如何才能够退出才行,通常情况下可以直接在Shell中输入exit或者ctrl-d即可以退出（用户层面），但是如果是类似于树莓派这种物理机的话，因为不只有Shell，想要完全退出的话需要在Shell中输入<code>sudo poweroff</code>后，才算是安全退出（机器层面）。</p>
 <h2 id="Unix下命令"><a href="#Unix下命令" class="headerlink" title="Unix下命令"></a>Unix下命令</h2><h3 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h3><p>Unix下命令格式基本如下：</p>
@@ -762,8 +762,8 @@
 <h2 id="如何阅读MAN手册"><a href="#如何阅读MAN手册" class="headerlink" title="如何阅读MAN手册"></a>如何阅读MAN手册</h2><p>很显然，那么多的命令加上参数，对于人而言是不可能完完全全记住的，在Unix中，系统就为用户提供了查看命令的帮助信息，但是相对的也带来了一些问题，man手册的阅读对于人而言是很痛苦的（无高亮、命令行下，第二语言下），而且有时候理不清文档内容组织结构，思维很混乱，或者明白文档描述所用的体例，但不明白命令各种参数该如何组合也是比较痛苦的。</p>
 <p>在联网的情况下，通常我都是查找开源的社区直接找命令，阅读效果比直接man 命令更好，并且例子丰富且多是实际状况下所需要的。网址见下：</p>
 <p><a href="http://linux.51yip.com/">Linux命令手册查询</a></p>
-<p>例图：<br><img src="/2.png"></p>
-<img src="/3.png">
+<p>例图：<br><img src="/posts/24335/2.png"></p>
+<img src="/posts/24335/3.png">
 
 <p>可见确实对于学习命令有很大的帮助</p>
 <p><strong>那如果我需要在Shell中阅读man手册该如何做？</strong></p>
@@ -835,7 +835,7 @@
 </ul>
 <p>切换shell的话，可以直接将shell的名称输入到命令行即可，切换回原来的shell的话，chsh不加参数即可。</p>
 <h3 id="etc-passwd文件"><a href="#etc-passwd文件" class="headerlink" title="/etc/passwd文件"></a>/etc/passwd文件</h3><p>在Linux /etc/passwd文件中每个用户都有一个对应的记录行，它记录了这个用户的一些基本属性,其中也包括了缺省的shell</p>
-<img src="/4.png">
+<img src="/posts/24335/4.png">
 
 <p>可以看到一条记录分为7个字段，以:为分隔符，如果以</p>
 <blockquote>
@@ -865,10 +865,10 @@
 <p>它再执行login程序:</p>
 <pre><code>execle(&quot;/bin/login&quot;, &quot;login&quot;, &quot;-p&quot;, username, NULL, envp)</code></pre><h4 id="Step3：login程序运行"><a href="#Step3：login程序运行" class="headerlink" title="Step3：login程序运行"></a>Step3：login程序运行</h4><p>login程序提示用户输入密码，且在输入密码期间关闭终端的回显，因此我们在linux下输入密码时是看不到的，然后验证帐号密码的正确性。</p>
 <p>如果密码不正确，login进程终止。init会重新fork/exec一个getty进程。如果密码正确，login程序设置⼀些环境变量，设置当前工作⽬录为该⽤户的主目录，然后执行Shell:</p>
-<pre><code>execl(&quot;/bin/bash&quot;, &quot;-bash&quot;, NULL)</code></pre><img style="width:400px;height:200px" src="/6.png">
+<pre><code>execl(&quot;/bin/bash&quot;, &quot;-bash&quot;, NULL)</code></pre><img style="width:400px;height:200px" src="/posts/24335/6.png">
 
 <h3 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h3><p>用户退出系统也是差不多类似的道理，shell程序终止执行，login退出，init回收login，然后init再fork出新的getty，来程序等待新用户的登录。</p>
-<img style="width:200px;height:300px" src="/5.png">
+<img style="width:200px;height:300px" src="/posts/24335/5.png">
 
             </div>
             <hr/>

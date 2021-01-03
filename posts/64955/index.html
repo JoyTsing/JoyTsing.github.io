@@ -595,7 +595,7 @@ tartar 命令">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="df-du与归档压缩等"><a href="#df-du与归档压缩等" class="headerlink" title="df,du与归档压缩等"></a>df,du与归档压缩等</h2><h3 id="df与du"><a href="#df与du" class="headerlink" title="df与du"></a>df与du</h3><p>df显示可用空间，-h用常见的格式显示出大小</p>
-<p><img src="/1.png" alt="挂载情况"></p>
+<p><img src="/posts/64955/1.png" alt="挂载情况"></p>
 <p>du统计文件或者目录的磁盘使用情况，用得比较少。</p>
 <p>这些命令通常是在要扩容和挂载时候才使用，配合fdisk -l和lvextend来使用。</p>
 <a id="more"></a>
@@ -637,10 +637,10 @@ tartar 命令">
 <p>相似的，chown修改文件目录的owner,chgrp修改文件目录的group。</p>
 <h2 id="Unix通信"><a href="#Unix通信" class="headerlink" title="Unix通信"></a>Unix通信</h2><h3 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h3><p>因为用的是树莓派4b的原因，在没有配显示器又想无线连接到树莓派的话，必须通过ssh，在此基础上如果想要使用桌面系统的话，则又要使用VNC Viewer与树莓派相连接。</p>
 <p>方法就在这简单描述一下，在烧录完系统后，打开SD卡直接新建SSH文件（无后缀名），随后在配置wpa_supplicant.conf，正常的话开机树莓派就能自动连接到wifi，可以通过路由器管理页面直接查看树莓派分配的ip，直接连接就行了(电脑用的是Putty)，通过ssh远程登陆主机和实体操作没有什么区别，另外ssh在github的配置上也有需求，可以查阅一下资料配置一下。</p>
-<h3 id="接口与状态"><a href="#接口与状态" class="headerlink" title="接口与状态"></a>接口与状态</h3><p>ifconfig用来查看ip地址和网络状态。<br><img src="/2.png" alt="ifconfig"></p>
-<p>ping用来查看与某个网址之间的延迟。<br><img src="/3.png" alt="ping"></p>
+<h3 id="接口与状态"><a href="#接口与状态" class="headerlink" title="接口与状态"></a>接口与状态</h3><p>ifconfig用来查看ip地址和网络状态。<br><img src="/posts/64955/2.png" alt="ifconfig"></p>
+<p>ping用来查看与某个网址之间的延迟。<br><img src="/posts/64955/3.png" alt="ping"></p>
 <h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>curl是一个利用URL规则在命令行下工作的文件传输工具。它支持文件的上传和下载，所以是综合传输工具，但按传统，习惯称url为下载工具。</p>
-<p><img src="/4.png" alt="ping"></p>
+<p><img src="/posts/64955/4.png" alt="ping"></p>
 <h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>wget是一个下载文件的工具，对于Linux用户是必不可少的工具，我们经常要下载一些软件或从远程服务器恢复备份到本地服务器，同时wget支持断点下载和指定目录下载，同时非常稳定，它在带宽很窄的情况下和不稳定网络中有很强的适应性.如果是由于网络的原因下载失败，wget会不断的尝试，直到整个文件下载完毕。是十分实用的一个命令。</p>
 <h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><p>使用wget -O下载并以不同的文件名保存(-O：下载文件到对应目录，并且修改文件名称)</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">wget</span> -O wordpress.zip http://www.minjieren.com/download.aspx?id<span class="token operator">=</span>1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -690,7 +690,7 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
 <li>gcc -c hello.s -o hello.o</li>
 <li>gcc -o hello hello.o</li>
 </ul>
-<p><img src="/5.png" alt="ping"></p>
+<p><img src="/posts/64955/5.png" alt="ping"></p>
 <h4 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h4><table>
 <thead>
 <tr>
@@ -769,7 +769,7 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
 </ul>
 <h4 id="git"><a href="#git" class="headerlink" title="git"></a>git</h4><p>版本控制系统，是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统，git采用分布式管理，十分推荐学习。</p>
 <p><a href="https://learngitbranching.js.org/?locale=zh_CN">一个非常好的，可视化的学习git的网站</a></p>
-<p><img src="/6.png" alt="ping"></p>
+<p><img src="/posts/64955/6.png" alt="ping"></p>
 
             </div>
             <hr/>
@@ -887,12 +887,12 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C</span>
-                                </a>
-                            
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">

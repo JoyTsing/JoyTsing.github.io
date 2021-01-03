@@ -610,13 +610,13 @@
 <h3 id="一、URL-解析"><a href="#一、URL-解析" class="headerlink" title="一、URL 解析"></a>一、URL 解析</h3><p><strong>地址解析</strong><br>首先判断你输入的是一个合法的 URL 还是一个待搜索的关键词，并且根据你输入的内容进行自动完成、字符编码等操作。</p>
 <p><strong>HSTS</strong><br>由于安全隐患，会使用 HSTS 强制客户端使用 HTTPS 访问页面。详见：你所不知道的 HSTS[1]。</p>
 <p><strong>其他操作</strong><br>浏览器还会进行一些额外的操作，比如安全检查、访问限制（之前国产浏览器限制 996.icu）。</p>
-<p><strong>检查缓存</strong><br><img src="/1.png" alt="检查缓存"></p>
-<h3 id="二、DNS-查询"><a href="#二、DNS-查询" class="headerlink" title="二、DNS 查询"></a>二、DNS 查询</h3><p><strong>基本步骤</strong><br><img src="/2.png" alt="DNS"></p>
+<p><strong>检查缓存</strong><br><img src="/posts/18919/1.png" alt="检查缓存"></p>
+<h3 id="二、DNS-查询"><a href="#二、DNS-查询" class="headerlink" title="二、DNS 查询"></a>二、DNS 查询</h3><p><strong>基本步骤</strong><br><img src="/posts/18919/2.png" alt="DNS"></p>
 <p><strong>1. 浏览器缓存</strong><br>浏览器会先检查是否在缓存中，没有则调用系统库函数进行查询。</p>
 <p><strong>2. 操作系统缓存</strong><br>操作系统也有自己的 DNS缓存，但在这之前，会向检查域名是否存在本地的 Hosts 文件里，没有则向 DNS 服务器发送查询请求。</p>
 <p><strong>3. 路由器缓存</strong><br>路由器也有自己的缓存。</p>
 <p><strong>4. ISP DNS 缓存</strong><br>ISP DNS 就是在客户端电脑上设置的首选 DNS 服务器，它们在大多数情况下都会有缓存。</p>
-<p><strong>根域名服务器查询</strong><br>在前面所有步骤没有缓存的情况下，本地 DNS 服务器会将请求转发到互联网上的根域，下面这个图很好的诠释了整个流程：<br><img src="/3.png" alt="根域名服务器递归"><br><strong>需要注意的点</strong></p>
+<p><strong>根域名服务器查询</strong><br>在前面所有步骤没有缓存的情况下，本地 DNS 服务器会将请求转发到互联网上的根域，下面这个图很好的诠释了整个流程：<br><img src="/posts/18919/3.png" alt="根域名服务器递归"><br><strong>需要注意的点</strong></p>
 <ol>
 <li><p>递归方式：一路查下去中间不返回，得到最终结果才返回信息（浏览器到本地DNS服务器的过程）</p>
 </li>
@@ -627,7 +627,7 @@
 <li><p>前端 dns-prefetch 优化</p>
 </li>
 </ol>
-<h3 id="三、TCP-连接"><a href="#三、TCP-连接" class="headerlink" title="三、TCP 连接"></a>三、TCP 连接</h3><p>TCP/IP 分为四层，在发送数据时，每层都要对数据进行封装：<br><img src="/4.png" alt="TCP连接"></p>
+<h3 id="三、TCP-连接"><a href="#三、TCP-连接" class="headerlink" title="三、TCP 连接"></a>三、TCP 连接</h3><p>TCP/IP 分为四层，在发送数据时，每层都要对数据进行封装：<br><img src="/posts/18919/4.png" alt="TCP连接"></p>
 <h4 id="1-应用层：发送-HTTP-请求"><a href="#1-应用层：发送-HTTP-请求" class="headerlink" title="1. 应用层：发送 HTTP 请求"></a>1. 应用层：发送 HTTP 请求</h4><p>在前面的步骤我们已经得到服务器的 IP 地址，浏览器会开始构造一个 HTTP 报文，其中包括：</p>
 <ul>
 <li><p>请求报头（Request Header）：请求方法、目标地址、遵循的协议等等</p>
@@ -659,7 +659,7 @@
 <p>相关知识点：<br>ARP 攻击</p>
 </blockquote>
 <p><strong>服务器接受请求</strong><br>接受过程就是把以上步骤逆转过来，参见上图。</p>
-<h3 id="四、服务器处理请求"><a href="#四、服务器处理请求" class="headerlink" title="四、服务器处理请求"></a>四、服务器处理请求</h3><p><strong>大致流程</strong><br><img src="/5.png" alt="TCP连接"></p>
+<h3 id="四、服务器处理请求"><a href="#四、服务器处理请求" class="headerlink" title="四、服务器处理请求"></a>四、服务器处理请求</h3><p><strong>大致流程</strong><br><img src="/posts/18919/5.png" alt="TCP连接"></p>
 <p><strong>HTTPD</strong><br>最常见的 HTTPD 有 Linux 上常用的 Apache 和 Nginx，以及 Windows 上的 IIS。</p>
 <p>它会监听得到的请求，然后开启一个子进程去处理这个请求。</p>
 <p><strong>处理请求</strong><br>接受 TCP 报文后，会对连接进行处理，对HTTP协议进行解析（请求方法、域名、路径等），并且进行一些验证：</p>
@@ -681,8 +681,8 @@
 <p>如果响应资源进行了压缩（比如 gzip），还需要进行解压。</p>
 <p>然后，对响应资源做缓存。</p>
 <p>接下来，根据响应资源里的 MIME[3]类型去解析响应内容（比如 HTML、Image各有不同的解析方式）。</p>
-<h2 id="六、渲染页面"><a href="#六、渲染页面" class="headerlink" title="六、渲染页面"></a>六、渲染页面</h2><p><strong>浏览器内核</strong><br><img src="/6.png" alt="TCP连接"><br><del>(最后一个大家也就康康)</del><br>不同的浏览器内核，渲染过程也不完全相同，但大致流程都差不多。</p>
-<p><strong>基本流程</strong><br><img src="/7.png" alt="TCP连接"></p>
+<h2 id="六、渲染页面"><a href="#六、渲染页面" class="headerlink" title="六、渲染页面"></a>六、渲染页面</h2><p><strong>浏览器内核</strong><br><img src="/posts/18919/6.png" alt="TCP连接"><br><del>(最后一个大家也就康康)</del><br>不同的浏览器内核，渲染过程也不完全相同，但大致流程都差不多。</p>
+<p><strong>基本流程</strong><br><img src="/posts/18919/7.png" alt="TCP连接"></p>
 <h4 id="6-1-HTML-解析"><a href="#6-1-HTML-解析" class="headerlink" title="6.1. HTML 解析"></a>6.1. HTML 解析</h4><p>首先要知道浏览器解析是从上往下一行一行地解析的。</p>
 <p>解析的过程可以分为四个步骤：</p>
 <p><strong>① 解码（encoding）</strong><br>传输回来的其实都是一些二进制字节数据，浏览器需要根据文件指定编码（例如UTF-8）转换成字符串，也就是HTML 代码。</p>
@@ -705,7 +705,7 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/8.png" alt="TCP连接"></p>
+<p><img src="/posts/18919/8.png" alt="TCP连接"></p>
 <p>浏览器容错进制</p>
 <p>你从来没有在浏览器看过类似”语法无效”的错误，这是因为浏览器去纠正错误的语法，然后继续工作。</p>
 <p>事件</p>
@@ -779,7 +779,7 @@
 <ul>
 <li>display:none 会触发回流，而 visibility:hidden 只会触发重绘。</li>
 </ul>
-<h4 id="6-7-JavaScript-编译执行"><a href="#6-7-JavaScript-编译执行" class="headerlink" title="6.7. JavaScript 编译执行"></a>6.7. JavaScript 编译执行</h4><p><strong>大致流程</strong><br><img src="/9.png" alt="TCP连接"><br>可以分为三个阶段：</p>
+<h4 id="6-7-JavaScript-编译执行"><a href="#6-7-JavaScript-编译执行" class="headerlink" title="6.7. JavaScript 编译执行"></a>6.7. JavaScript 编译执行</h4><p><strong>大致流程</strong><br><img src="/posts/18919/9.png" alt="TCP连接"><br>可以分为三个阶段：</p>
 <p><strong>1. 词法分析</strong><br>JS 脚本加载完毕后，会首先进入语法分析阶段，它首先会分析代码块的语法是否正确，不正确则抛出“语法错误”，停止执行。</p>
 <p>几个步骤：</p>
 <ul>
@@ -816,7 +816,7 @@
 <li><p>确定 This 指向</p>
 </li>
 </ul>
-<p><strong>3. 执行</strong><br><strong>JS 线程</strong><br><img src="/10.png" alt="TCP连接"><br>虽然 JS 是单线程的，但实际上参与工作的线程一共有四个：</p>
+<p><strong>3. 执行</strong><br><strong>JS 线程</strong><br><img src="/posts/18919/10.png" alt="TCP连接"><br>虽然 JS 是单线程的，但实际上参与工作的线程一共有四个：</p>
 <blockquote>
 <p>其中三个只是协助，只有 JS 引擎线程是真正执行的</p>
 </blockquote>
@@ -839,7 +839,7 @@
 </li>
 </ul>
 <p><strong>微任务</strong><br>微任务是ES6和Node环境下的，主要 API 有：Promise，process.nextTick。</p>
-<p>微任务的执行在宏任务的同步任务之后，在异步任务之前。<br><img src="/11.png" alt="TCP连接"></p>
+<p>微任务的执行在宏任务的同步任务之后，在异步任务之前。<br><img src="/posts/18919/11.png" alt="TCP连接"></p>
 <pre class="line-numbers language-css"><code class="language-css"><span class="token selector">console<span class="token class">.log</span>('1'); // 宏任务 同步
 
 setTimeout(function() </span><span class="token punctuation">{</span>

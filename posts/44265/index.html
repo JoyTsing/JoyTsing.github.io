@@ -605,15 +605,15 @@
 <h4 id="3-学习路径"><a href="#3-学习路径" class="headerlink" title="3 .学习路径"></a>3 .学习路径</h4><ul>
 <li>线性（排序）</li>
 </ul>
-<p><img src="/1.gif" alt="排序"><br>此系列首先会讲解线性结构，主要体现在排序算法上，稍有了解的学者应当知晓关于排序的算法并不少，通过此部分学习可深入了解许多算法思想。</p>
+<p><img src="/posts/44265/1.gif" alt="排序"><br>此系列首先会讲解线性结构，主要体现在排序算法上，稍有了解的学者应当知晓关于排序的算法并不少，通过此部分学习可深入了解许多算法思想。</p>
 <ul>
-<li>树形结构<br><img src="/2.png" alt="树形结构"></li>
+<li>树形结构<br><img src="/posts/44265/2.png" alt="树形结构"></li>
 </ul>
 <p>此部分将介绍几种重要的树形结构的算法思想、应用场景，它们之间的区别、特点、局限性等一一探究。</p>
 <ul>
 <li>图形结构</li>
 </ul>
-<p><img src="/3.png" alt="图形结构"></p>
+<p><img src="/posts/44265/3.png" alt="图形结构"></p>
 <p>此部分主要介绍图论相关的基础算法。</p>
 <p>对于算法而言，编程是次要的，更重要的还是思想，例如面试中的常见的“白板编程”，便是如此，一块白板不可能让你实现多长的代码，通常十几行甚至不足十行就可以考察出你对其算法的思想理解深度。</p>
 <h4 id="4-数据结构的重要性"><a href="#4-数据结构的重要性" class="headerlink" title="4. 数据结构的重要性"></a>4. 数据结构的重要性</h4><p>查看以上学习路径会发现重点更偏向于数据结构，从简单的线性过渡到图结构。确实如此，数据结构在编程中的地位是承上启下的。<br>优秀与平庸的程序员之间的区别就是数据结构的使用上，更重要的是算法与数据结构是融合一体、无法分隔的.<br>其实很多算法是依托于数据结构而存在的，包括面试中很多问题看似算法问题，本质还是数据结构，考察的远比我们想象的要基础，基础的重要性从来无需多言。例如微软曾面试过的代码实现堆、二叉树翻转等，无不是在考察基础。</p>
@@ -643,7 +643,7 @@
 <li>此时数组中第一个位置已是最小数字，接着在其余位置中找寻最小数字，与其数组中目前的第二个位置进行交换。</li>
 <li>后面过程依次类推，直到剩下最后一个位置，已无需排序，已为最大值。</li>
 </ul>
-<p><img src="/4.gif" alt="选择排序"></p>
+<p><img src="/posts/44265/4.gif" alt="选择排序"></p>
 <h4 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><pre class="line-numbers language-C++"><code class="language-C++">#include <iostream>
 #include <algorithm>
 
@@ -774,7 +774,7 @@ namespace SortTestHelper {
 
     return 0;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>显示结果（对20000个无序数字进行 选择排序，最终使用时间）：<br><img src="/4.png" alt="用时"><br>此时的main 函数看起来已经十分简洁了，其中的随机生成测试用例及排序函数过程执行时间都依赖于测试帮助文件SortTestHelper完成，而三个优化已经完成。</p>
+<p>显示结果（对20000个无序数字进行 选择排序，最终使用时间）：<br><img src="/posts/44265/4.png" alt="用时"><br>此时的main 函数看起来已经十分简洁了，其中的随机生成测试用例及排序函数过程执行时间都依赖于测试帮助文件SortTestHelper完成，而三个优化已经完成。</p>
 <hr>
 <h2 id="三-插入排序"><a href="#三-插入排序" class="headerlink" title="三. 插入排序"></a>三. 插入排序</h2><h4 id="1-算法思想-1"><a href="#1-算法思想-1" class="headerlink" title="1. 算法思想"></a>1. 算法思想</h4><p>插入排序的思想同生活中整理扑克牌顺序有些类似，将后面的牌按照大小顺序插入到前面来。{8,6,2,3,1,5,7,4},</p>
 <ul>
@@ -783,7 +783,7 @@ namespace SortTestHelper {
 <li>继续看第三个元素2，比第二个元素8小，交换位置，此时元素2是第二个位置，再同第一个元素6进行比较，比它小继而交换位置。</li>
 <li>后面过程依次类推。</li>
 </ul>
-<p><img src="/5.gif" alt="插入排序"></p>
+<p><img src="/posts/44265/5.gif" alt="插入排序"></p>
 <p>该算法在后面的应用中比较重要</p>
 <h4 id="2-代码实现-1"><a href="#2-代码实现-1" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>注意：</p>
 <ul>
@@ -826,12 +826,12 @@ void insertionSort(T arr[], int n){
         copy(a, a+n, arr);
         return arr;
     }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>显示结果:<br><img src="/6.png" alt="显示结果"></p>
+<p>显示结果:<br><img src="/posts/44265/6.png" alt="显示结果"></p>
 <p>从以上结果发现这与之前的理论分析有所出入，插入排序反而比选择排序效率低。具体原因稍后解析，接下来将针对插入排序的特性来进行优化，最后你会发现在某些情况下插入排序的效率不比 O(n*㏒n)差。</p>
 <h4 id="3-代码优化"><a href="#3-代码优化" class="headerlink" title="3. 代码优化"></a>3. 代码优化</h4><p>（1）减少多次交换swap操作</p>
 <p>以上发现插入排序中的内循环可提前结束性质后，可是测试结果却出乎意料。<strong>再仔细观察发现内循环中存在的swap操作比简单的比较操作更加耗时，因为swap交换中其实涉及到了3次赋值步骤，更不用说数组中的索引值访问等消耗时间。</strong></p>
 <p>所以这第一个优化就是<strong>避免在内循环中重复swap，只进行一次赋值操作，在内循环结束后再进行一次赋值操作，彻底避免交换操作。</strong></p>
-<p><img src="/7.gif" alt="优化"></p>
+<p><img src="/posts/44265/7.gif" alt="优化"></p>
 <ul>
 <li>查看以上GIF演示过程，这里以第三个元素2进行示例讲解（找到元素2应该待的位置）{6,8,2,3,1,5,7,4}：<br>在进行第三个元素2比较之前，先将元素值2复制一份保存起来再开始比较。</li>
 <li>第三个元素2比第二个元素8小，即2不应该在这个位置。此时不进行交换操作，而是进行赋值，将第三个元素赋值为8。</li>
@@ -878,7 +878,7 @@ void insertionSort(T arr[], int n){
 
         return arr;
     }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/8.png" alt="结果"></p>
+<p><img src="/posts/44265/8.png" alt="结果"></p>
 <p>以上20000个数字，其实任意交换100对数字，最后排序的结果，插入排序明显优于选择排序太多，<strong>这也体现出在特定情况下（近乎有序的数字排序）插入排序的高效性！</strong></p>
 <h2 id="四-冒泡排序"><a href="#四-冒泡排序" class="headerlink" title="四. 冒泡排序"></a>四. 冒泡排序</h2><p>过于简单，就略过了，但是需要注意的是冒泡排序有一个优化版本，叫做梳排序，可以去了解一下。</p>
 <h2 id="五-思维拓展"><a href="#五-思维拓展" class="headerlink" title="五. 思维拓展"></a>五. 思维拓展</h2><h3 id="1-O-n-2-算法思考"><a href="#1-O-n-2-算法思考" class="headerlink" title="1. O(n^2)算法思考"></a>1. O(n^2)算法思考</h3><p>这一篇博文主要学习了O(n^2)的排序算法：</p>

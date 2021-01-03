@@ -361,13 +361,6 @@
 
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-01-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://joytsing.github.io/tags/C/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
@@ -389,7 +382,7 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/C/</loc>
+    <loc>https://joytsing.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -397,6 +390,13 @@
   
   <url>
     <loc>https://joytsing.github.io/tags/Linux/</loc>
+    <lastmod>2021-01-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/C/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -424,20 +424,6 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E8%AE%A1%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2021-01-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/tags/TCP-IP/</loc>
-    <lastmod>2021-01-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://joytsing.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
@@ -459,14 +445,28 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Hexo/</loc>
+    <loc>https://joytsing.github.io/tags/Leetcode/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Leetcode/</loc>
+    <loc>https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E8%AE%A1%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2021-01-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/TCP-IP/</loc>
+    <lastmod>2021-01-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/Hexo/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -503,13 +503,6 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/C/</loc>
-    <lastmod>2021-01-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://joytsing.github.io/categories/Linux/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
@@ -517,14 +510,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/Algorithms/</loc>
+    <loc>https://joytsing.github.io/categories/C/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/%E8%AE%A1%E7%BD%91/</loc>
+    <loc>https://joytsing.github.io/categories/Algorithms/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -539,6 +532,13 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/Algorithm/</loc>
+    <lastmod>2021-01-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/categories/%E8%AE%A1%E7%BD%91/</loc>
     <lastmod>2021-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

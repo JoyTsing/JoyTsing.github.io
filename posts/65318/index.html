@@ -1076,7 +1076,7 @@ Posix标准中">
 <li>索引 key,value对，key是文件名，要求变长，</li>
 <li>目录文件</li>
 </ul>
-<img src="/1.png">
+<img src="/posts/65318/1.png">
 
 <h4 id="整体过程"><a href="#整体过程" class="headerlink" title="整体过程"></a>整体过程</h4><p>登录时,UNIX读取根目录(i-node2),找出用户主目录(homedirectory),存储用户主目录的i节点号。当用cd改变目录时, UNIX用新目录的i节点号进行替换。</p>
 <p>用系统工具或命令(例如vi或at)访问文件或者某个程序打开文件时, UNIX查找指定文件名的目录。每个文件名与i节点列表中的一个i节点相联系。UNIX通过用户工作目录的i节点开始搜索,但是如果用户给定了全路径名,则从根目录(i-node 2)开始查找。</p>

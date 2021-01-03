@@ -610,9 +610,9 @@ private:
     int m_data1, m_data2;
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <a id="more"></a>
-<p>类A的虚表如图1所示:<br><img src="/1.png" alt="类A的虚表示意图"></p>
+<p>类A的虚表如图1所示:<br><img src="/posts/4469/1.png" alt="类A的虚表示意图"></p>
 <p>虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。<br>虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。</p>
-<h3 id="三、虚表指针"><a href="#三、虚表指针" class="headerlink" title="三、虚表指针"></a>三、虚表指针</h3><p>虚表是属于类的，而不是属于某个具体的对象，一个类只需要一个虚表即可。同一个类的所有对象都使用同一个虚表。<br>为了指定对象的虚表，对象内部包含一个虚表的指针，来指向自己所使用的虚表。为了让每个包含虚表的类的对象都拥有一个虚表指针，编译器在类中添加了一个指针，<em>__vptr，用来指向虚表。这样，当类的对象在创建时便拥有了这个指针，且这个指针的值会自动被设置为指向类的虚表。<br>*对象与它的虚表:</em><br><img src="/2.png" alt="对象与它的虚表"></p>
+<h3 id="三、虚表指针"><a href="#三、虚表指针" class="headerlink" title="三、虚表指针"></a>三、虚表指针</h3><p>虚表是属于类的，而不是属于某个具体的对象，一个类只需要一个虚表即可。同一个类的所有对象都使用同一个虚表。<br>为了指定对象的虚表，对象内部包含一个虚表的指针，来指向自己所使用的虚表。为了让每个包含虚表的类的对象都拥有一个虚表指针，编译器在类中添加了一个指针，<em>__vptr，用来指向虚表。这样，当类的对象在创建时便拥有了这个指针，且这个指针的值会自动被设置为指向类的虚表。<br>*对象与它的虚表:</em><br><img src="/posts/4469/2.png" alt="对象与它的虚表"></p>
 <p>上面指出，一个继承类的基类如果包含虚函数，那个这个继承类也有拥有自己的虚表，故这个继承类的对象也包含一个虚表指针，用来指向它的虚表。</p>
 <h3 id="四、动态绑定"><a href="#四、动态绑定" class="headerlink" title="四、动态绑定"></a>四、动态绑定</h3><p>说到这里，大家一定会好奇C++是如何利用虚表和虚表指针来实现动态绑定的。我们先看下面的代码。</p>
 <pre class="line-numbers language-C++"><code class="language-C++">class A {
@@ -640,7 +640,7 @@ public:
 private:
     int m_data1, m_data4;
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>类A是基类，类B继承类A，类C又继承类B。类A，类B，类C，其对象模型如下图3所示。<br><img src="/3.png" alt="类A，类B，类C的对象模型"><br>由于这三个类都有虚函数，故编译器为每个类都创建了一个虚表，即类A的虚表（A vtbl），类B的虚表（B vtbl），类C的虚表（C vtbl）。类A，类B，类C的对象都拥有一个虚表指针，*__vptr，用来指向自己所属类的虚表。<br>类A包括两个虚函数，故A vtbl包含两个指针，分别指向A::vfunc1()和A::vfunc2()。<br>类B继承于类A，故类B可以调用类A的函数，但由于类B重写了B::vfunc1()函数，故B vtbl的两个指针分别指向B::vfunc1()和A::vfunc2()。<br>类C继承于类B，故类C可以调用类B的函数，但由于类C重写了C::vfunc2()函数，故C vtbl的两个指针分别指向B::vfunc1()（指向继承的最近的一个类的函数）和C::vfunc2()。<br>虽然图3看起来有点复杂，但是只要抓住“对象的虚表指针用来指向自己所属类的虚表，虚表中的指针会指向其继承的最近的一个类的虚函数”这个特点，便可以快速将这几个类的对象模型在自己的脑海中描绘出来。</p>
+<p>类A是基类，类B继承类A，类C又继承类B。类A，类B，类C，其对象模型如下图3所示。<br><img src="/posts/4469/3.png" alt="类A，类B，类C的对象模型"><br>由于这三个类都有虚函数，故编译器为每个类都创建了一个虚表，即类A的虚表（A vtbl），类B的虚表（B vtbl），类C的虚表（C vtbl）。类A，类B，类C的对象都拥有一个虚表指针，*__vptr，用来指向自己所属类的虚表。<br>类A包括两个虚函数，故A vtbl包含两个指针，分别指向A::vfunc1()和A::vfunc2()。<br>类B继承于类A，故类B可以调用类A的函数，但由于类B重写了B::vfunc1()函数，故B vtbl的两个指针分别指向B::vfunc1()和A::vfunc2()。<br>类C继承于类B，故类C可以调用类B的函数，但由于类C重写了C::vfunc2()函数，故C vtbl的两个指针分别指向B::vfunc1()（指向继承的最近的一个类的函数）和C::vfunc2()。<br>虽然图3看起来有点复杂，但是只要抓住“对象的虚表指针用来指向自己所属类的虚表，虚表中的指针会指向其继承的最近的一个类的虚函数”这个特点，便可以快速将这几个类的对象模型在自己的脑海中描绘出来。</p>
 <p>非虚函数的调用不用经过虚表，故不需要虚表中的指针指向这些函数。</p>
 <p>假设我们定义一个类B的对象。由于bObject是类B的一个对象，故bObject包含一个虚表指针，指向类B的虚表。</p>
 <pre class="line-numbers language-C++"><code class="language-C++">int main() 
@@ -806,12 +806,12 @@ private:
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">设计模式</span>
                                 </a>
                             
                         </div>

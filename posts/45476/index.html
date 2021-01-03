@@ -607,7 +607,7 @@
 <h4 id="1-限制"><a href="#1-限制" class="headerlink" title="1. 限制"></a>1. 限制</h4><p><strong>对于有序数列，才能使用二分查找法！在此体现出前面几篇文章介绍的排序算法的作用：可作为其它算法的子过程 。</strong></p>
 <h4 id="2-算法思想"><a href="#2-算法思想" class="headerlink" title="2. 算法思想"></a>2. 算法思想</h4><p>注意该算法的前提条件：有序数组。例如下图，想查找元素value，先查看数组中间元素值v与value的大小，若相等则刚好，否则根据比较结果选择左、右半部分再次寻找。</p>
 <p>整个查找过程可构成一棵树，时间复杂度为O(logn)。</p>
-<p><img src="/1.png" alt="图片"></p>
+<p><img src="/posts/45476/1.png" alt="图片"></p>
 <h4 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h4><pre class="line-numbers language-C++"><code class="language-C++">// 二分查找法,在有序数组arr中,查找target
 // 如果找到target,返回相应的索引index
 // 如果没有找到target,返回-1
@@ -651,14 +651,14 @@ int __binarySearch2(T arr[], int l, int r, T target){
         return __binarySearch2(arr, mid+1, r, target);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="4-变种算法-floor-和-ceil"><a href="#4-变种算法-floor-和-ceil" class="headerlink" title="4. 变种算法 floor 和 ceil"></a>4. 变种算法 floor 和 ceil</h4><h5 id="（1）算法思想"><a href="#（1）算法思想" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p>以上实现的二分查找，在数组中存在重复值的情况下无法确定返回的唯一索引值，于是二分查找法的变种：floor 和 ceil</p>
-<p><img src="/2.png" alt="图片"></p>
+<p><img src="/posts/45476/2.png" alt="图片"></p>
 <ul>
 <li><p><strong>floor</strong>：是查找元素在数组中<strong>第一个</strong>索引位置；若数组中无此元素，则是查找元素值<strong>前一个</strong>索引位置。</p>
 </li>
 <li><p><strong>ceil</strong>：是查找元素在数组中<strong>最后一个</strong>索引位置；若数组中无此元素，则是查找元素值<strong>后一个</strong>索引位置。</p>
 </li>
 </ul>
-<p><img src="/3.png" alt="图片"></p>
+<p><img src="/posts/45476/3.png" alt="图片"></p>
 <h5 id="（2）代码实现"><a href="#（2）代码实现" class="headerlink" title="（2）代码实现"></a>（2）代码实现</h5><pre class="line-numbers language-C++"><code class="language-C++">// 二分查找法, 在有序数组arr中, 查找target
 // 如果找到target, 返回第一个target相应的索引index
 // 如果没有找到target, 返回比target小的最大值相应的索引, 如果这个最大值有多个, 返回最大索引
@@ -720,8 +720,8 @@ int ceil(T arr[], int n, T target){
     return r;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="二-二分搜索树"><a href="#二-二分搜索树" class="headerlink" title="二. 二分搜索树"></a>二. 二分搜索树</h2><h4 id="1-优势"><a href="#1-优势" class="headerlink" title="1. 优势"></a>1. 优势</h4><p>首先来了解二分搜索树的优势。</p>
-<h5 id="（1）查找表的实现-字典数据结构"><a href="#（1）查找表的实现-字典数据结构" class="headerlink" title="（1）查找表的实现 - 字典数据结构"></a>（1）查找表的实现 - 字典数据结构</h5><p>查找表的实现，通常这种实现又被称为“字典数据结构”，都是以键值对形式形成了表，通过key来查找对应value。如果这些key值都是整型，那么可以使用数组实现，但是在实际运用中key值是比较复杂的，例如字典。因此需要实现一个“查找表”，最基础方式就是二分搜索树。<br><img src="/4.png" alt="图片"></p>
-<h5 id="（2）时间复杂度比较"><a href="#（2）时间复杂度比较" class="headerlink" title="（2）时间复杂度比较"></a>（2）时间复杂度比较</h5><p>通过以上分析，其实普通数组和顺序数组也可以完成以上需求，但是操作起来消耗的时间却不尽人意。<br><img src="/5.png" alt="图片"></p>
+<h5 id="（1）查找表的实现-字典数据结构"><a href="#（1）查找表的实现-字典数据结构" class="headerlink" title="（1）查找表的实现 - 字典数据结构"></a>（1）查找表的实现 - 字典数据结构</h5><p>查找表的实现，通常这种实现又被称为“字典数据结构”，都是以键值对形式形成了表，通过key来查找对应value。如果这些key值都是整型，那么可以使用数组实现，但是在实际运用中key值是比较复杂的，例如字典。因此需要实现一个“查找表”，最基础方式就是二分搜索树。<br><img src="/posts/45476/4.png" alt="图片"></p>
+<h5 id="（2）时间复杂度比较"><a href="#（2）时间复杂度比较" class="headerlink" title="（2）时间复杂度比较"></a>（2）时间复杂度比较</h5><p>通过以上分析，其实普通数组和顺序数组也可以完成以上需求，但是操作起来消耗的时间却不尽人意。<br><img src="/posts/45476/5.png" alt="图片"></p>
 <h5 id="（3）高效性"><a href="#（3）高效性" class="headerlink" title="（3）高效性"></a>（3）高效性</h5><ul>
 <li>不仅可查找数据，还可以高效地插入，删除数据之类的动态维护数据。</li>
 <li>可以方便地回答很多数据之间的关系问题： </li>
@@ -734,10 +734,10 @@ int ceil(T arr[], int n, T target){
 <ul>
 <li><strong>每个节点的键值大于左孩子</strong></li>
 <li><strong>每个节点的键值小于右孩子</strong></li>
-<li>以左右孩子为根的子树仍为二分搜索树<br><img src="/6.png" alt="图片"></li>
+<li>以左右孩子为根的子树仍为二分搜索树<br><img src="/posts/45476/6.png" alt="图片"></li>
 </ul>
 <p><em>注意：上篇博文中讲解的堆是一棵完全的二叉树，但对于二分搜索而言，并无此限制，例如下图。</em></p>
-<p><img src="/7.png" alt="图片"></p>
+<p><img src="/posts/45476/7.png" alt="图片"></p>
 <h4 id="3-代码实现-1"><a href="#3-代码实现-1" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h4><p>在代码实现堆时，正是因为它是一棵完全的二叉树此特点，所以可使用数组进行实现，但是二分搜索树并无此特性，<strong>所以在实现上是设立key、value这种Node节点，节点之间的连续使用指针。</strong></p>
 <p><strong>Node节点结构体包含：</strong></p>
 <ul>
@@ -802,7 +802,7 @@ public:
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="4-插入新节点"><a href="#4-插入新节点" class="headerlink" title="4. 插入新节点"></a>4. 插入新节点</h4><p>算法思想</p>
 <p>查看以下动画演示了解插入新节点的算法思想：（其插入过程充分利用了二分搜索树的特性）</p>
-<p>例如待插入数据60，首先与根元素41比较，大于根元素，则与其右孩子再进行比较，大于58由于58无右孩子，则60为58的右孩子，过程结束。（注意其递归过程）<br><img src="/1.gif" alt="图片"></p>
+<p>例如待插入数据60，首先与根元素41比较，大于根元素，则与其右孩子再进行比较，大于58由于58无右孩子，则60为58的右孩子，过程结束。（注意其递归过程）<br><img src="/posts/45476/1.gif" alt="图片"></p>
 <p><strong>代码实现：insert函数</strong></p>
 <ul>
 <li>判断node节点是否为空，为空则创建节点并将其返回（ <strong>判断递归到底的情况</strong>）。<br>若不为空，则继续判断根元素的key值是否等于根元素的key值： <ul>
@@ -886,15 +886,15 @@ private:
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="三-二分搜索树的遍历"><a href="#三-二分搜索树的遍历" class="headerlink" title="三. 二分搜索树的遍历"></a>三. 二分搜索树的遍历</h2><p>接下来讲解二分搜索树的遍历过程，学习之后不论是其它的树、图结构，都会使用到遍历。</p>
 <p><strong>二分搜索树的前中后序遍历：</strong></p>
-<p>对于每个节点而言，可能会有左、右两个孩子，所以分成下图中3个点，每次递归过程中会经过这3个点<br><img src="/8.png" alt="图片"></p>
+<p>对于每个节点而言，可能会有左、右两个孩子，所以分成下图中3个点，每次递归过程中会经过这3个点<br><img src="/posts/45476/8.png" alt="图片"></p>
 <ul>
 <li>前序遍历：先访问当前节点，再依次递归访问左右子树</li>
 <li>中序遍历：先递归访问左子树，再访问自身，再递归访问右子树</li>
 <li>后续遍历：先递归访问左右子树，再访问自身节点</li>
 </ul>
-<h4 id="1-前序遍历"><a href="#1-前序遍历" class="headerlink" title="1. 前序遍历"></a>1. 前序遍历</h4><h5 id="（1）算法思想-1"><a href="#（1）算法思想-1" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p><strong>前序遍历：先访问当前节点，再依次递归访问左右子树。</strong><br><img src="/2.gif" alt="图片"></p>
+<h4 id="1-前序遍历"><a href="#1-前序遍历" class="headerlink" title="1. 前序遍历"></a>1. 前序遍历</h4><h5 id="（1）算法思想-1"><a href="#（1）算法思想-1" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p><strong>前序遍历：先访问当前节点，再依次递归访问左右子树。</strong><br><img src="/posts/45476/2.gif" alt="图片"></p>
 <p>其实在遍历过程中每个节点都访问了3次，对应着这3个小点，顺序为前-&gt; 中 -&gt; 后，<strong>只有在“前”点时才会打印该节点元素值。</strong></p>
-<p>最终打印结果：<br><img src="/9.png" alt="图片"></p>
+<p>最终打印结果：<br><img src="/posts/45476/9.png" alt="图片"></p>
 <h5 id="（2）代码实现-1"><a href="#（2）代码实现-1" class="headerlink" title="（2）代码实现"></a>（2）代码实现</h5><pre class="line-numbers language-C++"><code class="language-C++">public:
     // 二分搜索树的前序遍历
     void preOrder(){
@@ -910,7 +910,7 @@ private:
             preOrder(node->right);
         }
     }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="2-中序遍历"><a href="#2-中序遍历" class="headerlink" title="2. 中序遍历"></a>2. 中序遍历</h4><h5 id="（1）算法思想-2"><a href="#（1）算法思想-2" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p><strong>中序遍历：先递归访问左子树，再访问自身，再递归访问右子树。</strong><br><img src="/3.gif" alt="图片"><br>在遍历过程中每个节点都访问了3次，对应着这3个小点，顺序为前-&gt; 中 -&gt; 后，<strong>只有在“中”点时才会打印该节点元素值。</strong><br><img src="/10.png" alt="图片"><br>查看其打印结果，<strong>是按照从小到大的顺序进行打印的，所以在进行实际应用时，可使用二分搜索输的中序遍历将元素按照从小到大顺序输出。其原因与二分搜索树定义相关的！</strong></p>
+<h4 id="2-中序遍历"><a href="#2-中序遍历" class="headerlink" title="2. 中序遍历"></a>2. 中序遍历</h4><h5 id="（1）算法思想-2"><a href="#（1）算法思想-2" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p><strong>中序遍历：先递归访问左子树，再访问自身，再递归访问右子树。</strong><br><img src="/posts/45476/3.gif" alt="图片"><br>在遍历过程中每个节点都访问了3次，对应着这3个小点，顺序为前-&gt; 中 -&gt; 后，<strong>只有在“中”点时才会打印该节点元素值。</strong><br><img src="/posts/45476/10.png" alt="图片"><br>查看其打印结果，<strong>是按照从小到大的顺序进行打印的，所以在进行实际应用时，可使用二分搜索输的中序遍历将元素按照从小到大顺序输出。其原因与二分搜索树定义相关的！</strong></p>
 <h5 id="（2）代码实现-2"><a href="#（2）代码实现-2" class="headerlink" title="（2）代码实现"></a>（2）代码实现</h5><pre class="line-numbers language-C++"><code class="language-C++">public:
     // 二分搜索树的中序遍历
     void inOrder(){
@@ -927,8 +927,8 @@ private:
             inOrder(node->right);
         }
     }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="3-后序遍历"><a href="#3-后序遍历" class="headerlink" title="3. 后序遍历"></a>3. 后序遍历</h4><h5 id="（1）算法思想-3"><a href="#（1）算法思想-3" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p><strong>后续遍历：先递归访问左右子树，再访问自身节点。</strong><br><img src="/4.gif" alt="图片"><br>在遍历过程中每个节点都访问了3次，对应着这3个小点，顺序为前-&gt; 中 -&gt; 后，<strong>只有在“后”点时才会打印该节点元素值。</strong></p>
-<p>最终打印结果：<br><img src="/11.png" alt="图片"></p>
+<h4 id="3-后序遍历"><a href="#3-后序遍历" class="headerlink" title="3. 后序遍历"></a>3. 后序遍历</h4><h5 id="（1）算法思想-3"><a href="#（1）算法思想-3" class="headerlink" title="（1）算法思想"></a>（1）算法思想</h5><p><strong>后续遍历：先递归访问左右子树，再访问自身节点。</strong><br><img src="/posts/45476/4.gif" alt="图片"><br>在遍历过程中每个节点都访问了3次，对应着这3个小点，顺序为前-&gt; 中 -&gt; 后，<strong>只有在“后”点时才会打印该节点元素值。</strong></p>
+<p>最终打印结果：<br><img src="/posts/45476/11.png" alt="图片"></p>
 <h5 id="（2）代码实现-3"><a href="#（2）代码实现-3" class="headerlink" title="（2）代码实现"></a>（2）代码实现</h5><pre class="line-numbers language-C++"><code class="language-C++">public:
     // 二分搜索树的后序遍历
     void postOrder(){
