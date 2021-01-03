@@ -529,12 +529,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -576,7 +576,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        13.2k
+                        13.1k
                     </div>
                 
 
@@ -798,7 +798,7 @@ Contents of section .interp:
 </ul>
 <p>现在用 <code>strace</code> 来跟踪一下程序执行过程中用到的系统调用。</p>
 <pre><code>$ strace -f -o strace.out test
-$ cat strace.out | grep \(.*\) | sed -e "s#[0-9]* \([a-zA-Z0-9_]*\)(.*).*#\1#g"
+$ cat strace.out | grep \(.*\) | sed -e &quot;s#[0-9]* \([a-zA-Z0-9_]*\)(.*).*#\1#g&quot;
 execve
 brk
 access
@@ -1344,7 +1344,7 @@ $ gdb -q ./testshellcode
 ...
 (gdb) l
 21
-22              memset(buffer, '\0', BUF_SIZE);
+22              memset(buffer, &#39;\0&#39;, BUF_SIZE);
 23              memcpy(buffer, STR_SRC, sizeof(STR_SRC)-1);
 24
 25              return sum;
@@ -1799,25 +1799,7 @@ Breakpoint <span class="token number">4</span><span class="token punctuation">,<
 <h3 id="缓冲区注入与防范"><a href="#缓冲区注入与防范" class="headerlink" title="缓冲区注入与防范"></a>缓冲区注入与防范</h3><p>这个程序里头的注入代码和被注入程序竟然是一个程序，傻瓜才自己攻击自己（不过有些黑客有可能利用程序中一些空闲空间注入代码哦），真正的缓冲区注入程序是分开的，比如作为被注入程序的一个字符串参数。而在被注入程序中刚好没有做字符串长度的限制，从而让这段字符串中的一部分修改了 <code>eip</code>，另外一部分作为注入代码运行了，从而实现了注入的目的。不过这会涉及到一些技巧，即如何刚好用注入代码的入口地址来修改 <code>eip</code> （即新的 <code>eip</code> 能够指向注入代码）？如果 <code>eip</code> 的位置和缓冲区的位置之间的距离是确定，那么就比较好处理了，但从上面的两个例子中我们发现，有一个编译后有 <code>edi</code> 和 <code>esi</code>，而另外一个则没有，另外，缓冲区的位置，以及被注入程序有多少个参数我们都无法预知，因此，如何计算 <code>eip</code> 所在的位置呢？这也会很难确定。还有，为了防止缓冲区溢出带来的注入问题，现在的操作系统采取了一些办法，比如让 <code>esp</code> 随机变化（比如和系统时钟关联起来），所以这些措施将导致注入更加困难。如果有兴趣，你可以接着看看最后的几篇参考资料并进行更深入的研究。</p>
 <p>需要提到的是，因为很多程序可能使用 <code>strcpy</code> 来进行字符串的复制，在实际编写缓冲区注入代码时，会采取一定的办法（指令替换），把代码中可能包含的 <code>\0</code> 字节去掉，从而防止 <code>strcpy</code> 中断对注入代码的复制，进而可以复制完整的注入代码。具体的技巧可以参考 <a href="http://www.ibm.com/developerworks/cn/linux/l-overflow/index.html">Linux下缓冲区溢出攻击的原理及对策</a>，<a href="http://janxin.bokee.com/4067220.html">Shellcode技术杂谈</a>，<a href="http://virus.bartolich.at/virus-writing-HOWTO/_html/">virus-writing-HOWTO</a>。</p>
 <h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>实际上缓冲区溢出应该是语法和逻辑方面的双重问题，由于语法上的不严格（对数组边界没有检查）导致逻辑上可能出现严重缺陷（程序执行行为被改变）。另外，这类问题是对程序运行过程中的程序映像的栈区进行注入。实际上除此之外，程序在安全方面还有很多类似的问题。比如，虽然程序映像的正文区受到系统保护（只读），但是如果内存（硬件本身，内存条）出现故障，在程序运行的过程中，程序映像的正文区的某些字节就可能被修改了，也可能发生非常严重的后果，因此程序运行过程的正文区检查等可能的手段需要被引入。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1830,12 +1812,12 @@ Breakpoint <span class="token number">4</span><span class="token punctuation">,<
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1942,12 +1924,12 @@ Breakpoint <span class="token number">4</span><span class="token punctuation">,<
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1999,12 +1981,12 @@ Breakpoint <span class="token number">4</span><span class="token punctuation">,<
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -2178,7 +2160,7 @@ Breakpoint <span class="token number">4</span><span class="token punctuation">,<
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

@@ -574,7 +574,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        16.9k
+                        16.8k
                     </div>
                 
 
@@ -762,7 +762,7 @@ $ <span class="token keyword">echo</span> 1959930*512/1024 <span class="token op
 <li><a href="http://soft.zdnet.com.cn/software_zone/2007/1010/545261.shtml">Linux 下加载 swap 分区的步骤</a></li>
 <li><a href="http://www.examda.com/linux/fudao/20071212/113445321.html">Linux 下 ISO 镜像文件的制作与刻录</a></li>
 <li>RAM 磁盘分区解释: <a href="http://oldlinux.org/oldlinux/viewthread.php?tid=2677">[1]</a>, <a href="http://www.ibm.com/developerworks/cn/linux/l-initrd.html">[2]</a></li>
-<li><a href="http://www.ibm.com/Search/?q=高级文件系统实现者指南&amp;v=17&amp;en=utf&amp;lang=en&amp;cc=us">高级文件系统实现者指南</a></li>
+<li><a href="http://www.ibm.com/Search/?q=高级文件系统实现者指南&v=17&en=utf&lang=en&cc=us">高级文件系统实现者指南</a></li>
 </ul>
 <h3 id="分区、逻辑卷和文件系统的关系"><a href="#分区、逻辑卷和文件系统的关系" class="headerlink" title="分区、逻辑卷和文件系统的关系"></a>分区、逻辑卷和文件系统的关系</h3><p>上一节直接把分区格式化为某种文件系统类型，但是考虑到扩展新的存储设备的需要，开发人员在文件系统和分区之间引入了逻辑卷。考虑到时间关系，这里不再详述，请参考资料：<a href="http://unix-cd.com/vc/www/28/2007-06/1178.html">Linux 逻辑卷管理详解</a></p>
 <h3 id="文件系统的可视化结构"><a href="#文件系统的可视化结构" class="headerlink" title="文件系统的可视化结构"></a>文件系统的可视化结构</h3><p>文件系统最终呈现出来的是一种可视化的结构，可用ls,find,tree等命令把它呈现出来。它就像一颗倒挂的“树”，在树的节点上还可以挂载新的“树”。</p>
@@ -1304,25 +1304,7 @@ test@falcon-desktop:~$ <span aria-hidden="true" class="line-numbers-rows"><span>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到这里，整个复习系列就要结束了，作为总结篇，主要回顾一下各个小节的主要内容，并总结出 Shell 编程的一些常用框架和相关注意事项等。</p>
 <h3 id="正确使用-source-和"><a href="#正确使用-source-和" class="headerlink" title="正确使用 source 和 ."></a>正确使用 <code>source</code> 和 <code>.</code></h3><p>仅使用 <code>source</code> 和 <code>.</code> 来执行你的环境配置等功能，建议不要用于其它用途。 在Shell中使用脚本时，使用 <code>bash your_script.sh</code> 而不是 <code>source your_script.sh</code> 或 <code>. your_script.sh</code>。</p>
 <p>当使用 <code>bash</code> 的时候，当前的Shell会创建一个新的子进程执行你的脚本；当使用 <code>source</code> 和 <code>.</code> 时，当前的Shell会直接解释执行 <code>your_script.sh</code> 中的代码。如果 <code>your_script.sh</code> 中包含了类似 <code>exit 0</code> 这样的代码，使用<code>source</code> 和 <code>.</code> 执行会导致当前Shell意外地退出。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1679,7 +1661,7 @@ test@falcon-desktop:~$ <span aria-hidden="true" class="line-numbers-rows"><span>
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

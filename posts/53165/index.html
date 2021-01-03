@@ -567,7 +567,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.3k
+                        1.2k
                     </div>
                 
 
@@ -596,7 +596,7 @@
 <p>vi/vim与常见的编辑器最大的不同就在于，你使用vi/vim的话完全可以做到手不离键盘，一切操作都不需要使用鼠标（当然你想使用的话也可以设置），但也因此需要记忆大量的命令，当你经常使用，最终熟记时，你就会发现vi/vim的强大。</p>
 <h2 id="vi的工作模式"><a href="#vi的工作模式" class="headerlink" title="vi的工作模式"></a>vi的工作模式</h2><p><code>命令模式：</code> 在启动之时，vi会进入命令模式，命令模式下键盘的输入不会在屏幕上显示出来（不像word），但会被解释执行，在命令模式下可以利用预先定义的按键来移动光标，复制删除查询等等一系列操作,可以通过配置vi/vim将命令模式下键盘输入显示到右下角。</p>
 <p>一些命令常常以冒号( : )、斜杠(/)、问号(?)开头来执行，所有命令均显示在编辑器屏幕的最下角。</p>
-<img src="/posts/53165/2.jpg">
+<img src="/2.jpg">
 
 <p><code>文本输入模式(插入模式)：</code>文本输入模式下键盘的输入都会显示在屏幕之中，按键不作为命令被执行，而是作为文本写入到用户的文件之中。</p>
 <p><code>命令行模式：</code>可以进行诸多扩展的操作</p>
@@ -612,15 +612,15 @@
 </ul>
 <p><strong>插入模式→命令模式</strong><br>在插入模式下<code>ESC键</code></p>
 <p><strong>命令模式→命令行模式</strong><br>输入：即可 转为末行模式</p>
-<img src="/posts/53165/1.jpg">
+<img src="/1.jpg">
 
 <p>到目前为止，就具有了最基本的读写文件的能力了。</p>
 <h2 id="vi基本命令"><a href="#vi基本命令" class="headerlink" title="vi基本命令"></a>vi基本命令</h2><p>使用基本命令需要在命令模式之下</p>
 <h3 id="1-移动光标"><a href="#1-移动光标" class="headerlink" title="1.移动光标"></a>1.移动光标</h3><p>可以在vi/vim中输入：help查看帮助</p>
-<img src="/posts/53165/3.jpg">
+<img src="/3.jpg">
 
 <p>除了使用小键盘可以移动光标外，常见的移动光标的方法有：</p>
-<img src="/posts/53165/4.jpg">
+<img src="/4.jpg">
 
 <p>额外补充的：</p>
 <ul>
@@ -640,39 +640,21 @@
 <li>s：删除光标所在字符,并转为输入模式</li>
 <li>r：替换光标处字符（输入r之后继续输入替换之后的字符即被替换，还停留在命令模式）</li>
 </ul>
-<h3 id="3-文本修改"><a href="#3-文本修改" class="headerlink" title="3.文本修改"></a>3.文本修改</h3><img src="/posts/53165/51.jpg">
+<h3 id="3-文本修改"><a href="#3-文本修改" class="headerlink" title="3.文本修改"></a>3.文本修改</h3><img src="/51.jpg">
 
 <p><code>.</code>可以让用户重复前一个动作，经常配合其他命令使用。数字可以和指令结合。</p>
 <br>
 
-<img src="/posts/53165/52.jpg">
+<img src="/52.jpg">
 
-<h3 id="4-搜索"><a href="#4-搜索" class="headerlink" title="4.搜索"></a>4.搜索</h3><img src="/posts/53165/6.jpg">
+<h3 id="4-搜索"><a href="#4-搜索" class="headerlink" title="4.搜索"></a>4.搜索</h3><img src="/6.jpg">
 
 <h2 id="vi的退出"><a href="#vi的退出" class="headerlink" title="vi的退出"></a>vi的退出</h2><p>进入vi的方法只有一种，但是退出vi的方法却有很多种，用户可以根据自己的需要选择不同的退出方式。</p>
-<img src="/posts/53165/7.jpg">
+<img src="/7.jpg">
 
 <h2 id="存储缓冲与显示"><a href="#存储缓冲与显示" class="headerlink" title="存储缓冲与显示"></a>存储缓冲与显示</h2><p>vi编辑器会为用户生成又或者修改一个文件创建一个临时工作区，用户对文件所做的修改只作用于工作区中的副本而不是源文件。vi编辑器在一个编辑任务中可以使用不同的的缓冲区来管理用户的文件。如果用户想要把偶才能所做的修改，就需要将缓冲区的副本替换源文件。对源文件的修改需要用户执行一个写入操作。</p>
 <p>对于缓冲区而言，只显示一个窗口的大小，并存在一个修改队列，记录用户的操作，<code>.</code>命令将最后一次修改append到队列,<code>u</code>命令回退这个队列</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1013,7 +995,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

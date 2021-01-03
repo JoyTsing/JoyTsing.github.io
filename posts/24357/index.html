@@ -574,7 +574,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        10 分
+                        9 分
                     </div>
                 
 
@@ -613,12 +613,12 @@
 </ul>
 </li>
 </ul>
-<img src="/posts/24357/1.png">
+<img src="/1.png">
 
 <h3 id="shell语言"><a href="#shell语言" class="headerlink" title="shell语言"></a>shell语言</h3><p>Shell 命令的基本格式如下：</p>
 <p>command [选项] [参数],与前面所学的命令十分相像,如果有多行单条命令，则要在行尾以<code>\</code>结束，shell也有扩展符，大体上与C相似，就不复述了。</p>
 <p>shell的命令解析过程：</p>
-<p><img src="/posts/24357/3.png" alt="解析过程"></p>
+<p><img src="/3.png" alt="解析过程"></p>
 <ul>
 <li>完整的命令解析过程<ul>
 <li>tilde是~表达式展开</li>
@@ -631,9 +631,9 @@
 </ul>
 <h4 id="显示信息echo"><a href="#显示信息echo" class="headerlink" title="显示信息echo"></a>显示信息echo</h4><p>echo用来显示信息到终端上，如果需要格式化输出请使用printf</p>
 <p><code>echo hello there</code></p>
-<img src="/posts/24357/2.png">
+<img src="/2.png">
 
-<p>有些shell的元字符对shell来说有特殊含义，这时候就有引用字符来消除元字符的特殊含义，除了反斜杠外还提供了：<code>' '</code> ,<code>" "</code>。</p>
+<p>有些shell的元字符对shell来说有特殊含义，这时候就有引用字符来消除元字符的特殊含义，除了反斜杠外还提供了：<code>&#39; &#39;</code> ,<code>&quot; &quot;</code>。</p>
 <p><code>双引号:</code>双引号可以忽略大多数字符的特殊意义，除了 <strong>$,单引号和双引号</strong>，此外双引号还保留了空白字符。</p>
 <p><code>单引号：</code>单引号在双引号基础上加强了，除了单引号外，任何符合的特殊意义都被消除，单引号同样保留空白符，除此之外还有一个非常重要的特性，包含在单引号的字符串变成1个单个的参数，空格也失去了作为参数分隔符的含义。</p>
 <h3 id="shell变量"><a href="#shell变量" class="headerlink" title="shell变量"></a>shell变量</h3><p>变量是任何一种编程语言都必不可少的组成部分，变量用来存放各种数据。脚本语言在定义变量时通常不需要指明类型，直接赋值就可以，Shell 变量也遵循这个规则。</p>
@@ -719,7 +719,7 @@
 <td align="left">按照job形式输出</td>
 </tr>
 </tbody></table>
-<img src="/posts/24357/4.png">
+<img src="/4.png">
 
 <h4 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h4><p><code>nohup “command”&amp;</code></p>
 <p>如果想要在用户退出系统后继续执行后台进程，则可以使用nohup命令，他可以让进程免于被终止信号终止，了解即可。</p>
@@ -749,15 +749,15 @@
 <td align="left">指定用户</td>
 </tr>
 </tbody></table>
-<img src="/posts/24357/5.png">
+<img src="/5.png">
 
 <h4 id="trap"><a href="#trap" class="headerlink" title="trap"></a>trap</h4><p>trap是一个shell内建命令，它用来在脚本中指定信号如何处理。比如，按Ctrl+C会使脚本终止执行，实际上系统发送了SIGINT信号给脚本进程，SIGINT信号的默认处理方式就是退出程序。如果要在Ctrl+C不退出程序，那么就得使用trap命令来指定一下SIGINT的处理方式了。trap命令不仅仅处理Linux信号，还能对脚本退出（EXIT）、调试（DEBUG）、错误（ERR）、返回（RETURN）等情况指定处理方式。</p>
 <p>格式为:</p>
 <p><code>trap “command”  signal numbers 将执行双引号中的命令串。</code></p>
-<p><code>trap ''  TERM 则是忽略SIGTERM信号</code></p>
+<p><code>trap &#39;&#39;  TERM 则是忽略SIGTERM信号</code></p>
 <p><code>trap - TERM 用来恢复SIGTERM信号缺省处理</code></p>
 <p>如果在编写shell脚本的话，trap最好放在开头第一个非注释行。另外，在trap语句中，单引号和双引号是不同的，当shell程序第一次碰到trap语句时，将把commands中的命令扫描一遍。此时若commands是用单引号括起来的话，那么shell不会对commands中的变量和命令进行替换， 否则commands中的变量和命令将用当时具体的值来替换。</p>
-<p>在实际使用中，可以使用下面的命令来创建临时文件，并在退出时候（无论以那种形式）时将临时文件删除。<br><img src="/posts/24357/6.png"></p>
+<p>在实际使用中，可以使用下面的命令来创建临时文件，并在退出时候（无论以那种形式）时将临时文件删除。<br><img src="/6.png"></p>
 <h3 id="其他一些命令"><a href="#其他一些命令" class="headerlink" title="其他一些命令"></a>其他一些命令</h3><p>Bash在执行命令后，会在内存中记录所有使用的命令，当用户退出登录，所有命令保存在~/.bash_history文件中，而history命令则列出到目前为止，执行的所有命令。</p>
 <p>fc是一个builtin命令</p>
 <ul>
@@ -798,25 +798,7 @@
 </ul>
 </li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1159,7 +1141,7 @@ bash收到错误，然后打开文件头部，发现是脚本
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

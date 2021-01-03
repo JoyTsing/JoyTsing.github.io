@@ -572,7 +572,7 @@ int trap(int[] height);
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        772
+                        749
                     </div>
                 
 
@@ -594,12 +594,12 @@ int trap(int[] height);
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>接雨水这道题目挺有意思，本文就来步步优化，讲解一下这道题。<br><img src="/posts/34649/1.png" alt="1"><br>题目来自 leetcode-cn.com<br>就是用一个数组表示一个条形图，问你这个条形图最多能接多少水。</p>
+                <p>接雨水这道题目挺有意思，本文就来步步优化，讲解一下这道题。<br><img src="/1.png" alt="1"><br>题目来自 leetcode-cn.com<br>就是用一个数组表示一个条形图，问你这个条形图最多能接多少水。</p>
 <pre class="line-numbers language-C++"><code class="language-C++">int trap(int[] height);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>下面就来由浅入深介绍暴力解法 -&gt; 备忘录解法 -&gt; 双指针解法，在 O(N) 时间 O(1) 空间内解决这个问题。</p>
  <a id="more"></a>
 
-<h3 id="一、核心思路"><a href="#一、核心思路" class="headerlink" title="一、核心思路"></a>一、核心思路</h3><p>对于这种问题，我们不要想整体，而应该去想局部；就像处理字符串问题，不要考虑如何处理整个字符串，而是去思考应该如何处理每一个字符。<br>这么一想，可以发现这道题的思路其实很简单。具体来说，仅仅对于位置 i，能装下多少水呢？<br><img src="/posts/34649/2.png" alt="2"><br>能装 2 格水。为什么恰好是两格水呢？因为 height[i] 的高度为 0，而这里最多能盛 2 格水，2-0=2。</p>
+<h3 id="一、核心思路"><a href="#一、核心思路" class="headerlink" title="一、核心思路"></a>一、核心思路</h3><p>对于这种问题，我们不要想整体，而应该去想局部；就像处理字符串问题，不要考虑如何处理整个字符串，而是去思考应该如何处理每一个字符。<br>这么一想，可以发现这道题的思路其实很简单。具体来说，仅仅对于位置 i，能装下多少水呢？<br><img src="/2.png" alt="2"><br>能装 2 格水。为什么恰好是两格水呢？因为 height[i] 的高度为 0，而这里最多能盛 2 格水，2-0=2。</p>
 <p>为什么位置 i 最多能盛 2 格水呢？因为，位置 i 能达到的水柱高度和其左边的最高柱子、右边的最高柱子有关，我们分别称这两个柱子高度为l_max和r_max；位置 i 最大的水柱高度就是<strong>min(l_max, r_max)</strong>。</p>
 <p>更进一步，对于位置 i，能够装的水为：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">water[i] = min(
@@ -608,10 +608,10 @@ int trap(int[] height);
                # 右边最高的柱子
                max(height[i..end]) 
             ) - height[i]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/posts/34649/3.png" alt="3"><br><img src="/posts/34649/4.png" alt="4"></p>
-<p>这就是本问题的核心思路，我们可以简单写一个暴力算法：<br><img src="/posts/34649/5.png" alt="5"><br>有之前的思路，这个解法应该是很直接粗暴的，时间复杂度 O(N^2)，空间复杂度 O(1)。但是很明显这种计算r_max和l_max的方式非常笨拙，一般的优化方法就是备忘录。</p>
+<p><img src="/3.png" alt="3"><br><img src="/4.png" alt="4"></p>
+<p>这就是本问题的核心思路，我们可以简单写一个暴力算法：<br><img src="/5.png" alt="5"><br>有之前的思路，这个解法应该是很直接粗暴的，时间复杂度 O(N^2)，空间复杂度 O(1)。但是很明显这种计算r_max和l_max的方式非常笨拙，一般的优化方法就是备忘录。</p>
 <h3 id="二、备忘录优化"><a href="#二、备忘录优化" class="headerlink" title="二、备忘录优化"></a>二、备忘录优化</h3><p>之前的暴力解法，不是在每个位置 i 都要计算r_max和l_max吗？我们直接把结果都缓存下来，别傻不拉几的每次都遍历，这时间复杂度不就降下来了嘛。</p>
-<p>我们开两个数组r_max和l_max充当备忘录，<strong>l_max[i]表示位置 i 左边最高的柱子高度，r_max[i]表示位置 i 右边最高的柱子高度</strong>。预先把这两个数组计算好，避免重复计算：<br><img src="/posts/34649/6.png" alt="6"><br>这个优化其实和暴力解法差不多，就是避免了重复计算，把时间复杂度降低为 O(N)，已经是最优了，但是空间复杂度是 O(N)。下面来看一个精妙一些的解法，能够把空间复杂度降低到 O(1)。</p>
+<p>我们开两个数组r_max和l_max充当备忘录，<strong>l_max[i]表示位置 i 左边最高的柱子高度，r_max[i]表示位置 i 右边最高的柱子高度</strong>。预先把这两个数组计算好，避免重复计算：<br><img src="/6.png" alt="6"><br>这个优化其实和暴力解法差不多，就是避免了重复计算，把时间复杂度降低为 O(N)，已经是最优了，但是空间复杂度是 O(N)。下面来看一个精妙一些的解法，能够把空间复杂度降低到 O(1)。</p>
 <h3 id="三、双指针解法"><a href="#三、双指针解法" class="headerlink" title="三、双指针解法"></a>三、双指针解法</h3><p>这种解法的思路是完全相同的，但在实现手法上非常巧妙，我们这次也不要用备忘录提前计算了，而是用双指针边走边算，节省下空间复杂度。</p>
 <p>首先，看一部分代码：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">int trap(vector<int>& height) {
@@ -628,38 +628,20 @@ int trap(int[] height);
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>对于这部分代码，请问l_max和r_max分别表示什么意义呢？<br>很容易理解，<strong>l_max是height[0..left]中最高柱子的高度，r_max是height[right..end]的最高柱子的高度</strong>。</p>
-<p>明白了这一点，直接看解法：<br><img src="/posts/34649/7.png" alt="7"></p>
+<p>明白了这一点，直接看解法：<br><img src="/7.png" alt="7"></p>
 <p>你看，其中的核心思想和之前一模一样，换汤不换药。但是细心的读者可能会发现次解法还是有点细节差异：</p>
 <p>之前的备忘录解法，l_max[i]和r_max[i]代表的是height[0..i]和height[i..end]的最高柱子高度。</p>
 <pre class="line-numbers language-C++"><code class="language-C++">ans += min(l_max[i], r_max[i]) - height[i];<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="/posts/34649/8.png" alt="8"><br>但是双指针解法中，l_max和r_max代表的是height[0..left]和height[right..end]的最高柱子高度。比如这段代码：</p>
+<p><img src="/8.png" alt="8"><br>但是双指针解法中，l_max和r_max代表的是height[0..left]和height[right..end]的最高柱子高度。比如这段代码：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">if (l_max < r_max) {
     ans += l_max - height[left];
     left++;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/posts/34649/9.png" alt="9"><br>此时的l_max是left指针左边的最高柱子，但是r_max并不一定是left指针右边最高的柱子，这真的可以得到正确答案吗？</p>
+<p><img src="/9.png" alt="9"><br>此时的l_max是left指针左边的最高柱子，但是r_max并不一定是left指针右边最高的柱子，这真的可以得到正确答案吗？</p>
 <p>其实这个问题要这么思考，我们只在乎min(l_max, r_max)。对于上图的情况，我们已经知道l_max &lt; r_max了，至于这个r_max是不是右边最大的，不重要，重要的是<strong>height[i]能够装的水只和l_max有关</strong>。</p>
-<p><img src="/posts/34649/10.png" alt="10"></p>
+<p><img src="/10.png" alt="10"></p>
 <p>对于 l_max &gt; r_max 的情况也是类似的。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1010,7 +992,7 @@ Wiki:在计算机科学中，AVL树是最早被发明的自平衡二叉查找树
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

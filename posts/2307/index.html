@@ -608,7 +608,7 @@
 <li>则每次从当前考虑的数组中选择一个元素，以这个元素为基点，进行处理将此基点放到数组中的合适位置，使得左边的其它元素比此元素小，右边的其它元素比此元素大。</li>
 <li>之后对左、右边这2个子数组分别使用快速排序的思路进行排序，逐渐递归下去完成整个排序过程。</li>
 </ul>
-<p>以下数组{4,6,2,3,1,5,7}为例，选择4为基点，将4放到合适位置，使得4之前的所以元素小于4，后面的所有元素大于4。<br><img src="/posts/2307/1.gif" alt="partition"></p>
+<p>以下数组{4,6,2,3,1,5,7}为例，选择4为基点，将4放到合适位置，使得4之前的所以元素小于4，后面的所有元素大于4。<br><img src="/1.gif" alt="partition"></p>
 <p><strong>（2）Partition过程</strong><br>对于快速排序过程而言，最重要的是将数组分成两个部分，使得基点元素在分界点。此过程为快速排序的核心，通常称为 Partition，以下动画演示了此过程：</p>
 <ul>
 <li>通常使用数组的第一个元素来作为分界的标志点（基点），记为l（left）</li>
@@ -621,12 +621,12 @@
 <li><strong>当 e &gt; v</strong>时：直接将 e 放到大于v右部分的后面，下标i ++，继续判断下一个元素。</li>
 <li><strong>当 e &lt; v</strong>时：需要将e放到橘黄色部分（也就是v的左部分），这时只需要将j所指的最后一个元素与 e进行交换，也就是一个大于v的元素与e进行交换下标j++，代表 橘黄色部分元素新增了一个，再进行i ++，继续判断下一个元素。</li>
 </ul>
-<p><img src="/posts/2307/2.gif" alt="partitiongif"></p>
+<p><img src="/2.gif" alt="partitiongif"></p>
 <p><strong>最终结果</strong></p>
-<p><img src="/posts/2307/1.png" alt="end"></p>
+<p><img src="/1.png" alt="end"></p>
 <p>经过以上部分对数组进行遍历，完成后就是上图所示，第一个元素是 v ，橘黄色部分小于 v ，紫色部分大于 v ，最后只需要将l下标和j 下标所指的元素交换位置即可。</p>
 <p><strong>整个数组被分成小于v 和大于 v的两部分，而v也放到了合适的位置，如下图所示：</strong></p>
-<p><img src="/posts/2307/2.png" alt="position"></p>
+<p><img src="/2.png" alt="position"></p>
 <hr>
 <h4 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>以上就是整个Partition的过程，理解透彻后可以轻松实现快速排序的逻辑代码。</p>
 <p><strong>（1）quickSort函数</strong><br><em>目的：主函数中调用此方法即可（暴露给上层调用）</em></p>
@@ -703,7 +703,7 @@ void quickSort(T arr[], int n){
     cout<<endl;
     return 0;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/posts/2307/3.png" alt="result"></p>
+<p><img src="/3.png" alt="result"></p>
 <p>总结:</p>
 <p><strong>两种排序算法虽然都是O(nlogn)级别的, 但是快速排序（Quick Sort）算法有常数级的优势，比归并排序（Merge Sort） 快，即使已经对  **归并排序</strong>  进行了优化。**</p>
 <h4 id="4-代码优化"><a href="#4-代码优化" class="headerlink" title="4. 代码优化"></a>4. 代码优化</h4><p>熟悉套路的都知道接下来对快速排序进行代码优化，这里主要优化两个部分：</p>
@@ -714,12 +714,12 @@ void quickSort(T arr[], int n){
 </ul>
 <p>所以优化一：函数一开始判断当递归到底只剩下一定值时（可自行修改，不要过大，这里设定为15）时，剩下的数组采用插入算法进行排序</p>
 <p><strong>（2）优化二:</strong></p>
-<p>此优化才是快速排序的<strong>重点问题</strong>，首先引出其问题再做一组测试用例，就是归并排序和快速排序对近乎有序的数组进行排序<br>结果如下：<br><img src="/posts/2307/4.png" alt="result"></p>
+<p>此优化才是快速排序的<strong>重点问题</strong>，首先引出其问题再做一组测试用例，就是归并排序和快速排序对近乎有序的数组进行排序<br>结果如下：<br><img src="/4.png" alt="result"></p>
 <p>查看第二个测试用例结果，发现两种排序在对近乎有序的数组情况时，归并排序很快得出了结果，但是快速排序迟迟未出现结果（最后需要几十秒）！<br><strong>原因分析</strong></p>
 <p>归并排序之所以是一个O(n* logn)的算法，在每次排序的时候都将数组一分为二，这样依次类推下去，整个层数是 logn层，每一层排序消耗O(n)时间，最后时间复杂度为O(n * logn)，如下图所示：</p>
-<p><img src="/posts/2307/5.png" alt="reason"></p>
-<p>对于快速排序而言，也是这样将整个数据一分为二，层层递进下去，只是稍有不同的是需要找到一个标志点，将此点左、右部分的数组进行分别排序。<strong>这样快速排序与归并排序产生不同：归并排序每次都是平均地将整个数组一分为二，而对于快速排序就无法保证，分出来的子数组可能是一大一小情况，进而再次递归时，情况会更严重。（如下图所示：）</strong><br><img src="/posts/2307/6.png" alt="reason2"><br>快速排序最差情况，退化为O(n^2)</p>
-<p>因此快速排序生成的递归树的平衡度比归并排序要差，并且并不难保证树的高度是logn，甚至于高过logn。<strong>最差的情况就是当整个数组近乎有序的情况，生成的递归树如下图所示，每次作为标志点的第一个元素左部分并无小于它的元素（因为是近乎有序数组），从而导致递归树层级很高，到达n层，每一层又消耗O(n)，此时最终时间复杂度为O(n^2)</strong><br><img src="/posts/2307/7.png" alt="reason3"></p>
+<p><img src="/5.png" alt="reason"></p>
+<p>对于快速排序而言，也是这样将整个数据一分为二，层层递进下去，只是稍有不同的是需要找到一个标志点，将此点左、右部分的数组进行分别排序。<strong>这样快速排序与归并排序产生不同：归并排序每次都是平均地将整个数组一分为二，而对于快速排序就无法保证，分出来的子数组可能是一大一小情况，进而再次递归时，情况会更严重。（如下图所示：）</strong><br><img src="/6.png" alt="reason2"><br>快速排序最差情况，退化为O(n^2)</p>
+<p>因此快速排序生成的递归树的平衡度比归并排序要差，并且并不难保证树的高度是logn，甚至于高过logn。<strong>最差的情况就是当整个数组近乎有序的情况，生成的递归树如下图所示，每次作为标志点的第一个元素左部分并无小于它的元素（因为是近乎有序数组），从而导致递归树层级很高，到达n层，每一层又消耗O(n)，此时最终时间复杂度为O(n^2)</strong><br><img src="/7.png" alt="reason3"></p>
 <p>解决优化:<br>以上也就是为何快速排序在面对近乎有序数组的情况下性能慢的原因，而解决方法正是对快速排序的第二个优化：<strong>在原有快速排序中，是固定使用最左侧元素作为标志元素，而希望是尽可能地使用整个数组中间的元素，也许不能准确地定位此中间元素。</strong><br><strong>优化二：其实只要随机使用一个标志元素即可，此时快速排序的时间复杂度期望值是O(n*logn)，此时退化成O(n^2)的概率是很小的，因为正好选到最小值作为标志元素的概率是很小的。（第一次选中最小值作为标志点的概率是1/n，第二次是1/(n-1)，依次类推，最后相乘得到结果近乎于0）</strong></p>
 <p>代码如下：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
@@ -764,11 +764,11 @@ void quickSort(T arr[], int n){
     srand(time(NULL));
     _quickSort(arr, 0, n-1);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>优化后的测试<br><img src="/posts/2307/8.png" alt="result4"><br>最后在优化后发现快速排序的性能已经极高地提升起来了，虽然没有快过归并排序，因为归并排序中的第二个优化，在已经排好序的数组中不用再次递归调用了。<strong>但也只是在近乎有序数组的情况下，这里快速排序结合随机算法进行了优化，在大部分情况下性能还是更优的。（此时快速排序的时间复杂度在最坏情况下仍是O(n^2)，但是此概率是极其极其低，近乎为0）</strong></p>
+<p>优化后的测试<br><img src="/8.png" alt="result4"><br>最后在优化后发现快速排序的性能已经极高地提升起来了，虽然没有快过归并排序，因为归并排序中的第二个优化，在已经排好序的数组中不用再次递归调用了。<strong>但也只是在近乎有序数组的情况下，这里快速排序结合随机算法进行了优化，在大部分情况下性能还是更优的。（此时快速排序的时间复杂度在最坏情况下仍是O(n^2)，但是此概率是极其极其低，近乎为0）</strong></p>
 <h2 id="二-双路快速排序法（Quick-Sort-2-Ways）"><a href="#二-双路快速排序法（Quick-Sort-2-Ways）" class="headerlink" title="二. 双路快速排序法（Quick Sort 2 Ways）"></a>二. 双路快速排序法（Quick Sort 2 Ways）</h2><h4 id="1-快速排序问题"><a href="#1-快速排序问题" class="headerlink" title="1. 快速排序问题"></a>1. 快速排序问题</h4><p><strong>(1）包含大量相同元素的数组测试</strong></p>
-<p>经过上面的优化过程，快速排序算法已是非常稳健了，但是它仍然存在一些问题：再测试一组特殊实例情况，对存在包含大量相同元素的数组（0~10范围内50万个数）进行排序，结果如下。<br><img src="/posts/2307/9.png" alt="result5"></p>
-<p><strong>（2）分析</strong><br><img src="/posts/2307/10.png" alt="result6"><br>上图部分并不陌生，是快速排序的核心部分，即Partition过程，判断当前元素e是否大于v，根据结果放入橘黄色部分或紫色部分。<strong>但是这里有一个隐患，我们并没有判断等于的情况！</strong></p>
-<p>第一反应你可能觉得这很好解决，至于要把相等的部分放入左、右任何一部分即可，数组中含有大量重复元素，<strong>这样会把数组分成极度不平衡的两个部分，在这种情况下快速排序会退化成O(n^2)，结果如下图所示：</strong><br><img src="/posts/2307/11.png" alt="result7"></p>
+<p>经过上面的优化过程，快速排序算法已是非常稳健了，但是它仍然存在一些问题：再测试一组特殊实例情况，对存在包含大量相同元素的数组（0~10范围内50万个数）进行排序，结果如下。<br><img src="/9.png" alt="result5"></p>
+<p><strong>（2）分析</strong><br><img src="/10.png" alt="result6"><br>上图部分并不陌生，是快速排序的核心部分，即Partition过程，判断当前元素e是否大于v，根据结果放入橘黄色部分或紫色部分。<strong>但是这里有一个隐患，我们并没有判断等于的情况！</strong></p>
+<p>第一反应你可能觉得这很好解决，至于要把相等的部分放入左、右任何一部分即可，数组中含有大量重复元素，<strong>这样会把数组分成极度不平衡的两个部分，在这种情况下快速排序会退化成O(n^2)，结果如下图所示：</strong><br><img src="/11.png" alt="result7"></p>
 <h4 id="2-算法思路"><a href="#2-算法思路" class="headerlink" title="2. 算法思路"></a>2. 算法思路</h4><p>意识到以上问题后，主要需要解决的还是Partition过程，于是我们换一个思路来实现Partition过程，查看以下动画：</p>
 <p>之前快速排序中的Partition过程是将小于v 和大于 v 的两部分放在一起，然后从左到右逐渐遍历整个数组。<strong>现在将这两部分放到数组的两端，下标i、j分别进行扫码：</strong></p>
 <ul>
@@ -783,7 +783,7 @@ void quickSort(T arr[], int n){
 </ul>
 </li>
 </ul>
-<p>以上两个下标进行扫码时，有一种情况没有写，<strong>其实就是当下标 i扫描的元素大于v，下标 j扫描的元素小于v时，将两个下标所指的元素值交换即可！</strong><br>最后，当下标i 等于下标j 时，扫描结束。将l 和 j下标所代表的元素交换位置即可。<br><img src="/posts/2307/3.gif" alt="2way"><br>最终结果：<br><img src="/posts/2307/12.png" alt="result8"><br>以上就是Partition后的结果，查看此图你会发现怎么橘黄色部分和紫色部分都含有等于v的元素，这范围设置的是否不对？<strong>其实不然！此种双路快速排序法与之前最大的区别就是：把等于v的元素分散到左右两部分。当下标i、j指向的元素即使与v相等，也要互相交换位置。这样可避免大量等于v的元素集中在一部分，正因如此，这样的算法面临大量重复元素值的情况下，也可以很好的平衡两部分。</strong></p>
+<p>以上两个下标进行扫码时，有一种情况没有写，<strong>其实就是当下标 i扫描的元素大于v，下标 j扫描的元素小于v时，将两个下标所指的元素值交换即可！</strong><br>最后，当下标i 等于下标j 时，扫描结束。将l 和 j下标所代表的元素交换位置即可。<br><img src="/3.gif" alt="2way"><br>最终结果：<br><img src="/12.png" alt="result8"><br>以上就是Partition后的结果，查看此图你会发现怎么橘黄色部分和紫色部分都含有等于v的元素，这范围设置的是否不对？<strong>其实不然！此种双路快速排序法与之前最大的区别就是：把等于v的元素分散到左右两部分。当下标i、j指向的元素即使与v相等，也要互相交换位置。这样可避免大量等于v的元素集中在一部分，正因如此，这样的算法面临大量重复元素值的情况下，也可以很好的平衡两部分。</strong></p>
 <h4 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h4><p>这里只修改partition函数即可，代码如下：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
 
@@ -825,7 +825,7 @@ int _partition2(T arr[], int l, int r){
 <li>对于arr[i]&lt;=v和arr[j]&gt;=v的方式，第一次partition得到的分点是数组的倒数第二个。</li>
 </ul>
 <p>因为连续出现相等的情况，第一种会交换i和j的值，而第二种方式则会将连续出现的这些值归为其中一方，使得两棵子树不平衡，这样会导致O(n^2)出现。</p>
-<h4 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4. 测试结果"></a>4. 测试结果</h4><p>再次进行测试（测试代码见源码）：<br><img src="/posts/2307/13.png" alt="result9"></p>
+<h4 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4. 测试结果"></a>4. 测试结果</h4><p>再次进行测试（测试代码见源码）：<br><img src="/13.png" alt="result9"></p>
 <h2 id="三-三路快速排序法（Quick-Sort-3-Ways）"><a href="#三-三路快速排序法（Quick-Sort-3-Ways）" class="headerlink" title="三. 三路快速排序法（Quick Sort 3 Ways）"></a>三. 三路快速排序法（Quick Sort 3 Ways）</h2><p>以上在面临数组中包含大量重复值排序时，对会沦为O(n^2)的排序算法进行优化，从而避免并更好的提高了其性能，但其实针对快速排序算法还有一个更经典的方法 —– <strong>三路快速排序法</strong></p>
 <h4 id="1-算法思路"><a href="#1-算法思路" class="headerlink" title="1. 算法思路"></a>1. 算法思路</h4><p>在之前进行快速排序时都是将整个数组分成两部分，即小于v 和大于v（两部分都含有等于v的元素值），而三路快速排序法则是多加了一部分—–等于v，将这一部分单独提出来。查看以下动画，这样划分之后，在处理等于v的元素可不管，而是处理小、大于v的元素即可。</p>
 <p>三部分下标划分表示:</p>
@@ -840,7 +840,7 @@ int _partition2(T arr[], int l, int r){
 <li>e 小于v ：在学习之前二路快速排序法，应该有思路了，<strong>将下标i的元素值和下标 lt+1（即等于v绿色部分的第一个元素）交换，然后i下标后移，继而判断下一个元素；lt下标后移，代表小于v的元素新增了一个。</strong></li>
 <li>e 大于v ：同理，将下标i的元素值和下标 gt-1（紫色部分的前一个元素）交换，gt下标前移，代表大于v的元素新增了一个。<strong>注意此时下标i 无需后移，因为不同于小于v 部分，此时交换后的元素是未处理过的，所以直接判断即可！</strong></li>
 </ul>
-<p>最后，当下标i 等于下标gt时，扫描结束。将l 和 lt下标所代表的元素交换位置即可。<br><img src="/posts/2307/4.gif" alt="3ways"><br>这种方式的优点就是不需要对等于v的元素进行重复操作，可以一次性少考虑相同元素</p>
+<p>最后，当下标i 等于下标gt时，扫描结束。将l 和 lt下标所代表的元素交换位置即可。<br><img src="/4.gif" alt="3ways"><br>这种方式的优点就是不需要对等于v的元素进行重复操作，可以一次性少考虑相同元素</p>
 <h4 id="2-代码实现-1"><a href="#2-代码实现-1" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>这里只修改partition函数即可，代码如下：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
 
@@ -882,7 +882,7 @@ void __quickSort3Ways(T arr[], int l, int r){
     __quickSort3Ways(arr, l, lt-1);
     __quickSort3Ways(arr, gt, r);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="3-归并排序、快速排序、三路快速排序比较"><a href="#3-归并排序、快速排序、三路快速排序比较" class="headerlink" title="3. 归并排序、快速排序、三路快速排序比较"></a>3. 归并排序、快速排序、三路快速排序比较</h4><p>下面针对以上讲解的3种快速排序方式分别对随机数组、近乎有序数组、包含大量重复元素数组进行测试，结果如下（测试代码见源码）：<br><img src="/posts/2307/14.png" alt="sort"></p>
+<h4 id="3-归并排序、快速排序、三路快速排序比较"><a href="#3-归并排序、快速排序、三路快速排序比较" class="headerlink" title="3. 归并排序、快速排序、三路快速排序比较"></a>3. 归并排序、快速排序、三路快速排序比较</h4><p>下面针对以上讲解的3种快速排序方式分别对随机数组、近乎有序数组、包含大量重复元素数组进行测试，结果如下（测试代码见源码）：<br><img src="/14.png" alt="sort"></p>
 <p>结论:</p>
 <ul>
 <li>测试一：面临大量无序元素时，快速排序最佳。</li>
@@ -899,7 +899,7 @@ void __quickSort3Ways(T arr[], int l, int r){
 <li>快速排序：重点在于如何划分这个问题上，采用了标志点，结合Partition过程，使得标志点左部分元素小于标志点元素值，右部分大于。当标志点移到合适位置后，才将整个数组划分成两部分，这样在“合”时就无需多做处理。</li>
 </ul>
 <p>其实后面介绍的树形结构有关内容也使用了 分治思想，所以不要把一些经典的算法实现和算法设计思想拆开。</p>
-<h4 id="2-逆序对"><a href="#2-逆序对" class="headerlink" title="2. 逆序对"></a>2. 逆序对</h4><p>关于归并排序和快速排序的第一个衍生问题就是逆序对，例如下图中的数组{8,6,2,3,1,5,7,4}，其中{2,3}就是一个顺序对，而{2,1}就是一个逆序对。<br><img src="/posts/2307/15.png" alt="sort"><br><strong>一个数组中逆序对的数量最有效的就是衡量这个数组的有序程度，</strong> 例如{1,2,3,4,5,6,7,8,}，这是完全有序数组，逆序对为0；而数组{8,7,6,5,4,3,2,1}完全逆序数组，此时逆序数量达到最大值。</p>
+<h4 id="2-逆序对"><a href="#2-逆序对" class="headerlink" title="2. 逆序对"></a>2. 逆序对</h4><p>关于归并排序和快速排序的第一个衍生问题就是逆序对，例如下图中的数组{8,6,2,3,1,5,7,4}，其中{2,3}就是一个顺序对，而{2,1}就是一个逆序对。<br><img src="/15.png" alt="sort"><br><strong>一个数组中逆序对的数量最有效的就是衡量这个数组的有序程度，</strong> 例如{1,2,3,4,5,6,7,8,}，这是完全有序数组，逆序对为0；而数组{8,7,6,5,4,3,2,1}完全逆序数组，此时逆序数量达到最大值。</p>
 <p>（1）暴力破解</p>
 <p>最容易解决的方式就是双重循环，考察每一个数对，判断是否逆序，实现简单，效率低，时间复杂度为O(n^2)</p>
 <p>（2）归并排序</p>
@@ -911,7 +911,7 @@ void __quickSort3Ways(T arr[], int l, int r){
 <li>4小于6，意味4比6后面的所有元素都小，计数器可直接加2，指向4的下标后移。</li>
 <li>依次类推</li>
 </ul>
-<p><img src="/posts/2307/5.gif" alt="sort"></p>
+<p><img src="/5.gif" alt="sort"></p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 计算逆序数对的结果以long long返回
 // 对于一个大小为N的数组, 其最大的逆序数对个数为 N*(N-1)/2, 非常容易产生整型溢出
 
@@ -979,7 +979,7 @@ long long inversionCount(int arr[], int n){
 <h4 id="3-取数组中第n大的元素"><a href="#3-取数组中第n大的元素" class="headerlink" title="3. 取数组中第n大的元素"></a>3. 取数组中第n大的元素</h4><p>如果这个问题是取数组中的最大值或最小值，那么时间复杂度为O(n)，可是现在是取第n大的元素，例如在1000000里取第1000个元素。</p>
 <p>此问题的解决思路很简单，就是给整个数组排序再通过下标索引取出元素即可，算法复杂度为O(n*logn)，但是！在本篇博文中学习了快速排序后，可使用O(n)时间获取。</p>
 <p>快速排序的核心过程:<br><strong>每次找到一个标志点，将此点挪到数组中合适的位置，注意此合适位置恰好是数组中排序好后所处的位置。</strong></p>
-<p>示例引导:<br>例如下图示例中的标志点4，最后挪到的位置恰好就是数组最后有序的位置，比如此时我们要获取第6个位置上的元素，那么标志位4之前的元素无需考虑，从后部分处理，继续处理后部分的第二位是谁？<br><img src="/posts/2307/16.png" alt="sort"></p>
+<p>示例引导:<br>例如下图示例中的标志点4，最后挪到的位置恰好就是数组最后有序的位置，比如此时我们要获取第6个位置上的元素，那么标志位4之前的元素无需考虑，从后部分处理，继续处理后部分的第二位是谁？<br><img src="/16.png" alt="sort"></p>
 <pre class="line-numbers language-C++"><code class="language-C++">// partition 过程, 和快排的partition一样
 // 思考: 双路快排和三路快排的思想能不能用在selection算法中? :)
 template <typename T>
@@ -1027,25 +1027,7 @@ int selection(T arr[], int n, int k) {
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下一篇博文将讲解另一个排序算法——堆排序，也是此系列的第一个数据结构—–堆，后续学习你会发现对于堆的使用将远超与求解排序。</p>
 <p>转载自：<a href="https://blog.csdn.net/ITermeng/article/details/77397212">https://blog.csdn.net/ITermeng/article/details/77397212</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1396,7 +1378,7 @@ int selection(T arr[], int n, int k) {
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

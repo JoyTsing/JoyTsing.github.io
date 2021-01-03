@@ -603,7 +603,7 @@
 <a id="more"></a>
 
 <h4 id="O-n-logn-和-O-n-2-算法比较"><a href="#O-n-logn-和-O-n-2-算法比较" class="headerlink" title="O(n*logn) 和 O(n^2)算法比较"></a>O(n*logn) 和 O(n^2)算法比较</h4><p>在讨论排序算法的时间复杂度时，O(n*logn)毫无疑问被视为最优解，而O(n^2)总被大家鄙夷不屑。这两者的差距究竟有多大呢，可查看下图进行了解：</p>
-<p><img src="/posts/24873/1.png" alt="算法复杂度"></p>
+<p><img src="/1.png" alt="算法复杂度"></p>
 <p>也许你在计算机跑程序时感觉时间消耗得都是差不多，并无太大区别，<strong>那是因为你使用的测试用例数量太小了。</strong>（不背这锅）</p>
 <p>例如上图中当测试数量为10时，O(n* logn)只是比O(n^2)快3倍，<strong>区别并不大，但是随着数量逐渐增大，O(n * logn)的优势会愈加明显!</strong> 当n=10^5时，其实这个测试数量也不是很大，<strong>O(n * logn)</strong> 比O(n^2)快6000倍，相当于使用<strong>O(n * logn)</strong> 算法计算需要1小时，而<strong>O(n^2)</strong> 却需要6000小时，天壤之别已经呈现出来了。</p>
 <p>因此，在算法的世界中才会一直有新的被优化的算法产生，从而达到人们追求高效的理想，我们更应该去学习理解。</p>
@@ -613,13 +613,13 @@
 <li>首先将数组对半划分，分别对左、右边的数组进行排序。</li>
 <li>还要分别继续划分左、右边的数组，将左边的数组继续对半划分…</li>
 <li>一直这样划分直到划分的“左边”或“右边”只剩下两个元素，对每一个小部分进行排序。</li>
-<li>小部分排序完后，进行向上归并，即与旁边的“小组”进行归并（注意：此时各小组的排序已经完成，需要做的步骤是将其归并！），层层往上，直到由多个小组归并成一个大组，归并完成，排序也完成。<br><img src="/posts/24873/1.gif" alt="归并"></li>
+<li>小部分排序完后，进行向上归并，即与旁边的“小组”进行归并（注意：此时各小组的排序已经完成，需要做的步骤是将其归并！），层层往上，直到由多个小组归并成一个大组，归并完成，排序也完成。<br><img src="/1.gif" alt="归并"></li>
 </ul>
 <p><strong>（2）算法复杂度</strong><br>为何需要将一个数组分层那个多个小组，再进行一层层向上归并？</p>
 <p>查看下图是对8个元素进行排序、归并一步步划分的过程。<strong>此数组一层层划分下来，总共分成了3级，到第3级时，每个“小组”只剩下1个元素了。8个元素，以2划分，3次下来只剩下1个元素，这个“3”层来源于：log以2为底8 = 3。</strong></p>
 <p>所以如果有n个元素，便有 <strong>log以2为底n</strong>个层级，虽然分成了不同的部分，但是每一层处理的个数是一样的，如果整个归并过程可以O(n)的时间复杂度来解决的话，那么最后整个过程的时间复杂度就是O(n*logn)。</p>
 <p>以上就是O(n* logn)时间复杂度的主要来源:<strong>通过二分法达到 logn的层级，每一个层级使用 O(n)的时间来处理排序，最后总时间复杂度就是O(n * logn)，而这整个过程可以通过递归来完成.</strong></p>
-<p><img src="/posts/24873/2.png" alt="归并排序"></p>
+<p><img src="/2.png" alt="归并排序"></p>
 <p><strong>（3）归并过程的思想</strong><br>接下来需要解决的问题就是<strong>两个已经各自排序好的小组是如何归并到一个大组的？</strong></p>
 <p>这里可不是采用之前学过的插入算法或其它的，毕竟这样做那之前个小组之间的有序性就无其他任何意义了，主要思路通过以下动画来了解（现在已经有两组搁在排序好的数组，需要将其归并到一个数组 {2,3,6,8}，{1,4,5,7}）：</p>
 <ul>
@@ -642,7 +642,7 @@
 </li>
 </ul>
 <p>总之，这个归并排序的过程就是两个已排序好的数组来比较头部的元素，取最小值放入最终数组中。<strong>此过程也依赖于3个索引值，i、j指向两个有序数组中正在比较大小的元素，k代表比较后的元素应当归并的位置 ，即下一个元素应该放入的位置。</strong></p>
-<p><img src="/posts/24873/2.gif" alt="merge"></p>
+<p><img src="/2.gif" alt="merge"></p>
 <p>另外，为了跟踪i、j、k的出界情况，还需要在数组中间作标记，左、右边两个有序数组分别标记为<strong>l(left)</strong>、<strong>r(right)</strong>，对于中间位置标记为<strong>m(middle)</strong>。</p>
 <h4 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>接下来，通过以上思路，由递归思想来完成这个归并过程：</p>
 <p><strong>（1）mergeSort函数</strong><br><em>目的：主函数中调用此方法即可（暴露给上层调用）</em></p>
@@ -754,7 +754,7 @@ void mergeSort(T arr[], int n){
 
     return 0;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>结果显示:<br><img src="/posts/24873/3.png" alt="merge对比"></p>
+<p>结果显示:<br><img src="/3.png" alt="merge对比"></p>
 <p>现象分析</p>
 <ul>
 <li>测试一结论：对于无序的数组，归并排序的时间甩插入排序几条街，更加高效！</li>
@@ -819,7 +819,7 @@ void mergeSort2(T arr[], int n){
 <ul>
 <li>将此数组按照从坐到右的顺序两两划分成多个小组来进行归并排序的过程（一个组有2个元素）。</li>
 <li>在两个元素归并排序完成后，再按照从坐到右的顺序将两个组进行归并到一个组（即1个组有4个元素）。</li>
-<li>依次类推。<br><img src="/posts/24873/3.gif" alt="自底向上"></li>
+<li>依次类推。<br><img src="/3.gif" alt="自底向上"></li>
 </ul>
 <hr>
 <p><strong>2. 代码实现</strong><br>在此过程中，并不需要递归，而是采用迭代来实现归并排序，代码如下：</p>
@@ -858,7 +858,7 @@ for( int i = 0 ; i < n ; i += 16 )
             if( arr[i+sz-1] > arr[i+sz] )
                 __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>注意</strong><br>测试数量为100000，比较自顶向下、自底向上两种归并排序在无序和有序数组测试的情况下，两者的测试结果如下：<br><img src="/posts/24873/4.png" alt="两者对比"></p>
+<p><strong>注意</strong><br>测试数量为100000，比较自顶向下、自底向上两种归并排序在无序和有序数组测试的情况下，两者的测试结果如下：<br><img src="/4.png" alt="两者对比"></p>
 <p><strong>结论</strong></p>
 <p>整体而言， 两种算法的效率是差不多的。但是如果进行仔细测试， 自底向上的归并排序会略胜一筹，而且它更适用于链表这样的数据结构进行排序。<strong>(LeetCode上第148号问题)</strong></p>
 <p><strong>分析</strong></p>
@@ -867,25 +867,7 @@ for( int i = 0 ; i < n ; i += 16 )
 </blockquote>
 <p>下一篇文章将介绍O(n*logn)排序算法中的另一个鼎鼎大名的算法——快速排序及其衍生算法。</p>
 <p>原文来自blog：<a href="https://blog.csdn.net/ITermeng/article/details/77326595">https://blog.csdn.net/ITermeng/article/details/77326595</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1234,7 +1216,7 @@ for( int i = 0 ; i < n ; i += 16 )
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

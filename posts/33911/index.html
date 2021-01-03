@@ -532,12 +532,12 @@ The differences between verification an">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -579,7 +579,7 @@ The differences between verification an">
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        6.2k
+                        6.1k
                     </div>
                 
 
@@ -960,7 +960,7 @@ _start:
         int $0x80</code></pre><p>汇编、链接、运行：</p>
 <pre><code>$ as -o test.o test.s
 $ ld -o test test.o
-$ ./test "Hello World"
+$ ./test &quot;Hello World&quot;
 Hello World</code></pre><p>查看程序的入口地址：</p>
 <pre><code>$ readelf -h test | grep Entry 
   Entry point address:               0x8048054</code></pre><p>接着用 <code>ald</code> 调试：</p>
@@ -996,25 +996,7 @@ Dumping 64 bytes of memory starting at 0x08048054 in hex
 <h2 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h2><p>这部分暂时没有准备足够的素材，有待进一步完善。</p>
 <p>暂且先提到两个比较重要的工具，一个是 Oprofile，另外一个是 Perf。</p>
 <p>实际上呢？“代码测试”部分介绍的很多工具是为代码优化服务的，更多具体的细节请参考后续资料，自己做实验吧。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1027,12 +1009,12 @@ Dumping 64 bytes of memory starting at 0x08048054 in hex
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1140,12 +1122,12 @@ Dumping 64 bytes of memory starting at 0x08048054 in hex
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1372,7 +1354,7 @@ Dumping 64 bytes of memory starting at 0x08048054 in hex
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

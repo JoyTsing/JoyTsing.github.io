@@ -527,12 +527,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -574,7 +574,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        9.1k
+                        9k
                     </div>
                 
 
@@ -675,7 +675,7 @@ root      7023     1  0 22:48 tty1     00:00:00 /sbin/getty 38400 tty1
 root      7081     1  0 22:51 tty2     00:00:00 /bin/login --
 falcon    7092  7081  0 22:52 tty2     00:00:00 -bash<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上面的结果已经过滤了一些不相干的数据。从上面的结果可以看到，除了 <code>tty2</code> 被替换成 <code>/bin/login</code> 外，其他终端都运行着 <code>/sbin/getty</code>，说明终端 2 上的进程是 <code>/bin/login</code>，它已经把 <code>/sbin/getty</code> 替换掉，另外，我们看到 <code>-bash</code> 进程的父进程是 <code>7081</code> 刚好是 <code>/bin/login</code> 程序，这说明 <code>/bin/login</code> 启动了 <code>-bash</code>，但是它并没有替换掉 <code>/bin/login</code>，而是成为了 <code>/bin/login</code> 的子进程，这说明 <code>/bin/login</code> 通过 <code>fork</code> 创建了一个子进程并通过 <code>execve</code> 执行了 <code>-bash</code>（后者通过 <code>strace</code>跟踪到）。而 <code>init</code> 呢，其进程 ID 是 1，是 <code>/sbin/getty</code> 和 <code>/bin/login</code> 的父进程，说明 <code>init</code> 启动或者间接启动了它们。下面通过 <code>pstree</code> 来查看调用树，可以更清晰地看出上述关系。</p>
-<pre><code>$ pstree | egrep "init|getty|\-bash|login"
+<pre><code>$ pstree | egrep &quot;init|getty|\-bash|login&quot;
 init-+-5*[getty]
      |-login---bash
      |-xfce4-terminal-+-bash-+-grep</code></pre><p>结果显示 <code>init</code> 是 5 个 <code>getty</code> 程序，<code>login</code> 程序和 <code>xfce4-terminal</code> 的父进程，而后两者则是 <code>bash</code> 的父进程，另外我们执行的 <code>grep</code> 命令则在 <code>bash</code> 上运行，是 <code>bash</code> 的子进程，这个将是我们后面关心的问题。</p>
@@ -701,7 +701,7 @@ init-+-5*[getty]
 <p>而当键入 <code>test</code> 时，看不到任何输出，唯一响应是，新命令提示符被打印了：</p>
 <pre class="line-numbers language-bash"><code class="language-bash">  $ <span class="token function">test</span>
   $<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>查看 <code>test</code> 这个命令的类型，即查看 <code>test</code> 将被如何解释， <code>type</code> 告诉我们 <code>test</code> 是一个内置命令，如果没有理解错， <code>test</code> 应该是利用诸如 <code>case "test": do something;break;</code> 这样的机制实现的，具体如何实现可以查看 <code>bash</code> 源代码。</p>
+<p>查看 <code>test</code> 这个命令的类型，即查看 <code>test</code> 将被如何解释， <code>type</code> 告诉我们 <code>test</code> 是一个内置命令，如果没有理解错， <code>test</code> 应该是利用诸如 <code>case &quot;test&quot;: do something;break;</code> 这样的机制实现的，具体如何实现可以查看 <code>bash</code> 源代码。</p>
 <pre class="line-numbers language-bash"><code class="language-bash">  $ <span class="token function">type</span> <span class="token function">test</span>
   <span class="token function">test</span> is a shell <span class="token function">builtin</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 </li>
@@ -789,7 +789,7 @@ test ()
 <span class="token function">test</span> is /bin/test<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因此，可以找出这么一个规律： Shell 从 <code>PATH</code> 列出的路径中依次查找用户输入的命令。考虑到程序的优先级最低，如果想优先执行磁盘上的程序文件 <code>test</code> 呢？那么就可以用 <code>test -P</code> 找出这个文件并执行就可以了。</p>
 <p>补充：对于 Shell 的内置命令，可以通过 <code>help command</code> 的方式获得帮助，对于程序文件，可以查看用户手册（当然，这个需要安装，一般叫做 <code>xxx-doc</code>）， <code>man command</code> 。</p>
-<h3 id="这些特殊字符是如何解析的：-gt-lt-amp"><a href="#这些特殊字符是如何解析的：-gt-lt-amp" class="headerlink" title="这些特殊字符是如何解析的：|, >, <, &amp;"></a>这些特殊字符是如何解析的：<code>|, &gt;, &lt;, &amp;</code></h3><p>在命令行上，除了输入各种命令以及一些参数外，比如上面 <code>type</code> 命令的各种参数 <code>-a</code>，<code>-P</code> 等，对于这些参数，是传递给程序本身的，非常好处理，比如 <code>if</code> ， <code>else</code> 条件分支或者 <code>switch</code>，<code>case</code> 都可以处理。当然，在 <code>bash</code> 里头可能使用专门的参数处理函数 <code>getopt</code> 和 <code>getopt_long</code> 来处理它们。</p>
+<h3 id="这些特殊字符是如何解析的：-gt-lt-amp"><a href="#这些特殊字符是如何解析的：-gt-lt-amp" class="headerlink" title="这些特殊字符是如何解析的：|, &gt;, &lt;, &amp;"></a>这些特殊字符是如何解析的：<code>|, &gt;, &lt;, &amp;</code></h3><p>在命令行上，除了输入各种命令以及一些参数外，比如上面 <code>type</code> 命令的各种参数 <code>-a</code>，<code>-P</code> 等，对于这些参数，是传递给程序本身的，非常好处理，比如 <code>if</code> ， <code>else</code> 条件分支或者 <code>switch</code>，<code>case</code> 都可以处理。当然，在 <code>bash</code> 里头可能使用专门的参数处理函数 <code>getopt</code> 和 <code>getopt_long</code> 来处理它们。</p>
 <p>而 <code>|</code> ， <code>&gt;</code> ， <code>&lt;</code> ， <code>&amp;</code> 等字符，则比较特别， Shell 是怎么处理它们的呢？它们也被传递给程序本身吗？可我们的程序内部一般都不处理这些字符的，所以应该是 Shell 程序自己解析了它们。</p>
 <p>先来看看这几个字符在命令行的常见用法，</p>
 <p><code>&lt;</code> 字符表示：把 <code>test.c</code> 文件重定向为标准输入，作为 <code>cat</code> 命令输入，而 <code>cat</code> 默认输出到标准输出：</p>
@@ -912,25 +912,7 @@ $ ./hello
 <li><code>man shadow</code></li>
 <li>《UNIX 环境高级编程》，进程关系一章</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -943,12 +925,12 @@ $ ./hello
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1056,12 +1038,12 @@ $ ./hello
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1115,12 +1097,12 @@ $ ./hello
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1294,7 +1276,7 @@ $ ./hello
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

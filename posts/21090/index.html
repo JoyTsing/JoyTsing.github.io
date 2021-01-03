@@ -581,7 +581,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        94 分
+                        93 分
                     </div>
                 
 
@@ -668,7 +668,7 @@ Hello, World<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <ul>
 <li>目的：享受用 Shell 解决问题的乐趣；和朋友们一起交流和探讨。</li>
 <li>读者：熟悉 Linux 基本知识，如文件系统结构、常用命令行工具、Shell 编程基础等。</li>
-<li>补充：看范例时，可参考<a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&amp;tid=2198159">《Shell基础十二篇》</a>和<a href="http://bbs.chinaunix.net/thread-218853-1-1.html">《Shell十三问》</a>。</li>
+<li>补充：看范例时，可参考<a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&tid=2198159">《Shell基础十二篇》</a>和<a href="http://bbs.chinaunix.net/thread-218853-1-1.html">《Shell十三问》</a>。</li>
 <li>环境：如没特别说明，该系列使用的 Shell 将特指 Bash，版本在 3.1.17 以上。</li>
 <li>说明：该系列不是依据 Shell 语法组织，而是面向某些潜在的操作对象和操作本身，它们反应了现实应用。当然，在这个过程中肯定会涉及到 Shell 的语法。</li>
 </ul>
@@ -992,7 +992,7 @@ $ <span class="token function">cat</span> index.html <span class="token operator
 <p>说明：</p>
 <ul>
 <li><code>cat index.html</code>: 输出 index.html 文件里的内容</li>
-<li><code>sed -e "s/[^a-zA-Z]/\n/g"</code>: 把非字母字符替换成空格，只保留字母字符</li>
+<li><code>sed -e &quot;s/[^a-zA-Z]/\n/g&quot;</code>: 把非字母字符替换成空格，只保留字母字符</li>
 <li><code>grep -v ^$</code>: 去掉空行</li>
 <li><code>sort</code>: 排序</li>
 <li><code>uniq -c</code>：统计相同行的个数，即每个单词的个数</li>
@@ -1197,7 +1197,7 @@ YES
 $ <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$i</span> -gt 4 <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">[</span> <span class="token variable">$i</span> -lt 6 <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span> <span class="token keyword">echo</span> <span class="token string">"YES"</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">echo</span> <span class="token string">"NO"</span><span class="token punctuation">;</span> <span class="token keyword">fi</span>
 YES<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>记得给一些字符串变量加上 <code>""</code>，记得 <code>[</code> 之后与 <code>]</code> 之前多加一个空格</p>
+<li><p>记得给一些字符串变量加上 <code>&quot;&quot;</code>，记得 <code>[</code> 之后与 <code>]</code> 之前多加一个空格</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ str<span class="token operator">=</span><span class="token string">""</span>
 $ <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$str</span>"</span> <span class="token operator">=</span> <span class="token string">"test"</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span> <span class="token keyword">echo</span> <span class="token string">"YES"</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">echo</span> <span class="token string">"NO"</span><span class="token punctuation">;</span> <span class="token keyword">fi</span>
 -bash: <span class="token punctuation">[</span>: missing `<span class="token punctuation">]</span>'
@@ -1334,7 +1334,7 @@ $ <span class="token keyword">echo</span> <span class="token string">"<span clas
 $ <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$var</span>"</span> <span class="token operator">|</span> <span class="token function">tr</span> <span class="token string">" "</span> <span class="token string">"\n"</span> <span class="token operator">|</span> <span class="token function">grep</span> get <span class="token operator">|</span> <span class="token function">wc</span> -l
 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>说明：</p>
-<p><code>${}</code> 操作符在 Bash 里头是一个“大牛”，能胜任相当多的工作，具体就看网中人的<a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&amp;tid=218853&amp;page=7#pid1617953">《Shell十三问》之<code>$(())</code>与<code>$()</code> 还有<code>${}</code>差在哪？”</a>吧。</p>
+<p><code>${}</code> 操作符在 Bash 里头是一个“大牛”，能胜任相当多的工作，具体就看网中人的<a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&tid=218853&page=7#pid1617953">《Shell十三问》之<code>$(())</code>与<code>$()</code> 还有<code>${}</code>差在哪？”</a>吧。</p>
 <h3 id="字符串的显示"><a href="#字符串的显示" class="headerlink" title="字符串的显示"></a>字符串的显示</h3><p>接下来讨论如何控制字符在终端的显示。</p>
 <h4 id="范例：在屏幕控制字符显示位置、颜色、背景等"><a href="#范例：在屏幕控制字符显示位置、颜色、背景等" class="headerlink" title="范例：在屏幕控制字符显示位置、颜色、背景等"></a>范例：在屏幕控制字符显示位置、颜色、背景等</h4><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> -e <span class="token string">"\033[31;40m"</span> <span class="token comment" spellcheck="true">#设置前景色为黑色，背景色为红色</span>
 $ <span class="token keyword">echo</span> -e <span class="token string">'\033[11;29H Hello, World!'</span> <span class="token comment" spellcheck="true">#在屏幕的第11行，29列开始打印字符串Hello,World!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -1344,7 +1344,7 @@ $ <span class="token keyword">echo</span> -e <span class="token string">'\033[11
 $ <span class="token function">cat</span> /bin/cat
 $ <span class="token keyword">exit</span>
 $ <span class="token function">cat</span> screenlog.0 <span class="token operator">|</span> col -b   <span class="token comment" spellcheck="true"># 把一些控制字符过滤后，就可以保留可读的操作日志</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="字符串的存储"><a href="#字符串的存储" class="headerlink" title="字符串的存储"></a>字符串的存储</h3><p>在我们看来，字符串是一连串的字符而已，但是为了操作方便，我们往往可以让字符串呈现出一定的结构。在这里，我们不关心字符串在内存中的实际存储结构，仅仅关系它呈现出来的逻辑结构。比如，这样一个字符串： <code>"get the length of me"</code>，我们可以从不同的方面来呈现它。</p>
+<h3 id="字符串的存储"><a href="#字符串的存储" class="headerlink" title="字符串的存储"></a>字符串的存储</h3><p>在我们看来，字符串是一连串的字符而已，但是为了操作方便，我们往往可以让字符串呈现出一定的结构。在这里，我们不关心字符串在内存中的实际存储结构，仅仅关系它呈现出来的逻辑结构。比如，这样一个字符串： <code>&quot;get the length of me&quot;</code>，我们可以从不同的方面来呈现它。</p>
 <ul>
 <li>通过字符在串中的位置来呈现它</li>
 </ul>
@@ -1458,7 +1458,7 @@ getthelengthofme<span aria-hidden="true" class="line-numbers-rows"><span></span>
 <p>说明：</p>
 <ul>
 <li><code>%</code> 和<code>#</code>删除字符的方向不一样，前者在右，后者在左，<code>%%</code> 和 <code>%</code>， <code>##</code> 和 <code>#</code> 的方向是前者是最大匹配，后者是最小匹配。（好的记忆方法见网中人的键盘记忆法：<code>#</code>，<code>$</code>，<code>%</code> 是键盘依次从左到右的三个键）</li>
-<li><code>tr</code> 的 <code>-c</code> 选项是 <code>complement</code> 的缩写，即 <code>invert</code>，而 <code>-d</code> 选项是删除，<code>tr -cd "[a-z]"</code> 这样一来就变成保留所有的字母</li>
+<li><code>tr</code> 的 <code>-c</code> 选项是 <code>complement</code> 的缩写，即 <code>invert</code>，而 <code>-d</code> 选项是删除，<code>tr -cd &quot;[a-z]&quot;</code> 这样一来就变成保留所有的字母</li>
 </ul>
 <p>对于字符串的截取，实际上还有一些命令，如果 <code>head</code>，<code>tail</code> 等可以实现有意思的功能，可以截取某个字符串的前面、后面指定的行数或者字节数。例如：</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> <span class="token string">"abcdefghijk"</span> <span class="token operator">|</span> <span class="token function">head</span> -c 4
@@ -1559,7 +1559,7 @@ getthelengthofme<span aria-hidden="true" class="line-numbers-rows"><span></span>
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">echo</span> <span class="token variable">$var</span> <span class="token operator">|</span> <span class="token function">tr</span> -d <span class="token string">" "</span>
 getthelengthofme<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>如果要删除第一个空格后面所有的字符串该怎么办呢？还记得 <code>{}</code> 的 <code>#</code> 和 <code>%</code> 用法么？如果不记得，回到这节的开头开始复习吧。（实际上删除子串和取子串未尝不是两种互补的运算呢，删除掉某些不想要的子串，也就同时取得另外那些想要的子串——这个世界就是一个“二元”的世界，非常有趣）</p>
-<h4 id="子串比较"><a href="#子串比较" class="headerlink" title="子串比较"></a>子串比较</h4><p>这个很简单：还记得 <code>test</code> 命令的用法么？ <code>help test</code> 。它可以用来判断两个字符串是否相等。另外，有发现“字符串是否相等”和“字符串能否跟另外一个字符串匹配 <code>"</code> 两个问题之间的关系吗？如果两个字符串完全匹配，那么这两个字符串就相等了。所以呢，上面用到的字符串匹配方法，也同样可以用到这里。</p>
+<h4 id="子串比较"><a href="#子串比较" class="headerlink" title="子串比较"></a>子串比较</h4><p>这个很简单：还记得 <code>test</code> 命令的用法么？ <code>help test</code> 。它可以用来判断两个字符串是否相等。另外，有发现“字符串是否相等”和“字符串能否跟另外一个字符串匹配 <code>&quot;</code> 两个问题之间的关系吗？如果两个字符串完全匹配，那么这两个字符串就相等了。所以呢，上面用到的字符串匹配方法，也同样可以用到这里。</p>
 <h4 id="子串排序"><a href="#子串排序" class="headerlink" title="子串排序"></a>子串排序</h4><p>差点忘记这个重要内容了，子串排序可是经常用到，常见的有按字母序、数字序等正序或反序排列。 <code>sort</code> 命令可以用来做这个工作，它和其他行处理命令一样，是按行操作的，另外，它类似 <code>cut</code> 和 <code>awk</code>，可以指定分割符，并指定需要排序的列。</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ var<span class="token operator">=</span><span class="token string">"get the length of me"</span>
 $ <span class="token keyword">echo</span> <span class="token variable">$var</span> <span class="token operator">|</span> <span class="token function">tr</span> <span class="token string">' '</span> <span class="token string">'\n'</span> <span class="token operator">|</span> <span class="token function">sort</span>   <span class="token comment" spellcheck="true">#正序排</span>
@@ -2009,25 +2009,7 @@ find: /usr/bin/find /usr/X11R6/bin/find /usr/bin/X11/find /usr/X11/bin/find /usr
 <li>考虑到文件和文件系统的重要性，将把它分成三个小节来介绍：文件、文件系统、程序与进程。在“文件”这一部分，主要介绍文件的基本属性和常规操作，在“文件系统”那部分，将深入探讨 Linux 文件系统的各个部分（包括 Linux 文件系统的结构、具体某个文件系统的大体结构分析、底层驱动的工作原理），在“程序与进程”一节将专门讨论可执行文件的相关内容（包括不同的程序类型、加载执行过程、不同进程之间的交互[命令管道和无名管道、信号通信]、对进程的控制等）</li>
 <li>有必要讨论清楚 目录大小 的含义，另外，最好把一些常规的文件操作全部考虑到，包括文件的读、写、执行、删除、修改、复制、压缩／解压缩等</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -2210,12 +2192,12 @@ find: /usr/bin/find /usr/X11R6/bin/find /usr/bin/X11/find /usr/X11/bin/find /usr
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -2389,7 +2371,7 @@ find: /usr/bin/find /usr/X11R6/bin/find /usr/bin/X11/find /usr/X11/bin/find /usr
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

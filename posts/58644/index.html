@@ -528,12 +528,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -575,7 +575,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        13.7k
+                        13.6k
                     </div>
                 
 
@@ -1188,7 +1188,7 @@ $ hexdump -C hello -n 16
 00000060<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以发现，文件头部分，有 30 个字节即使被篡改后，该可执行文件依然可以正常执行。这意味着，这 30 字节是可以写入其他代码指令字节的。而我们的实际代码指令只剩下 12 个，完全可以直接移到前 12 个 <code>0xff</code> 的位置，即从第 4 个到第 15 个。</p>
 <p>而代码部分的起始位置，通过 <code>readelf -h</code> 命令可以看到：</p>
-<pre><code>$ readelf -h hello | grep "Entry"
+<pre><code>$ readelf -h hello | grep &quot;Entry&quot;
   Entry point address:               0x8048054</code></pre><p>上面地址的最后两位 <code>0x54=84</code> 就是代码在文件中的偏移，也就是刚好从程序头之后开始的，也就是用文件头（52）+程序头（32）个字节开始的 12 字节覆盖到第 4 个字节开始的 12 字节内容即可。</p>
 <p>上面的 <code>dd</code> 命令从 <code>echo</code> 命令获得输入，下面需要通过可执行文件本身获得输入，先把代码部分移过去：</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">dd</span> if<span class="token operator">=</span>hello of<span class="token operator">=</span>hello bs<span class="token operator">=</span>1 skip<span class="token operator">=</span>84 count<span class="token operator">=</span>12 seek<span class="token operator">=</span>4 conv<span class="token operator">=</span>notrunc
@@ -1668,7 +1668,7 @@ $ hexdump -C ret.bin
 </blockquote>
 <p>可以直接用已经合并好程序头的 <code>hello</code> 来做实验，这里一并截掉最后的 7 个 0 字节：</p>
 <pre><code>$ cp hello ret
-$ echo -ne "\xb3\x2a\x31\xc0\x40\xcd\x80" |\
+$ echo -ne &quot;\xb3\x2a\x31\xc0\x40\xcd\x80&quot; |\
     dd of=ret bs=1 count=8 seek=32 conv=notrunc
 $ dd if=ret of=hello bs=1 count=1 skip=45 seek=45
 $ hexdump -C hello
@@ -1960,25 +1960,7 @@ $ <span class="token function">wc</span> -c hello
 <p>到这里，我们获得了史上最小的可以打印字符串的 <code>Elf</code> 文件，是的，只有 45 个字节。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>到这里，关于可执行文件的讨论暂且结束，最后来一段小小的总结，那就是我们设法去减少可执行文件大小的意义？</p>
 <p>实际上，通过这样一个讨论深入到了很多技术的细节，包括可执行文件的格式、目标代码链接的过程、 Linux 下汇编语言开发等。与此同时，可执行文件大小的减少本身对嵌入式系统非常有用，如果删除那些对程序运行没有影响的节区和节区表将减少目标系统的大小，适应嵌入式系统资源受限的需求。除此之外，动态连接库中的很多函数可能不会被使用到，因此也可以通过某种方式剔除。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1991,12 +1973,12 @@ $ <span class="token function">wc</span> -c hello
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -2106,12 +2088,12 @@ $ <span class="token function">wc</span> -c hello
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -2164,12 +2146,12 @@ $ <span class="token function">wc</span> -c hello
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -2343,7 +2325,7 @@ $ <span class="token function">wc</span> -c hello
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

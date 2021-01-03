@@ -574,7 +574,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.3k
+                        2.2k
                     </div>
                 
 
@@ -686,7 +686,7 @@ $ <span class="token function">readonly</span> oracle_home<span aria-hidden="tru
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">test</span> -z s1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>如果串 <code>s1</code> 长度为零，返回真。</p>
 <h4 id="范例：串比较"><a href="#范例：串比较" class="headerlink" title="范例：串比较"></a>范例：串比较</h4><blockquote>
-<p>相等<code>"s1"="s2"</code>； 不相等 <code>"s1"!="s2"</code></p>
+<p>相等<code>&quot;s1&quot;=&quot;s2&quot;</code>； 不相等 <code>&quot;s1&quot;!=&quot;s2&quot;</code></p>
 </blockquote>
 <p>还有一种比较串的方法（可以按字典序来比较）：</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token string">'abcde'</span> <span class="token operator">&lt;</span> <span class="token string">'abcdf'</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>  <span class="token keyword">echo</span> <span class="token string">"yeah,果然是诶"</span><span class="token punctuation">;</span> <span class="token keyword">fi</span>
@@ -768,26 +768,8 @@ Hello,World<span class="token operator">!</span><span aria-hidden="true" class="
 <span class="token punctuation">}</span>
 HW<span class="token operator">=</span><span class="token string">"Hello World"</span>
 show <span class="token string">"<span class="token variable">$HW</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>如果直接 <code>show $HW</code>，肯定不行，因为 <code>$1</code> 只接受到了 <code>Hello</code>，所以结果只显示 <code>Hello</code>，原因是字符串变量必须用 <code>"</code> 包含起来。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<p>如果直接 <code>show $HW</code>，肯定不行，因为 <code>$1</code> 只接受到了 <code>Hello</code>，所以结果只显示 <code>Hello</code>，原因是字符串变量必须用 <code>&quot;</code> 包含起来。</p>
+
             </div>
             <hr/>
 
@@ -1148,7 +1130,7 @@ show <span class="token string">"<span class="token variable">$HW</span>"</span>
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

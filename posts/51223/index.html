@@ -815,25 +815,7 @@ Animal* creat(string& name, int age) {
 <p>如前面所说，Animal* creat(string&amp; name, int age)确实只是实例化一个RealAnimal对象，返回的却是Animal接口对象，所以必须将类Animal 的析构函数声明为虚函数，不然会造成内存泄漏。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>无论是Impl Idiom手法，还是Object Interface手法都实现了同样的接口，而且它们有一个共同的目的，降低用户（被提供接口的小组也称为客户）直接操作数据造成不必要错误的可能性。其实它们有一个重要的优点就是将模块的依赖性降到了最低，举个例子吧，假如客户在使用这些接口的时候，如果这些接口内部的实现细目变更了，客户也不需要再重新编译自己的代码，因为客户只依赖接口声明的头文件。如果客户依赖接口的代码量非常大，那么，这个时候，这样定义接口就非常有必要了，毕竟客户在不修改自己代码的前提下，不需要重新编译自己的代码，这样可以提高客户的效率。</p>
 <p>其实，这样来设计接口还是有缺点的，虽然接口定义在一个类中，但是真正实例化接口类的过程中，编译器会自动替我们生成必需的成员函数（比如构造函数、拷贝构造函数等），显然Animal也不例外。虽然有这样的缺点，但还是瑕不掩瑜。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1187,7 +1169,7 @@ int trap(int[] height);
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

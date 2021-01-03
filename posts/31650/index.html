@@ -571,7 +571,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.3k
+                        3.2k
                     </div>
                 
 
@@ -601,7 +601,7 @@
 <li>堆结构衍生的问题</li>
 </ul>
 <a id="more"></a>
-<h2 id="一-排序算法总结"><a href="#一-排序算法总结" class="headerlink" title="一. 排序算法总结"></a>一. 排序算法总结</h2><p>前三篇博文介绍的排序算法及以上讲解完的堆排序完成，意味着有关排序算法已讲解完毕，下面对这些排序算法进行简单总结：<br><img src="/posts/31650/1.png" alt="图片"></p>
+<h2 id="一-排序算法总结"><a href="#一-排序算法总结" class="headerlink" title="一. 排序算法总结"></a>一. 排序算法总结</h2><p>前三篇博文介绍的排序算法及以上讲解完的堆排序完成，意味着有关排序算法已讲解完毕，下面对这些排序算法进行简单总结：<br><img src="/1.png" alt="图片"></p>
 <p><strong>（1）均时间复杂度</strong></p>
 <p>注意，表格中强调的是“平均”时间复杂度，比如说快速排序，待排序数组已经是近乎有序，那么其时间复杂度会退化到O(n^2)，所以使用了随机算法优化使其概率降低到0。<strong>总体而言，快速排序的性能较优，也就是说在O(n*logn)这3种算法而言有常数性的差异，但快速排序较优，所以一般系统级别的排序采用快速排序，而对于含有大量重复元素的数组可采用优化的三路快速排序。</strong></p>
 <p><strong>（2）原地排序</strong></p>
@@ -614,7 +614,7 @@
 </ul>
 <p><strong>（4）稳定排序</strong></p>
 <p>稳定排序：对于相等的元素，在排序后，原来靠前的元素依然靠前，即相等元素的相对位置没有发生改变，此算法才是稳定的。</p>
-<p><img src="/posts/31650/2.png" alt="图片"></p>
+<p><img src="/2.png" alt="图片"></p>
 <p>例如上图数组中有3个相同元素3，在排序后，这分开的3个3肯定会排列在一起，但重点依旧按照原来的“红绿蓝”位置排列，这才是稳定排序。</p>
 <p>例如实际应用中，学生名单按照名字字典序排列，现在需要按照成绩重新排列，最后几个同分的同学之间依然还是按照字典序排列。</p>
 <ul>
@@ -631,7 +631,7 @@
 </ul>
 <h2 id="二-索引堆（Index-Heap）及优化"><a href="#二-索引堆（Index-Heap）及优化" class="headerlink" title="二. 索引堆（Index Heap）及优化"></a>二. 索引堆（Index Heap）及优化</h2><p>下面依然将重点放到“堆”这个数据结构，以下将介绍一个相比普通的堆更加高级的数据结构——索引堆。</p>
 <h4 id="1-引出问题"><a href="#1-引出问题" class="headerlink" title="1. 引出问题"></a>1. 引出问题</h4><p>首先来分析一下普通的堆有什么问题，才会进而衍生出索引堆：</p>
-<p><img src="/posts/31650/3.png" alt="图片"><br>重点查看以上举例证明一个数组实现堆后元素的变换，可是在构建堆的过程中有局限性：</p>
+<p><img src="/3.png" alt="图片"><br>重点查看以上举例证明一个数组实现堆后元素的变换，可是在构建堆的过程中有局限性：</p>
 <ul>
 <li>如果元素是非常复杂的结构，例如字符串（一篇十万字的文章）等等，这样交换的代价是十分大的。不过这可以通过一些基本手段解决，</li>
 <li>更加致命的是元素在数组中的位置发生改变，使得在堆中很难索引到它！例如元素下标是任务ID，元素值是优先级别。当将数组构建成堆后，下标发生改变，则意味着两者无法产生联系！在原来数组中寻找任务只需O(1)，但是构建成堆后元素位置发生改变后需要遍历数组！所以才会引入“索引堆”这个概念。</li>
@@ -642,7 +642,7 @@
 <li><p>当将此数组构建成堆之后：data部分并未发生改变，真正改变的是索引index，index数组发生改变形成堆。<strong>index为10，即真正元素值去找索引10代表的data值62，这样去对应。</strong></p>
 </li>
 </ul>
-<p><img src="/posts/31650/4.png" alt="图片"></p>
+<p><img src="/4.png" alt="图片"></p>
 <p>使用“索引堆”有以下两个好处：</p>
 <ul>
 <li>将数组构建成堆之后，只是索引index值发生改变，int型数字之间的交换而不会涉及到data数据类型，提供交换效率。</li>
@@ -729,13 +729,13 @@
                 return;
             }
     }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="4-反向查找优化-——-更改元素值"><a href="#4-反向查找优化-——-更改元素值" class="headerlink" title="4. 反向查找优化 —— 更改元素值"></a>4. 反向查找优化 —— 更改元素值</h4><p><strong>（1）引出问题</strong><br><img src="/posts/31650/5.png" alt="图片"><br>举个例子，如上图，若用户要更改下标4所指向元素的数据，将此数据更爱以后需要维护index数组，此数组本质上是一个堆，其中存储的元素对应着上一层索引。</p>
+<h4 id="4-反向查找优化-——-更改元素值"><a href="#4-反向查找优化-——-更改元素值" class="headerlink" title="4. 反向查找优化 —— 更改元素值"></a>4. 反向查找优化 —— 更改元素值</h4><p><strong>（1）引出问题</strong><br><img src="/5.png" alt="图片"><br>举个例子，如上图，若用户要更改下标4所指向元素的数据，将此数据更爱以后需要维护index数组，此数组本质上是一个堆，其中存储的元素对应着上一层索引。</p>
 <p>所以需要做的是在index数组中找到4的位置，在下标9指向的位置，上一点的实现方法是顺序遍历查找下标9的位置，4指向的data是13，<strong>然后调用shiftUp、shiftDown方法维护二叉堆特征，这样过程的时间复杂度为O(n)级别。</strong></p>
-<p><strong>（2）思想</strong><br>其实对于以上更改元素值思想还有可以优化的地方，此种思想非常经典，被称为“反向查找”，查看下图：<br><img src="/posts/31650/6.png" alt="图片"></p>
+<p><strong>（2）思想</strong><br>其实对于以上更改元素值思想还有可以优化的地方，此种思想非常经典，被称为“反向查找”，查看下图：<br><img src="/6.png" alt="图片"></p>
 <p>可以看到，多了一行数组rev，rev[i]代表i这个索引在堆中的位置。举个例子，将下标4的data13修改了，接着需要维护索引4在堆中的位置，即维护index数组，怎么找到下标4在堆中的位置？</p>
 <p><strong>查看rev数组，rev数组中对应的是9，所以在index数组中第9个位置存储的索引4。</strong></p>
 <p>rev数组相关性质:</p>
-<p>这样一来只需维护rev数组，在进行元素更新时所耗时间复杂度为O(1)，来了解rev数组相关性质：<br><img src="/posts/31650/7.png" alt="图片"></p>
+<p>这样一来只需维护rev数组，在进行元素更新时所耗时间复杂度为O(1)，来了解rev数组相关性质：<br><img src="/7.png" alt="图片"></p>
 <p><strong>（3）代码实现</strong></p>
 <p>如此一来引入了rev数组，就需要在insert、shiftUp、extractMax、shiftDown函数中进行维护，重点代码如下：</p>
 <pre class="line-numbers language-c++"><code class="language-c++">Class{
@@ -815,8 +815,8 @@
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="五-堆衍生的问题"><a href="#五-堆衍生的问题" class="headerlink" title="五. 堆衍生的问题"></a>五. 堆衍生的问题</h2><h4 id="1-使用堆实现优先队列"><a href="#1-使用堆实现优先队列" class="headerlink" title="1. 使用堆实现优先队列"></a>1. 使用堆实现优先队列</h4><p><strong>在N个元素中选出前M个元素</strong><br>例如在1,000,000个元素中选出前100名，也就是“在N个元素中选出前M个元素”。</p>
 <p>按照之前学习的一些排序算法，性能最优可达到O(n* logn )<strong>但是使用了优先队列，可将时间复杂度从O(n *logn )降低为O(n *logM)</strong>！（若N是百万级别数字，其实这优化的不少）使用一个最小堆，使长度维护在100，将前100个元素放入最小堆之后再插入新的元素，此时只会将堆中最小元素移出去，堆的长度不变，将这1,000,000个元素遍历完后，最小堆中存放的100个元素就是前100名，因为比其小的元素全都请了出去。</p>
-<h4 id="2-多路归并排序"><a href="#2-多路归并排序" class="headerlink" title="2. 多路归并排序"></a>2. 多路归并排序</h4><p>可以使用堆来完成多路归并排序，首先思考归并排序思想，是将数组一分为二，两个子数组分别排序后进行归并，每次归并的过程只有两个子数组元素比较，如下图：<br><img src="/posts/31650/8.png" alt="图片"><br>其实在归并排序过程中可以一次分成多个（大于2，这里是4）子数组，再进行归并，每次比较4个元素的大小关系，理所当然想到逐个元素比较，<strong>但是可以将这4个元素放入堆中，再逐个取出来，取出来的元素属于哪个子数组，再添加这个子数组的下一个元素进入堆中，来维护这个堆。</strong></p>
-<h4 id="3-d叉堆"><a href="#3-d叉堆" class="headerlink" title="3. d叉堆"></a>3. d叉堆</h4><p>此部分主要讲解的是二叉堆，即每个节点最多有两个孩子，其实还有一种思想——d叉堆，下图是三叉堆，依然满足堆的特征。其中d越大，层数越少，同样在Shift Up、Shift Down时比较的次数增多，所以对于这个d的数量，也是性能之间的衡量。（二叉堆是最经典的）<br><img src="/posts/31650/9.png" alt="图片"></p>
+<h4 id="2-多路归并排序"><a href="#2-多路归并排序" class="headerlink" title="2. 多路归并排序"></a>2. 多路归并排序</h4><p>可以使用堆来完成多路归并排序，首先思考归并排序思想，是将数组一分为二，两个子数组分别排序后进行归并，每次归并的过程只有两个子数组元素比较，如下图：<br><img src="/8.png" alt="图片"><br>其实在归并排序过程中可以一次分成多个（大于2，这里是4）子数组，再进行归并，每次比较4个元素的大小关系，理所当然想到逐个元素比较，<strong>但是可以将这4个元素放入堆中，再逐个取出来，取出来的元素属于哪个子数组，再添加这个子数组的下一个元素进入堆中，来维护这个堆。</strong></p>
+<h4 id="3-d叉堆"><a href="#3-d叉堆" class="headerlink" title="3. d叉堆"></a>3. d叉堆</h4><p>此部分主要讲解的是二叉堆，即每个节点最多有两个孩子，其实还有一种思想——d叉堆，下图是三叉堆，依然满足堆的特征。其中d越大，层数越少，同样在Shift Up、Shift Down时比较的次数增多，所以对于这个d的数量，也是性能之间的衡量。（二叉堆是最经典的）<br><img src="/9.png" alt="图片"></p>
 <h4 id="4-堆的实现细节优化"><a href="#4-堆的实现细节优化" class="headerlink" title="4. 堆的实现细节优化"></a>4. 堆的实现细节优化</h4><p>这里这位读者提供对细节优化的思路，切身去体会算法的“优化”，堆的实现细节优化还有：</p>
 <ul>
 <li>ShiftUp 和 ShiftDown 中使用赋值操作替换swap操作</li>
@@ -831,25 +831,7 @@
 <p>以上就是有关于堆的所有内容，堆其实就是一棵“数”，包括之前学习的有关O(n*logn)排序算法，虽然是在数组上进行排序，但是通过其算法使用的递归可画出“树”结构，可见“树”的重要性，下一篇将开始讲解</p>
 <hr>
 <p>转自：<a href="https://blog.csdn.net/ITermeng/article/details/77431945">https://blog.csdn.net/ITermeng/article/details/77431945</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1199,7 +1181,7 @@
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

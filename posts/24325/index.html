@@ -652,7 +652,7 @@ VI编辑器只读选项在打开某些配置文件的时候，为了安全起见
 </ul>
 <p>在命令模式下以”双引号开头引用这些寄存器。比如想要使用2号寄存器中的内容，只需要输入”2p。</p>
 <p>指定缓冲区的格式可以总结为</p>
-<p><code>"+指定寄存器+命令</code></p>
+<p><code>&quot;+指定寄存器+命令</code></p>
 <p>命令行模式下，:reg显示寄存器。</p>
 <h4 id="寄存器加操作符作用域"><a href="#寄存器加操作符作用域" class="headerlink" title="寄存器加操作符作用域"></a>寄存器加操作符作用域</h4><p>刚刚所学的寄存器和操作符作用域是可以结合起来使用的:</p>
 <p>寄存器+[range]+d/y+[motion]组合，完成拷贝/删除动作到寄存器，例如</p>
@@ -678,25 +678,7 @@ VI编辑器只读选项在打开某些配置文件的时候，为了安全起见
 <p>?something: 在光标前面的文本中查找something</p>
 <p>n: 向后查找下一个。</p>
 <p>N: 向前查找下一个。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1040,7 +1022,7 @@ Posix标准中
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

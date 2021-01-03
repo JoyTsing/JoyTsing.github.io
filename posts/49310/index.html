@@ -571,7 +571,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.7k
+                        3.6k
                     </div>
                 
 
@@ -613,7 +613,7 @@
 <p>为什么使用优先队列？</p>
 <p>注意“动态”的重要性，如果任务是固定的话，可以将这些任务排序好安装优先级最高到最低依次执行，可是实际处理确要复杂得多。如下图：蓝色任务处理中心就类似CPU，由它来处理所有请求（红色代表Request）。<em>选择执行某个请求后，下一步不是简单地选择另一个请求执行，与此同时可能会来新的任务，不仅如此，旧的任务优先级可能会发生改变，所以将所有任务按优先级排序再依次执行是不现实的。</em></p>
 <p>所以优先队列模型不仅适用于OS，更存在与生活中方方面面，例如大家同时请求某个网页，服务器端需要依次回应请求，回应的顺序通常是按照优先队列决定的。</p>
-<p><img src="/posts/49310/1.png" alt="partition"></p>
+<p><img src="/1.png" alt="partition"></p>
 <p><strong>优先队列处理“静态问题”</strong></p>
 <p>前面一直在强调优先队列善于处理“动态”的情况，但其实对于“静态”也是十分擅长，例如在1,000,000个元素中选出前100名，也就是“在N个元素中选出前M个元素”。</p>
 <p>在前三篇博文中学习了排序算法后，很快得到将所有元素排序，选出前M个元素即可，时间复杂度为O(n * logn)。 <strong>但是使用了优先队列，可将时间复杂度降低为O(n * logM)！</strong> 具体实现涉及到优先队列实现，后续介绍。</p>
@@ -636,14 +636,14 @@
 <li>使用普通数组或者顺序数组，最差情况：O(n^2)</li>
 <li>使用堆：O(nlgn)</li>
 </ul>
-<p><img src="/posts/49310/2.png" alt="图片"></p>
+<p><img src="/2.png" alt="图片"></p>
 <h4 id="2-二叉堆（Binary-Heap）的基本存储"><a href="#2-二叉堆（Binary-Heap）的基本存储" class="headerlink" title="2. 二叉堆（Binary Heap）的基本存储"></a>2. 二叉堆（Binary Heap）的基本存储</h4><p>因此若要实现优先队列，必须采用堆数据结构，下面介绍堆有关知识及如何实现。</p>
 <p><strong>（1）概念特征</strong><br>在以上了解堆中操作都是O(n *logn)级别，应当知道堆相应的是一种树形结构，其中最为经典的是二叉堆，类似于二叉树，每一个节点可以有两个子节点，特点：</p>
 <ul>
 <li><strong>在二叉树上任何一个子节点都不大于其父节点。</strong></li>
 <li>必须是一棵完全的二叉树，即除了最后一层外，以上层数的节点都必须存在并且狐妖集中在左侧。</li>
 </ul>
-<p><img src="/posts/49310/3.png" alt="图片"></p>
+<p><img src="/3.png" alt="图片"></p>
 <p>注意：<strong>第一个特征中说明在二叉树上任何一个子节点都不大于其父节点，并不意味着层数越高节点数越大，这都是相对父节点而言的。</strong> 例如第三层的19比第二层的16大。</p>
 <p>这样的二叉堆又被称为“最大堆”，父节点总是比子节点大，同理而言“最小堆”中父节点总是比子节点小，这里只讲解“最大堆”。</p>
 <p><strong>（2）结构实现</strong><br>对于其具体实现，熟悉树形结构的同学可能认为需要两个指针来实现左、右节点，当然可以这样实现，但是还有一个经典实现方式——通过数组实现，正是因为堆是一棵完全的二叉树。</p>
@@ -652,7 +652,7 @@
 <li>它的左孩子序列号都是本身序列号的:2倍</li>
 <li>它的右孩子序列号都是本身序列号的:2倍+1</li>
 </ul>
-<p>（这里的根节点下标是由1开始而得出以上规则，但其实由0开始也可得出相应的规则，此部分重点还是放在下标1开始）<br><img src="/posts/49310/4.png" alt="图片"></p>
+<p>（这里的根节点下标是由1开始而得出以上规则，但其实由0开始也可得出相应的规则，此部分重点还是放在下标1开始）<br><img src="/4.png" alt="图片"></p>
 <p><strong>（3）基本结构代码实现</strong></p>
 <pre class="line-numbers language-C++"><code class="language-C++">
 template<typename Item>
@@ -693,7 +693,7 @@ public:
 <li>52被换到一个新位置，再继续查看52是否大于其父节点，发现52比41大，继续交换。</li>
 <li>再继续判断，52比62小，无须挪动位置，插入完成。</li>
 </ul>
-<p><img src="/posts/49310/1.gif" alt="图片"></p>
+<p><img src="/1.gif" alt="图片"></p>
 <p>代码实现</p>
 <p>在MaxHeap中新增一个insert方法，传入新增元素在二叉堆中的下标</p>
 <pre class="line-numbers language-C++"><code class="language-C++">    //将下标k的新增元素放入到二叉堆中合适位置
@@ -724,7 +724,7 @@ public:
 </ul>
 </li>
 </ul>
-<p><img src="/posts/49310/2.gif" alt="图片"></p>
+<p><img src="/2.gif" alt="图片"></p>
 <p>代码实现:</p>
 <pre class="line-numbers language-C++"><code class="language-C++">
     void shiftDown(int k){
@@ -769,18 +769,18 @@ void heapSort1(T arr[], int n){
 <p><strong>（1）测试</strong></p>
 <p>所以以下将二叉堆和之前所学到的O(n*logn)排序算法比较测试，分别对</p>
 <p>无序数组<br>近乎有序数组<br>包含大量重复值数组<br>以上3组测试用例进行时间比较，结果如下:</p>
-<p><img src="/posts/49310/5.png" alt="图片"><br>虽然二叉堆排序使用的时间相较于其它排序算法要慢，但使用时间仍在接收范围内。因为整个堆排序的整体时间复杂度为O(nlogn) ，无论是创建堆的过程, 还是从堆中依次取出元素的过程, 时间复杂度均为O(nlogn)。总共循环n此，每次循环二叉树操作消耗O(logn)，所以最后是O(nlogn)。</p>
+<p><img src="/5.png" alt="图片"><br>虽然二叉堆排序使用的时间相较于其它排序算法要慢，但使用时间仍在接收范围内。因为整个堆排序的整体时间复杂度为O(nlogn) ，无论是创建堆的过程, 还是从堆中依次取出元素的过程, 时间复杂度均为O(nlogn)。总共循环n此，每次循环二叉树操作消耗O(logn)，所以最后是O(nlogn)。</p>
 <p>但是还可以继续优化，使性能达到更优以上过程创建二叉堆的过程是一个个将元素插入，其实还有更好的方式——Heapify。</p>
 <p><strong>（2）Heapify算法思想</strong></p>
 <p>给定一个数组，使这个数组形成堆的形状，此过程名为Heapify。例如以下数组{15,17,19,13,22,16,28,30,41,62}：</p>
-<p><img src="/posts/49310/6.png" alt="图片"></p>
+<p><img src="/6.png" alt="图片"></p>
 <p>此数组形成的二叉树并非最大堆，不满足特征。但是上图中的叶子节点，即最后一层的每个节点可看作是一个最大堆（因为只有它一个节点）。接着再向上递进一层：</p>
 <ul>
 <li>由最后一个节点开始，考察父节点22是否大于孩子62，不满足则交换位置。这样这两个节点组成的子树满足最大堆特征。</li>
 <li>再考虑父节点13是否大于孩子30、41，不满足则与最大值的孩子交换位置。</li>
 <li>依次类推，其实思想与Shift Down相似。</li>
 </ul>
-<p><img src="/posts/49310/3.gif" alt="图片"></p>
+<p><img src="/3.gif" alt="图片"></p>
 <p>（3）代码实现</p>
 <p>所以，此堆排序的优化就是<strong>修改其创建方法，不通过一个一个元素插入来创建二叉堆，而是通过Heapify方法来完成创建，此过程消耗的时间复杂度为O(n)，性能更优。</strong></p>
 <p>需要修改MaxHeap中的构造函数，传入参数为无序的数组和数组长度，首先开辟空间，下标从1开始将数组元素值赋值到新数组中，再结合Shift Down方法层层递进。</p>
@@ -807,7 +807,7 @@ void heapSort2(T arr[], int n){
 
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>（4）测试</p>
-<p>通过优化后的创建二叉堆构造函数再次测试，结果如下：<br><img src="/posts/49310/7.png" alt="图片"></p>
+<p>通过优化后的创建二叉堆构造函数再次测试，结果如下：<br><img src="/7.png" alt="图片"></p>
 <p>结论</p>
 <p>将n个元素逐个插入到一个空堆中，算法复杂度是O(nlogn)，而使用Heapify的过程，算法复杂度为O(n)</p>
 <h4 id="2-原地堆排序"><a href="#2-原地堆排序" class="headerlink" title="2. 原地堆排序"></a>2. 原地堆排序</h4><p>不同于其他排序算法，在堆排序中需要将数组元素放入“堆”中，需要开辟新的数组，相当于开了额外的O(n)空间，其实可以继续优化不适用空间原地对元素进行排序。</p>
@@ -818,9 +818,9 @@ void heapSort2(T arr[], int n){
 <li>其第一个元素v就是根节点（最大值），在具体排序过程中最大值应在末尾位置w，将两个值互换位置，此时最大值v在数组末尾。</li>
 <li>那么此时包含w在内的橘黄色部分就不是最大堆了，将w位置的值进行Shift Down操作。</li>
 <li>橘黄色部分再次成为“最大堆”，最大值仍在第一个位置，那堆末尾的元素（即倒数第二个位置）与第一个元素交换位置，再进行Shift Down操作。</li>
-<li>依次类推<br><img src="/posts/49310/4.gif" alt="图片"></li>
+<li>依次类推<br><img src="/4.gif" alt="图片"></li>
 </ul>
-<p>这样所有的元素逐渐排序好，直到整个数组都变成蓝色。使用的空间复杂度是O(1)，但是这里需要注意的是，如此一来下标是从0开始并非1，所以规则需要进行相应的调整：<br><img src="/posts/49310/8.png" alt="图片"></p>
+<p>这样所有的元素逐渐排序好，直到整个数组都变成蓝色。使用的空间复杂度是O(1)，但是这里需要注意的是，如此一来下标是从0开始并非1，所以规则需要进行相应的调整：<br><img src="/8.png" alt="图片"></p>
 <p>代码实现</p>
 <pre class="line-numbers language-C++"><code class="language-C++">// 优化的shiftDown过程, 使用赋值的方式取代不断的swap,
 // 该优化思想和我们之前对插入排序进行优化的思路是一致的
@@ -858,29 +858,11 @@ void heapSort(T arr[], int n){
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>测试：</p>
-<p>分别测试原始Shift Down堆排序 和 Heapify堆排序 和 原地堆排序的时间消耗。<br><img src="/posts/49310/9.png" alt="图片"></p>
+<p>分别测试原始Shift Down堆排序 和 Heapify堆排序 和 原地堆排序的时间消耗。<br><img src="/9.png" alt="图片"></p>
 <p>从结构得知优化后的原地堆排序快于之前原始Shift Down堆排序和Heapify堆排序，因为新的算法不需要额外的空间，也不需要对这些空间赋值，所以性能有所提高。</p>
 <p>前三篇博文介绍的排序算法及以上讲解完的堆排序完成，意味着有关排序算法已讲解完毕，下面篇博文对这些排序算法进行比较总结，并且学习另一个经典的堆结构，处于二叉堆优化之上的索引堆。</p>
 <p>转自：<a href="https://blog.csdn.net/ITermeng/article/details/77480102">https://blog.csdn.net/ITermeng/article/details/77480102</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1230,7 +1212,7 @@ void heapSort(T arr[], int n){
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

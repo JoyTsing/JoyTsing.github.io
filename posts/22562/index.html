@@ -600,9 +600,9 @@ Wiki:在计算机科学中，AVL树是最早被发明的自平衡二叉查找树
 </blockquote>
 <a id="more"></a>
 
-<h2 id="1-为什么要有平衡二叉树"><a href="#1-为什么要有平衡二叉树" class="headerlink" title="1 为什么要有平衡二叉树"></a>1 为什么要有平衡二叉树</h2><p>二叉搜索树一定程度上可以提高搜索效率，但是当原序列有序时，例如序列 A = {1，2，3，4，5，6}，构造二叉搜索树如图 1.1。依据此序列构造的二叉搜索树为右斜树，同时二叉树退化成单链表，搜索效率降低为 O(n)。<br><img src="/posts/22562/1.png" alt="图片1"></p>
+<h2 id="1-为什么要有平衡二叉树"><a href="#1-为什么要有平衡二叉树" class="headerlink" title="1 为什么要有平衡二叉树"></a>1 为什么要有平衡二叉树</h2><p>二叉搜索树一定程度上可以提高搜索效率，但是当原序列有序时，例如序列 A = {1，2，3，4，5，6}，构造二叉搜索树如图 1.1。依据此序列构造的二叉搜索树为右斜树，同时二叉树退化成单链表，搜索效率降低为 O(n)。<br><img src="/1.png" alt="图片1"></p>
 <p>在此二叉搜索树中查找元素 6 需要查找 6 次。</p>
-<p>二叉搜索树的查找效率取决于树的高度，因此保持树的高度最小，即可保证树的查找效率。同样的序列 A，将其改为图 1.2 的方式存储，查找元素 6 时只需比较 3 次，查找效率提升一倍。<br><img src="/posts/22562/2.png" alt="图片1"><br>可以看出当节点数目一定，保持树的左右两端保持平衡，树的查找效率最高。</p>
+<p>二叉搜索树的查找效率取决于树的高度，因此保持树的高度最小，即可保证树的查找效率。同样的序列 A，将其改为图 1.2 的方式存储，查找元素 6 时只需比较 3 次，查找效率提升一倍。<br><img src="/2.png" alt="图片1"><br>可以看出当节点数目一定，保持树的左右两端保持平衡，树的查找效率最高。</p>
 <p><strong>这种左右子树的高度相差不超过 1 的树为平衡二叉树。</strong></p>
 <h2 id="2-定义"><a href="#2-定义" class="headerlink" title="2. 定义"></a>2. 定义</h2><p><strong>平衡二叉查找树</strong>：简称平衡二叉树。由前苏联的数学家 Adelse-Velskil 和 Landis 在 1962 年提出的高度平衡的二叉树，根据科学家的英文名也称为 AVL 树。它具有如下几个性质：</p>
 <ol>
@@ -611,15 +611,15 @@ Wiki:在计算机科学中，AVL树是最早被发明的自平衡二叉查找树
 </ol>
 <p>平衡之意，如天平，即两边的分量大约相同。</p>
 <p>例如图 2.1 不是平衡二叉树，因为节点 60 的左子树不是平衡二叉树。</p>
-<p><img src="/posts/22562/3.png" alt="图片1"></p>
+<p><img src="/3.png" alt="图片1"></p>
 <p>图 2.2 也不是平衡二叉树，因为虽然任何一个节点的左子树与右子树都是平衡二叉树，但高度之差已经超过 1 。</p>
-<p><img src="/posts/22562/4.png" alt="图片1"></p>
+<p><img src="/4.png" alt="图片1"></p>
 <p>图 2.3 是平衡二叉树。</p>
-<p><img src="/posts/22562/5.png" alt="图片1"></p>
+<p><img src="/5.png" alt="图片1"></p>
 <h2 id="3-平衡因子"><a href="#3-平衡因子" class="headerlink" title="3. 平衡因子"></a>3. 平衡因子</h2><p><strong>定义：</strong> 某节点的左子树与右子树的高度(深度)差即为该节点的平衡因子（BF,Balance Factor），平衡二叉树中不存在平衡因子大于 1 的节点。在一棵平衡二叉树中，节点的平衡因子只能取 0 、1 或者 -1 ，分别对应着左右子树等高，左子树比较高，右子树比较高。</p>
-<p><img src="/posts/22562/6.png" alt="图片1"></p>
-<p><img src="/posts/22562/7.png" alt="图片1"></p>
-<p><img src="/posts/22562/8.png" alt="图片1"></p>
+<p><img src="/6.png" alt="图片1"></p>
+<p><img src="/7.png" alt="图片1"></p>
+<p><img src="/8.png" alt="图片1"></p>
 <h2 id="4-节点结构"><a href="#4-节点结构" class="headerlink" title="4. 节点结构"></a>4. 节点结构</h2><p>定义平衡二叉树的节点结构：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">typedef struct AVLNode *Tree;
 
@@ -644,12 +644,12 @@ struct AVLNode{
         this->val=val;
     }
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="5-AVL树插入时的失衡与调整"><a href="#5-AVL树插入时的失衡与调整" class="headerlink" title="5. AVL树插入时的失衡与调整"></a>5. AVL树插入时的失衡与调整</h2><p>图 5.1 是一颗平衡二叉树<br><img src="/posts/22562/9.png" alt="图片1"><br>在此平衡二叉树插入节点 99 ，树结构变为：<br><img src="/posts/22562/1.gif" alt="图片1"><br>在动图 5.2 中，节点 66 的左子树高度为 1，右子树高度为 3，此时平衡因子为 -2，树失去平衡。</p>
+<h2 id="5-AVL树插入时的失衡与调整"><a href="#5-AVL树插入时的失衡与调整" class="headerlink" title="5. AVL树插入时的失衡与调整"></a>5. AVL树插入时的失衡与调整</h2><p>图 5.1 是一颗平衡二叉树<br><img src="/9.png" alt="图片1"><br>在此平衡二叉树插入节点 99 ，树结构变为：<br><img src="/1.gif" alt="图片1"><br>在动图 5.2 中，节点 66 的左子树高度为 1，右子树高度为 3，此时平衡因子为 -2，树失去平衡。</p>
 <p>在动图 5.2 中，以节点 66 为父节点的那颗树就称为 <strong>最小失衡子树</strong>。</p>
 <p><strong>最小失衡子树：</strong> 在新插入的节点向上查找，以第一个平衡因子的绝对值超过 1 的节点为根的子树称为最小不平衡子树。也就是说，一棵失衡的树，是有可能有多棵子树同时失衡的。而这个时候，我们只要调整最小的不平衡子树，就能够将不平衡的树调整为平衡的树。</p>
 <p><strong>平衡二叉树的失衡调整主要是通过旋转最小失衡子树来实现的。</strong> 根据旋转的方向有两种处理方式，<strong>左旋</strong> 与 <strong>右旋</strong> 。</p>
 <p>旋转的目的就是减少高度，通过降低整棵树的高度来平衡。哪边的树高，就把那边的树向上旋转。</p>
-<h3 id="5-1-左旋"><a href="#5-1-左旋" class="headerlink" title="5.1 左旋"></a>5.1 左旋</h3><p><img src="/posts/22562/10.png" alt="图片1"></p>
+<h3 id="5-1-左旋"><a href="#5-1-左旋" class="headerlink" title="5.1 左旋"></a>5.1 左旋</h3><p><img src="/10.png" alt="图片1"></p>
 <p>以图 5.1.1 为例，加入新节点 99 后， 节点 66 的左子树高度为 1，右子树高度为 3，此时平衡因子为 -2。为保证树的平衡，此时需要对节点 66 做出旋转，因为右子树高度高于左子树，对节点进行左旋操作，流程如下：</p>
 <ul>
 <li>（1）节点的右孩子替代此节点位置</li>
@@ -657,17 +657,17 @@ struct AVLNode{
 <li>（3）节点本身变为右孩子的左子树</li>
 </ul>
 <p>整个操作流程如动图 5.1.2 所示。</p>
-<p><img src="/posts/22562/2.gif" alt="图片1"></p>
+<p><img src="/2.gif" alt="图片1"></p>
 <h3 id="5-2-右旋"><a href="#5-2-右旋" class="headerlink" title="5.2 右旋"></a>5.2 右旋</h3><p>右旋操作与左旋类似，操作流程为：</p>
 <ul>
 <li>（1）节点的左孩子代表此节点</li>
 <li>（2）节点的左孩子的右子树变为节点的左子树</li>
 <li>（3）将此节点作为左孩子节点的右子树。</li>
 </ul>
-<p><img src="/posts/22562/3.gif" alt="图片1"></p>
+<p><img src="/3.gif" alt="图片1"></p>
 <h2 id="6-AVL树的四种插入节点方式"><a href="#6-AVL树的四种插入节点方式" class="headerlink" title="6. AVL树的四种插入节点方式"></a>6. AVL树的四种插入节点方式</h2><p>假设一颗 AVL 树的某个节点为 A，有四种操作会使 A 的左右子树高度差大于 1，从而破坏了原有 AVL 树的平衡性。平衡二叉树插入节点的情况分为以下四种：</p>
-<p><img src="/posts/22562/11.png" alt="图片1"><br>具体分析如下：</p>
-<h3 id="6-1-A的左孩子的左子树插入节点-LL"><a href="#6-1-A的左孩子的左子树插入节点-LL" class="headerlink" title="6.1 A的左孩子的左子树插入节点(LL)"></a>6.1 A的左孩子的左子树插入节点(LL)</h3><p>只需要执行一次右旋即可。<br><img src="/posts/22562/4.gif" alt="图片1"></p>
+<p><img src="/11.png" alt="图片1"><br>具体分析如下：</p>
+<h3 id="6-1-A的左孩子的左子树插入节点-LL"><a href="#6-1-A的左孩子的左子树插入节点-LL" class="headerlink" title="6.1 A的左孩子的左子树插入节点(LL)"></a>6.1 A的左孩子的左子树插入节点(LL)</h3><p>只需要执行一次右旋即可。<br><img src="/4.gif" alt="图片1"></p>
 <p><strong>实现代码如下：</strong></p>
 <pre class="line-numbers language-C++"><code class="language-C++">//LL型调整函数
 //返回:新父节点
@@ -705,7 +705,7 @@ Tree LL_rotate(Tree node){
     return son;
 }
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="6-2-A的右孩子的右子树插入节点-RR"><a href="#6-2-A的右孩子的右子树插入节点-RR" class="headerlink" title="6.2 A的右孩子的右子树插入节点(RR)"></a>6.2 A的右孩子的右子树插入节点(RR)</h3><p>只需要执行一次左旋即可。<br><img src="/posts/22562/5.gif" alt="图片1"><br>实现代码如下：</p>
+<h3 id="6-2-A的右孩子的右子树插入节点-RR"><a href="#6-2-A的右孩子的右子树插入节点-RR" class="headerlink" title="6.2 A的右孩子的右子树插入节点(RR)"></a>6.2 A的右孩子的右子树插入节点(RR)</h3><p>只需要执行一次左旋即可。<br><img src="/5.gif" alt="图片1"><br>实现代码如下：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">//RR型调整函数
 //返回新父节点
 Tree RR_rotate(Tree node){
@@ -743,9 +743,9 @@ Tree RR_rotate(Tree node){
     update_depth(son);
     return son;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="6-3-A的左孩子的右子树插入节点-LR"><a href="#6-3-A的左孩子的右子树插入节点-LR" class="headerlink" title="6.3 A的左孩子的右子树插入节点(LR)"></a>6.3 A的左孩子的右子树插入节点(LR)</h3><p>若 A 的左孩子节点 B 的右子树 E 插入节点 F ，导致节点 A 失衡，如图：<br><img src="/posts/22562/12.png" alt="图片1"><br>A 的平衡因子为 2 ，若仍按照右旋调整，则变化后的图形为这样：<br><img src="/posts/22562/13.png" alt="图片1"><br>经过右旋调整发现，调整后树仍然失衡，说明这种情况单纯的进行右旋操作不能使树重新平衡。那么这种插入方式需要执行两步操作，使得旋转之后为 <strong>原来根节点的左孩子的右孩子作为新的根节点</strong>。</p>
+<h3 id="6-3-A的左孩子的右子树插入节点-LR"><a href="#6-3-A的左孩子的右子树插入节点-LR" class="headerlink" title="6.3 A的左孩子的右子树插入节点(LR)"></a>6.3 A的左孩子的右子树插入节点(LR)</h3><p>若 A 的左孩子节点 B 的右子树 E 插入节点 F ，导致节点 A 失衡，如图：<br><img src="/12.png" alt="图片1"><br>A 的平衡因子为 2 ，若仍按照右旋调整，则变化后的图形为这样：<br><img src="/13.png" alt="图片1"><br>经过右旋调整发现，调整后树仍然失衡，说明这种情况单纯的进行右旋操作不能使树重新平衡。那么这种插入方式需要执行两步操作，使得旋转之后为 <strong>原来根节点的左孩子的右孩子作为新的根节点</strong>。</p>
 <p>（1）对失衡节点 A 的左孩子 B 进行左旋操作，即上述 RR 情形操作。<br>（2）对失衡节点 A 做右旋操作，即上述 LL 情形操作。</p>
-<p>调整过程如下：<br><img src="/posts/22562/14.png" alt="图片1"><br><img src="/posts/22562/15.png" alt="图片1"></p>
+<p>调整过程如下：<br><img src="/14.png" alt="图片1"><br><img src="/15.png" alt="图片1"></p>
 <p>也就是说，经过这两步操作，使得 <strong>原来根节点的左孩子的右孩子 E 节点成为了新的根节点。</strong><br>代码实现：</p>
 <pre class="line-numbers language-c++"><code class="language-c++">//LR型，先左旋转，再右旋转
 //返回：新父节点
@@ -754,7 +754,7 @@ Tree LR_rotate(Tree node){
     return LL_rotate(node);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="6-4-A的右孩子的左子树插入节点-RL"><a href="#6-4-A的右孩子的左子树插入节点-RL" class="headerlink" title="6.4 A的右孩子的左子树插入节点(RL)"></a>6.4 A的右孩子的左子树插入节点(RL)</h3><p>右孩子插入左节点的过程与左孩子插入右节点过程类似，也是需要执行两步操作，使得旋转之后为 <strong>原来根节点的右孩子的左孩子作为新的根节点。</strong></p>
-<p>（1）对失衡节点 A 的右孩子 C 进行右旋操作，即上述 LL 情形操作。<br>（2）对失衡节点 A 做左旋操作，即上述 RR 情形操作。<br><img src="/posts/22562/16.png" alt="图片1"><br><img src="/posts/22562/17.png" alt="图片1"><br><img src="/posts/22562/18.png" alt="图片1"><br>也就是说，经过这两步操作，使得 原来根节点的右孩子的左孩子 D 节点成为了新的根节点。</p>
+<p>（1）对失衡节点 A 的右孩子 C 进行右旋操作，即上述 LL 情形操作。<br>（2）对失衡节点 A 做左旋操作，即上述 RR 情形操作。<br><img src="/16.png" alt="图片1"><br><img src="/17.png" alt="图片1"><br><img src="/18.png" alt="图片1"><br>也就是说，经过这两步操作，使得 原来根节点的右孩子的左孩子 D 节点成为了新的根节点。</p>
 <p>代码实现：</p>
 <pre class="line-numbers language-C++"><code class="language-C++">//RL型，先右旋转，再左旋转
 //返回:新父节点
@@ -811,43 +811,25 @@ int is_balance(Tree node){
 <p>②、其父节点的子树高度的变化将导致父节点平衡因子的变化，通过向上检索并推算其父节点是否失衡；</p>
 <p>③、如果其父节点未失衡，则继续向上检索推算其父节点的父节点是否失衡…如此反复②的判断，直到根节点 ；如果向上推算过程中发现了失衡的现象，则进行 ④ 的处理；</p>
 <p>④、如果其父节点失衡，则判断是哪种失衡类型 [LL、LR、RR、RL] ，并对其进行相应的平衡化处理。如果平衡化处理结束后，发现与原来以父节点为根节点的树的高度发生变化，则继续进行 ② 的检索推算；如果与原来以父节点为根节点的高度一致时，则可说明父节点的父节点及祖先节点的平衡因子将不会有变化，因此可以退出处理；</p>
-<p><img src="/posts/22562/6.gif" alt="图片1"></p>
+<p><img src="/6.gif" alt="图片1"></p>
 <p>具体数字演示：</p>
-<p><img src="/posts/22562/7.gif" alt="图片1"></p>
+<p><img src="/7.gif" alt="图片1"></p>
 <h3 id="7-2-amp-7-3-删除的节点只有左子树或右子树"><a href="#7-2-amp-7-3-删除的节点只有左子树或右子树" class="headerlink" title="7.2 &amp; 7.3 删除的节点只有左子树或右子树"></a>7.2 &amp; 7.3 删除的节点只有左子树或右子树</h3><p>处理步骤：</p>
 <p>①、将左子树（右子树）替代原有节点 C 的位置；</p>
 <p>②、节点 C 被删除后，则以 C 的父节点 B 为起始推算点，依此向上检索推算各节点（父、祖先）是否失衡；</p>
 <p>③、如果其父节点未失衡，则继续向上检索推算其父节点 的父节点 是否失衡…如此反复 ② 的判断，直到根节点 ；如果向上推算过程中发现了失衡的现象，则进行 ④ 的处理；</p>
-<p>④、如果其父节点失衡，则判断是哪种失衡类型 [LL、LR、RR、RL] ，并对其进行相应的平衡化处理。如果平衡化处理结束后，发现与原来以父节点为根节点的树的高度发生变化，则继续进行 ② 的检索推算；如果与原来以父节点为根节点的高度一致时，则可说明父节点的父节点及祖先节点的平衡因子将不会有变化，因此可以退出处理；<br><img src="/posts/22562/8.gif" alt="图片1"></p>
+<p>④、如果其父节点失衡，则判断是哪种失衡类型 [LL、LR、RR、RL] ，并对其进行相应的平衡化处理。如果平衡化处理结束后，发现与原来以父节点为根节点的树的高度发生变化，则继续进行 ② 的检索推算；如果与原来以父节点为根节点的高度一致时，则可说明父节点的父节点及祖先节点的平衡因子将不会有变化，因此可以退出处理；<br><img src="/8.gif" alt="图片1"></p>
 <h3 id="7-4-删除的节点既有左子树又有右子树"><a href="#7-4-删除的节点既有左子树又有右子树" class="headerlink" title="7.4 删除的节点既有左子树又有右子树"></a>7.4 删除的节点既有左子树又有右子树</h3><p>处理步骤：</p>
 <p>①、找到被删节点 B 和替代节点 BLR (节点 B 的前继节点或后继节点 —— 在此选择 <strong>前继</strong>)；</p>
 <p>②、将替代节点 BLR 的值赋给节点 B ，再把替代节点 BLR 的左孩子 BLRL 替换替代节点 BLR 的位置；</p>
 <p>③、以 BLR 的父节点 BL 为起始推算点，依此向上检索推算父节点或祖先节点是否失衡；</p>
 <p>④、如果其父节点未失衡，则继续向上检索推算其父节点的父节点是否失衡…如此反复③的判断，直到根节点；如果向上推算过程中发现了失衡的现象，则进行⑤的处理；</p>
 <p>⑤、如果其父节点失衡，则判断是哪种失衡类型 [LL、LR、RR、RL] ，并对其进行相应的平衡化处理。如果平衡化处理结束后，发现与原来以父节点为根节点的树的高度发生变化，则继续进行 ② 的检索推算；如果与原来以父节点为根节点的高度一致时，则可说明父节点的父节点及祖先节点的平衡因子将不会有变化，因此可以退出处理；</p>
-<p><img src="/posts/22562/9.gif" alt="图片1"></p>
+<p><img src="/9.gif" alt="图片1"></p>
 <p>注：并没有给出 AVL 的删除操作的代码，也没有给出平衡性修复的动画，因为并不打算过多去讨论它，更复杂的删除操作过程将放在后续的 红黑树 中进行讨论。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过对 AVL 的插入操作和删除操作可以看出，平衡二叉树的优势在于不会出现普通二叉查找树的最差情况，即退化成链表结构，但为了保证高度平衡（对称），动态插入和删除的代价也随之增加。</p>
 <p>AVL 的旋转问题看似复杂，但实际上如果你亲自用笔纸操作一下还是很好理解的。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -968,12 +950,12 @@ int is_balance(Tree node){
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Hexo/">
-                                    <span class="chip bg-color">Hexo</span>
-                                </a>
-                            
                                 <a href="/tags/%E6%95%99%E7%A8%8B/">
                                     <span class="chip bg-color">教程</span>
+                                </a>
+                            
+                                <a href="/tags/Hexo/">
+                                    <span class="chip bg-color">Hexo</span>
                                 </a>
                             
                         </div>
@@ -1198,7 +1180,7 @@ int trap(int[] height);
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

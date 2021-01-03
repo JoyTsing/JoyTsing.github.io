@@ -528,12 +528,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -625,7 +625,7 @@ ffffe000-fffff000 r-xp 00000000 00:00 0          [vdso]</code></pre><p>程序被
   PID TTY          TIME CMD
     1 ?        00:00:01 init</code></pre><p>选择某个特定用户启动的进程：</p>
 <pre><code>$ ps -U falcon</code></pre><p>按照指定格式输出指定内容，下面输出命令名和 <code>cpu</code> 使用率：</p>
-<pre><code>$ ps -e -o "%C %c"</code></pre><p>打印 <code>cpu</code> 使用率最高的前 4 个程序：</p>
+<pre><code>$ ps -e -o &quot;%C %c&quot;</code></pre><p>打印 <code>cpu</code> 使用率最高的前 4 个程序：</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">ps</span> -e -o <span class="token string">"%C %c"</span> <span class="token operator">|</span> <span class="token function">sort</span> -u -k1 -r <span class="token operator">|</span> <span class="token function">head</span> -5
  7.5 firefox-bin
  1.1 Xorg
@@ -664,7 +664,7 @@ ffffe000-fffff000 r-xp 00000000 00:00 0          [vdso]</code></pre><p>程序被
 <span class="token comment" spellcheck="true">#设置信号0的动作，当程序退出时触发该信号从而删除掉临时文件</span>
 <span class="token function">trap</span> <span class="token string">"rm <span class="token variable">$pidfile</span>"</span>      0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="调整进程的优先级"><a href="#调整进程的优先级" class="headerlink" title="调整进程的优先级"></a>调整进程的优先级</h2><p>在保证每个进程都能够顺利执行外，为了让某些任务优先完成，那么系统在进行进程调度时就会采用一定的调度办法，比如常见的有按照优先级的时间片轮转的调度算法。这种情况下，可以通过 <code>renice</code> 调整正在运行的程序的优先级，例如：`</p>
-<h3 id="获取进程优先级"><a href="#获取进程优先级" class="headerlink" title="获取进程优先级"></a>获取进程优先级</h3><pre><code>$ ps -e -o "%p %c %n" | grep xfs
+<h3 id="获取进程优先级"><a href="#获取进程优先级" class="headerlink" title="获取进程优先级"></a>获取进程优先级</h3><pre><code>$ ps -e -o &quot;%p %c %n&quot; | grep xfs
  5089 xfs               0</code></pre><h3 id="调整进程的优先级-1"><a href="#调整进程的优先级-1" class="headerlink" title="调整进程的优先级"></a>调整进程的优先级</h3><pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">renice</span> 1 -p 5089
 renice: 5089: setpriority: Operation not permitted
 $ <span class="token function">sudo</span> <span class="token function">renice</span> 1 -p 5089   <span class="token comment" spellcheck="true">#需要权限才行</span>
@@ -728,7 +728,7 @@ $ <span class="token keyword">echo</span> <span class="token variable">$?</span>
 <pre><code>$ ps -ef | grep init</code></pre><p>也许会觉得这个“管子”好有魔法，竟然真地能够链接两个程序的输入和输出，它们到底是怎么实现的呢？实际上当输入这样一组命令时，当前 Shell 会进行适当的解析，把前面一个进程的输出关联到管道的输出文件描述符，把后面一个进程的输入关联到管道的输入文件描述符，这个关联过程通过输入输出重定向函数 <code>dup</code> （或者 <code>fcntl</code> ）来实现。</p>
 <h3 id="有名管道（named-pipe）"><a href="#有名管道（named-pipe）" class="headerlink" title="有名管道（named pipe）"></a>有名管道（named pipe）</h3><p>有名管道实际上是一个文件（无名管道也像一个文件，虽然关系到两个文件描述符，不过只能一边读另外一边写），不过这个文件比较特别，操作时要满足先进先出，而且，如果试图读一个没有内容的有名管道，那么就会被阻塞，同样地，如果试图往一个有名管道里写东西，而当前没有程序试图读它，也会被阻塞。下面看看效果。</p>
 <pre><code>$ mkfifo fifo_test    #通过mkfifo命令创建一个有名管道
-$ echo "fewfefe" &gt; fifo_test
+$ echo &quot;fewfefe&quot; &gt; fifo_test
 #试图往fifo_test文件中写入内容，但是被阻塞，要另开一个终端继续下面的操作
 $ cat fifo_test        #另开一个终端，记得，另开一个。试图读出fifo_test的内容
 fewfefe</code></pre><p>这里的 <code>echo</code> 和 <code>cat</code> 是两个不同的程序，在这种情况下，通过 <code>echo</code> 和 <code>cat</code> 启动的两个进程之间并没有父子关系。不过它们依然可以通过有名管道通信。</p>
@@ -790,7 +790,7 @@ CI<span class="token operator">=</span><span class="token variable">$QUERY_STRIN
 <p>在 C 语言中，如果要使用有名管道，和 Shell 类似，只不过在读写数据时用 <code>read</code>，<code>write</code> 调用，在创建 <code>fifo</code> 时用 <code>mkfifo</code> 函数调用。</p>
 <h3 id="信号（Signal）"><a href="#信号（Signal）" class="headerlink" title="信号（Signal）"></a>信号（Signal）</h3><p>信号是软件中断，Linux 用户可以通过 <code>kill</code> 命令给某个进程发送一个特定的信号，也可以通过键盘发送一些信号，比如 <code>CTRL+C</code> 可能触发 <code>SGIINT</code> 信号，而 <code>CTRL+\</code> 可能触发 <code>SGIQUIT</code> 信号等，除此之外，内核在某些情况下也会给进程发送信号，比如在访问内存越界时产生 <code>SGISEGV</code> 信号，当然，进程本身也可以通过 <code>kill</code>，<code>raise</code> 等函数给自己发送信号。对于 Linux 下支持的信号类型，大家可以通过 <code>man 7 signal</code> 或者 <code>kill -l</code> 查看到相关列表和说明。</p>
 <p>对于有些信号，进程会有默认的响应动作，而有些信号，进程可能直接会忽略，当然，用户还可以对某些信号设定专门的处理函数。在 Shell 中，可以通过 <code>trap</code> 命令（Shell 内置命令）来设定响应某个信号的动作（某个命令或者定义的某个函数），而在 C 语言中可以通过 <code>signal</code> 调用注册某个信号的处理函数。这里仅仅演示 <code>trap</code> 命令的用法。</p>
-<pre><code>$ function signal_handler { echo "hello, world."; } #定义signal_handler函数
+<pre><code>$ function signal_handler { echo &quot;hello, world.&quot;; } #定义signal_handler函数
 $ trap signal_handler SIGINT  #执行该命令设定：收到SIGINT信号时打印hello, world
 $ hello, world     #按下CTRL+C，可以看到屏幕上输出了hello, world字符串</code></pre><p>类似地，如果设定信号 0 的响应动作，那么就可以用 <code>trap</code> 来模拟 C 语言程序中的 <code>atexit</code> 程序终止函数的登记，即通过 <code>trap signal_handler SIGQUIT</code> 设定的 <code>signal_handler</code> 函数将在程序退出时执行。信号 0 是一个特别的信号，在 <code>POSIX.1</code> 中把信号编号 0 定义为空信号，这常被用来确定一个特定进程是否仍旧存在。当一个程序退出时会触发该信号。</p>
 <pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">cat</span> sigexit.sh
@@ -817,25 +817,7 @@ $ jobs            #查看当前作业情况，一个正在运行，一个停止
 [1]+  Stopped                 sleep 50
 [2]-  Running                 sleep 100 &amp;</code></pre><h3 id="启动停止的进程并运行在后台"><a href="#启动停止的进程并运行在后台" class="headerlink" title="启动停止的进程并运行在后台"></a>启动停止的进程并运行在后台</h3><pre><code>$ bg %1
 [2]+ sleep 50 &amp;</code></pre><p>不过，要在命令行下使用作业控制，需要当前 Shell，内核终端驱动等对作业控制支持才行。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -848,12 +830,12 @@ $ jobs            #查看当前作业情况，一个正在运行，一个停止
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -961,12 +943,12 @@ $ jobs            #查看当前作业情况，一个正在运行，一个停止
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1018,12 +1000,12 @@ $ jobs            #查看当前作业情况，一个正在运行，一个停止
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
@@ -1197,7 +1179,7 @@ $ jobs            #查看当前作业情况，一个正在运行，一个停止
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

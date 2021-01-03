@@ -592,7 +592,7 @@
 <a id="more"></a>
 
 <p>sed 命令的基本格式如下：</p>
-<p><code>sed [选项] '[脚本命令]' 文件名</code></p>
+<p><code>sed [选项] &#39;[脚本命令]&#39; 文件名</code></p>
 <table>
 <thead>
 <tr>
@@ -614,7 +614,7 @@
 </tr>
 </tbody></table>
 <p>其中最常使用的使用sed来替换的脚本命令为：</p>
-<p><code>sed -n '[address]s/pattern/replacement/flags'</code></p>
+<p><code>sed -n &#39;[address]s/pattern/replacement/flags&#39;</code></p>
 <p>其中，address 表示指定要操作的具体行，pattern 指的是需要替换的内容，replacement 指的是要替换的新内容。</p>
 <p>address用于决定对哪些行进行编辑。地址的形式可以是数字、正则表达式、或二者的结合。如果没有指定地址，sed将处理输入文件的所有行。</p>
 <p>address是一个数字，则表示行号；是“$”符号，则表示最后一行。address是逗号分隔的，那么需要处理的内容是这两行之间的范围（包括这两行在内）。</p>
@@ -644,18 +644,18 @@
 </tr>
 </tbody></table>
 <p>像这种比较抽象的命令应该多举几个例子：</p>
-<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p><code>sed '1,3d' test.txt</code>,删除第1~3行</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p><code>sed &#39;1,3d&#39; test.txt</code>,删除第1~3行</p>
 <p>删除hello.h文件中的空行，保存到hello2.h</p>
-<p><code>sed -e 's/^[[:space:]]*$//g' hello.txt &gt; hello2.txt</code></p>
-<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><p><code>sed 's/old/new/' testfile</code>,把testfile文件中的old替换成new,只替换一次及终止在这一行的操作</p>
-<p><code>sed 's/old/new/g' testfile</code>,用new把文件testfile中的old全部替换掉</p>
-<p><code>sed -n 's/old/new/p' testfile</code>,只打印那些发生替换的行</p>
-<p><code>cat test | sed -ne '2,8s/^zhang/ying/gp'</code>,在第二行，到第八行之间，替换以zhang开头的行，用ying来替换，并显示替换的行</p>
+<p><code>sed -e &#39;s/^[[:space:]]*$//g&#39; hello.txt &gt; hello2.txt</code></p>
+<h4 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h4><p><code>sed &#39;s/old/new/&#39; testfile</code>,把testfile文件中的old替换成new,只替换一次及终止在这一行的操作</p>
+<p><code>sed &#39;s/old/new/g&#39; testfile</code>,用new把文件testfile中的old全部替换掉</p>
+<p><code>sed -n &#39;s/old/new/p&#39; testfile</code>,只打印那些发生替换的行</p>
+<p><code>cat test | sed -ne &#39;2,8s/^zhang/ying/gp&#39;</code>,在第二行，到第八行之间，替换以zhang开头的行，用ying来替换，并显示替换的行</p>
 <p>在一个reference.bib文件中，将所有”…”替换为{…}</p>
-<p><code>sed -e 's/"\([^"]*\)"/{\1}/g' reference.bib</code></p>
+<p><code>sed -e &#39;s/&quot;\([^&quot;]*\)&quot;/{\1}/g&#39; reference.bib</code></p>
 <p>使用下来你会发现其实和vi中的替换很类似，同样都是用 <strong>/</strong> 分割，当然也不一定，比如：</p>
 <p>查找/usr/include/boost目录下的所有头文件，然后将之替换为/usr/local/include/boost路径，输出到header文件</p>
-<p><code>find /usr/include/boost -name "*.h" | sed -e 's:/usr/include/\(.*\):/usr/local/include/\1:g' &gt; header</code></p>
+<p><code>find /usr/include/boost -name &quot;*.h&quot; | sed -e &#39;s:/usr/include/\(.*\):/usr/local/include/\1:g&#39; &gt; header</code></p>
 <p>其中使用的是: 为分隔符</p>
 <h3 id="tr"><a href="#tr" class="headerlink" title="tr"></a>tr</h3><p>tr命令可以对来自标准输入的字符进行替换、压缩和删除。它可以将一组字符变成另一组字符，经常用来编写优美的单行命令，作用很强大。</p>
 <p>用法：</p>
@@ -685,32 +685,14 @@
 </tr>
 </tbody></table>
 <p>仅在SET1 和SET2 都给出，同时没有-d 选项的时候才会进行替换。利用tr命令将一个dos结尾的\r\n文本文件变换为Unix结尾的\n</p>
-<p><code>tr -d "\r" &lt; a.txt &gt; b.txt</code></p>
-<p><code>tr -s "\r\n" "\n" &lt; a.txt &gt; b.txt</code></p>
+<p><code>tr -d &quot;\r&quot; &lt; a.txt &gt; b.txt</code></p>
+<p><code>tr -s &quot;\r\n&quot; &quot;\n&quot; &lt; a.txt &gt; b.txt</code></p>
 <p>大写字母转小写</p>
-<p><code>echo "TANK" |tr A-Z a-z</code>   #大写字母转小写</p>
-<p><code>cat aaa.txt|tr 'a' 'c'</code>     #字母c替换字母a</p>
-<p><code>cat aaa.txt|tr -d 'a'</code>    #删除所有字母a</p>
-<p><code>cat aaa.txt|tr -s '\n'</code>    #删除空行</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+<p><code>echo &quot;TANK&quot; |tr A-Z a-z</code>   #大写字母转小写</p>
+<p><code>cat aaa.txt|tr &#39;a&#39; &#39;c&#39;</code>     #字母c替换字母a</p>
+<p><code>cat aaa.txt|tr -d &#39;a&#39;</code>    #删除所有字母a</p>
+<p><code>cat aaa.txt|tr -s &#39;\n&#39;</code>    #删除空行</p>
+
             </div>
             <hr/>
 
@@ -1052,7 +1034,7 @@ Posix标准中
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>

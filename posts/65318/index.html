@@ -570,14 +570,14 @@ Posix标准中">
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        4.1k
+                        4k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        15 分
+                        14 分
                     </div>
                 
 
@@ -902,7 +902,7 @@ Posix标准中">
 </tr>
 </tbody></table>
 <p>重点讲一下-exec选项，-exec允许用户给出一个命令，作用于发现的文件，-exec后跟指定命令，空格，反斜杠和分号，用户可以用一对大括号（{}）表示发现的文件名，当然后面会学到xargs来取代-exec，例子有：</p>
-<p><code>find . -name "first.c" -mtime +90 -exec rm -i {} \;</code></p>
+<p><code>find . -name &quot;first.c&quot; -mtime +90 -exec rm -i {} \;</code></p>
 <p>寻找并删除当前目录下所有大于90天且名为first.c的文件，删除前要先确认</p>
 <h4 id="cut命令"><a href="#cut命令" class="headerlink" title="cut命令"></a>cut命令</h4><p>cut命令纵向输出文件的某个列,一般与cat配合管道符联用。</p>
 <table>
@@ -936,7 +936,7 @@ Posix标准中">
 <p>默认的分隔符是TAB制表键</p>
 <p>以/etc/passwd为例</p>
 <p><code>cat /etc/passwd | cut -c 1-4 |head -5</code>    #输出文件的前四个字符</p>
-<p><code>cat /etc/passwd | cut -f1 -d ':' |head -5</code>   #以:分割文件，输出第一个字段</p>
+<p><code>cat /etc/passwd | cut -f1 -d &#39;:&#39; |head -5</code>   #以:分割文件，输出第一个字段</p>
 <h4 id="paste命令"><a href="#paste命令" class="headerlink" title="paste命令"></a>paste命令</h4><p>paste命令横向连接两个文件</p>
 <table>
 <thead>
@@ -1027,7 +1027,7 @@ Posix标准中">
 </tr>
 </tbody></table>
 <p>以/etc/passwd为例，匹配以root开头或者以zhang开头的行，注意反斜杠</p>
-<p><code>cat /etc/passwd |grep '^\(root\|zhang\)'</code></p>
+<p><code>cat /etc/passwd |grep &#39;^\(root\|zhang\)&#39;</code></p>
 <h4 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h4><p>xargs 又称管道命令，构造参数等。是给命令传递参数的一个过滤器,也是组合多个命令的一个工具 它把一个数据流分割为一些足够小的块,以方便过滤器和命令进行处理 。简单的说 就是把 其他命令的给它的数据 传递给它后面的命令作为参数，xargs的格式为：</p>
 <p>xargs [command [initial-arguments]]</p>
 <p>xargs从标准输入上读，将标准输入文件按照空格/TAB拆解成参数，作为command执行参数，经常与find和awk或者tr配合使用</p>
@@ -1076,30 +1076,12 @@ Posix标准中">
 <li>索引 key,value对，key是文件名，要求变长，</li>
 <li>目录文件</li>
 </ul>
-<img src="/posts/65318/1.png">
+<img src="/1.png">
 
 <h4 id="整体过程"><a href="#整体过程" class="headerlink" title="整体过程"></a>整体过程</h4><p>登录时,UNIX读取根目录(i-node2),找出用户主目录(homedirectory),存储用户主目录的i节点号。当用cd改变目录时, UNIX用新目录的i节点号进行替换。</p>
 <p>用系统工具或命令(例如vi或at)访问文件或者某个程序打开文件时, UNIX查找指定文件名的目录。每个文件名与i节点列表中的一个i节点相联系。UNIX通过用户工作目录的i节点开始搜索,但是如果用户给定了全路径名,则从根目录(i-node 2)开始查找。</p>
 <p>下一章中我们会先来学习sed和tr命令.</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
@@ -1440,7 +1422,7 @@ VI编辑器只读选项在打开某些配置文件的时候，为了安全起见
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">197.4k</span>&nbsp;字
+                            class="white-color">198.7k</span>&nbsp;字
                 
                 
                 <script>
