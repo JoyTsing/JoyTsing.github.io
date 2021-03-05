@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Scheme入门教程</title>
+      <link href="posts/56075/"/>
+      <url>posts/56075/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>虽然目前因为scheme过时，最新的SICP已经采用python作为系列语言，但是通过前两章的学习，可以说，Scheme（lisp方言）是一门充满魅力的语言，而且在之前有过关于用C设计lisp语言的学习，都用C写出来了lisp结果不熟悉lisp未免来说过于尴尬，因此决定恶补一下scheme。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SICP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> UESTC </tag>
+            
+            <tag> Scheme </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>go-ast入门</title>
       <link href="posts/14266/"/>
       <url>posts/14266/</url>

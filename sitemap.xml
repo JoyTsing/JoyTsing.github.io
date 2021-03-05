@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://joytsing.github.io/posts/56075/</loc>
+    
+    <lastmod>2021-03-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/posts/14266/</loc>
     
     <lastmod>2021-03-05</lastmod>
@@ -549,6 +556,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://joytsing.github.io/tags/Scheme/</loc>
+    <lastmod>2021-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -609,6 +623,13 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/%E6%BC%AB%E8%AF%AD/</loc>
+    <lastmod>2021-03-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/categories/SICP/</loc>
     <lastmod>2021-03-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

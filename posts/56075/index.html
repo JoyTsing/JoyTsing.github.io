@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: Linux, 博客 JoyTsing">
-    <meta name="description" content="分类: Linux | JoyTsing">
+    <meta name="keywords" content="Scheme入门教程, 博客 JoyTsing">
+    <meta name="description" content="本教程的目的在于给读者在Scheme程序设计上提供足够的知识和能力以便能够阅读最好的计算机科学教科书之一的——《计算机程序的构造和解释》">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>分类: Linux | JoyTsing</title>
+    <title>Scheme入门教程 | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -402,235 +402,515 @@
     </nav>
 
 </header>
-<div class="bg-cover pd-header about-cover">
-    <div class="container">
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                    JoyTsing
-                
-            </div>
-
-            <div class="description center-align">
-                
-                    <span id="subtitle"></span>
-                    <script src="https://cdn.jsdelivr.net/npm/typed.js"></script>
-                    <script>
-                        var typed = new Typed("#subtitle", {
-                            strings: ['everyday is night',''],
-                            startDelay: 600,
-                            typeSpeed: 100,
-                            loop: true,
-                            backSpeed: 90,
-                            showCursor: true
-                        });
-                    </script>
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    <script>
-        $('.bg-cover').css('background-image', 'url(/medias/banner/0.jpg)');
-    </script>
-
-    </div>
-</div>
-
-<main class="content">
-
-    
-
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fa fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                    
-                        
-                        <a href="/categories/Cpp/" title="Cpp: 7">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #F9EBEA;">Cpp
-                        <span class="tag-length">7</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/Linux/" title="Linux: 13">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                          style="background-color: #F5EEF8;">Linux
-                        <span class="tag-length">13</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/C/" title="C: 9">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #D5F5E3;">C
-                        <span class="tag-length">9</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/Algorithms/" title="Algorithms: 8">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #E8F8F5;">Algorithms
-                        <span class="tag-length">8</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/%E6%9D%82%E8%AE%B0/" title="杂记: 3">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #FEF9E7;">杂记
-                        <span class="tag-length">3</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/Algorithm/" title="Algorithm: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #F8F9F9;">Algorithm
-                        <span class="tag-length">1</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/%E8%AE%A1%E7%BD%91/" title="计网: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #82E0AA;">计网
-                        <span class="tag-length">1</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/UESTC/" title="UESTC: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #D7BDE2;">UESTC
-                        <span class="tag-length">4</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/%E6%BC%AB%E8%AF%AD/" title="漫语: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #A3E4D7;">漫语
-                        <span class="tag-length">1</span>
-                    </span>
-                        </a>
-                    
-                        
-                        <a href="/categories/SICP/" title="SICP: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #85C1E9;">SICP
-                        <span class="tag-length">1</span>
-                    </span>
-                        </a>
-                    
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-    
-
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-                <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                    <div class="card">
-                        <a href="/posts/40875/">
-                            <div class="card-image tag-image">
-                                
-                                    
-                                    <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Linux学习笔记(一)">
-                                
-                                <span class="card-title">Linux学习笔记(一)</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    计算机硬件现代的计算机应该由运算器(算术逻辑与运算)，控制器(执行指令)，存储器(存储数据和指令)，输入设备和输出设备(通信)，其中处理器单元是计算机系统最智能的部分，处理器单元也成为CPU，包括了3个基本组成部分：
-
-
-算术逻辑单元  算
-                                
-                            </div>
-                            <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-03-28
-                            </span>
-                                <span class="publish-author">
-                                    
-                                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                        
-                                            <a href="/categories/Linux/" class="post-category">
-                                    Linux
-                                </a>
-                                        
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                            <div class="card-action article-tags">
-                                
-                                    <a href="/tags/Linux/">
-                                        <span class="chip bg-color">Linux</span>
-                                    </a>
-                                
-                            </div>
-                        
-                    </div>
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Scheme入门教程</h1>
                 </div>
-            
-        </div>
-    </article>
-</main>
-
-
-    <div class="container paging">
-    <div class="row">
-        <div class="col s6 m4 l4">
-            
-                <a href="/categories/Linux/"
-                   class="left btn-floating btn-large waves-effect waves-light bg-color">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-        </div>
-        <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 2</div>
-        </div>
-        <div class="col s6 m4 l4">
-            
-                <a class="right btn-floating btn-large disabled">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            </div>
         </div>
     </div>
 </div>
+
+
+
+<main class="post-container content">
+
+    
+        <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/Scheme/">
+                                    <span class="chip bg-color">Scheme</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/SICP/" class="post-category">
+                                    SICP
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2021-03-05
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2021-03-05
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        99
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        1 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>虽然目前因为scheme过时，最新的SICP已经采用python作为系列语言，但是通过前两章的学习，可以说，Scheme（lisp方言）是一门充满魅力的语言，而且在之前有过关于用C设计lisp语言的学习，都用C写出来了lisp结果不熟悉lisp未免来说过于尴尬，因此决定恶补一下scheme。</p>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/Scheme/">
+                                    <span class="chip bg-color">Scheme</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'e1e76a75c09daeb96740',
+        clientSecret: 'c090881ff25206a1601027ac3b225def230cdf2f',
+        repo: 'JoyTsing.github.io',
+        owner: 'JoyTsing',
+        admin: '["JoyTsing"]',
+        id: 'posts/56075/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
+                <div class="card">
+                    <a href="/posts/56075/">
+                        <div class="card-image">
+                            
+                                
+                                <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Scheme入门教程">
+                            
+                            <span class="card-title">Scheme入门教程</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                本教程的目的在于给读者在Scheme程序设计上提供足够的知识和能力以便能够阅读最好的计算机科学教科书之一的——《计算机程序的构造和解释》
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-05
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/SICP/" class="post-category">
+                                    SICP
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/Scheme/">
+                                    <span class="chip bg-color">Scheme</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/14266/">
+                        <div class="card-image">
+                            
+                                
+                                <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="go-ast入门">
+                            
+                            <span class="card-title">go-ast入门</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                开启自制编程语言和编译器之旅
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-05
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/UESTC/" class="post-category">
+                                    UESTC
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/GO/">
+                                    <span class="chip bg-color">GO</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+    <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+    <script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+    <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+    <style type="text/css">
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+    </style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
 
 
 <footer class="page-footer bg-color">
