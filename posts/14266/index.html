@@ -4,14 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux学习笔记(十), 博客 JoyTsing">
-    <meta name="description" content="df,du与归档压缩等df与dudf显示可用空间，-h用常见的格式显示出大小
-
-du统计文件或者目录的磁盘使用情况，用得比较少。
-这些命令通常是在要扩容和挂载时候才使用，配合fdisk -l和lvextend来使用。
-
-
-tartar 命令">
+    <meta name="keywords" content="go-ast入门, 博客 JoyTsing">
+    <meta name="description" content="开启自制编程语言和编译器之旅">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +14,7 @@ tartar 命令">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Linux学习笔记(十) | JoyTsing</title>
+    <title>go-ast入门 | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -412,12 +406,12 @@ tartar 命令">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux学习笔记(十)</h1>
+                    <h1 class="description center-align post-title">go-ast入门</h1>
                 </div>
             </div>
         </div>
@@ -533,8 +527,12 @@ tartar 命令">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/GO/">
+                                    <span class="chip bg-color">GO</span>
                                 </a>
                             
                         </div>
@@ -545,8 +543,8 @@ tartar 命令">
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                <a href="/categories/UESTC/" class="post-category">
+                                    UESTC
                                 </a>
                             
                         </div>
@@ -558,28 +556,28 @@ tartar 命令">
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-05-11
+                        2021-03-05
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-01-03
+                        2021-03-05
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.7k
+                        2.8k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        6 分
+                        11 分
                     </div>
                 
 
@@ -594,183 +592,251 @@ tartar 命令">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="df-du与归档压缩等"><a href="#df-du与归档压缩等" class="headerlink" title="df,du与归档压缩等"></a>df,du与归档压缩等</h2><h3 id="df与du"><a href="#df与du" class="headerlink" title="df与du"></a>df与du</h3><p>df显示可用空间，-h用常见的格式显示出大小</p>
-<p><img src="/posts/64955/1.png" alt="挂载情况"></p>
-<p>du统计文件或者目录的磁盘使用情况，用得比较少。</p>
-<p>这些命令通常是在要扩容和挂载时候才使用，配合fdisk -l和lvextend来使用。</p>
-<a id="more"></a>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进入大三下，由于学校课程的安排，本学期安排了编译原理的内容，说是编译原理，其实从实验安排上看更像是教你做一个语法树和词法分析器. 本文就记录一下相关的学习过程，也算是一个督促学习的手段. 本篇文章为阅读go-ast-book过程中一起做的笔记.</p>
+<h2 id="第一章-Token"><a href="#第一章-Token" class="headerlink" title="第一章 Token"></a>第一章 Token</h2><p>词法分析一般是编译器的第一部分,而且词法分析很简单,就是一个有限状态机. 开始词法分析的过程就是把源文件转换成一组预先定义好的Token的过程.</p>
+<p><strong>Token是编程语言中最小的具有独立含义的词法单元。</strong> Token不仅包括了核心的关键字，还包括了标识符，运算符，分隔符（如果有的话），以及注释等等，也就是说Token就是我们能操作的最小单元，其中每个Token又称为词法单元，对应的有三个重要的属性.</p>
+<ul>
+<li>Token本身的值表示词法单元的类型</li>
+<li>Token在源代码中的源代码文本形式</li>
+<li>Token出现的位置</li>
+</ul>
+<p>在所有Token中，注释和分号是两种比较特殊的Token，前一种不影响程序的语义（大部分情况下，像JAVA的标签除外），而后一种一般作为分隔符，在GO中分号是可加可不加的，因为GO语言会在行尾自动添加分号的Token，分号的最大作用是分割语句的词法单元，因此自动添加分号导致GO语言做优化括弧不能单独成一行。下来咱们学习如何进行Token的分析.</p>
+<h3 id="1-1-Token语法"><a href="#1-1-Token语法" class="headerlink" title="1.1 Token语法"></a>1.1 Token语法</h3><p>GO语法中主要有<code>标识符</code>，<code>关键字</code>，<code>运算符</code>,<code>分隔符</code>等Token组成. 其中标识符的语法定义如下:</p>
+<pre><code>identifier = letter { letter | unicode_digit } .
+letter     = unicode_letter | &quot;_&quot; .</code></pre><p><code>identifier</code> 由字母和数字组成, 其中开头第一个字符必须是字母而不是数字, 注意在我们定义的<code>letter</code> 中, <code>__</code> 也作为字母的一员. 在<code>标识符</code> 中, 有一类特殊的标识符被提出来单独定义, 他们就是<code>关键字</code> , <code>关键字</code>用来引导特殊的语法结构, 因此关键字是作为独立的<code>标识符</code>.GO中有25个<code>关键字</code>. </p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token operator">></span> <span class="token keyword">break</span>        <span class="token keyword">default</span>      <span class="token keyword">func</span>         <span class="token keyword">interface</span>    <span class="token keyword">select</span>
+<span class="token operator">></span> <span class="token keyword">case</span>         <span class="token keyword">defer</span>        <span class="token keyword">go</span>           <span class="token keyword">map</span>          <span class="token keyword">struct</span>
+<span class="token operator">></span> <span class="token keyword">chan</span>         <span class="token keyword">else</span>         <span class="token keyword">goto</span>         <span class="token keyword">package</span>      <span class="token keyword">switch</span>
+<span class="token operator">></span> <span class="token keyword">const</span>        <span class="token keyword">fallthrough</span>  <span class="token keyword">if</span>           <span class="token keyword">range</span>        <span class="token keyword">type</span>
+<span class="token operator">></span> <span class="token keyword">continue</span>     <span class="token keyword">for</span>          <span class="token keyword">import</span>       <span class="token keyword">return</span>       <span class="token keyword">var</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后是GO定义的47个符号:</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token operator">+</span>    <span class="token operator">&amp;</span>     <span class="token operator">+=</span>    <span class="token operator">&amp;=</span>     <span class="token operator">&amp;&amp;</span>    <span class="token operator">==</span>    <span class="token operator">!=</span>    <span class="token punctuation">(</span>    <span class="token punctuation">)</span>
+<span class="token operator">-</span>    <span class="token operator">|</span>     <span class="token operator">-=</span>    <span class="token operator">|=</span>     <span class="token operator">||</span>    <span class="token operator">&lt;</span>     <span class="token operator">&lt;=</span>    <span class="token punctuation">[</span>    <span class="token punctuation">]</span>
+<span class="token operator">*</span>    <span class="token operator">^</span>     <span class="token operator">*=</span>    <span class="token operator">^=</span>     <span class="token operator">&lt;-</span>    <span class="token operator">></span>     <span class="token operator">>=</span>    <span class="token punctuation">{</span>    <span class="token punctuation">}</span>
+<span class="token operator">/</span>    <span class="token operator">&lt;&lt;</span>    <span class="token operator">/=</span>    <span class="token operator">&lt;&lt;=</span>    <span class="token operator">++</span>    <span class="token operator">=</span>     <span class="token operator">:=</span>    <span class="token punctuation">,</span>    <span class="token punctuation">;</span>
+<span class="token operator">%</span>    <span class="token operator">>></span>    <span class="token operator">%=</span>    <span class="token operator">>>=</span>    <span class="token operator">--</span>    <span class="token operator">!</span>     <span class="token operator">...</span>   <span class="token punctuation">.</span>    <span class="token punctuation">:</span>
+     <span class="token operator">&amp;^</span>          <span class="token operator">&amp;^=</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>除了以上提到的, 程序中还有一些注释, 和空白符, 想要解析一个GO语言程序,第一步就需要解析这些Token.</p>
+<h3 id="1-2-Token的定义"><a href="#1-2-Token的定义" class="headerlink" title="1.2 Token的定义"></a>1.2 Token的定义</h3><p><code>go/token</code>包中,Token被定义为一种枚举值,不同值的Token表示不同类型的词法记号:</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token comment" spellcheck="true">// Token is the set of lexical tokens of the Go programming language.</span>
+<span class="token keyword">type</span> Token <span class="token builtin">int</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>所有的Token可以被分为四类:</p>
+<ul>
+<li>特殊类型的Token</li>
+<li>基础面值对应的Token</li>
+<li>运算符Token</li>
+<li>关键字</li>
+</ul>
+<p><img src="/posts/14266/ch1-token-01.png" alt></p>
+<p>而特殊类型的Token平时最常接触到的为注释,剩余两种为错误、文件注释:</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token comment" spellcheck="true">// The list of tokens.</span>
+<span class="token keyword">const</span> <span class="token punctuation">(</span>
+    <span class="token comment" spellcheck="true">// Special tokens</span>
+    ILLEGAL Token <span class="token operator">=</span> <span class="token boolean">iota</span>
+    EOF
+    COMMENT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>遇到不能识别的Token统一返回ILLEGAL，这样可以简化词法分析时的错误处理。</p>
+<p>基础面值对应的Token类型有: Go语言规范定义的基础面值主要有整数、浮点数和复数面值类型，此外还有字符和字符串面值类型。需要注意的是，在Go语言规范中布尔类型的true和false并不在基础面值之类。但是为了方便词法解析，<code>go/token</code>包将true和false等对应的标识符也作为面值Token一类。</p>
+<p>下面是面值类Token列表：</p>
+<pre class="line-numbers language-go"><code class="language-go">    literal_beg
+    <span class="token comment" spellcheck="true">// Identifiers and basic type literals</span>
+    <span class="token comment" spellcheck="true">// (these tokens stand for classes of literals)</span>
+    IDENT  <span class="token comment" spellcheck="true">// main</span>
+    INT    <span class="token comment" spellcheck="true">// 12345</span>
+    FLOAT  <span class="token comment" spellcheck="true">// 123.45</span>
+    IMAG   <span class="token comment" spellcheck="true">// 123.45i</span>
+    CHAR   <span class="token comment" spellcheck="true">// 'a'</span>
+    STRING <span class="token comment" spellcheck="true">// "abc"</span>
+    literal_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中literal_beg和literal_end是私有的类型，主要用于表示面值类型Token的值域范围，因此判断一个Token的值在literal_beg和literal_end之间就可以确定是面值类型。</p>
+<p>运算符和分隔符符类型的Token数量最多，下面Token列表：</p>
+<pre class="line-numbers language-go"><code class="language-go">    operator_beg
+    <span class="token comment" spellcheck="true">// Operators and delimiters</span>
+    ADD <span class="token comment" spellcheck="true">// +</span>
+    SUB <span class="token comment" spellcheck="true">// -</span>
+    MUL <span class="token comment" spellcheck="true">// *</span>
+    QUO <span class="token comment" spellcheck="true">// /</span>
+    REM <span class="token comment" spellcheck="true">// %</span>
 
-<h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><p>tar 命令：用来压缩和解压文件。tar本身不具有压缩功能。他是调用压缩功能实现的。十分常用，但可以在使用时候查找就行了，如果是使用VMware Workstation的话，官方会提示你安装Vmware Workstation tools，可以帮助用户虚拟硬件的驱动，鼠标的无缝移出移入，剪贴板共享，共享主机上的文件夹等实用功能，在安装过程中就会使用到tar来解压。</p>
-<ul>
-<li>tar zcfv压缩成.tar.gz文件</li>
-<li>tar zxfv解压.tar.gz文件</li>
-<li>tar Jcfv压缩成.tar.xz文件</li>
-<li>tar Jxfv解压.tar.xz文件</li>
-<li>tar jcfv压缩成.tar.bz2文件</li>
-<li>tar jxfv解压.tar.bz2文件</li>
-</ul>
-<h3 id="chmod类"><a href="#chmod类" class="headerlink" title="chmod类"></a>chmod类</h3><p>chmod修改文件目录的访问权限,每种 MODE 都应属于这类形式[ugoa]+-=rwx</p>
-<ul>
-<li><p>操作对像</p>
-<ul>
-<li>u 文件属主权限</li>
-<li>g 同组用户权限</li>
-<li>o 其它用户权限</li>
-<li>a 所有用户（包括以上三种）</li>
-</ul>
-</li>
-<li><p>权限设定</p>
-<ul>
-<li>+ 增加权限</li>
-<li>- 取消权限</li>
-<li>=  唯一设定权限</li>
-</ul>
-</li>
-<li><p>权限类别(也可以用数字表示，前面出现过)</p>
-<ul>
-<li>r 读权限 ( r–&gt;4)</li>
-<li>w 写权限 ( w–&gt;2)</li>
-<li>x 执行权限 ( x–&gt;1)</li>
-</ul>
-</li>
-</ul>
-<p>相似的，chown修改文件目录的owner,chgrp修改文件目录的group。</p>
-<h2 id="Unix通信"><a href="#Unix通信" class="headerlink" title="Unix通信"></a>Unix通信</h2><h3 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h3><p>因为用的是树莓派4b的原因，在没有配显示器又想无线连接到树莓派的话，必须通过ssh，在此基础上如果想要使用桌面系统的话，则又要使用VNC Viewer与树莓派相连接。</p>
-<p>方法就在这简单描述一下，在烧录完系统后，打开SD卡直接新建SSH文件（无后缀名），随后在配置wpa_supplicant.conf，正常的话开机树莓派就能自动连接到wifi，可以通过路由器管理页面直接查看树莓派分配的ip，直接连接就行了(电脑用的是Putty)，通过ssh远程登陆主机和实体操作没有什么区别，另外ssh在github的配置上也有需求，可以查阅一下资料配置一下。</p>
-<h3 id="接口与状态"><a href="#接口与状态" class="headerlink" title="接口与状态"></a>接口与状态</h3><p>ifconfig用来查看ip地址和网络状态。<br><img src="/posts/64955/2.png" alt="ifconfig"></p>
-<p>ping用来查看与某个网址之间的延迟。<br><img src="/posts/64955/3.png" alt="ping"></p>
-<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>curl是一个利用URL规则在命令行下工作的文件传输工具。它支持文件的上传和下载，所以是综合传输工具，但按传统，习惯称url为下载工具。</p>
-<p><img src="/posts/64955/4.png" alt="ping"></p>
-<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>wget是一个下载文件的工具，对于Linux用户是必不可少的工具，我们经常要下载一些软件或从远程服务器恢复备份到本地服务器，同时wget支持断点下载和指定目录下载，同时非常稳定，它在带宽很窄的情况下和不稳定网络中有很强的适应性.如果是由于网络的原因下载失败，wget会不断的尝试，直到整个文件下载完毕。是十分实用的一个命令。</p>
-<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><p>使用wget -O下载并以不同的文件名保存(-O：下载文件到对应目录，并且修改文件名称)</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">wget</span> -O wordpress.zip http://www.minjieren.com/download.aspx?id<span class="token operator">=</span>1080<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>使用wget -b后台下载</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">wget</span> -b <span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"http://www.minjieren.com/wordpress-3.1-zh_CN.zip"</span><span class="token operator">></span>http://www.minjieren.com/wordpress-3.1-zh_CN.zip<span class="token operator">&lt;</span>/a<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="ftp"><a href="#ftp" class="headerlink" title="ftp"></a>ftp</h3><p>文件传输可以在此基础上使用别的软件，如FileZilla Client来传输。</p>
-<h3 id="systemd"><a href="#systemd" class="headerlink" title="systemd"></a>systemd</h3><p>systemd 是一个专用于 Linux 操作系统的系统与服务管理器。以mysql为例子。</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 开机启动</span>
-systemctl <span class="token function">enable</span> mysqld
-<span class="token comment" spellcheck="true"># 关闭开机启动</span>
-systemctl disable mysqld
-<span class="token comment" spellcheck="true"># 启动服务</span>
-systemctl start mysqld
-<span class="token comment" spellcheck="true"># 停止服务</span>
-systemctl stop mysqld
-<span class="token comment" spellcheck="true"># 重启服务</span>
-systemctl restart mysqld
-<span class="token comment" spellcheck="true"># 查看服务状态</span>
-systemctl status mysqld
-systemctl is-active sshd.service
-<span class="token comment" spellcheck="true"># 结束服务进程(服务无法停止时)</span>
-systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>system daemon，代替常用的System V与BSD风格init程序，可以即时发现依赖。</p>
-<ul>
-<li>init采用脚本来加载各种服务，各种服务的依赖难以维持，服务加载速度 慢</li>
-<li>systemd使用c编写的程序接管各种服务加载</li>
-</ul>
-<p>关于systemd的管理对象抽象为单元，详细就不叙述了，感兴趣的话可以man 5 systemd.unit，此外systemd还可以配置服务启动或者自定义服务，但个人觉得掌握上面举的例子就能应付很多情况了，感兴趣可以学习哈。</p>
-<h3 id="Gnu工具链"><a href="#Gnu工具链" class="headerlink" title="Gnu工具链"></a>Gnu工具链</h3><p>Gnu toolchain是开发操作系统、应用程序的一套完整的程序和库，包括gcc、gdb、glibc等。</p>
-<p>其中gcc是一族编译器，包括c、c++、go、java等，</p>
-<ul>
-<li>.c为后缀的文件，C语言源代码文件；</li>
-<li>.a为后缀的文件，是由目标文件构成的档案库文件；</li>
-<li>.C、.cc或.cxx 为后缀的文件，是C++源代码文件；</li>
-<li>.h为后缀的文件，是程序所包含的头文件；</li>
-<li>.i 为后缀的文件，是已经预处理过的C源代码文件；</li>
-<li>.ii为后缀的文件，是已经预处理过的C++源代码文件；</li>
-<li>.m为后缀的文件，是Objective-C源代码文件；</li>
-<li>.o为后缀的文件，是编译后的目标文件；</li>
-<li>.s为后缀的文件，是汇编语言源代码文件；</li>
-<li>.S为后缀的文件，是经过预编译的汇编语言源代码文件。</li>
-</ul>
-<p>C语言编译过程</p>
-<ul>
-<li>gcc -E hello.c -o hello.i</li>
-<li>gcc -S hello.i -o hello.s</li>
-<li>gcc -c hello.s -o hello.o</li>
-<li>gcc -o hello hello.o</li>
-</ul>
-<p><img src="/posts/64955/5.png" alt="ping"></p>
-<h4 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h4><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">缩写</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">list</td>
-<td align="left">l</td>
-<td align="left">打印当前位置源码</td>
-</tr>
-<tr>
-<td align="left">break</td>
-<td align="left">b</td>
-<td align="left">设置断点</td>
-</tr>
-<tr>
-<td align="left">run</td>
-<td align="left">r</td>
-<td align="left">运行程序</td>
-</tr>
-<tr>
-<td align="left">step</td>
-<td align="left">s</td>
-<td align="left">单步进入函数</td>
-</tr>
-<tr>
-<td align="left">next</td>
-<td align="left">n</td>
-<td align="left">单步不进入函数</td>
-</tr>
-<tr>
-<td align="left">print</td>
-<td align="left">p</td>
-<td align="left">打印变量</td>
-</tr>
-<tr>
-<td align="left">continue</td>
-<td align="left">c</td>
-<td align="left">继续运行</td>
-</tr>
-<tr>
-<td align="left">backtrace</td>
-<td align="left">bt</td>
-<td align="left">显示调用栈</td>
-</tr>
-<tr>
-<td align="left">info threads</td>
-<td align="left"></td>
-<td align="left">显示线程</td>
-</tr>
-<tr>
-<td align="left">thread n</td>
-<td align="left"></td>
-<td align="left">切换线程</td>
-</tr>
-<tr>
-<td align="left">set scheduler-locking on</td>
-<td align="left"></td>
-<td align="left">关闭线程调度</td>
-</tr>
-</tbody></table>
-<h4 id="makefile"><a href="#makefile" class="headerlink" title="makefile"></a>makefile</h4><p>Makefile用于工程组织和编译，与常见的命令式语言不同，它是一种依赖推导语言。</p>
-<ul>
-<li>Shell语言：变量定义+命令执行</li>
-<li>Makefile：变量定义+依赖描述</li>
-</ul>
-<p>有显式规则与隐式规则，推导规则为检查目标和依赖文件的时间，如果依赖更新，则执行动作，显式规则 &gt; 隐式规则。</p>
-<h4 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h4><p>Cmake在不同平台上生成不同的本地化脚本：Linux下的Gnu Makefile，Visual Studio的sln，Google等ninja</p>
-<p>Cmake管理的代码编译主要有两步：</p>
-<ul>
-<li>利用cmake生成本地编译脚本</li>
-<li>利用本地脚本编译程序</li>
-</ul>
-<h4 id="git"><a href="#git" class="headerlink" title="git"></a>git</h4><p>版本控制系统，是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统，git采用分布式管理，十分推荐学习。</p>
-<p><a href="https://learngitbranching.js.org/?locale=zh_CN">一个非常好的，可视化的学习git的网站</a></p>
-<p><img src="/posts/64955/6.png" alt="ping"></p>
+    AND     <span class="token comment" spellcheck="true">// &amp;</span>
+    OR      <span class="token comment" spellcheck="true">// |</span>
+    XOR     <span class="token comment" spellcheck="true">// ^</span>
+    SHL     <span class="token comment" spellcheck="true">// &lt;&lt;</span>
+    SHR     <span class="token comment" spellcheck="true">// >></span>
+    AND_NOT <span class="token comment" spellcheck="true">// &amp;^</span>
 
+    ADD_ASSIGN <span class="token comment" spellcheck="true">// +=</span>
+    SUB_ASSIGN <span class="token comment" spellcheck="true">// -=</span>
+    MUL_ASSIGN <span class="token comment" spellcheck="true">// *=</span>
+    QUO_ASSIGN <span class="token comment" spellcheck="true">// /=</span>
+    REM_ASSIGN <span class="token comment" spellcheck="true">// %=</span>
+
+    AND_ASSIGN     <span class="token comment" spellcheck="true">// &amp;=</span>
+    OR_ASSIGN      <span class="token comment" spellcheck="true">// |=</span>
+    XOR_ASSIGN     <span class="token comment" spellcheck="true">// ^=</span>
+    SHL_ASSIGN     <span class="token comment" spellcheck="true">// &lt;&lt;=</span>
+    SHR_ASSIGN     <span class="token comment" spellcheck="true">// >>=</span>
+    AND_NOT_ASSIGN <span class="token comment" spellcheck="true">// &amp;^=</span>
+
+    LAND  <span class="token comment" spellcheck="true">// &amp;&amp;</span>
+    LOR   <span class="token comment" spellcheck="true">// ||</span>
+    ARROW <span class="token comment" spellcheck="true">// &lt;-</span>
+    INC   <span class="token comment" spellcheck="true">// ++</span>
+    DEC   <span class="token comment" spellcheck="true">// --</span>
+
+    EQL    <span class="token comment" spellcheck="true">// ==</span>
+    LSS    <span class="token comment" spellcheck="true">// &lt;</span>
+    GTR    <span class="token comment" spellcheck="true">// ></span>
+    ASSIGN <span class="token comment" spellcheck="true">// =</span>
+    NOT    <span class="token comment" spellcheck="true">// !</span>
+
+    NEQ      <span class="token comment" spellcheck="true">// !=</span>
+    LEQ      <span class="token comment" spellcheck="true">// &lt;=</span>
+    GEQ      <span class="token comment" spellcheck="true">// >=</span>
+    DEFINE   <span class="token comment" spellcheck="true">// :=</span>
+    ELLIPSIS <span class="token comment" spellcheck="true">// ...</span>
+
+    LPAREN <span class="token comment" spellcheck="true">// (</span>
+    LBRACK <span class="token comment" spellcheck="true">// [</span>
+    LBRACE <span class="token comment" spellcheck="true">// {</span>
+    COMMA  <span class="token comment" spellcheck="true">// ,</span>
+    PERIOD <span class="token comment" spellcheck="true">// .</span>
+
+    RPAREN    <span class="token comment" spellcheck="true">// )</span>
+    RBRACK    <span class="token comment" spellcheck="true">// ]</span>
+    RBRACE    <span class="token comment" spellcheck="true">// }</span>
+    SEMICOLON <span class="token comment" spellcheck="true">// ;</span>
+    COLON     <span class="token comment" spellcheck="true">// :</span>
+    operator_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运算符中最多的就是加减乘除以及逻辑,位运算, 其他的不再赘述.</p>
+<p>Go语言的关键字刚好对应25个关键字类型的Token：</p>
+<pre class="line-numbers language-go"><code class="language-go">    keyword_beg
+    <span class="token comment" spellcheck="true">// Keywords</span>
+    BREAK
+    CASE
+    CHAN
+    CONST
+    CONTINUE
+
+    DEFAULT
+    DEFER
+    ELSE
+    FALLTHROUGH
+    FOR
+
+    FUNC
+    GO
+    GOTO
+    IF
+    IMPORT
+
+    INTERFACE
+    MAP
+    PACKAGE
+    RANGE
+    RETURN
+
+    SELECT
+    STRUCT
+    SWITCH
+    TYPE
+    VAR
+    keyword_end
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>从词法分析角度看，关键字和普通的标识符并无差别。但是25个关键字一般都是不同语法结构的开头Token，通过将这些特殊的Token定义为关键字可以简化语法解析的工作。</p>
+<p>Token对于编程语言而言就像26个字母对于英文一样重要，它是组成更复杂的逻辑代码的基础单元，因此我们需要熟悉Token的特性和分类。</p>
+<h3 id="1-3-FileSet和File"><a href="#1-3-FileSet和File" class="headerlink" title="1.3 FileSet和File"></a>1.3 FileSet和File</h3><p>了解完Token后，就可以最原始的词法分析了。需要注意的是，词法分析是一个很基础的内容，需要耐心设计接口的部分。参考Go语言本身，它是由多个文件组成包，然后多个包链接为一个可执行文件，所以单个包对应的多个文件可以看作是Go语言的基本编译单元。因此<code>go/token</code>包还定义了FileSet和File对象，用于描述文件集和文件。</p>
+<p>FileSet和File对象的对应关系如图所示：</p>
+<p><img src="/posts/14266/ch1-file-set-01.ditaa.png" alt></p>
+<p>每个FileSet表示一个文件集合，底层抽象为一个一维数组，而Pos类型表示数组的下标位置。FileSet中的每个File元素对应底层数组的一个区间，不同的File之间没有交集，相邻的File之间可能存在填充空间。</p>
+<p>而每个File主要由文件名、base和size三个信息组成。其中base对应File在FileSet中的Pos索引位置，因此base和base+size定义了File在FileSet数组中的开始和结束位置。在每个File内部可以通过offset定位下标索引，通过offset+File.base可以将File内部的offset转换为Pos位置。因为Pos是FileSet的全局偏移量，反之也可以通过Pos查询对应的File，以及对应File内部的offset。</p>
+<p>而词法分析的每个Token位置信息就是由Pos定义，通过Pos和对应的FileSet可以轻松查询到对应的File。然后在通过File对应的源文件和offset计算出对应的行号和列号（实现中File只是保存了每行的开始位置，并没有包含原始的源代码数据）。Pos底层是int类型，它和指针的语义类似，因此0也类似空指针被定义为NoPos，表示无效的Pos。</p>
+<h3 id="1-4-解析Token"><a href="#1-4-解析Token" class="headerlink" title="1.4 解析Token"></a>1.4 解析Token</h3><p>Go语言标准库<code>go/scanner</code>包提供了Scanner实现Token扫描，它是在FileSet和File抽象文件集合基础上进行词法分析。</p>
+<p>scanner.Scanner的公开接口定义如下：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">type</span> Scanner <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// public state - ok to modify</span>
+    ErrorCount <span class="token builtin">int</span> <span class="token comment" spellcheck="true">// number of errors encountered</span>
+    <span class="token comment" spellcheck="true">// Has unexported fields.</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>Scanner<span class="token punctuation">)</span> <span class="token function">Init</span><span class="token punctuation">(</span>
+    file <span class="token operator">*</span>token<span class="token punctuation">.</span>File<span class="token punctuation">,</span> src <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span>
+    err ErrorHandler<span class="token punctuation">,</span> mode Mode<span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s <span class="token operator">*</span>Scanner<span class="token punctuation">)</span> <span class="token function">Scan</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>
+    pos token<span class="token punctuation">.</span>Pos<span class="token punctuation">,</span> tok token<span class="token punctuation">.</span>Token<span class="token punctuation">,</span> lit <span class="token builtin">string</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Init方法用于初始化扫描器，其中file参数表示当前的文件（不包含代码数据），src参数表示要分析的代码，err是用户自定义的错误处理函数，mode可以控制是否扫描注释部分。</p>
+<p>Scan方法扫描一个Token，三个返回值分别表示Token的位置 、Token值和Token的源代码文本表示。</p>
+<p>要构造一个最简单的词法扫描器测试程序，首先要构造Init方法第一参数需要的File对象。但是File对象没有公开的构造函数，只能通过FileSet的AddFile方法间接构造File对象。</p>
+<p>下面是一个简单的词法分析程序：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+    <span class="token string">"go/scanner"</span>
+    <span class="token string">"go/token"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> src <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token function">byte</span><span class="token punctuation">(</span><span class="token string">`println("你好，世界")`</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">var</span> fset <span class="token operator">=</span> token<span class="token punctuation">.</span><span class="token function">NewFileSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">var</span> file <span class="token operator">=</span> fset<span class="token punctuation">.</span><span class="token function">AddFile</span><span class="token punctuation">(</span><span class="token string">"hello.go"</span><span class="token punctuation">,</span> fset<span class="token punctuation">.</span><span class="token function">Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>src<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">var</span> s scanner<span class="token punctuation">.</span>Scanner
+    s<span class="token punctuation">.</span><span class="token function">Init</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> src<span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> scanner<span class="token punctuation">.</span>ScanComments<span class="token punctuation">)</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">{</span>
+        pos<span class="token punctuation">,</span> tok<span class="token punctuation">,</span> lit <span class="token operator">:=</span> s<span class="token punctuation">.</span><span class="token function">Scan</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> tok <span class="token operator">==</span> token<span class="token punctuation">.</span>EOF <span class="token punctuation">{</span>
+            <span class="token keyword">break</span>
+        <span class="token punctuation">}</span>
+        fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%s\t%s\t%q\n"</span><span class="token punctuation">,</span> fset<span class="token punctuation">.</span><span class="token function">Position</span><span class="token punctuation">(</span>pos<span class="token punctuation">)</span><span class="token punctuation">,</span> tok<span class="token punctuation">,</span> lit<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>是不是发现非常简单，GO语言的接口一直以简洁和高效出名。回到代码分析上，src是要分析的代码，通过<code>token.NewFileSet()</code>创建一个文件集，Token的位置信息必须通过文件集定位，并且需要通过文件集创建扫描器的Init方法需要的File参数。</p>
+<p><code>fset.AddFile</code>方法调用向fset文件集添加一个新的文件，文件名为“hello.go”，文件的长度就是src要分析代码的长度。</p>
+<p>然后创建scanner.Scanner对象，并且调用Init方法初始化扫描器。Init的第一个参数就是刚刚添加到fset的文件对象，第二个参数是要分析的代码，第三个nil参数表示没有自定义的错误处理函数，最后的scanner.ScanComments参数表示不用忽略注释Token。</p>
+<p>因为要解析的代码中有多个Token，因此我们在一个for循环调用<code>s.Scan()</code>依次解析新的Token。如果返回的是token.EOF表示扫描到了文件末尾，否则打印扫描返回的结果。打印前，我们需要将扫描器返回的pos参数转换为更详细的带文件名和行列号的位置信息，可以通过<code>fset.Position(pos)</code>方法完成。</p>
+<p>以上程序运行的输出如下：</p>
+<pre><code>hello.go:1:1    IDENT   &quot;println&quot;
+hello.go:1:8    (       &quot;&quot;
+hello.go:1:9    STRING  &quot;\&quot;你好，世界\&quot;&quot;
+hello.go:1:26   )       &quot;&quot;
+hello.go:1:27   ;       &quot;\n&quot;</code></pre><p>输出结果的第一列表示Token所在的文件和行列号，中间一列表示Token的值，最后一列表示Token对应的面值。</p>
+<h3 id="1-5-Position位置信息"><a href="#1-5-Position位置信息" class="headerlink" title="1.5 Position位置信息"></a>1.5 Position位置信息</h3><p><code>go/token</code>包的Position表示更详细的位置信息，被定义为一个结构体：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">type</span> Position <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    Filename <span class="token builtin">string</span> <span class="token comment" spellcheck="true">// filename, if any</span>
+    Offset   <span class="token builtin">int</span>    <span class="token comment" spellcheck="true">// offset, starting at 0</span>
+    Line     <span class="token builtin">int</span>    <span class="token comment" spellcheck="true">// line number, starting at 1</span>
+    Column   <span class="token builtin">int</span>    <span class="token comment" spellcheck="true">// column number, starting at 1 (byte count)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Filename表示文件名，Offset对应文件内的字节偏移量（从0开始），Line和Column对应行列号（从1开始）。比较特殊的是Offset成员，它用于从文件数据定位代码，但是输出时会将偏移量转换为行列号输出。</p>
+<p>打印位置信息时，根据文件名、行号和列号有6种组合：</p>
+<pre><code>func main() {
+    a := token.Position{Filename: &quot;hello.go&quot;, Line: 1, Column: 2}
+    b := token.Position{Filename: &quot;hello.go&quot;, Line: 1}
+    c := token.Position{Filename: &quot;hello.go&quot;}
+
+    d := token.Position{Line: 1, Column: 2}
+    e := token.Position{Line: 1}
+    f := token.Position{Column: 2}
+
+    fmt.Println(a.String())
+    fmt.Println(b.String())
+    fmt.Println(c.String())
+    fmt.Println(d.String())
+    fmt.Println(e.String())
+    fmt.Println(f.String())
+}</code></pre><p>输出的格式如下：</p>
+<pre><code>hello.go:1:2
+hello.go:1
+hello.go
+1:2
+1
+-</code></pre><p>行号从1开始，是必须的信息，如果缺少行号则输出“-”表示无效的位置。</p>
+<h2 id="第二章-基础面值"><a href="#第二章-基础面值" class="headerlink" title="第二章 基础面值"></a>第二章 基础面值</h2>
             </div>
             <hr/>
 
@@ -783,8 +849,12 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/GO/">
+                                    <span class="chip bg-color">GO</span>
                                 </a>
                             
                         </div>
@@ -826,7 +896,7 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
         repo: 'JoyTsing.github.io',
         owner: 'JoyTsing',
         admin: '["JoyTsing"]',
-        id: 'posts/64955/',
+        id: 'posts/14266/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -849,54 +919,52 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/41703/">
+                    <a href="/posts/14266/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Gcc编译的背后">
+                                <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="go-ast入门">
                             
-                            <span class="card-title">Gcc编译的背后</span>
+                            <span class="card-title">go-ast入门</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言在linux下写代码时，使用gcc只需要输入gcc a.c -o a就将代码编译好了，这背后做了些什么，在学习了下一学期的《编译原理》则不难理解，一般来说高级语言程序编译的过程只需要：预处理、编译、汇编、链接。gcc在后台实际上也经历了
+                                开启自制编程语言和编译器之旅
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-05
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/C/" class="post-category">
-                                    C
+                                        <a href="/categories/UESTC/" class="post-category">
+                                    UESTC
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
                                 </a>
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C</span>
-                                </a>
-                            
-                                <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/">
-                                    <span class="chip bg-color">编程透视</span>
+                                <a href="/tags/GO/">
+                                    <span class="chip bg-color">GO</span>
                                 </a>
                             
                         </div>
@@ -910,37 +978,31 @@ systemctl <span class="token function">kill</span> mysqld<span aria-hidden="true
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/4083/">
+                    <a href="/posts/41006/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Linux学习笔记(九)">
+                                <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="计算机病毒原理与防范">
                             
-                            <span class="card-title">Linux学习笔记(九)</span>
+                            <span class="card-title">计算机病毒原理与防范</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Shell编程脚本shell脚本工作原理:
-
-loader程序加载脚本，发现不是elf可执行文件，返回错误
-bash收到错误，然后打开文件头部，发现是脚本
-调用脚本执行
-
-几乎所有编程语言的教程都是从使用著名的“Hello World”开始
+                                
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-11
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-03
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <a href="/categories/UESTC/" class="post-category">
+                                    UESTC
                                 </a>
                                     
                                 
@@ -950,8 +1012,12 @@ bash收到错误，然后打开文件头部，发现是脚本
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/UESTC/">
+                                    <span class="chip bg-color">UESTC</span>
+                                </a>
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%97%85%E6%AF%92%E5%8E%9F%E7%90%86%E4%B8%8E%E9%98%B2%E8%8C%83/">
+                                    <span class="chip bg-color">计算机病毒原理与防范</span>
                                 </a>
                             
                         </div>
