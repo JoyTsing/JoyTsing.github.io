@@ -563,21 +563,21 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-03-05
+                        2021-03-07
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2.8k
+                        4.3k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        11 分
+                        17 分
                     </div>
                 
 
@@ -592,7 +592,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进入大三下，由于学校课程的安排，本学期安排了编译原理的内容，说是编译原理，其实从实验安排上看更像是教你做一个语法树和词法分析器. 本文就记录一下相关的学习过程，也算是一个督促学习的手段. 本篇文章为阅读go-ast-book过程中一起做的笔记.</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进入大三下，由于学校课程的安排，本学期安排了编译原理的内容，说是编译原理，其实从实验安排上看更像是教你做一个语法树和词法分析器. 本文就记录一下相关的学习过程，也算是一个督促学习的手段. 本篇文章为阅读go-ast-book过程中一起做的笔记(<del>虽然更像复制粘贴就是了</del> .</p>
 <h2 id="第一章-Token"><a href="#第一章-Token" class="headerlink" title="第一章 Token"></a>第一章 Token</h2><p>词法分析一般是编译器的第一部分,而且词法分析很简单,就是一个有限状态机. 开始词法分析的过程就是把源文件转换成一组预先定义好的Token的过程.</p>
 <p><strong>Token是编程语言中最小的具有独立含义的词法单元。</strong> Token不仅包括了核心的关键字，还包括了标识符，运算符，分隔符（如果有的话），以及注释等等，也就是说Token就是我们能操作的最小单元，其中每个Token又称为词法单元，对应的有三个重要的属性.</p>
 <ul>
@@ -637,78 +637,6 @@ letter     = unicode_letter | &quot;_&quot; .</code></pre><p><code>identifier</c
     COMMENT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>遇到不能识别的Token统一返回ILLEGAL，这样可以简化词法分析时的错误处理。</p>
 <p>基础面值对应的Token类型有: Go语言规范定义的基础面值主要有整数、浮点数和复数面值类型，此外还有字符和字符串面值类型。需要注意的是，在Go语言规范中布尔类型的true和false并不在基础面值之类。但是为了方便词法解析，<code>go/token</code>包将true和false等对应的标识符也作为面值Token一类。</p>
-<p>下面是面值类Token列表：</p>
-<pre class="line-numbers language-go"><code class="language-go">    literal_beg
-    <span class="token comment" spellcheck="true">// Identifiers and basic type literals</span>
-    <span class="token comment" spellcheck="true">// (these tokens stand for classes of literals)</span>
-    IDENT  <span class="token comment" spellcheck="true">// main</span>
-    INT    <span class="token comment" spellcheck="true">// 12345</span>
-    FLOAT  <span class="token comment" spellcheck="true">// 123.45</span>
-    IMAG   <span class="token comment" spellcheck="true">// 123.45i</span>
-    CHAR   <span class="token comment" spellcheck="true">// 'a'</span>
-    STRING <span class="token comment" spellcheck="true">// "abc"</span>
-    literal_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>其中literal_beg和literal_end是私有的类型，主要用于表示面值类型Token的值域范围，因此判断一个Token的值在literal_beg和literal_end之间就可以确定是面值类型。</p>
-<p>运算符和分隔符符类型的Token数量最多，下面Token列表：</p>
-<pre class="line-numbers language-go"><code class="language-go">    operator_beg
-    <span class="token comment" spellcheck="true">// Operators and delimiters</span>
-    ADD <span class="token comment" spellcheck="true">// +</span>
-    SUB <span class="token comment" spellcheck="true">// -</span>
-    MUL <span class="token comment" spellcheck="true">// *</span>
-    QUO <span class="token comment" spellcheck="true">// /</span>
-    REM <span class="token comment" spellcheck="true">// %</span>
-
-    AND     <span class="token comment" spellcheck="true">// &amp;</span>
-    OR      <span class="token comment" spellcheck="true">// |</span>
-    XOR     <span class="token comment" spellcheck="true">// ^</span>
-    SHL     <span class="token comment" spellcheck="true">// &lt;&lt;</span>
-    SHR     <span class="token comment" spellcheck="true">// >></span>
-    AND_NOT <span class="token comment" spellcheck="true">// &amp;^</span>
-
-    ADD_ASSIGN <span class="token comment" spellcheck="true">// +=</span>
-    SUB_ASSIGN <span class="token comment" spellcheck="true">// -=</span>
-    MUL_ASSIGN <span class="token comment" spellcheck="true">// *=</span>
-    QUO_ASSIGN <span class="token comment" spellcheck="true">// /=</span>
-    REM_ASSIGN <span class="token comment" spellcheck="true">// %=</span>
-
-    AND_ASSIGN     <span class="token comment" spellcheck="true">// &amp;=</span>
-    OR_ASSIGN      <span class="token comment" spellcheck="true">// |=</span>
-    XOR_ASSIGN     <span class="token comment" spellcheck="true">// ^=</span>
-    SHL_ASSIGN     <span class="token comment" spellcheck="true">// &lt;&lt;=</span>
-    SHR_ASSIGN     <span class="token comment" spellcheck="true">// >>=</span>
-    AND_NOT_ASSIGN <span class="token comment" spellcheck="true">// &amp;^=</span>
-
-    LAND  <span class="token comment" spellcheck="true">// &amp;&amp;</span>
-    LOR   <span class="token comment" spellcheck="true">// ||</span>
-    ARROW <span class="token comment" spellcheck="true">// &lt;-</span>
-    INC   <span class="token comment" spellcheck="true">// ++</span>
-    DEC   <span class="token comment" spellcheck="true">// --</span>
-
-    EQL    <span class="token comment" spellcheck="true">// ==</span>
-    LSS    <span class="token comment" spellcheck="true">// &lt;</span>
-    GTR    <span class="token comment" spellcheck="true">// ></span>
-    ASSIGN <span class="token comment" spellcheck="true">// =</span>
-    NOT    <span class="token comment" spellcheck="true">// !</span>
-
-    NEQ      <span class="token comment" spellcheck="true">// !=</span>
-    LEQ      <span class="token comment" spellcheck="true">// &lt;=</span>
-    GEQ      <span class="token comment" spellcheck="true">// >=</span>
-    DEFINE   <span class="token comment" spellcheck="true">// :=</span>
-    ELLIPSIS <span class="token comment" spellcheck="true">// ...</span>
-
-    LPAREN <span class="token comment" spellcheck="true">// (</span>
-    LBRACK <span class="token comment" spellcheck="true">// [</span>
-    LBRACE <span class="token comment" spellcheck="true">// {</span>
-    COMMA  <span class="token comment" spellcheck="true">// ,</span>
-    PERIOD <span class="token comment" spellcheck="true">// .</span>
-
-    RPAREN    <span class="token comment" spellcheck="true">// )</span>
-    RBRACK    <span class="token comment" spellcheck="true">// ]</span>
-    RBRACE    <span class="token comment" spellcheck="true">// }</span>
-    SEMICOLON <span class="token comment" spellcheck="true">// ;</span>
-    COLON     <span class="token comment" spellcheck="true">// :</span>
-    operator_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>运算符中最多的就是加减乘除以及逻辑,位运算, 其他的不再赘述.</p>
 <p>Go语言的关键字刚好对应25个关键字类型的Token：</p>
 <pre class="line-numbers language-go"><code class="language-go">    keyword_beg
     <span class="token comment" spellcheck="true">// Keywords</span>
@@ -836,7 +764,125 @@ hello.go
 1:2
 1
 -</code></pre><p>行号从1开始，是必须的信息，如果缺少行号则输出“-”表示无效的位置。</p>
-<h2 id="第二章-基础面值"><a href="#第二章-基础面值" class="headerlink" title="第二章 基础面值"></a>第二章 基础面值</h2>
+<h2 id="第二章-基础面值"><a href="#第二章-基础面值" class="headerlink" title="第二章 基础面值"></a>第二章 基础面值</h2><p>面值是在程序代码中直接表示的值。比如表达式<code>x+2*y</code>的<code>2</code>就是面值，而<code>x</code>和<code>y</code>则不是面值而是标识符。Go语言规范明确定义了基础面值只有整数、浮点数、复数、符文和字符串几种类型。布尔类型的true和false并不是普通的面值，而是内置的布尔类型标识符（可能被重新定义为其它变量）。</p>
+<h2 id="2-1-基础面值定义"><a href="#2-1-基础面值定义" class="headerlink" title="2.1 基础面值定义"></a>2.1 基础面值定义</h2><p>基础面值有整数、浮点数、复数、字符和字符串几种类型，同时标识符也作为面值类型。在<code>go/token</code>包中，基础面值也被定义为独立的Token：</p>
+<p><img src="/posts/14266/ch2-lit-01.png" alt></p>
+<p>其中整数型面值定义如下：</p>
+<pre><code>int_lit        = decimal_lit | binary_lit | octal_lit | hex_lit .
+decimal_lit    = &quot;0&quot; | ( &quot;1&quot; … &quot;9&quot; ) [ [ &quot;_&quot; ] decimal_digits ] .
+binary_lit     = &quot;0&quot; ( &quot;b&quot; | &quot;B&quot; ) [ &quot;_&quot; ] binary_digits .
+octal_lit      = &quot;0&quot; [ &quot;o&quot; | &quot;O&quot; ] [ &quot;_&quot; ] octal_digits .
+hex_lit        = &quot;0&quot; ( &quot;x&quot; | &quot;X&quot; ) [ &quot;_&quot; ] hex_digits .</code></pre><p>整数型面值分为十进制面值、二进制面值、八进制面值和十六进制面值四种形式。需要注意的是整数型面值并不支持科学计数法形式，同时数字中间可以添加下划线分隔数字。</p>
+<p>数值类型的面值中除了整数之外就是浮点数面值。浮点数面值又分为十进制浮点数和十六进制浮点数，它们的语法定义如下：</p>
+<pre><code>float_lit         = decimal_float_lit | hex_float_lit .
+
+decimal_float_lit = decimal_digits &quot;.&quot; [ decimal_digits ] [ decimal_exponent ] |
+                    decimal_digits decimal_exponent |
+                    &quot;.&quot; decimal_digits [ decimal_exponent ] .
+decimal_exponent  = ( &quot;e&quot; | &quot;E&quot; ) [ &quot;+&quot; | &quot;-&quot; ] decimal_digits .
+
+hex_float_lit     = &quot;0&quot; ( &quot;x&quot; | &quot;X&quot; ) hex_mantissa hex_exponent .
+hex_mantissa      = [ &quot;_&quot; ] hex_digits &quot;.&quot; [ hex_digits ] |
+                    [ &quot;_&quot; ] hex_digits |
+                    &quot;.&quot; hex_digits .
+hex_exponent      = ( &quot;p&quot; | &quot;P&quot; ) [ &quot;+&quot; | &quot;-&quot; ] decimal_digits .</code></pre><p>其中decimal_float_lit表示十进制浮点数，又有普通十进制和科学计数法两种表示形式。而科学计数法形式的面值中不仅仅有十进制形式，还有十六进制科学计数法形式。</p>
+<p>除了整数和浮点数之外，数值型面值还包含复数类型：</p>
+<pre><code>imaginary_lit = (decimal_digits | int_lit | float_lit) &quot;i&quot; .</code></pre><p>复数面值的定义比较简单，它是在整数或浮点数面值增加一个<code>i</code>后缀。比如<code>0i</code>和<code>123i</code>就分别将0和123转为复数形式。</p>
+<p>除了数值型面值之外，还有字符面值和字符串面值，它们的定义如下：</p>
+<pre><code>rune_lit         = &quot;&#39;&quot; ( unicode_value | byte_value ) &quot;&#39;&quot; .
+unicode_value    = unicode_char | little_u_value | big_u_value | escaped_char .
+byte_value       = octal_byte_value | hex_byte_value .
+
+string_lit             = raw_string_lit | interpreted_string_lit .
+raw_string_lit         = &quot;`&quot; { unicode_char | newline } &quot;`&quot; .
+interpreted_string_lit = `&quot;` { unicode_value | byte_value } `&quot;`</code></pre><h2 id="2-2-基础面值语法树结构"><a href="#2-2-基础面值语法树结构" class="headerlink" title="2.2 基础面值语法树结构"></a>2.2 基础面值语法树结构</h2><p>Go语言的抽象语法树由<code>go/ast</code>包定义。其中<code>ast.BasicLit</code>表示一个基础类型的面值常量结构，它的定义如下：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">type</span> BasicLit <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    ValuePos token<span class="token punctuation">.</span>Pos   <span class="token comment" spellcheck="true">// literal position</span>
+    Kind     token<span class="token punctuation">.</span>Token <span class="token comment" spellcheck="true">// token.INT, token.FLOAT, token.IMAG, token.CHAR, or token.STRING</span>
+    Value    <span class="token builtin">string</span>      <span class="token comment" spellcheck="true">// literal string; e.g. 42, 0x7f, 3.14, 1e-9, 2.4i, 'a', '\x7f', "foo" or `\m\n\o`</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中ValuePos成员表示该词法元素开始的字节偏移量（并不包含文件名、行号和列号等信息），Kind表示面值的类型（只有数值类型、字符和字符串三类），最后的Value是表示面值的原始代码。</p>
+<h2 id="2-3-构造面值"><a href="#2-3-构造面值" class="headerlink" title="2.3 构造面值"></a>2.3 构造面值</h2><p>在了解了基础面值的语法树结构之后，我们可以手工构造简单的基础面值。比如下面的代码构造一个整数9527的面值：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"go/ast"</span>
+    <span class="token string">"go/token"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> lit9527 <span class="token operator">=</span> <span class="token operator">&amp;</span>ast<span class="token punctuation">.</span>BasicLit<span class="token punctuation">{</span>
+        Kind<span class="token punctuation">:</span>  token<span class="token punctuation">.</span>INT<span class="token punctuation">,</span>
+        Value<span class="token punctuation">:</span> <span class="token string">"9527"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+    ast<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token boolean">nil</span><span class="token punctuation">,</span> lit9527<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中<code>token.INT</code>表示基础面值的类型是整数，值是整数的十进制字符串表示。如果把<code>token.INT</code>改为<code>token.FLOAT</code>则变成浮点数的9527，如果改成<code>token.STRING</code>则会变成“9527”字符串面值。</p>
+<h2 id="2-4-解析基础面值"><a href="#2-4-解析基础面值" class="headerlink" title="2.4 解析基础面值"></a>2.4 解析基础面值</h2><p>在前面的例子中，我们通过<code>ast.BasicLit</code>结构直接构造了面值。通过手工的方式直接构造<code>ast.BasicLit</code>甚至是完整的语法树都是可以的，从理论上说可以为任何Go语言程序手工构造等价的语法树结构。但是纯手工方式构造语法树毕竟太繁琐，还好Go语言的<code>go/parser</code>可以帮我们解析Go语言代码并自动构造语法树。</p>
+<p>下面的例子是通过<code>parser.ParseExpr</code>函数从十进制的9527生成<code>ast.BasicLit</code>结构：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    expr<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> parser<span class="token punctuation">.</span><span class="token function">ParseExpr</span><span class="token punctuation">(</span><span class="token string">`9527`</span><span class="token punctuation">)</span>
+    ast<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token boolean">nil</span><span class="token punctuation">,</span> expr<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>go/parser</code>包提供了<code>parser.ParseExpr</code>函数用于简化表达式的解析。返回<code>ast.Expr</code>类型的<code>expr</code>和一个错误，<code>expr</code>表示表达式的语法树。然后通过<code>go/ast</code>包提供的<code>ast.Print</code>函数打印语法树。</p>
+<p>输出结果如下：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token number">0</span>  <span class="token operator">*</span>ast<span class="token punctuation">.</span>BasicLit <span class="token punctuation">{</span>
+<span class="token number">1</span>  <span class="token punctuation">.</span>  ValuePos<span class="token punctuation">:</span> <span class="token number">1</span>
+<span class="token number">2</span>  <span class="token punctuation">.</span>  Kind<span class="token punctuation">:</span> INT
+<span class="token number">3</span>  <span class="token punctuation">.</span>  Value<span class="token punctuation">:</span> <span class="token string">"9527"</span>
+<span class="token number">4</span>  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也可以解析“9527”字符串面值：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    expr<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> parser<span class="token punctuation">.</span><span class="token function">ParseExpr</span><span class="token punctuation">(</span><span class="token string">`"9527"`</span><span class="token punctuation">)</span>
+    ast<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token boolean">nil</span><span class="token punctuation">,</span> expr<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>输出的字符串面值的原始表达文本：</p>
+<pre><code>0  *ast.BasicLit {
+1  .  ValuePos: 1
+2  .  Kind: STRING
+3  .  Value: &quot;\&quot;9527\&quot;&quot;
+4  }</code></pre><p>基础面值在语法树中是属于叶子结点的存在，在递归遍历语法树时遇到基础面值结点递归就会返回。同时，通过基础面值、指针、结构体、数组和map等其它语法结构的相互嵌套和组合就可以构造出无穷无尽的复杂类型来。</p>
+<h2 id="2-5-标识符面值"><a href="#2-5-标识符面值" class="headerlink" title="2.5 标识符面值"></a>2.5 标识符面值</h2><p><code>go/ast</code>包同样定义了Ident结构体，表示标识符类型：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">type</span> Ident <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    NamePos token<span class="token punctuation">.</span>Pos <span class="token comment" spellcheck="true">// identifier position</span>
+    Name    <span class="token builtin">string</span>    <span class="token comment" spellcheck="true">// identifier name</span>
+    Obj     <span class="token operator">*</span>Object   <span class="token comment" spellcheck="true">// denoted object; or nil</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>NamePos表示标识符的位置，Name是标识符的名字，Obj则表示标识符的类型获取其它的扩展信息。作为内置的标识符面值来说，我们主要关注标识符的名字即可。</p>
+<p><code>go/ast</code>包同时提供了<code>NewIdent</code>函数用于创建简单的标识符：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ast<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token boolean">nil</span><span class="token punctuation">,</span> ast<span class="token punctuation">.</span><span class="token function">NewIdent</span><span class="token punctuation">(</span><span class="token string">`x`</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>输出的结果如下：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token number">0</span>  <span class="token operator">*</span>ast<span class="token punctuation">.</span>Ident <span class="token punctuation">{</span>
+<span class="token number">1</span>  <span class="token punctuation">.</span>  NamePos<span class="token punctuation">:</span> <span class="token number">0</span>
+<span class="token number">2</span>  <span class="token punctuation">.</span>  Name<span class="token punctuation">:</span> <span class="token string">"x"</span>
+<span class="token number">3</span>  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果是从表达式解析标识符，则会通过Obj成员描述标识符额外的信息：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    expr<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> parser<span class="token punctuation">.</span><span class="token function">ParseExpr</span><span class="token punctuation">(</span><span class="token string">`x`</span><span class="token punctuation">)</span>
+    ast<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token boolean">nil</span><span class="token punctuation">,</span> expr<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>输出表达式中x标识符信息如下：</p>
+<pre><code>0  *ast.Ident {
+1  .  NamePos: 1
+2  .  Name: &quot;x&quot;
+3  .  Obj: *ast.Object {
+4  .  .  Kind: bad
+5  .  .  Name: &quot;&quot;
+6  .  }
+7  }</code></pre><p><code>ast.Object</code>是一个相对复杂的结构，其中Kind用于描述标识符的类型：</p>
+<pre class="line-numbers language-go"><code class="language-go"><span class="token keyword">const</span> <span class="token punctuation">(</span>
+    Bad ObjKind <span class="token operator">=</span> <span class="token boolean">iota</span> <span class="token comment" spellcheck="true">// for error handling</span>
+    Pkg                <span class="token comment" spellcheck="true">// package</span>
+    Con                <span class="token comment" spellcheck="true">// constant</span>
+    Typ                <span class="token comment" spellcheck="true">// type</span>
+    Var                <span class="token comment" spellcheck="true">// variable</span>
+    Fun                <span class="token comment" spellcheck="true">// function or method</span>
+    Lbl                <span class="token comment" spellcheck="true">// label</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Bad表示未知的类型，其它的分别对应Go语言中包、常量、类型、变量、函数和标号等语法结构。而对于标识符中更具体的类型（比如是整数还是布尔类型）则是由<code>ast.Object</code>的其它成员描述。</p>
+
             </div>
             <hr/>
 
@@ -1185,7 +1231,7 @@ hello.go
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">203.1k</span>&nbsp;字
+                            class="white-color">211k</span>&nbsp;字
                 
                 
                 <script>
