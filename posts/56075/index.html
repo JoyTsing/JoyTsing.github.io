@@ -630,7 +630,7 @@
 <pre class="line-numbers language-scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token number">3</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token number">1</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这种情况的内存空间如图2所示。</p>
 <p><img src="http://deathking.github.io/yast-cn/contents/figures/conss2.png" alt></p>
-<p>Cons单元可以存放不同类型的数据，也可以嵌套。</p>
+<p>Cons单元可以存放不同类型的数据也可以嵌套。</p>
 <pre class="line-numbers language-scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token builtin">cons</span> #\a <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token number">3</span> <span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token comment" spellcheck="true">;Value 17: (#\a 3 . "hello")</span>
 
