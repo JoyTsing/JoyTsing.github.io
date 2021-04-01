@@ -563,7 +563,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-03-31
+                        2021-04-01
                     </div>
                 
 
@@ -577,7 +577,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        15 分
+                        16 分
                     </div>
                 
 
@@ -713,7 +713,7 @@
 <h3 id="JMP指令解析"><a href="#JMP指令解析" class="headerlink" title="JMP指令解析"></a>JMP指令解析</h3><pre><code>地址1        Jmp offset -&gt; Offset=地址3-地址2
 地址2        Push eas
     ...
-地址3        Mov xxx</code></pre><p>JMP跳转的偏移量是：<strong>目的地址-JMP的下一条指令地址</strong></p>
+地址3        Mov xxx</code></pre><p>JMP跳转的偏移量是：<strong>目的地址-JMP的下一条指令地址</strong>，同时JMP跳转指令占1个字节，偏移量4个字节，一共5个字节</p>
 <h2 id="第三章-文件系统"><a href="#第三章-文件系统" class="headerlink" title="第三章-文件系统"></a>第三章-文件系统</h2><h3 id="硬盘的物理结构"><a href="#硬盘的物理结构" class="headerlink" title="硬盘的物理结构"></a>硬盘的物理结构</h3><p>初级格式化的主要目的：划分成<strong>磁道、扇区和柱面</strong></p>
 <p><strong>CHS参数</strong>：磁道/盘片/扇区</p>
 <p><strong>INT 13H</strong>：寻址范围为8GB</p>
@@ -1070,7 +1070,8 @@
 <li><p>EXE文件，是以.EXE结尾的文件。文件以英文字母“MZ”开头，有一个文件头，用来指出每个段的定义等信息，EXE文件摆脱了代码大小最多不能超过64K的限制</p>
 </li>
 </ul>
-<h3 id="头插入"><a href="#头插入" class="headerlink" title="头插入"></a>头插入</h3>
+<h3 id="头插入"><a href="#头插入" class="headerlink" title="头插入"></a>头插入</h3><p>头插入病毒是三种病毒之中</p>
+
             </div>
             <hr/>
 
