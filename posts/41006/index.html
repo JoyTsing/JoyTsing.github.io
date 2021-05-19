@@ -563,7 +563,7 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2021-05-05
+                        2021-05-19
                     </div>
                 
 
@@ -1787,6 +1787,148 @@ IMAGE_NT_HEADERS ENDS</code></pre><p>它包含3部分：</p>
 <li><p>基于自我完整性检查的计算机病毒免疫</p>
 </li>
 </ol>
+<h2 id="不负责猜题"><a href="#不负责猜题" class="headerlink" title="不负责猜题"></a>不负责猜题</h2><p>计算机病毒的定义?</p>
+<blockquote>
+<p>编制或者在计算机程序中<strong>插入</strong>的破坏计算机功能或者毁坏数据，影响计算机使用，并能自我复制的一组计算机指令或者程序代码。</p>
+</blockquote>
+<p>病毒的基本特征？</p>
+<ul>
+<li>传染性</li>
+<li>隐蔽性</li>
+<li>可触发性</li>
+<li>其他一些基本特性<ul>
+<li>破坏性</li>
+<li>针对性</li>
+<li>不可预见性</li>
+<li>寄生性</li>
+<li>衍生性</li>
+<li>持久性</li>
+</ul>
+</li>
+</ul>
+<p>计算机病毒的本质属性?</p>
+<blockquote>
+<p>人为的<strong>特制程序</strong>是任何计算机病毒的<strong>固有本质属性</strong></p>
+<p>程序性的<strong>客观性</strong>决定了计算机病毒的可防治性和可清除性</p>
+<p><strong>人为性</strong>的<strong>主观性</strong>导致计算机病毒各异多变</p>
+</blockquote>
+<p>木马和蠕虫的概念：</p>
+<blockquote>
+<p>蠕虫:独立的可执行程序, 不需要寄生在宿主程序中，通过网络分发自己的副本，工作方式为：漏洞扫描、远程攻击、迁移传染、现场处理</p>
+<p>木马：在远程计算机之间建立连接，使得远程计算机能通过网络控制本地计算机的非法程序。木马系统软件一般由木马配置程序、控制程序和木马程序(服务端)三部分组成。</p>
+</blockquote>
+<p>小端机和大端机？</p>
+<blockquote>
+<p>整数逻辑上的最低字节放在内存的最低地址，次低字节放内存的次低地址，依次存放。比如，0x12345678（12为高位）放在内存中就是78 56 34 12(最左边为低字节)。大端机则相反</p>
+</blockquote>
+<p>JMP指令计算偏移量？</p>
+<blockquote>
+<p>从JMP指令的开始计算，直接加5。或者说是从JMP的下一条开始的指令算起被减数。</p>
+</blockquote>
+<p>文件系统（重点）</p>
+<blockquote>
+<p>一个FAT9个扇区，引导扇区1个，根目录区有224条记录，一个记录32字节，一个表项1.5字节</p>
+<ul>
+<li>数据区中存放用户数据,是文件和子目录数据真正存放的区域</li>
+<li>根目录区中存放的是文件目录表,为记录根目录文件项的表，文件项包括文件，目录。通过它可以查找到根目录下的文件和目录信息，比名称，大小，日期等</li>
+<li>FAT12为<strong>文件分配表</strong>（FAT（File Allocation Table））：记录已分配的扇区和可用扇区，并通过链表依序记录一个文件占用的扇区,另外一个FAT12为备用的FAT表</li>
+<li><strong>引导扇区</strong>（DBR （DOS Boot Record））：记录磁盘和文件系统相关的各种参数，比如扇区大小，一簇的扇区数等</li>
+</ul>
+</blockquote>
+<p><strong>如何定位一个文件？</strong></p>
+<blockquote>
+<p>FAT12文件系统中，FAT表以3个<strong>半字节</strong>（3*0.5 Byte = 1.5 Byte = 12 bit）来记录一个簇的相关情况，这也是“FAT12“文件系统中命名12的原因。</p>
+<p>FAT表的本质是磁盘簇分配情况的数据表示，FAT表中每3个半字节为一个元素，这个元素就代表一个簇，簇号从0开始，这个元素中存放的整数值表示其链接的下一簇的簇号</p>
+</blockquote>
+<ul>
+<li>查找和遍历</li>
+</ul>
+<blockquote>
+<p>类似于链表的查找，以FFF为结尾，FAT12默认设置引导区占一个扇区，FAT1于其后，同时FAT表开始的3个字节没用于用户文件分配，3字节有2组12bits所以，占用了0,1两个簇号，用户的数据从簇2开始分配。</p>
+<p>随后FAT表从头开始按3字节分成一组，但是有一点需要特别注意：</p>
+<p>在这3个字节中，用第2字节的低半字节和第1字节形成整数表示一个簇号，用第2字节的高半字节和第3字节形成的整数来表示另一个簇号</p>
+<p>由上面学习的内容知道，在FAT表中想要开始遍历就必须知道首簇号，而首簇号位于根目录区域中。</p>
+</blockquote>
+<blockquote>
+<p>计算根目录区的起始位置为：<strong>[ 1（Boot区扇区数）+2（FAT数目）*9（FAT扇区数）] * 512 = 0x2600</strong></p>
+<p>每一条记录，从该记录开始偏移0xB处有个字节指示出文件的类型，对于多级目录来说，则是存放在数据区内，原理和根目录查找目录类似，只不过是多层嵌套，查找到的是另一个目录表。</p>
+</blockquote>
+<p>查找<strong>a:\tem\tem.txt</strong>为例：</p>
+<p><img src="/posts/41006/2.png" alt></p>
+<p>如何恢复只有一个簇的文件？</p>
+<blockquote>
+<p>文件内容不会因删除而改动。而对应文件的项只是将第一个字节改成E5，其首簇段的值也不会该动</p>
+<p>在目录表中找到E5开始的相关文件名，从该项的首簇字段（0x1A）获得首簇，然后，在FAT表中对应的簇项改成FFF即可</p>
+</blockquote>
+<p><strong>FAT12和FAT32的区别</strong></p>
+<blockquote>
+<ul>
+<li>FAT32的一个重要不同在于<strong>取消了根目录区</strong>，根目录在用户区，且FAT32引导记录中有一个指向根目录区的首簇字段</li>
+<li>fat32支持长文件名而fat12不支持(FAT12文件名固定11字节，其中3字节用于后缀)</li>
+<li>fat12一个表项占1.5个字节而fat32一个表项占4个字节</li>
+<li>fat32有保留区而fat12没有</li>
+<li>FAT32的记录项中的首簇号，由两个字段构成，分别代表高位两字节和低位两字节</li>
+</ul>
+</blockquote>
+<p>硬盘数据结构</p>
+<p>MBR和EBR</p>
+<blockquote>
+<p><strong>扩展分区</strong>核心思想是：形成一个分区链，MBR定义的主分区表本来有4条分区记录，用一条描述自己分区的信息，用剩余的指向下一个分区。</p>
+<p>为了完全兼容MBR的格式，EBR完全复用了引导扇区的格式，即起始446字节给引导记录EBR，但在EBR中，这些内容全为0。</p>
+<p>主分区的相对扇区相对于MBR，通过MBR和相对扇区就可以定位每一个主分区</p>
+</blockquote>
+<p><img src="/posts/41006/7.png" alt></p>
+<blockquote>
+<p>首先找到C盘，找到主引导扇区的分区表，找到分区的相对偏移扇区数，扩展分区1是MBR的主扩展分区，它的EBR放在主扩展分区的开始处</p>
+<p>找到扩展分区1的EBR。</p>
+<p>随后查找扩展分区1上的基本分区E盘，</p>
+<p>同理查找扩展分区2的EBR和分区表</p>
+<p>最后利用相对偏移字段和首部偏移查找F盘的起始位置</p>
+<p>注意EBR是相对于包含该分区表的扩展区开始处而言（扩展分区开始处为其EBR），在扩展分区的分区表中，第一项的偏移指向的是盘区，第二项的偏移指向的是下一个扩展分区开始处（也就是下一个扩展分区的EBR）</p>
+</blockquote>
+<p>硬盘的引导过程</p>
+<p>分区表项的第一个字节0x80表示激活</p>
+<blockquote>
+<ul>
+<li>开机加电自检：开机，CPU跳到内存FFFF:0000处，由该处的一条JMP指令跳到BIOS的自检程序（POST），自检通过后，加载引导程序（与操作系统无关的MBR，按用户在BIOS中的指定顺序，硬盘、软盘、光驱或U盘等</li>
+<li>读主引导扇区：将主引导扇区MBR读入到内存的0000:7C00，扫描主分区表，搜索激活分区，分区表项第一个字节为0x80表示激活分区</li>
+<li>读激活分区引导扇区 ：如果有多个激活分区或没有，报错结束。否则读取激活分区引导扇区到0000:7c00</li>
+<li>操作系统引导代码引导系统并读取操作系统初始化文件</li>
+</ul>
+</blockquote>
+<p>MBR代码拷贝的问题</p>
+<blockquote>
+<p>MBR的这段代码会被加载到7C00处，这段代码的主要任务是什么呢？是找到激活分区（如C盘）并将真正C盘的引导扇区加载到7C00处（也就是拷贝），这必然覆盖已经在内存7C00处的MBR自己，当自己正在拷贝的另外的指令覆盖自己时，必然破坏了自己的指令执行逻辑。</p>
+<p> 所以，要错开<strong>MBR引导程序</strong>和<strong>激活分区引导程序</strong>占用的内存空间范围，让MBR的引导程序在600h执行，而它拷贝的激活分区引导程序将在7C00h执行</p>
+</blockquote>
+<p>头插入病毒遇到的问题</p>
+<blockquote>
+<p>需要去掉病毒代码最后的RET指令，否则原本的COM文件得不到执行机会</p>
+<p>病毒代码执行结束后需用一条JMP指令跳过病毒数据区</p>
+<p>加载后的实际内存位置后移, 后移长度就是virus.com的机器码长度</p>
+<p>将源程序复制到原先的位置时候需要避免自我覆盖</p>
+</blockquote>
+<p>尾插入中的思路</p>
+<blockquote>
+<p>1） 构造一个打印的正常代码normal.com</p>
+<p>2）构造一个寄生在normal.com尾部的病毒代码virus.com</p>
+<p>3）用DOS的拷贝命令将两个编译好的程序粘起来</p>
+<p>4）将normal.com开始的3字节作为数据保存到virus.com的代码某部分，然后将normal.com开始的3字节修改（先用UE手动修改）为JMP XXXX（跳到virus.com指令处）。</p>
+<p>5）virus.com打印“I am virus”后，将normal.com开始的3字节进行还原，并JMP到normal.com开始，将执行权限交给normal.com</p>
+</blockquote>
+<p>为什么计算机病毒往往需要重定位技术？病毒重定位技术的关键技术原理是什么？以下重定位代码中，语句（1）-（4）在变量Message重定位过程中发挥的作用分别是什么？</p>
+<pre><code>（1） call base
+ base:
+（2） pop bp
+（3） sub bp, base
+​     mov ax, bp
+（4） add ax, Message</code></pre><blockquote>
+<p>病毒的寄生会导致指令所在位置发生变化，从而导致预期加载地址和实际地址不一致的情况；知道一条指令<strong>运行时的地址值</strong>和<strong>编译时的地址值</strong>，相减即可；</p>
+<p>Call指令的下一条指令是pop ax，call执行时，首先会把pop ax指令的IP（即pop ax这条指令的实际地址）<strong>压栈</strong>，然后根据<strong>相对偏移</strong>跳到标号here处；</p>
+<p>标号base处就是pop bp指令，执行这条<strong>出栈</strong>指令会把栈中数据放入bp中，也就是pop bp指令的IP，利用栈获得了IP的值</p>
+<p>Sub语句中的标号base在编译时就生成了地址，但是是<strong>预期地址</strong>,现在，实际地址-预期地址，ax中放的就是加载偏差了</p>
+<p>将编译期要用的的地址，比如字串的首址加上ax就是字串实际地址了</p>
+</blockquote>
 
             </div>
             <hr/>
@@ -1927,31 +2069,30 @@ IMAGE_NT_HEADERS ENDS</code></pre><p>它包含3部分：</p>
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/9020/">
+                    <a href="/posts/52979/">
                         <div class="card-image">
                             
-                                
-                                <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="计算机系统结构">
+                                <img src="medias/imgs/52979/1.png" class="responsive-img" alt="[漫语]葬送的芙莉莲">
                             
-                            <span class="card-title">计算机系统结构</span>
+                            <span class="card-title">[漫语]葬送的芙莉莲</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                
+                                难得一见的优秀漫画
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-03
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-01-07
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/UESTC/" class="post-category">
-                                    UESTC
+                                        <a href="/categories/%E6%BC%AB%E8%AF%AD/" class="post-category">
+                                    漫语
                                 </a>
                                     
                                 
@@ -1961,12 +2102,8 @@ IMAGE_NT_HEADERS ENDS</code></pre><p>它包含3部分：</p>
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/UESTC/">
-                                    <span class="chip bg-color">UESTC</span>
-                                </a>
-                            
-                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">
-                                    <span class="chip bg-color">计算机系统结构</span>
+                                <a href="/tags/%E6%BC%AB%E8%AF%AD/">
+                                    <span class="chip bg-color">漫语</span>
                                 </a>
                             
                         </div>
