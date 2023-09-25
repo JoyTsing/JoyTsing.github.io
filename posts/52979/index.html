@@ -527,8 +527,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%BC%AB%E8%AF%AD/">
-                                    <span class="chip bg-color">漫语</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -539,8 +539,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/%E6%BC%AB%E8%AF%AD/" class="post-category">
-                                    漫语
+                                <a href="/categories/%E6%9D%82%E8%AE%B0/" class="post-category">
+                                    杂记
                                 </a>
                             
                         </div>
@@ -573,7 +573,7 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        4 分
+                        5 分
                     </div>
                 
 
@@ -629,7 +629,25 @@
 <p><strong>那么，芙莉莲就能够活在这个充满他们存在痕迹的世界中。</strong></p>
 <p><strong>仅此而已。</strong></p>
 <p>这些仅仅是漫画的开头，但已经足够表现漫画的张力，类似的作品还有很多，之后会慢慢更新</p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
             <hr/>
 
@@ -642,8 +660,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%BC%AB%E8%AF%AD/">
-                                    <span class="chip bg-color">漫语</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -681,7 +699,7 @@
 <script>
     let gitalk = new Gitalk({
         clientID: 'e1e76a75c09daeb96740',
-        clientSecret: 'c090881ff25206a1601027ac3b225def230cdf2f',
+        clientSecret: '88db25cd4dd3c68dbae3607bb0e9bf87328ad4b6',
         repo: 'JoyTsing.github.io',
         owner: 'JoyTsing',
         admin: '["JoyTsing"]',
@@ -716,7 +734,7 @@
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="计算机病毒原理与防范">
+                                <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="计算机病毒原理与防范">
                             
                             <span class="card-title">计算机病毒原理与防范</span>
                         </div>
@@ -769,7 +787,7 @@
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="可执行ELF文件的编写">
+                                <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="可执行ELF文件的编写">
                             
                             <span class="card-title">可执行ELF文件的编写</span>
                         </div>
@@ -976,10 +994,15 @@
             
             <br>
             
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+                    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278523400'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1278523400%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+                <br>
+            
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">237.3k</span>&nbsp;字
+                            class="white-color">237.4k</span>&nbsp;字
                 
                 
                 <script>
@@ -1062,11 +1085,6 @@
 
 
 
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top"
-       data-delay="50">
-        <i class="fa fa-rss"></i>
-    </a>
-
 </div>
     </div>
 </footer>
@@ -1116,8 +1134,6 @@
 
 <!-- Baidu Push -->
 
-
-    <script src="/libs/others/clicklove.js" async="async"></script>
 
 
 
