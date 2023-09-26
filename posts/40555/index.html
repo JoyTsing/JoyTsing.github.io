@@ -650,7 +650,7 @@
 <h3 id="额外补充"><a href="#额外补充" class="headerlink" title="额外补充"></a>额外补充</h3><p>值得一提的是，在很多教程里面没有提到如果你下载了CMake language support这个软件，那么会需要一个.net运行环境依赖，这个依赖如果你只靠vscode同样是不能下载下来的，需要<code>apt install dotnet</code>的运行环境（或者连sdk一起下载），除此之外，如果你在vscode输出这栏打开CMake/Build这插件的输出，大概率会看见说build失败，缺乏ninja(然而实际上是构建成功的，只不过是原生cmake构建)，当然也可以不用管，但是我非常推荐安装ninja，它类似于CMake但速度比CMake快了一个数量级，并且安装并不麻烦。</p>
 <pre class="line-numbers language-sh"><code class="language-sh">sudo apt-get install ninja-build
 ninja --version<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>同时还推荐下载github copilot，感受人工智能帮你补充代码和注释（前提已经弄好了github pro），接下来就可以正式开始了。</p>
+<p>同时还推荐下载<code>github copilot</code>，感受人工智能帮你补充代码和注释（前提已经弄好了github pro），接下来就可以正式开始了。</p>
 <h2 id="运行与调试"><a href="#运行与调试" class="headerlink" title="运行与调试"></a><strong>运行与调试</strong></h2><p>按一下底部菜单中的<code>build</code>键，看看我们生成的可执行文件在哪里（一般就在<code>build</code>下面）：</p>
 <p><img src="/posts/40555/v2-27523b009d10182419ae5ac3d3549cce_720w.png" alt></p>
 <p>按<code>F5</code>键，VSCode会报错，同时在根目录下生成一个<code>.vscode</code>文件夹以及<code>launch.json</code>。打开这个json文件，将其中唯一一个需要我们配置的（也是本文第二次跟配置文件打交道）<code>program</code>项改为<code>cmake</code>生成的可执行文件的位置（按照惯例，根目录的名字和项目的名字应该是同一个，否则就需要手动指定）。</p>
@@ -668,7 +668,7 @@ include_directories(${PROJECT_SOURSE_DIR}/thirdparty)<span aria-hidden="true" cl
 <p>同样需要告诉编辑器怎么去寻找执行文件，对于.vscode来说则是：</p>
 <pre class="line-numbers language-json"><code class="language-json">
             <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}/build/${fileBasenameNoExtension}"</span><span class="token punctuation">,</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>对于该种工程结构：<br>├── <strong>build</strong><br>├── CMakeLists.txt<br>├── <strong>include</strong><br>│   └── sayHello.h<br>├── main.cpp<br>└── <strong>src</strong><br>    └── sayHello.cpp</p>
+<p>对于该种工程结构：<br>├── <strong>build</strong><br>├── CMakeLists.txt<br>├── <strong>include</strong><br>│   └── sayHello.h<br>├── main.cpp<br>└── <strong>src</strong><br>│   └── sayHello.cpp</p>
 <p>对应的cmake添加：</p>
 <blockquote>
 <p>include_directories(include)<br>add_executable(main main.cpp src/atmp.cpp)</p>
@@ -694,14 +694,14 @@ include_directories(${PROJECT_SOURSE_DIR}/thirdparty)<span aria-hidden="true" cl
   <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>即可</p>
-<h2 id="VPN的使用"><a href="#VPN的使用" class="headerlink" title="VPN的使用"></a>VPN的使用</h2><p><img src="/posts/40555/wsl-1695711915507-35.png" alt="wsl"></p>
-<p><img src="/posts/40555/QY_7NET0QO29D%7BYR4WC%7B$G-1695711922336-37.png" alt="QY_7NET0QO29D~{YR4WC{$G"></p>
+<p>即可成功编译运行。</p>
+<h2 id="VPN的使用"><a href="#VPN的使用" class="headerlink" title="VPN的使用"></a>VPN的使用</h2><p><img src="/posts/40555/wsl-1695711915507-35.png" alt></p>
+<p><img src="/posts/40555/QY_7NET0QO29D%7BYR4WC%7B$G-1695711922336-37.png" alt></p>
 <p><a href="https://zhuanlan.zhihu.com/p/153124468">知乎有对应的脚本来开启vpn</a>，但有些细节没有说清楚。</p>
 <pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 host_ip<span class="token operator">=</span><span class="token punctuation">$(</span>cat /etc/resolv.conf <span class="token operator">|</span><span class="token function">grep</span> <span class="token string">"nameserver"</span> <span class="token operator">|</span><span class="token function">cut</span> -f 2 -d <span class="token string">" "</span><span class="token punctuation">)</span>
 <span class="token function">export</span> ALL_PROXY<span class="token operator">=</span><span class="token string">"http://<span class="token variable">$host_ip</span>:7890"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>当你做完这些，一定要在对应的.zsh文件里面最后添加对端口配置文件的 source，不然无法生效。</p>
+<p>当你做完这些，<strong>一定要在对应的.zsh文件里面最后对端口配置文件进行source</strong>，不然无法生效。</p>
 
             </div>
             <hr/>
@@ -1298,7 +1298,7 @@ host_ip<span class="token operator">=</span><span class="token punctuation">$(</
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">293.8k</span>&nbsp;字
+                            class="white-color">296.1k</span>&nbsp;字
                 
                 
                 <script>

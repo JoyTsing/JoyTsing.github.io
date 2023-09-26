@@ -566,14 +566,14 @@
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        19.3k
+                        21.5k
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        78 分
+                        87 分
                     </div>
                 
 
@@ -593,63 +593,63 @@
 <li><strong><code>auto_ptr</code> 被弃用，应使用 <code>unique_ptr</code>。</strong></li>
 <li><strong>C 语言风格的类型转换被弃用（即在变量前使用 <code>(convert_type)</code>），应该使用 <code>static_cast</code>、<code>reinterpret_cast</code>、<code>const_cast</code> 来进行类型转换。</strong><br>在编写 C++ 时，也应该尽可能的避免使用诸如 <code>void*</code> 之类的程序风格。而在不得不使用 C 时，应该注意使用 <code>extern &quot;C&quot;</code> 这种特性，将 C 语言的代码与 C++代码进行分离编译，再统一链接这种做法，例如：</li>
 </ul>
-<h1 id="第-2-章-语言可用性的强化"><a href="#第-2-章-语言可用性的强化" class="headerlink" title="第 2 章 语言可用性的强化"></a>第 2 章 语言可用性的强化</h1><h2 id="2-1-常量"><a href="#2-1-常量" class="headerlink" title="2.1 常量"></a>2.1 常量</h2><h3 id="nullptr"><a href="#nullptr" class="headerlink" title="nullptr"></a>nullptr</h3><p><code>nullptr</code> 出现的目的是为了替代 <code>NULL</code>。在某种意义上来说，传统 C++ 会把 <code>NULL</code>、<code>0</code> 视为同一种东西，这取决于编译器如何定义 <code>NULL</code>，有些编译器会将 <code>NULL</code> 定义为 <code>((void*)0)</code>，有些则会直接将其定义为 <code>0</code>。</p>
+<h2 id="第-2-章-语言可用性的强化"><a href="#第-2-章-语言可用性的强化" class="headerlink" title="第 2 章 语言可用性的强化"></a>第 2 章 语言可用性的强化</h2><h3 id="2-1-常量"><a href="#2-1-常量" class="headerlink" title="2.1 常量"></a>2.1 常量</h3><h4 id="nullptr"><a href="#nullptr" class="headerlink" title="nullptr"></a>nullptr</h4><p><code>nullptr</code> 出现的目的是为了替代 <code>NULL</code>。在某种意义上来说，传统 C++ 会把 <code>NULL</code>、<code>0</code> 视为同一种东西，这取决于编译器如何定义 <code>NULL</code>，有些编译器会将 <code>NULL</code> 定义为 <code>((void*)0)</code>，有些则会直接将其定义为 <code>0</code>。</p>
 <p>C++ <strong>不允许</strong>直接将 <code>void *</code> 隐式转换到其他类型。但如果编译器尝试把 <code>NULL</code> 定义为 <code>((void*)0)</code>，那么在下面这句代码中：</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span>ch <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>没有了 <code>void *</code> 隐式转换的 C++ 只好将 <code>NULL</code> 定义为 <code>0</code>。而这依然会产生新的问题，将 <code>NULL</code> 定义成 <code>0</code> 将导致 <code>C++</code> 中重载特性发生混乱。考虑下面这两个 <code>foo</code> 函数：</p>
-<pre class="line-numbers language-c++"><code class="language-c++">void foo(char*); 
-void foo(int);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>那么 <code>foo(NULL);</code> 这个语句将会去调用 <code>foo(int)</code>，从而导致代码违反直觉。</p>
 <p>为了解决这个问题，C++11 引入了 <code>nullptr</code> 关键字，专门用来区分空指针、<code>0</code>。而 <code>nullptr</code> 的类型为 <code>nullptr_t</code>，能够隐式的转换为任何指针或成员指针的类型，也能和他们进行相等或者不等的比较。</p>
 <p><code>NULL</code> 不同于 <code>0</code> 与 <code>nullptr</code>。所以，请养成直接使用 <code>nullptr</code>的习惯。</p>
 <p><code>decltype</code> 和 <code>std::is_same</code> 这两个属于现代 C++ 的语法，简单来说，<code>decltype</code> 用于类型推导，而 <code>std::is_same</code> 用于比较两个类型是否相同。</p>
-<h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><p>C++ 本身已经具备了常量表达式的概念，比如 <code>1+2</code>, <code>3*4</code> 这种表达式总是会产生相同的结果并且没有任何副作用。如果编译器能够在编译时就把这些表达式直接优化并植入到程序运行时，将能增加程序的性能。一个非常明显的例子就是在数组的定义阶段：</p>
-<pre class="line-numbers language-c++"><code class="language-c++">#include <iostream>  
-#define LEN 10  
+<h4 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h4><p>C++ 本身已经具备了常量表达式的概念，比如 <code>1+2</code>, <code>3*4</code> 这种表达式总是会产生相同的结果并且没有任何副作用。如果编译器能够在编译时就把这些表达式直接优化并植入到程序运行时，将能增加程序的性能。一个非常明显的例子就是在数组的定义阶段：</p>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">define</span> LEN 10  </span>
 
-int len_foo() {  
-    int i = 2;  
-    return i;  
-}  
-constexpr int len_foo_constexpr() {  
-    return 5;  
-}  
+<span class="token keyword">int</span> <span class="token function">len_foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>  
+    <span class="token keyword">return</span> i<span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token function">len_foo_constexpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
 
-constexpr int fibonacci(const int n) {  
-    return n == 1 || n == 2 ? 1 : fibonacci(n-1)+fibonacci(n-2);  
-}  
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">return</span> n <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">||</span> n <span class="token operator">==</span> <span class="token number">2</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">fibonacci</span><span class="token punctuation">(</span>n<span class="token number">-2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
 
-int main() {  
-    char arr_1[10];                      // 合法  
-    char arr_2[LEN];                     // 合法  
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">char</span> arr_1<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>                      <span class="token comment" spellcheck="true">// 合法  </span>
+    <span class="token keyword">char</span> arr_2<span class="token punctuation">[</span>LEN<span class="token punctuation">]</span><span class="token punctuation">;</span>                     <span class="token comment" spellcheck="true">// 合法  </span>
 
-    int len = 10;  
-    // char arr_3[len];                  // 非法  
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  
+    <span class="token comment" spellcheck="true">// char arr_3[len];                  // 非法  </span>
 
-    const int len_2 = len + 1;  
-    constexpr int len_2_constexpr = 1 + 2 + 3;  
-    // char arr_4[len_2];                // 非法  
-    char arr_4[len_2_constexpr];         // 合法  
+    <span class="token keyword">const</span> <span class="token keyword">int</span> len_2 <span class="token operator">=</span> len <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>  
+    <span class="token keyword">constexpr</span> <span class="token keyword">int</span> len_2_constexpr <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">;</span>  
+    <span class="token comment" spellcheck="true">// char arr_4[len_2];                // 非法  </span>
+    <span class="token keyword">char</span> arr_4<span class="token punctuation">[</span>len_2_constexpr<span class="token punctuation">]</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">// 合法  </span>
 
-    // char arr_5[len_foo()+5];          // 非法  
-    char arr_6[len_foo_constexpr() + 1]; // 合法  
+    <span class="token comment" spellcheck="true">// char arr_5[len_foo()+5];          // 非法  </span>
+    <span class="token keyword">char</span> arr_6<span class="token punctuation">[</span><span class="token function">len_foo_constexpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 合法  </span>
 
-    std::cout << fibonacci(10) << std::endl;  
-    // 1, 1, 2, 3, 5, 8, 13, 21, 34, 55  
-    std::cout << fibonacci(10) << std::endl;  
-    return 0;  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
+    <span class="token comment" spellcheck="true">// 1, 1, 2, 3, 5, 8, 13, 21, 34, 55  </span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上面的例子中，<code>char arr_4[len_2]</code> 可能比较令人困惑，因为 <code>len_2</code> 已经被定义为了常量。为什么 <code>char arr_4[len_2]</code> 仍然是非法的呢？这是因为 C++ 标准中数组的长度必须是一个常量表达式，而对于 <code>len_2</code> 而言，这是一个 <code>const</code> 常数，而不是一个常量表达式，因此（即便这种行为在大部分编译器中都支持，但是）它是一个非法的行为，我们需要使用接下来即将介绍的 C++11 引入的 <code>constexpr</code> 特性来解决这个问题；而对于 <code>arr_5</code> 来说，C++98 之前的编译器无法得知 <code>len_foo()</code> 在运行期实际上是返回一个常数，这也就导致了非法的产生。</p>
 <blockquote>
 <p>注意，现在大部分编译器其实都带有自身编译优化，很多非法行为在编译器优化的加持下会变得合法，若需重现编译报错的现象需要使用老版本的编译器。</p>
 </blockquote>
 <p>C++11 提供了 <code>constexpr</code> 让用户显式的声明函数或对象构造函数在编译期会成为常量表达式，这个关键字明确的告诉编译器应该去验证 <code>len_foo</code> 在编译期就应该是一个常量表达式。</p>
 <p>此外，<code>constexpr</code> 修饰的函数可以使用递归：</p>
-<pre class="line-numbers language-c++"><code class="language-c++">constexpr int fibonacci(const int n) {  
-    return n == 1 || n == 2 ? 1 : fibonacci(n-1)+fibonacci(n-2);  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">return</span> n <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">||</span> n <span class="token operator">==</span> <span class="token number">2</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token function">fibonacci</span><span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token function">fibonacci</span><span class="token punctuation">(</span>n<span class="token number">-2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>从 C++14 开始，<code>constexpr</code> 函数可以在内部使用局部变量、循环和分支等简单语句，但是对于C++11来说则需要简化到如上述代码才行，因为无法使用分支语句。</p>
-<h2 id="2-2-变量及其初始化"><a href="#2-2-变量及其初始化" class="headerlink" title="2.2 变量及其初始化"></a>2.2 变量及其初始化</h2><h3 id="if-switch变量声明强化"><a href="#if-switch变量声明强化" class="headerlink" title="if/switch变量声明强化"></a>if/switch变量声明强化</h3><p>在传统 C++ 中，变量的声明虽然能够位于任何位置，甚至于 <code>for</code> 语句内能够声明一个临时变量 <code>int</code>，但始终没有办法在 <code>if</code> 和 <code>switch</code> 语句中声明一个临时的变量。也就是需要在全局声明后才能在局部代码域内使用，比如：</p>
+<h3 id="2-2-变量及其初始化"><a href="#2-2-变量及其初始化" class="headerlink" title="2.2 变量及其初始化"></a>2.2 变量及其初始化</h3><h4 id="if-switch变量声明强化"><a href="#if-switch变量声明强化" class="headerlink" title="if/switch变量声明强化"></a>if/switch变量声明强化</h4><p>在传统 C++ 中，变量的声明虽然能够位于任何位置，甚至于 <code>for</code> 语句内能够声明一个临时变量 <code>int</code>，但始终没有办法在 <code>if</code> 和 <code>switch</code> 语句中声明一个临时的变量。也就是需要在全局声明后才能在局部代码域内使用，比如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp">    <span class="token comment" spellcheck="true">// 在 c++17 之前  </span>
     <span class="token keyword">const</span> std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">::</span>iterator itr <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">find</span><span class="token punctuation">(</span>vec<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> vec<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
     <span class="token keyword">if</span> <span class="token punctuation">(</span>itr <span class="token operator">!=</span> vec<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
@@ -661,12 +661,12 @@ int main() {
     itr <span class="token operator">!=</span> vec<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
     <span class="token operator">*</span>itr <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h3><p>初始化是一个非常重要的语言特性，最常见的就是在对象进行初始化时进行使用。 在传统 C++ 中，不同的对象有着不同的初始化方法，例如普通数组、 POD （<strong>P</strong>lain <strong>O</strong>ld <strong>D</strong>ata，即没有构造、析构和虚函数的类或结构体） 类型都可以使用 <code>{}</code> 进行初始化，也就是我们所说的初始化列表。 而对于类对象的初始化，要么需要通过拷贝构造、要么就需要使用 <code>()</code> 进行。 这些不同方法都针对各自对象，不能通用。</p>
+<h4 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h4><p>初始化是一个非常重要的语言特性，最常见的就是在对象进行初始化时进行使用。 在传统 C++ 中，不同的对象有着不同的初始化方法，例如普通数组、 POD （<strong>P</strong>lain <strong>O</strong>ld <strong>D</strong>ata，即没有构造、析构和虚函数的类或结构体） 类型都可以使用 <code>{}</code> 进行初始化，也就是我们所说的初始化列表。 而对于类对象的初始化，要么需要通过拷贝构造、要么就需要使用 <code>()</code> 进行。 这些不同方法都针对各自对象，不能通用。</p>
 <p>比如最常见的：<br><img src="/posts/35627/image-20230919213531943.png" alt></p>
 <p>为解决这个问题，C++11 首先把初始化列表的概念绑定到类型上，称其为 <code>std::initializer_list</code>，允许构造函数或其他函数像参数一样使用初始化列表，这就为类对象的初始化与普通数组和 POD 的初始化方法提供了统一的桥梁:</p>
 <p><img src="/posts/35627/image-20230919213518078.png" alt><br>出现这个的原因是在C++中，当创建一个对象时，编译器要保证调用了所有子对象的构造函数，这是C++强制要求的，也是它的一个机制。而在一些自定义类中没有定义默认构造函数，只定义了一个有整型参数的构造函数，因此编译器并不会再去生成一个默认的构造函数，而BaseChild继承Base时，又没有显式地指定Base的构造函数，所以编译报错。</p>
 <p>如果不修改Base，那么，我们用什么办法不去调用默认构造函数，而是显式的调用Base带参构造函数呢。答案就是初始化列表。</p>
-<h3 id="结构化绑定"><a href="#结构化绑定" class="headerlink" title="结构化绑定"></a>结构化绑定</h3><p>结构化绑定提供了类似其他语言中提供的多返回值的功能。在容器一章中，我们会学到 C++11 新增了 <code>std::tuple</code> 容器用于构造一个元组，进而囊括多个返回值。但缺陷是，C++11/14 并没有提供一种简单的方法直接从元组中拿到并定义元组中的元素，尽管我们可以使用 <code>std::tie</code> 对元组进行拆包，但我们依然必须非常清楚这个元组包含多少个对象，各个对象是什么类型，非常麻烦。</p>
+<h4 id="结构化绑定"><a href="#结构化绑定" class="headerlink" title="结构化绑定"></a>结构化绑定</h4><p>结构化绑定提供了类似其他语言中提供的多返回值的功能。在容器一章中，我们会学到 C++11 新增了 <code>std::tuple</code> 容器用于构造一个元组，进而囊括多个返回值。但缺陷是，C++11/14 并没有提供一种简单的方法直接从元组中拿到并定义元组中的元素，尽管我们可以使用 <code>std::tie</code> 对元组进行拆包，但我们依然必须非常清楚这个元组包含多少个对象，各个对象是什么类型，非常麻烦。</p>
 <p>C++17 完善了这一设定，给出的结构化绑定可以让我们写出这样的代码：</p>
 <p><img src="/posts/35627/image-20230919215615980.png" alt></p>
 <p>换句话说就是例如：返回一个结构体函数</p>
@@ -707,8 +707,8 @@ int main() {
 <span class="token keyword">auto</span><span class="token operator">&amp;&amp;</span> _unnamed_ <span class="token operator">=</span> arr<span class="token punctuation">;</span>
 <span class="token comment" spellcheck="true">// 经过推导得到左值引用：</span>
 <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>_unnamed_<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-3-类型推断"><a href="#2-3-类型推断" class="headerlink" title="2.3 类型推断"></a>2.3 类型推断</h2><p>C++11 引入了 <code>auto</code> 和 <code>decltype</code> 这两个关键字实现了类型推导，让编译器来操心变量的类型。这使得 C++ 也具有了和其他现代编程语言一样，某种意义上提供了无需操心变量类型的使用习惯。</p>
-<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>使用 <code>auto</code> 进行类型推导的一个最为常见而且显著的例子就是迭代器。</p>
+<h3 id="2-3-类型推断"><a href="#2-3-类型推断" class="headerlink" title="2.3 类型推断"></a>2.3 类型推断</h3><p>C++11 引入了 <code>auto</code> 和 <code>decltype</code> 这两个关键字实现了类型推导，让编译器来操心变量的类型。这使得 C++ 也具有了和其他现代编程语言一样，某种意义上提供了无需操心变量类型的使用习惯。</p>
+<h4 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h4><p>使用 <code>auto</code> 进行类型推导的一个最为常见而且显著的例子就是迭代器。</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// 在 C++11 之前  </span>
 <span class="token comment" spellcheck="true">// 由于 cbegin() 将返回 vector&lt;int>::const_iterator  </span>
 <span class="token comment" spellcheck="true">// 所以 it 也应该是 vector&lt;int>::const_iterator 类型  </span>
@@ -720,13 +720,13 @@ int main() {
             vec<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token operator">*</span>it<span class="token punctuation">)</span><span class="token punctuation">;</span>  
         <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>注意</strong>：<code>auto</code> 还不能用于推导数组类型：</p>
-<h3 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h3><p><code>decltype</code> 关键字是为了解决 <code>auto</code> 关键字只能对变量进行类型推导的缺陷而出现的。它的用法和 <code>typeof</code> 很相似：</p>
+<h4 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h4><p><code>decltype</code> 关键字是为了解决 <code>auto</code> 关键字只能对变量进行类型推导的缺陷而出现的。它的用法和 <code>typeof</code> 很相似：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">decltype</span><span class="token punctuation">(</span>表达式<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>有时候，我们可能需要计算某个表达式的类型，例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">auto</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token keyword">auto</span> y <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
 <span class="token keyword">decltype</span><span class="token punctuation">(</span>x<span class="token operator">+</span>y<span class="token punctuation">)</span> z<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="尾返回类型"><a href="#尾返回类型" class="headerlink" title="尾返回类型"></a>尾返回类型</h3><p>在介绍 <code>auto</code> 时，我们已经提过 <code>auto</code> 不能用于函数形参进行类型推导，那么 <code>auto</code> 能不能用于推导函数的返回类型呢？还是考虑一个加法函数的例子，在传统 C++ 中我们必须这么写：</p>
+<h4 id="尾返回类型"><a href="#尾返回类型" class="headerlink" title="尾返回类型"></a>尾返回类型</h4><p>在介绍 <code>auto</code> 时，我们已经提过 <code>auto</code> 不能用于函数形参进行类型推导，那么 <code>auto</code> 能不能用于推导函数的返回类型呢？还是考虑一个加法函数的例子，在传统 C++ 中我们必须这么写：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> R<span class="token punctuation">,</span> <span class="token keyword">typename</span> T<span class="token punctuation">,</span> <span class="token keyword">typename</span> U<span class="token operator">></span>
 R <span class="token function">add</span><span class="token punctuation">(</span>T x<span class="token punctuation">,</span> U y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> x<span class="token operator">+</span>y<span class="token punctuation">;</span>
@@ -739,7 +739,7 @@ R <span class="token function">add</span><span class="token punctuation">(</span
     <span class="token keyword">return</span> x <span class="token operator">+</span> y<span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从 C++14 开始是可以直接让普通函数具备返回值推导,也就是无需再使用decltype而是直接用auto关键字即可。</p>
-<h3 id="decltype-auto"><a href="#decltype-auto" class="headerlink" title="decltype(auto)"></a>decltype(auto)</h3><p><code>decltype(auto)</code> 是 C++14 开始提供的一个略微复杂的用法。简单来说，<code>decltype(auto)</code> 主要用于对转发函数或封装的返回类型进行推导，它使我们无需显式的指定 <code>decltype</code> 的参数表达式。考虑看下面的例子，当我们需要对下面两个函数进行封装时:</p>
+<h4 id="decltype-auto"><a href="#decltype-auto" class="headerlink" title="decltype(auto)"></a>decltype(auto)</h4><p><code>decltype(auto)</code> 是 C++14 开始提供的一个略微复杂的用法。简单来说，<code>decltype(auto)</code> 主要用于对转发函数或封装的返回类型进行推导，它使我们无需显式的指定 <code>decltype</code> 的参数表达式。考虑看下面的例子，当我们需要对下面两个函数进行封装时:</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp">std<span class="token operator">::</span>string  <span class="token function">lookup1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token operator">&lt;</span>br<span class="token operator">></span>std<span class="token operator">::</span>string<span class="token operator">&amp;</span> <span class="token function">lookup2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>在 C++11 中，封装实现是如下形式：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp">std<span class="token operator">::</span>string <span class="token function">look_up_a_string_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
@@ -755,7 +755,7 @@ std<span class="token operator">::</span>string<span class="token operator">&amp
 <span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span> <span class="token function">look_up_a_string_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
     <span class="token keyword">return</span> <span class="token function">lookup2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-4-控制流"><a href="#2-4-控制流" class="headerlink" title="2.4 控制流"></a>2.4 控制流</h2><p>正如本章开头出，我们知道了 C++11 引入了 <code>constexpr</code> 关键字，它将表达式或函数编译为常量结果。一个很自然的想法是，如果我们把这一特性引入到条件判断中去，让代码在编译时就完成分支判断，岂不是能让程序效率更高？C++17 将 <code>constexpr</code> 这个关键字引入到 <code>if</code> 语句中，允许在代码中声明常量表达式的判断条件，考虑下面的代码：</p>
+<h3 id="2-4-控制流"><a href="#2-4-控制流" class="headerlink" title="2.4 控制流"></a>2.4 控制流</h3><p>正如本章开头出，我们知道了 C++11 引入了 <code>constexpr</code> 关键字，它将表达式或函数编译为常量结果。一个很自然的想法是，如果我们把这一特性引入到条件判断中去，让代码在编译时就完成分支判断，岂不是能让程序效率更高？C++17 将 <code>constexpr</code> 这个关键字引入到 <code>if</code> 语句中，允许在代码中声明常量表达式的判断条件，考虑下面的代码：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 
 <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>  
@@ -781,7 +781,7 @@ std<span class="token operator">::</span>string<span class="token operator">&amp
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">print_type_info</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">print_type_info</span><span class="token punctuation">(</span><span class="token number">3.14</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="区间for迭代"><a href="#区间for迭代" class="headerlink" title="区间for迭代"></a>区间for迭代</h3><p>C++11 引入了基于范围的迭代写法，我们拥有了能够写出像 Python 一样简洁的循环语句，我们可以进一步简化前面的例子：</p>
+<h4 id="区间for迭代"><a href="#区间for迭代" class="headerlink" title="区间for迭代"></a>区间for迭代</h4><p>C++11 引入了基于范围的迭代写法，我们拥有了能够写出像 Python 一样简洁的循环语句，我们可以进一步简化前面的例子：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;vector></span>  </span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span>  </span>
@@ -807,21 +807,21 @@ std<span class="token operator">::</span>string<span class="token operator">&amp
         <span class="token keyword">auto</span> <span class="token punctuation">[</span>k<span class="token punctuation">,</span> v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">*</span>iter<span class="token punctuation">;</span>
         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\nkey exsists: { %d: %d }\n"</span><span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-5-模板"><a href="#2-5-模板" class="headerlink" title="2.5 模板"></a>2.5 模板</h2><p>模板的哲学在于将一切能够在编译期处理的问题丢到编译期进行处理，仅在运行时处理那些最核心的动态服务，进而大幅优化运行期的性能。</p>
-<h3 id="外部模板"><a href="#外部模板" class="headerlink" title="外部模板"></a>外部模板</h3><p>传统 C++ 中，模板只有在使用时才会被编译器实例化。换句话说，只要在每个编译单元（文件）中编译的代码中遇到了被完整定义的模板，都会实例化。这就产生了重复实例化而导致的编译时间的增加。并且，我们没有办法通知编译器不要触发模板的实例化。</p>
+<h3 id="2-5-模板"><a href="#2-5-模板" class="headerlink" title="2.5 模板"></a>2.5 模板</h3><p>模板的哲学在于将一切能够在编译期处理的问题丢到编译期进行处理，仅在运行时处理那些最核心的动态服务，进而大幅优化运行期的性能。</p>
+<h4 id="外部模板"><a href="#外部模板" class="headerlink" title="外部模板"></a>外部模板</h4><p>传统 C++ 中，模板只有在使用时才会被编译器实例化。换句话说，只要在每个编译单元（文件）中编译的代码中遇到了被完整定义的模板，都会实例化。这就产生了重复实例化而导致的编译时间的增加。并且，我们没有办法通知编译器不要触发模板的实例化。</p>
 <p>为此，C++11 引入了外部模板，扩充了原来的强制编译器在特定位置实例化模板的语法，使我们能够显式的通知编译器何时进行模板的实例化：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token keyword">class</span> <span class="token class-name">std</span><span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// 强行实例化</span>
 <span class="token keyword">extern</span> <span class="token keyword">template</span> <span class="token keyword">class</span> <span class="token class-name">std</span><span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 不在该当前编译文件中实例化模板</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="类型别名模板"><a href="#类型别名模板" class="headerlink" title="类型别名模板"></a>类型别名模板</h3><p>在了解类型别名模板之前，需要理解『模板』和『类型』之间的不同。仔细体会这句话：<strong>模板是用来产生类型的。</strong> 在传统 C++ 中，<code>typedef</code> 可以为类型定义一个新的名称，但是却没有办法为模板定义一个新的名称。因为，模板不是类型。例如：</p>
+<h4 id="类型别名模板"><a href="#类型别名模板" class="headerlink" title="类型别名模板"></a>类型别名模板</h4><p>在了解类型别名模板之前，需要理解『模板』和『类型』之间的不同。仔细体会这句话：<strong>模板是用来产生类型的。</strong> 在传统 C++ 中，<code>typedef</code> 可以为类型定义一个新的名称，但是却没有办法为模板定义一个新的名称。因为，模板不是类型。例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// 不合法</span>
 <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>
 <span class="token keyword">typedef</span> MagicType<span class="token operator">&lt;</span>std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">,</span> std<span class="token operator">::</span>string<span class="token operator">></span> FakeDarkMagic<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>C++11 使用 <code>using</code> 引入了下面这种形式的写法，并且同时支持对传统 <code>typedef</code> 相同的功效：<br>    <strong>通常我们使用 <code>typedef</code> 定义别名的语法是：<code>typedef 原名称 新名称;</code>，但是对函数指针等别名的定义语法却不相同，这通常给直接阅读造成了一定程度的困难。</strong></p>
+<p>C++11 使用 <code>using</code> 引入了下面这种形式的写法，并且同时支持对传统 <code>typedef</code> 相同的功效：<br><strong>通常我们使用 <code>typedef</code> 定义别名的语法是：<code>typedef 原名称 新名称;</code>，但是对函数指针等别名的定义语法却不相同，这通常给直接阅读造成了一定程度的困难。</strong></p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">typedef</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>process<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">using</span> NewProcess <span class="token operator">=</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>
 <span class="token keyword">using</span> TrueDarkMagic <span class="token operator">=</span> MagicType<span class="token operator">&lt;</span>std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">,</span> std<span class="token operator">::</span>string<span class="token operator">></span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="变长参数模板"><a href="#变长参数模板" class="headerlink" title="变长参数模板"></a>变长参数模板</h3><p> 在 C++11 之前，无论是类模板还是函数模板，都只能按其指定的样子， 接受一组固定数量的模板参数；而 C++11 加入了新的表示方法， 允许任意个数、任意类别的模板参数，同时也不需要在定义时将参数的个数固定。</p>
+<h4 id="变长参数模板"><a href="#变长参数模板" class="headerlink" title="变长参数模板"></a>变长参数模板</h4><p> 在 C++11 之前，无论是类模板还是函数模板，都只能按其指定的样子， 接受一组固定数量的模板参数；而 C++11 加入了新的表示方法， 允许任意个数、任意类别的模板参数，同时也不需要在定义时将参数的个数固定。</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> Ts<span class="token operator">></span> <span class="token keyword">class</span> <span class="token class-name">Magic</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>模板类 Magic 的对象，能够接受不受限制个数的 typename 作为模板的形式参数，例如下面的定义：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Magic</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span>  
@@ -839,7 +839,7 @@ std<span class="token operator">::</span>string<span class="token operator">&amp
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其次，对参数进行解包，到目前为止还没有一种简单的方法能够处理参数包，但有两种经典的处理手法：</p>
-<h4 id="1-递归模板函数"><a href="#1-递归模板函数" class="headerlink" title="1.递归模板函数"></a>1.递归模板函数</h4><p>递归是非常容易想到的一种手段，也是最经典的处理方法。这种方法不断递归地向函数传递模板参数，进而达到递归遍历所有模板参数的目的：</p>
+<h5 id="1-递归模板函数"><a href="#1-递归模板函数" class="headerlink" title="1.递归模板函数"></a>1.递归模板函数</h5><p>递归是非常容易想到的一种手段，也是最经典的处理方法。这种方法不断递归地向函数传递模板参数，进而达到递归遍历所有模板参数的目的：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T0<span class="token operator">></span>  
 <span class="token keyword">void</span> <span class="token function">printf1</span><span class="token punctuation">(</span>T0 value<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
@@ -854,14 +854,14 @@ std<span class="token operator">::</span>string<span class="token operator">&amp
     <span class="token function">printf1</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"123"</span><span class="token punctuation">,</span> <span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="2-变参模板展开"><a href="#2-变参模板展开" class="headerlink" title="2.变参模板展开"></a>2.变参模板展开</h4><p>在 C++17 中增加了变参模板展开的支持，于是你可以在一个函数中完成 <code>printf</code> 的编写：</p>
+<h5 id="2-变参模板展开"><a href="#2-变参模板展开" class="headerlink" title="2.变参模板展开"></a>2.变参模板展开</h5><p>在 C++17 中增加了变参模板展开的支持，于是你可以在一个函数中完成 <code>printf</code> 的编写：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T0<span class="token punctuation">,</span> <span class="token keyword">typename</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> T<span class="token operator">></span>
 <span class="token keyword">void</span> <span class="token function">printf2</span><span class="token punctuation">(</span>T0 t0<span class="token punctuation">,</span> T<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> t0 <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token keyword">constexpr</span> <span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token function">printf2</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre><code>事实上，有时候我们虽然使用了变参模板，却不一定需要对参数做逐个遍历，我们可以利用 `std::bind` 及完美转发等特性实现对函数和参数的绑定，从而达到成功调用的目的。</code></pre><p><strong>非类型模板参数推导</strong></p>
-<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token punctuation">,</span> <span class="token keyword">int</span> BufSize<span class="token operator">></span>  
+<p>事实上，有时候我们虽然使用了变参模板，却不一定需要对参数做逐个遍历，我们可以利用 <code>std::bind</code> 及完美转发等特性实现对函数和参数的绑定，从而达到成功调用的目的。</p>
+<h4 id="非类型模板参数推导"><a href="#非类型模板参数推导" class="headerlink" title="非类型模板参数推导"></a>非类型模板参数推导</h4><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token punctuation">,</span> <span class="token keyword">int</span> BufSize<span class="token operator">></span>  
 <span class="token keyword">class</span> <span class="token class-name">buffer_t</span> <span class="token punctuation">{</span>  
 <span class="token keyword">public</span><span class="token operator">:</span>  
     T<span class="token operator">&amp;</span> <span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
@@ -880,7 +880,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
     foo<span class="token operator">&lt;</span><span class="token number">10</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// value 被推导为 int 类型  </span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-6面向对象"><a href="#2-6面向对象" class="headerlink" title="2.6面向对象"></a>2.6面向对象</h2><h3 id="委托构造"><a href="#委托构造" class="headerlink" title="委托构造"></a>委托构造</h3><p>C++11 引入了委托构造的概念，这使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，从而达到简化代码的目的：</p>
+<h3 id="2-6-面向对象"><a href="#2-6-面向对象" class="headerlink" title="2.6 面向对象"></a>2.6 面向对象</h3><h4 id="委托构造"><a href="#委托构造" class="headerlink" title="委托构造"></a>委托构造</h4><p>C++11 引入了委托构造的概念，这使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，从而达到简化代码的目的：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 <span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">{</span>  
 <span class="token keyword">public</span><span class="token operator">:</span>  
@@ -899,7 +899,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> b<span class="token punctuation">.</span>value1 <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> b<span class="token punctuation">.</span>value2 <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="继承构造"><a href="#继承构造" class="headerlink" title="继承构造"></a>继承构造</h3><p>在传统 C++ 中，构造函数如果需要继承是需要将参数一一传递的，这将导致效率低下。C++11 利用关键字 <code>using</code> 引入了继承构造函数的概念：</p>
+<h4 id="继承构造"><a href="#继承构造" class="headerlink" title="继承构造"></a>继承构造</h4><p>在传统 C++ 中，构造函数如果需要继承是需要将参数一一传递的，这将导致效率低下。C++11 利用关键字 <code>using</code> 引入了继承构造函数的概念：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -921,7 +921,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">.</span>value1 <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">.</span>value2 <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="显式虚函数重载"><a href="#显式虚函数重载" class="headerlink" title="显式虚函数重载"></a>显式虚函数重载</h3><p>在传统 C++ 中，经常容易发生意外重载虚函数的事情。例如：</p>
+<h4 id="显式虚函数重载"><a href="#显式虚函数重载" class="headerlink" title="显式虚函数重载"></a>显式虚函数重载</h4><p>在传统 C++ 中，经常容易发生意外重载虚函数的事情。例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> Base <span class="token punctuation">{</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
@@ -930,7 +930,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>SubClass::foo</code> 可能并不是程序员尝试重载虚函数，只是恰好加入了一个具有相同名字的函数。另一个可能的情形是，当基类的虚函数被删除后，子类拥有旧的函数就不再重载该虚拟函数并摇身一变成为了一个普通的类方法，这将造成灾难性的后果。</p>
 <p>C++11 引入了 <code>override</code> 和 <code>final</code> 这两个关键字来防止上述情形的发生。</p>
-<h4 id="override"><a href="#override" class="headerlink" title="override"></a>override</h4><p>当重载虚函数时，引入 <code>override</code> 关键字将显式的告知编译器进行重载，编译器将检查基函数是否存在这样的其函数签名一致的虚函数，否则将无法通过编译：</p>
+<h5 id="override"><a href="#override" class="headerlink" title="override"></a>override</h5><p>当重载虚函数时，引入 <code>override</code> 关键字将显式的告知编译器进行重载，编译器将检查基函数是否存在这样的其函数签名一致的虚函数，否则将无法通过编译：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> Base <span class="token punctuation">{</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
@@ -938,7 +938,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> override<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 合法</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">)</span> override<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 非法, 父类没有此虚函数</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="final"><a href="#final" class="headerlink" title="final"></a>final</h4><p><code>final</code> 则是为了防止类被继续继承以及终止虚函数继续重载引入的。</p>
+<h5 id="final"><a href="#final" class="headerlink" title="final"></a>final</h5><p><code>final</code> 则是为了防止类被继续继承以及终止虚函数继续重载引入的。</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> Base <span class="token punctuation">{</span>  
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> final<span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span class="token punctuation">;</span>  
@@ -951,7 +951,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
 <span class="token keyword">struct</span> SubClass3<span class="token operator">:</span> Base <span class="token punctuation">{</span>  
     <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 非法, foo 已 final  </span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="显式禁用默认函数"><a href="#显式禁用默认函数" class="headerlink" title="显式禁用默认函数"></a>显式禁用默认函数</h3><p>在传统 C++ 中，如果程序员没有提供，编译器会默认为对象生成默认构造函数、 复制构造、赋值算符以及析构函数。 另外，C++ 也为所有类定义了诸如 <code>new</code> <code>delete</code> 这样的运算符。 当程序员有需要时，可以重载这部分函数。</p>
+<h4 id="显式禁用默认函数"><a href="#显式禁用默认函数" class="headerlink" title="显式禁用默认函数"></a>显式禁用默认函数</h4><p>在传统 C++ 中，如果程序员没有提供，编译器会默认为对象生成默认构造函数、 复制构造、赋值算符以及析构函数。 另外，C++ 也为所有类定义了诸如 <code>new</code> <code>delete</code> 这样的运算符。 当程序员有需要时，可以重载这部分函数。</p>
 <p>这就引发了一些需求：无法精确控制默认函数的生成行为。 例如禁止类的拷贝时，必须将复制构造函数与赋值算符声明为 <code>private</code>。 尝试使用这些未定义的函数将导致编译或链接错误，则是一种非常不优雅的方式。</p>
 <p>并且，编译器产生的默认构造函数与用户定义的构造函数无法同时存在。 若用户定义了任何构造函数，编译器将不再生成默认构造函数， 但有时候我们却希望同时拥有这两种构造函数，这就造成了尴尬。</p>
 <p>C++11 提供了上述需求的解决方案，允许显式的声明采用或拒绝编译器自带的函数。 例如：</p>
@@ -961,7 +961,7 @@ buffer_t<span class="token operator">&lt;</span><span class="token keyword">int<
     Magic<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Magic<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 显式声明拒绝编译器生成构造</span>
     <span class="token function">Magic</span><span class="token punctuation">(</span><span class="token keyword">int</span> magic_number<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="强类型枚举"><a href="#强类型枚举" class="headerlink" title="强类型枚举"></a>强类型枚举</h3><p>在传统 C++中，枚举类型并非类型安全，枚举类型会被视作整数，则会让两种完全不同的枚举类型可以进行直接的比较（虽然编译器给出了检查，但并非所有），<strong>甚至同一个命名空间中的不同枚举类型的枚举值名字不能相同</strong>，这通常不是我们希望看到的结果。</p>
+<h4 id="强类型枚举"><a href="#强类型枚举" class="headerlink" title="强类型枚举"></a>强类型枚举</h4><p>在传统 C++中，枚举类型并非类型安全，枚举类型会被视作整数，则会让两种完全不同的枚举类型可以进行直接的比较（虽然编译器给出了检查，但并非所有），<strong>甚至同一个命名空间中的不同枚举类型的枚举值名字不能相同</strong>，这通常不是我们希望看到的结果。</p>
 <p>C++11 引入了枚举类（enumeration class），并使用 <code>enum class</code> 的语法进行声明：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">new_enum</span> <span class="token operator">:</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token punctuation">{</span>  
     value1<span class="token punctuation">,</span>  
@@ -979,13 +979,13 @@ std<span class="token operator">::</span>ostream<span class="token operator">&am
 <span class="token punctuation">{</span>
     <span class="token keyword">return</span> stream <span class="token operator">&lt;&lt;</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> std<span class="token operator">::</span>underlying_type<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token operator">::</span>type<span class="token operator">></span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h1 id="第-3-章-语言运行期的强化"><a href="#第-3-章-语言运行期的强化" class="headerlink" title="第 3 章 语言运行期的强化"></a>第 3 章 语言运行期的强化</h1><h2 id="3-1-Lambda表达式"><a href="#3-1-Lambda表达式" class="headerlink" title="3.1 Lambda表达式"></a>3.1 Lambda表达式</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>Lambda 表达式的基本语法如下：</p>
+<h2 id="第-3-章-语言运行期的强化"><a href="#第-3-章-语言运行期的强化" class="headerlink" title="第 3 章 语言运行期的强化"></a>第 3 章 语言运行期的强化</h2><h3 id="3-1-Lambda表达式"><a href="#3-1-Lambda表达式" class="headerlink" title="3.1 Lambda表达式"></a>3.1 Lambda表达式</h3><h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><p>Lambda 表达式的基本语法如下：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token punctuation">[</span>捕获列表<span class="token punctuation">]</span><span class="token punctuation">(</span>参数列表<span class="token punctuation">)</span> <span class="token keyword">mutable</span><span class="token punctuation">(</span>可选<span class="token punctuation">)</span> 异常属性 <span class="token operator">-</span><span class="token operator">></span> 返回类型 <span class="token punctuation">{</span>  
 <span class="token comment" spellcheck="true">// 函数体  </span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>上面的语法规则除了 <code>[捕获列表]</code> 内的东西外，其他部分都很好理解，只是一般函数的函数名被略去， 返回值使用了一个 <code>-&gt;</code> 的形式进行（我们在上一节前面的尾返回类型已经提到过这种写法了）。</p>
 <p>所谓捕获列表，其实可以理解为参数的一种类型，Lambda 表达式内部函数体在默认情况下是不能够使用函数体外部的变量的， 这时候捕获列表可以起到传递外部数据的作用。根据传递的行为，捕获列表也分为以下几种：</p>
-<h4 id="1-值捕获"><a href="#1-值捕获" class="headerlink" title="1. 值捕获"></a>1. 值捕获</h4><p>与参数传值类似，值捕获的前提是变量可以拷贝，不同之处则在于，被捕获的变量在 Lambda 表达式被创建时拷贝， 而非调用时才拷贝：</p>
+<h5 id="1-值捕获"><a href="#1-值捕获" class="headerlink" title="1. 值捕获"></a>1. 值捕获</h5><p>与参数传值类似，值捕获的前提是变量可以拷贝，不同之处则在于，被捕获的变量在 Lambda 表达式被创建时拷贝， 而非调用时才拷贝：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">lambda_value_capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token keyword">auto</span> copy_value <span class="token operator">=</span> <span class="token punctuation">[</span>value<span class="token punctuation">]</span> <span class="token punctuation">{</span>
@@ -997,7 +997,7 @@ std<span class="token operator">::</span>ostream<span class="token operator">&am
     <span class="token comment" spellcheck="true">// 这时, stored_value == 1, 而 value == 100.</span>
     <span class="token comment" spellcheck="true">// 因为 copy_value 在创建时就保存了一份 value 的拷贝</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="2-引用捕获"><a href="#2-引用捕获" class="headerlink" title="2. 引用捕获"></a>2. 引用捕获</h4><p>与引用传参类似，引用捕获保存的是引用，值会发生变化。</p>
+<h5 id="2-引用捕获"><a href="#2-引用捕获" class="headerlink" title="2. 引用捕获"></a>2. 引用捕获</h5><p>与引用传参类似，引用捕获保存的是引用，值会发生变化。</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">lambda_reference_capture</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token keyword">auto</span> copy_value <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">&amp;</span>value<span class="token punctuation">]</span> <span class="token punctuation">{</span>
@@ -1009,14 +1009,15 @@ std<span class="token operator">::</span>ostream<span class="token operator">&am
     <span class="token comment" spellcheck="true">// 这时, stored_value == 100, value == 100.</span>
     <span class="token comment" spellcheck="true">// 因为 copy_value 保存的是引用</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="3-隐式捕获"><a href="#3-隐式捕获" class="headerlink" title="3. 隐式捕获"></a>3. 隐式捕获</h4><p>手动书写捕获列表有时候是非常复杂的，这种机械性的工作可以交给编译器来处理，这时候可以在捕获列表中写一个 <code>&amp;</code> 或 <code>=</code> 向编译器声明采用引用捕获或者值捕获.</p>
+<h5 id="3-隐式捕获"><a href="#3-隐式捕获" class="headerlink" title="3. 隐式捕获"></a>3. 隐式捕获</h5><p>手动书写捕获列表有时候是非常复杂的，这种机械性的工作可以交给编译器来处理，这时候可以在捕获列表中写一个 <code>&amp;</code> 或 <code>=</code> 向编译器声明采用引用捕获或者值捕获.</p>
 <p>总结一下，捕获提供了 Lambda 表达式对外部值进行使用的功能，捕获列表的最常用的四种形式可以是：</p>
 <ul>
 <li>[] 空捕获列表</li>
 <li>[name1, name2, …] 捕获一系列变量</li>
 <li>[&amp;]引用捕获, 让编译器自行推导引用列表</li>
-<li>[= ]值捕获, 让编译器自行推导值捕获列表<h4 id="4-表达式捕获"><a href="#4-表达式捕获" class="headerlink" title="4. 表达式捕获"></a>4. 表达式捕获</h4>上面提到的值捕获、引用捕获都是已经在外层作用域声明的变量，因此这些捕获方式捕获的均为左值，而不能捕获右值。</li>
+<li>[= ]值捕获, 让编译器自行推导值捕获列表</li>
 </ul>
+<h5 id="4-表达式捕获"><a href="#4-表达式捕获" class="headerlink" title="4. 表达式捕获"></a>4. 表达式捕获</h5><p>上面提到的值捕获、引用捕获都是已经在外层作用域声明的变量，因此这些捕获方式捕获的均为左值，而不能捕获右值。</p>
 <p>C++14 给与了我们方便，允许捕获的成员用任意的表达式进行初始化，这就允许了右值的捕获， 被声明的捕获变量类型会根据表达式进行判断，判断方式与使用 <code>auto</code> 本质上是相同的：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;memory></span>  </span><span class="token comment" spellcheck="true">// std::make_unique</span>
@@ -1030,7 +1031,7 @@ std<span class="token operator">::</span>ostream<span class="token operator">&am
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在上面的代码中，important 是一个独占指针，是不能够被 “=” 值捕获到，这时候我们可以将其转移为右值，在表达式中初始化。</p>
-<h2 id="3-2-函数对象包装器"><a href="#3-2-函数对象包装器" class="headerlink" title="3.2 函数对象包装器"></a>3.2 函数对象包装器</h2><h3 id="std-function"><a href="#std-function" class="headerlink" title="std::function"></a>std::function</h3><p>Lambda 表达式的本质是一个和函数对象类型相似的类类型（称为闭包类型）的对象（称为闭包对象）， 当 Lambda 表达式的捕获列表为空时，闭包对象还能够转换为函数指针值进行传递，例如：</p>
+<h3 id="3-2-函数对象包装器"><a href="#3-2-函数对象包装器" class="headerlink" title="3.2 函数对象包装器"></a>3.2 函数对象包装器</h3><h4 id="std-function"><a href="#std-function" class="headerlink" title="std::function"></a>std::function</h4><p>Lambda 表达式的本质是一个和函数对象类型相似的类类型（称为闭包类型）的对象（称为闭包对象）， 当 Lambda 表达式的捕获列表为空时，闭包对象还能够转换为函数指针值进行传递，例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 
 <span class="token keyword">using</span> foo <span class="token operator">=</span> <span class="token keyword">void</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 定义函数类型, using 的使用见上一节中的别名语法  </span>
@@ -1066,7 +1067,7 @@ std<span class="token operator">::</span>ostream<span class="token operator">&am
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">func2</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="std-bind-和-std-placeholder"><a href="#std-bind-和-std-placeholder" class="headerlink" title="std::bind 和 std::placeholder"></a>std::bind 和 std::placeholder</h3><p>而 std::bind 则是用来绑定函数调用的参数的，它解决的需求是我们有时候可能并不一定能够一次性获得调用某个函数的全部参数，通过这个函数， 我们可以将部分调用参数提前绑定到函数身上成为一个新的对象，然后在参数齐全后，完成调用。 例如：</p>
+<h4 id="std-bind-和-std-placeholder"><a href="#std-bind-和-std-placeholder" class="headerlink" title="std::bind 和 std::placeholder"></a>std::bind 和 std::placeholder</h4><p>而 std::bind 则是用来绑定函数调用的参数的，它解决的需求是我们有时候可能并不一定能够一次性获得调用某个函数的全部参数，通过这个函数， 我们可以将部分调用参数提前绑定到函数身上成为一个新的对象，然后在参数齐全后，完成调用。 例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">,</span> <span class="token keyword">int</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -1077,7 +1078,7 @@ std<span class="token operator">::</span>ostream<span class="token operator">&am
     <span class="token comment" spellcheck="true">// 这时调用 bindFoo 时，只需要提供第一个参数即可</span>
     <span class="token function">bindFoo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="3-3-右值引用"><a href="#3-3-右值引用" class="headerlink" title="3.3 右值引用"></a>3.3 右值引用</h2><h4 id="左值、右值的纯右值、将亡值、右值"><a href="#左值、右值的纯右值、将亡值、右值" class="headerlink" title="左值、右值的纯右值、将亡值、右值"></a>左值、右值的纯右值、将亡值、右值</h4><p>要弄明白右值引用到底是怎么一回事，必须要对左值和右值做一个明确的理解。</p>
+<h3 id="3-3-右值引用"><a href="#3-3-右值引用" class="headerlink" title="3.3 右值引用"></a>3.3 右值引用</h3><h4 id="左值、右值的纯右值、将亡值、右值"><a href="#左值、右值的纯右值、将亡值、右值" class="headerlink" title="左值、右值的纯右值、将亡值、右值"></a>左值、右值的纯右值、将亡值、右值</h4><p>要弄明白右值引用到底是怎么一回事，必须要对左值和右值做一个明确的理解。</p>
 <p><strong>左值 (lvalue, left value)</strong>，顾名思义就是赋值符号左边的值。准确来说， 左值是表达式（不一定是赋值表达式）后依然存在的持久对象。</p>
 <p><strong>右值 (rvalue, right value)</strong>，右边的值，是指表达式结束后就不再存在的<code>临时对象</code>。</p>
 <p>而 C++11 中为了引入强大的右值引用，将右值的概念进行了进一步的划分，分为：纯右值、将亡值。</p>
@@ -1111,7 +1112,7 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
 <p>在这样的代码中，就传统的理解而言，函数 <code>foo</code> 的返回值 <code>temp</code> 在内部创建然后被赋值给 <code>v</code>， 然而 <code>v</code> 获得这个对象时，会将整个 <code>temp</code> 拷贝一份，然后把 <code>temp</code> 销毁，如果这个 <code>temp</code> 非常大， 这将造成大量额外的开销（这也就是传统 C++ 一直被诟病的问题）。</p>
 <p>在最后一行中，<code>v</code> 是左值、 <code>foo()</code> 返回的值就是右值（也是纯右值）。但是，<code>v</code> 可以被别的变量捕获到， 而 <code>foo()</code> 产生的那个返回值作为一个临时值，一旦被 <code>v</code> 复制后，将立即被销毁，无法获取、也不能修改。 而将亡值就定义了这样一种行为：临时的值能够被识别、同时又能够被移动。</p>
 <p>在 C++11 之后，编译器为我们做了一些工作，此处的左值 <code>temp</code> 会被进行此隐式右值转换， 等价于 <code>static_cast&lt;std::vector&lt;int&gt; &amp;&amp;&gt;(temp)</code>，进而此处的 <code>v</code> 会将 <code>foo</code> 局部返回的值进行移动。 也就是后面我们将会提到的移动语义。</p>
-<h3 id="右值引用和左值引用"><a href="#右值引用和左值引用" class="headerlink" title="右值引用和左值引用"></a>右值引用和左值引用</h3><p>要拿到一个将亡值，就需要用到右值引用：T &amp;&amp;，其中 T 是类型。 右值引用的声明让这个临时值的生命周期得以延长、只要变量还活着，那么将亡值将继续存活。</p>
+<h4 id="右值引用和左值引用"><a href="#右值引用和左值引用" class="headerlink" title="右值引用和左值引用"></a>右值引用和左值引用</h4><p>要拿到一个将亡值，就需要用到右值引用：T &amp;&amp;，其中 T 是类型。 右值引用的声明让这个临时值的生命周期得以延长、只要变量还活着，那么将亡值将继续存活。</p>
 <p><strong>C++11 提供了 <code>std::move</code> 这个方法将左值参数无条件的转换为右值， 有了它我们就能够方便的获得一个右值临时对象</strong>，例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string></span>  </span>
@@ -1161,7 +1162,7 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>由于 <code>int&amp;</code> 不能引用 <code>double</code> 类型的参数，因此必须产生一个临时值来保存 <code>s</code> 的值， 从而当 <code>increase()</code> 修改这个临时值时，调用完成后 <code>s</code> 本身并没有被修改。</p>
 <p>第二个问题，为什么常量引用允许绑定到非左值？原因很简单，因为 Fortran 需要。</p>
-<h3 id="移动语义"><a href="#移动语义" class="headerlink" title="移动语义"></a>移动语义</h3><p>传统 C++ 通过拷贝构造函数和赋值操作符为类对象设计了拷贝/复制的概念，但为了实现对资源的移动操作， 调用者必须使用先复制、再析构的方式，否则就需要自己实现移动对象的接口。 试想，搬家的时候是把家里的东西直接搬到新家去，而不是将所有东西复制一份（重买）再放到新家、 再把原来的东西全部扔掉（销毁），这是非常反人类的一件事情。</p>
+<h4 id="移动语义"><a href="#移动语义" class="headerlink" title="移动语义"></a>移动语义</h4><p>传统 C++ 通过拷贝构造函数和赋值操作符为类对象设计了拷贝/复制的概念，但为了实现对资源的移动操作， 调用者必须使用先复制、再析构的方式，否则就需要自己实现移动对象的接口。 试想，搬家的时候是把家里的东西直接搬到新家去，而不是将所有东西复制一份（重买）再放到新家、 再把原来的东西全部扔掉（销毁），这是非常反人类的一件事情。</p>
 <p>传统的 C++ 没有区分『移动』和『拷贝』的概念，造成了大量的数据拷贝，浪费时间和空间。 右值引用的出现恰好就解决了这两个概念的混淆问题，例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
@@ -1225,7 +1226,7 @@ A <span class="token function">return_rvalue</span><span class="token punctuatio
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h3><p>前面我们提到了，一个声明的右值引用其实是一个左值。这就为我们进行参数转发（传递）造成了问题：</p>
+<h4 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h4><p>前面我们提到了，一个声明的右值引用其实是一个左值。这就为我们进行参数转发（传递）造成了问题：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">reference</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"左值"</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -1314,6 +1315,7 @@ A <span class="token function">return_rvalue</span><span class="token punctuatio
        std::move 传参: 右值引用
     std::forward 传参: 右值引用
 static_cast&lt;T&amp;&amp;&gt; 传参: 右值引用
+
 传递左值:
               普通传参: 左值引用
        std::move 传参: 右值引用
@@ -1323,7 +1325,7 @@ static_cast&lt;T&amp;&amp;&gt; 传参: 左值引用</code></pre><p>无论传递�
 <p><code>std::forward</code> 和 <code>std::move</code> 一样，没有做任何事情，<code>std::move</code> 单纯的将左值转化为右值， <code>std::forward</code> 也只是单纯的将参数做了一个类型的转换，从现象上来看， <code>std::forward&lt;T&gt;(v)</code> 和 <code>static_cast&lt;T&amp;&amp;&gt;(v)</code> 是完全一样的。</p>
 <p>当 <code>std::forward</code> 接受左值时，<code>_Tp</code> 被推导为左值，所以返回值为左值；而当其接受右值时， <code>_Tp</code> 被推导为 右值引用，则基于坍缩规则，返回值便成为了 <code>&amp;&amp; + &amp;&amp;</code> 的右值。 可见 <code>std::forward</code> 的原理在于巧妙的利用了模板类型推导中产生的差异。</p>
 <p>这时我们能回答这样一个问题：为什么在使用循环语句的过程中，<code>auto&amp;&amp;</code> 是最安全的方式？ 因为当 <code>auto</code> 被推导为不同的左右引用时，与 <code>&amp;&amp;</code> 的坍缩组合是完美转发。</p>
-<h1 id="第-4-章-容器"><a href="#第-4-章-容器" class="headerlink" title="第 4 章 容器"></a>第 4 章 容器</h1><h2 id="4-1-线性容器"><a href="#4-1-线性容器" class="headerlink" title="4.1 线性容器"></a>4.1 线性容器</h2><h3 id="std-array"><a href="#std-array" class="headerlink" title="std::array"></a>std::array</h3><p>看到这个容器的时候肯定会出现这样的问题：为什么要引入 std::array 而不是直接使用 std::vector？已经有了传统数组，为什么要用 std::array?</p>
+<h2 id="第-4-章-容器"><a href="#第-4-章-容器" class="headerlink" title="第 4 章 容器"></a>第 4 章 容器</h2><h3 id="4-1-线性容器"><a href="#4-1-线性容器" class="headerlink" title="4.1 线性容器"></a>4.1 线性容器</h3><h4 id="std-array"><a href="#std-array" class="headerlink" title="std::array"></a>std::array</h4><p>看到这个容器的时候肯定会出现这样的问题：为什么要引入 std::array 而不是直接使用 std::vector？已经有了传统数组，为什么要用 std::array?</p>
 <p>先回答第一个问题，与 <code>std::vector</code> 不同，<code>std::array</code> 对象的大小是固定的，如果容器大小是固定的，那么可以优先考虑使用 <code>std::array</code> 容器。 另外由于 <code>std::vector</code> 是自动扩容的，当存入大量的数据后，并且对容器进行了删除操作， 容器并不会自动归还被删除元素相应的内存，这时候就需要手动运行 <code>shrink_to_fit()</code> 释放这部分内存。</p>
 <p>而第二个问题就更加简单，使用 <code>std::array</code> 能够让代码变得更加“现代化”，而且封装了一些操作函数，比如获取数组大小以及检查是否非空，同时还能够友好的使用标准库中的容器算法，比如 <code>std::sort</code>。</p>
 <p>当我们开始用上了 <code>std::array</code> 时，难免会遇到要将其兼容 C 风格的接口，这里有三种做法：</p>
@@ -1339,14 +1341,14 @@ std<span class="token operator">::</span>array<span class="token operator">&lt;<
 
 <span class="token comment" spellcheck="true">// 使用 `std::sort`</span>
 std<span class="token operator">::</span><span class="token function">sort</span><span class="token punctuation">(</span>arr<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> arr<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="std-forward-list"><a href="#std-forward-list" class="headerlink" title="std::forward_list"></a>std::forward_list</h3><p><code>std::forward_list</code> 是一个列表容器，使用方法和 <code>std::list</code> 基本类似，因此我们就不花费篇幅进行介绍了。</p>
+<h4 id="std-forward-list"><a href="#std-forward-list" class="headerlink" title="std::forward_list"></a>std::forward_list</h4><p><code>std::forward_list</code> 是一个列表容器，使用方法和 <code>std::list</code> 基本类似，因此我们就不花费篇幅进行介绍了。</p>
 <p>需要知道的是，和 <code>std::list</code> 的双向链表的实现不同，<code>std::forward_list</code> 使用单向链表进行实现， 提供了 <code>O(1)</code> 复杂度的元素插入，不支持快速随机访问（这也是链表的特点）， 也是标准库容器中唯一一个不提供 <code>size()</code> 方法的容器。当不需要双向迭代时，具有比 <code>std::list</code> 更高的空间利用率。</p>
-<h2 id="4-2-无序容器"><a href="#4-2-无序容器" class="headerlink" title="4.2 无序容器"></a>4.2 无序容器</h2><p>我们已经熟知了传统 C++ 中的有序容器 <code>std::map</code>/<code>std::set</code>，这些元素内部通过红黑树进行实现， 插入和搜索的平均复杂度均为 <code>O(log(size))</code>。在插入元素时候，会根据 <code>&lt;</code> 操作符比较元素大小并判断元素是否相同， 并选择合适的位置插入到容器中。当对这个容器中的元素进行遍历时，输出结果会按照 <code>&lt;</code> 操作符的顺序来逐个遍历。</p>
+<h3 id="4-2-无序容器"><a href="#4-2-无序容器" class="headerlink" title="4.2 无序容器"></a>4.2 无序容器</h3><p>我们已经熟知了传统 C++ 中的有序容器 <code>std::map</code>/<code>std::set</code>，这些元素内部通过红黑树进行实现， 插入和搜索的平均复杂度均为 <code>O(log(size))</code>。在插入元素时候，会根据 <code>&lt;</code> 操作符比较元素大小并判断元素是否相同， 并选择合适的位置插入到容器中。当对这个容器中的元素进行遍历时，输出结果会按照 <code>&lt;</code> 操作符的顺序来逐个遍历。</p>
 <p>而无序容器中的元素是不进行排序的，内部通过 Hash 表实现，插入和搜索元素的平均复杂度为 <code>O(constant)</code>， 在不关心容器内部元素顺序时，能够获得显著的性能提升。</p>
 <p>C++11 引入了的两组无序容器分别是：<code>std::unordered_map</code>/<code>std::unordered_multimap</code> 和 <code>std::unordered_set</code>/<code>std::unordered_multiset</code>。</p>
 <p>它们的用法和原有的 <code>std::map</code>/<code>std::multimap</code>/<code>std::set</code>/<code>set::multiset</code> 基本类似。</p>
-<h2 id="4-3-元组"><a href="#4-3-元组" class="headerlink" title="4.3 元组"></a>4.3 元组</h2><p>了解过 Python 的程序员应该知道元组的概念，纵观传统 C++ 中的容器，除了 <code>std::pair</code> 外， 似乎没有现成的结构能够用来存放不同类型的数据（通常我们会自己定义结构）。 但 <code>std::pair</code> 的缺陷是显而易见的，只能保存两个元素。</p>
-<h3 id="元组基本操作"><a href="#元组基本操作" class="headerlink" title="元组基本操作"></a>元组基本操作</h3><p>关于元组的使用有三个核心的函数：</p>
+<h3 id="4-3-元组"><a href="#4-3-元组" class="headerlink" title="4.3 元组"></a>4.3 元组</h3><p>了解过 Python 的程序员应该知道元组的概念，纵观传统 C++ 中的容器，除了 <code>std::pair</code> 外， 似乎没有现成的结构能够用来存放不同类型的数据（通常我们会自己定义结构）。 但 <code>std::pair</code> 的缺陷是显而易见的，只能保存两个元素。</p>
+<h4 id="元组基本操作"><a href="#元组基本操作" class="headerlink" title="元组基本操作"></a>元组基本操作</h4><p>关于元组的使用有三个核心的函数：</p>
 <ol>
 <li><code>std::make_tuple</code>: 构造元组</li>
 <li><code>std::get</code>: 获得元组某个位置的值</li>
@@ -1393,7 +1395,7 @@ std<span class="token operator">::</span><span class="token function">sort</span
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>get<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>get<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 非法, 引发编译期错误</span>
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>get<span class="token operator">&lt;</span><span class="token number">3</span><span class="token operator">></span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="运行期索引"><a href="#运行期索引" class="headerlink" title="运行期索引"></a>运行期索引</h3><p>如果你仔细思考一下可能就会发现上面代码的问题，<code>std::get&lt;&gt;</code> 依赖一个编译期的常量，所以下面的方式是不合法的：</p>
+<h4 id="运行期索引"><a href="#运行期索引" class="headerlink" title="运行期索引"></a>运行期索引</h4><p>如果你仔细思考一下可能就会发现上面代码的问题，<code>std::get&lt;&gt;</code> 依赖一个编译期的常量，所以下面的方式是不合法的：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 std<span class="token operator">::</span>get<span class="token operator">&lt;</span>index<span class="token operator">></span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>那么要怎么处理？答案是，使用 <code>std::variant&lt;&gt;</code>（C++ 17 引入），提供给 <code>variant&lt;&gt;</code> 的类型模板参数 可以让一个 <code>variant&lt;&gt;</code> 从而容纳提供的几种类型的变量,这是 C++ 中的语法糖，它可以简化代码的编写，提高程序的可读性和可维护性。</p>
@@ -1421,7 +1423,7 @@ std<span class="token operator">::</span>ostream <span class="token operator">&a
 <p>这样我们就能：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">tuple_index</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h4 id="元组合并与遍历"><a href="#元组合并与遍历" class="headerlink" title="元组合并与遍历"></a>元组合并与遍历</h4><p>还有一个常见的需求就是合并两个元组，这可以通过 std::tuple_cat 来实现：</p>
+<h5 id="元组合并与遍历"><a href="#元组合并与遍历" class="headerlink" title="元组合并与遍历"></a>元组合并与遍历</h5><p>还有一个常见的需求就是合并两个元组，这可以通过 std::tuple_cat 来实现：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">auto</span> new_tuple <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">tuple_cat</span><span class="token punctuation">(</span><span class="token function">get_student</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>马上就能够发现，应该如何快速遍历一个元组？但是我们刚才介绍了如何在运行期通过非常数索引一个 <code>tuple</code> 那么遍历就变得简单了， 首先我们需要知道一个元组的长度，可以：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>  
@@ -1433,9 +1435,12 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> <span class="token function">tuple_len</span><span class="token punctuation">(</span>new_tuple<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
     <span class="token comment" spellcheck="true">// 运行期索引</span>
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">tuple_index</span><span class="token punctuation">(</span>new_tuple<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h1 id="第-5-章-智能指针与内存管理"><a href="#第-5-章-智能指针与内存管理" class="headerlink" title="第 5 章 智能指针与内存管理"></a>第 5 章 智能指针与内存管理</h1><h2 id="5-1-RAII与引用计数"><a href="#5-1-RAII与引用计数" class="headerlink" title="5.1 RAII与引用计数"></a>5.1 RAII与引用计数</h2><p>在传统 C++ 中，『记得』手动释放资源，总不是最佳实践。因为我们很有可能就忘记了去释放资源而导致泄露。 所以通常的做法是对于一个对象而言，我们在构造函数的时候申请空间，而在析构函数（在离开作用域时调用）的时候释放空间， 也就是我们常说的 RAII 资源获取即初始化技术。</p>
+<h2 id="第-5-章-智能指针与内存管理"><a href="#第-5-章-智能指针与内存管理" class="headerlink" title="第 5 章 智能指针与内存管理"></a>第 5 章 智能指针与内存管理</h2><h3 id="5-1-RAII与引用计数"><a href="#5-1-RAII与引用计数" class="headerlink" title="5.1 RAII与引用计数"></a>5.1 RAII与引用计数</h3><p>在传统 C++ 中，『记得』手动释放资源，总不是最佳实践。因为我们很有可能就忘记了去释放资源而导致泄露。 所以通常的做法是对于一个对象而言，我们在构造函数的时候申请空间，而在析构函数（在离开作用域时调用）的时候释放空间， 也就是我们常说的 RAII 资源获取即初始化技术。</p>
 <p>凡事都有例外，我们总会有需要将对象在自由存储上分配的需求，在传统 C++ 里我们只好使用 <code>new</code> 和 <code>delete</code> 去 『记得』对资源进行释放。而 C++11 引入了智能指针的概念，使用了引用计数的想法，让程序员不再需要关心手动释放内存。 这些智能指针包括 <code>std::shared_ptr</code>/<code>std::unique_ptr</code>/<code>std::weak_ptr</code>，使用它们需要包含头文件 <code>&lt;memory&gt;</code>。</p>
-<pre><code>注意：引用计数不是垃圾回收，引用计数能够尽快收回不再被使用的对象，同时在回收的过程中也不会造成长时间的等待， 更能够清晰明确的表明资源的生命周期。</code></pre><h2 id="5-2-std-shared-ptr"><a href="#5-2-std-shared-ptr" class="headerlink" title="5.2 std::shared_ptr"></a>5.2 std::shared_ptr</h2><p><code>std::shared_ptr</code> 是一种智能指针，它能够记录多少个 <code>shared_ptr</code> 共同指向一个对象，从而消除显式的调用 <code>delete</code>，当引用计数变为零的时候就会将对象自动删除。</p>
+<blockquote>
+<p>注意：引用计数不是垃圾回收，引用计数能够尽快收回不再被使用的对象，同时在回收的过程中也不会造成长时间的等待， 更能够清晰明确的表明资源的生命周期。</p>
+</blockquote>
+<h3 id="5-2-std-shared-ptr"><a href="#5-2-std-shared-ptr" class="headerlink" title="5.2 std::shared_ptr"></a>5.2 std::shared_ptr</h3><p><code>std::shared_ptr</code> 是一种智能指针，它能够记录多少个 <code>shared_ptr</code> 共同指向一个对象，从而消除显式的调用 <code>delete</code>，当引用计数变为零的时候就会将对象自动删除。</p>
 <p>但还不够，因为使用 <code>std::shared_ptr</code> 仍然需要使用 <code>new</code> 来调用，这使得代码出现了某种程度上的不对称。</p>
 <p><code>std::make_shared</code> 就能够用来消除显式的使用 <code>new</code>，所以<code>std::make_shared</code> 会分配创建传入参数中的对象， 并返回这个对象类型的<code>std::shared_ptr</code>指针。例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
@@ -1473,10 +1478,11 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"pointer2.use_count() = "</span> <span class="token operator">&lt;&lt;</span> pointer2<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 0  </span>
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"pointer3.use_count() = "</span>  
 <span class="token operator">&lt;&lt;</span> pointer3<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// pointer3 已 reset; 0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="5-3-std-unique-ptr"><a href="#5-3-std-unique-ptr" class="headerlink" title="5.3 std::unique_ptr"></a>5.3 std::unique_ptr</h2><p><code>std::unique_ptr</code> 是一种独占的智能指针，它禁止其他智能指针与其共享同一个对象，从而保证代码的安全：</p>
+<h3 id="5-3-std-unique-ptr"><a href="#5-3-std-unique-ptr" class="headerlink" title="5.3 std::unique_ptr"></a>5.3 std::unique_ptr</h3><p><code>std::unique_ptr</code> 是一种独占的智能指针，它禁止其他智能指针与其共享同一个对象，从而保证代码的安全：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp">std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> pointer <span class="token operator">=</span> std<span class="token operator">::</span>make_unique<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// make_unique 从 C++14 引入</span>
 std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> pointer2 <span class="token operator">=</span> pointer<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 非法</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre><code>`make_unique` 并不复杂，C++11 没有提供 `std::make_unique`，可以自行实现：</code></pre><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>Args<span class="token operator">></span>  
+<p><code>make_unique</code> 并不复杂，C++11 没有提供 <code>std::make_unique</code>，可以自行实现：</p>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>Args<span class="token operator">></span>  
 std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">make_unique</span><span class="token punctuation">(</span> Args<span class="token operator">&amp;&amp;</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>args <span class="token punctuation">)</span> <span class="token punctuation">{</span>  
   <span class="token keyword">return</span> std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">(</span> <span class="token keyword">new</span> <span class="token function">T</span><span class="token punctuation">(</span> std<span class="token operator">::</span>forward<span class="token operator">&lt;</span>Args<span class="token operator">></span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
@@ -1515,7 +1521,7 @@ std<span class="token operator">::</span>unique_ptr<span class="token operator">
     <span class="token keyword">if</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> p1<span class="token operator">-</span><span class="token operator">></span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// Foo 的实例会在离开作用域时被销毁</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="5-4-std-weak-ptr"><a href="#5-4-std-weak-ptr" class="headerlink" title="5.4 std::weak_ptr"></a>5.4 std::weak_ptr</h2><p>如果你仔细思考 std::shared_ptr 就会发现依然存在着资源无法释放的问题。看下面这个例子：</p>
+<h3 id="5-4-std-weak-ptr"><a href="#5-4-std-weak-ptr" class="headerlink" title="5.4 std::weak_ptr"></a>5.4 std::weak_ptr</h3><p>如果你仔细思考 std::shared_ptr 就会发现依然存在着资源无法释放的问题。看下面这个例子：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> A<span class="token punctuation">;</span>
 <span class="token keyword">struct</span> B<span class="token punctuation">;</span>
 
@@ -1538,13 +1544,13 @@ std<span class="token operator">::</span>unique_ptr<span class="token operator">
     b<span class="token operator">-</span><span class="token operator">></span>pointer <span class="token operator">=</span> a<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行结果是 A, B 都不会被销毁，这是因为 a,b 内部的 pointer 同时又引用了 <code>a,b</code>，这使得 <code>a,b</code> 的引用计数均变为了 2，而离开作用域时，<code>a,b</code> 智能指针被析构，却只能造成这块区域的引用计数减一，这样就导致了 <code>a,b</code> 对象指向的内存区域引用计数不为零，而外部已经没有办法找到这块区域了，也就造成了内存泄露:</p>
-<p><img src="/posts/35627/image-20230920211900775.png" alt="|500"></p>
+<p><img src="/posts/35627/image-20230920211900775.png" alt></p>
 <p>解决这个问题的办法就是使用弱引用指针 <code>std::weak_ptr</code>，<code>std::weak_ptr</code>是一种弱引用（相比较而言 <code>std::shared_ptr</code> 就是一种强引用）。弱引用不会引起引用计数增加，当换用弱引用时候，最终的释放流程如图所示：</p>
-<p><img src="/posts/35627/image-20230920211910262.png" alt="|500"></p>
+<p><img src="/posts/35627/image-20230920211910262.png" alt></p>
 <p>在上图中，最后一步只剩下 B，而 B 并没有任何智能指针引用它，因此这块内存资源也会被释放。</p>
 <p><code>std::weak_ptr</code> 没有 <code>*</code> 运算符和 <code>-&gt;</code> 运算符，所以不能够对资源进行操作，它可以用于检查 <code>std::shared_ptr</code> 是否存在，其 <code>expired()</code> 方法能在资源未被释放时，会返回 <code>false</code>，否则返回 <code>true</code>；除此之外，它也可以用于获取指向原始对象的 <code>std::shared_ptr</code> 指针，其 <code>lock()</code> 方法在原始对象未被释放时，返回一个指向原始对象的 <code>std::shared_ptr</code> 指针，进而访问原始对象的资源，否则返回<code>nullptr</code>。</p>
-<h1 id="第-6-章-正则表达式"><a href="#第-6-章-正则表达式" class="headerlink" title="第 6 章 正则表达式"></a>第 6 章 正则表达式</h1><h2 id="6-1-正则表达式简介"><a href="#6-1-正则表达式简介" class="headerlink" title="6.1 正则表达式简介"></a>6.1 正则表达式简介</h2><h3 id="普通字符"><a href="#普通字符" class="headerlink" title="普通字符"></a>普通字符</h3><p>普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。</p>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><p>特殊字符是正则表达式里有特殊含义的字符，也是正则表达式的核心匹配语法。参见下表：</p>
+<h2 id="第-6-章-正则表达式"><a href="#第-6-章-正则表达式" class="headerlink" title="第 6 章 正则表达式"></a>第 6 章 正则表达式</h2><h3 id="6-1-正则表达式简介"><a href="#6-1-正则表达式简介" class="headerlink" title="6.1 正则表达式简介"></a>6.1 正则表达式简介</h3><h4 id="普通字符"><a href="#普通字符" class="headerlink" title="普通字符"></a>普通字符</h4><p>普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。</p>
+<h4 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h4><p>特殊字符是正则表达式里有特殊含义的字符，也是正则表达式的核心匹配语法。参见下表：</p>
 <table>
 <thead>
 <tr>
@@ -1597,7 +1603,7 @@ std<span class="token operator">::</span>unique_ptr<span class="token operator">
 <td align="left">指明两项之间的一个选择。</td>
 </tr>
 </tbody></table>
-<h3 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h3><p>限定符用来指定正则表达式的一个给定的组件必须要出现多少次才能满足匹配。见下表：</p>
+<h4 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h4><p>限定符用来指定正则表达式的一个给定的组件必须要出现多少次才能满足匹配。见下表：</p>
 <table>
 <thead>
 <tr>
@@ -1630,7 +1636,7 @@ std<span class="token operator">::</span>unique_ptr<span class="token operator">
 <td align="left"><code>m</code> 和 <code>n</code> 均为非负整数，其中 <code>n</code> 小于等于 <code>m</code>。最少匹配 <code>n</code> 次且最多匹配 <code>m</code> 次。例如，<code>o{1,3}</code> 将匹配 <code>foooooo</code> 中的前三个 <code>o</code>。<code>o{0,1}</code> 等价于 <code>o?</code>。注意，在逗号和两个数之间不能有空格。</td>
 </tr>
 </tbody></table>
-<h2 id="6-2-std-regex-及其相关"><a href="#6-2-std-regex-及其相关" class="headerlink" title="6.2 std::regex 及其相关"></a>6.2 std::regex 及其相关</h2><p>C++11 提供的正则表达式库操作 <code>std::string</code> 对象， 模式 <code>std::regex</code> (本质是 <code>std::basic_regex</code>)进行初始化， 通过 <code>std::regex_match</code> 进行匹配， 从而产生 <code>std::smatch</code> （本质是 <code>std::match_results</code> 对象）。</p>
+<h3 id="6-2-std-regex-及其相关"><a href="#6-2-std-regex-及其相关" class="headerlink" title="6.2 std::regex 及其相关"></a>6.2 std::regex 及其相关</h3><p>C++11 提供的正则表达式库操作 <code>std::string</code> 对象， 模式 <code>std::regex</code> (本质是 <code>std::basic_regex</code>)进行初始化， 通过 <code>std::regex_match</code> 进行匹配， 从而产生 <code>std::smatch</code> （本质是 <code>std::match_results</code> 对象）。</p>
 <p>我们通过一个简单的例子来简单介绍这个库的使用。考虑下面的正则表达式:</p>
 <ul>
 <li><code>[a-z]+\.txt</code>: 在这个正则表达式中, <code>[a-z]</code> 表示匹配一个小写字母, <code>+</code> 可以使前面的表达式匹配多次， 因此 <code>[a-z]+</code> 能够匹配一个小写字母组成的字符串。 在正则表达式中一个 <code>.</code> 表示匹配任意字符，而 <code>\.</code> 则表示匹配字符 <code>.</code>， 最后的 <code>txt</code> 表示严格匹配 <code>txt</code> 则三个字母。因此这个正则表达式的所要匹配的内容就是由纯小写字母组成的文本文件。</li>
@@ -1671,7 +1677,7 @@ AAA.txt: 0
 sub-match[0]: foo.txt
 foo.txt sub-match[1]: foo
 sub-match[0]: bar.txt
-bar.txt sub-match[1]: bar</code></pre><h1 id="第-7-章-并行与并发"><a href="#第-7-章-并行与并发" class="headerlink" title="第 7 章 并行与并发"></a>第 7 章 并行与并发</h1><h2 id="7-1-并行基础"><a href="#7-1-并行基础" class="headerlink" title="7.1 并行基础"></a>7.1 并行基础</h2><p><code>std::thread</code> 用于创建一个执行的线程实例，所以它是一切并发编程的基础，使用时需要包含 <code>&lt;thread&gt;</code> 头文件， 它提供了很多基本的线程操作，例如 <code>get_id()</code> 来获取所创建线程的线程 ID，使用 <code>join()</code> 来等待一个线程结束（与该线程汇合）等等，例如：</p>
+bar.txt sub-match[1]: bar</code></pre><h2 id="第-7-章-并行与并发"><a href="#第-7-章-并行与并发" class="headerlink" title="第 7 章 并行与并发"></a>第 7 章 并行与并发</h2><h3 id="7-1-并行基础"><a href="#7-1-并行基础" class="headerlink" title="7.1 并行基础"></a>7.1 并行基础</h3><p><code>std::thread</code> 用于创建一个执行的线程实例，所以它是一切并发编程的基础，使用时需要包含 <code>&lt;thread&gt;</code> 头文件， 它提供了很多基本的线程操作，例如 <code>get_id()</code> 来获取所创建线程的线程 ID，使用 <code>join()</code> 来等待一个线程结束（与该线程汇合）等等，例如：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;thread></span></span>
 
@@ -1682,9 +1688,9 @@ bar.txt sub-match[1]: bar</code></pre><h1 id="第-7-章-并行与并发"><a href
     t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="7-2-互斥量与临界区"><a href="#7-2-互斥量与临界区" class="headerlink" title="7.2 互斥量与临界区"></a>7.2 互斥量与临界区</h2><p>我们在操作系统、亦或是数据库的相关知识中已经了解过了有关并发技术的基本知识，<code>mutex</code> 就是其中的核心之一。 C++11 引入了 <code>mutex</code> 相关的类，其所有相关的函数都放在 <code>&lt;mutex&gt;</code> 头文件中。</p>
+<h3 id="7-2-互斥量与临界区"><a href="#7-2-互斥量与临界区" class="headerlink" title="7.2 互斥量与临界区"></a>7.2 互斥量与临界区</h3><p>我们在操作系统、亦或是数据库的相关知识中已经了解过了有关并发技术的基本知识，<code>mutex</code> 就是其中的核心之一。 C++11 引入了 <code>mutex</code> 相关的类，其所有相关的函数都放在 <code>&lt;mutex&gt;</code> 头文件中。</p>
 <p><code>std::mutex</code> 是 C++11 中最基本的 <code>mutex</code> 类，通过实例化 <code>std::mutex</code> 可以创建互斥量， 而通过其成员函数 <code>lock()</code> 可以进行上锁，<code>unlock()</code> 可以进行解锁。 但是在实际编写代码的过程中，最好不去直接调用成员函数， 因为调用成员函数就需要在每个临界区的出口处调用 <code>unlock()</code>，当然，还包括异常。 这时候 C++11 还为互斥量提供了一个 RAII 语法的模板类 <code>std::lock_guard</code>。 RAII 在不失代码简洁性的同时，很好的保证了代码的异常安全性。</p>
-<p>在 RAII 用法下，对于临界区的互斥量的创建只需要在作用域的开始部分，例如</p>
+<p>在 RAII 用法下，对于临界区的互斥量的创建只需要在作用域的开始部分，例如:</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;mutex></span>  </span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;thread></span>  </span>
@@ -1741,7 +1747,7 @@ bar.txt sub-match[1]: bar</code></pre><h1 id="第-7-章-并行与并发"><a href
     t2<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="7-3-期物"><a href="#7-3-期物" class="headerlink" title="7.3 期物"></a>7.3 期物</h2><p>期物（Future）表现为 <code>std::future</code>，它提供了一个访问异步操作结果的途径，这句话很不好理解。 为了理解这个特性，我们需要先理解一下在 C++11 之前的多线程行为。</p>
+<h3 id="7-3-期物"><a href="#7-3-期物" class="headerlink" title="7.3 期物"></a>7.3 期物</h3><p>期物（Future）表现为 <code>std::future</code>，它提供了一个访问异步操作结果的途径，这句话很不好理解。 为了理解这个特性，我们需要先理解一下在 C++11 之前的多线程行为。</p>
 <p>试想，如果我们的主线程 A 希望新开辟一个线程 B 去执行某个我们预期的任务，并返回我一个结果。 而这时候，线程 A 可能正在忙其他的事情，无暇顾及 B 的结果， 所以我们会很自然的希望能够在某个特定的时间获得线程 B 的结果。</p>
 <p>在 C++11 的 <code>std::future</code> 被引入之前，通常的做法是： 创建一个线程 A，在线程 A 里启动任务 B，当准备完毕后发送一个事件，并将结果保存在全局变量中。 而主函数线程 A 里正在做其他的事情，当需要结果的时候，调用一个线程等待函数来获得执行的结果。</p>
 <p>而 C++11 提供的 <code>std::future</code> 简化了这个流程，可以用来获取异步任务的结果。 自然地，我们很容易能够想象到把它作为一种简单的线程同步手段，即屏障（barrier）。</p>
@@ -1765,7 +1771,7 @@ bar.txt sub-match[1]: bar</code></pre><h1 id="第-7-章-并行与并发"><a href
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在封装好要调用的目标后，可以使用 <code>get_future()</code> 来获得一个 <code>std::future</code> 对象，以便之后实施线程同步。</p>
-<h2 id="7-4-条件变量"><a href="#7-4-条件变量" class="headerlink" title="7.4 条件变量"></a>7.4 条件变量</h2><p>条件变量 <code>std::condition_variable</code> 是为了解决死锁而生，当互斥操作不够用而引入的。 比如，线程可能需要等待某个条件为真才能继续执行， 而一个忙等待循环中可能会导致所有其他线程都无法进入临界区使得条件为真时，就会发生死锁。 所以，<code>condition_variable</code> 实例被创建出现主要就是用于唤醒等待线程从而避免死锁。 <code>std::condition_variable</code>的 <code>notify_one()</code> 用于唤醒一个线程； <code>notify_all()</code> 则是通知所有线程。下面是一个生产者和消费者模型的例子：</p>
+<h3 id="7-4-条件变量"><a href="#7-4-条件变量" class="headerlink" title="7.4 条件变量"></a>7.4 条件变量</h3><p>条件变量 <code>std::condition_variable</code> 是为了解决死锁而生，当互斥操作不够用而引入的。 比如，线程可能需要等待某个条件为真才能继续执行， 而一个忙等待循环中可能会导致所有其他线程都无法进入临界区使得条件为真时，就会发生死锁。 所以，<code>condition_variable</code> 实例被创建出现主要就是用于唤醒等待线程从而避免死锁。 <code>std::condition_variable</code>的 <code>notify_one()</code> 用于唤醒一个线程； <code>notify_all()</code> 则是通知所有线程。下面是一个生产者和消费者模型的例子：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;queue></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;chrono></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;mutex></span></span>
@@ -1824,7 +1830,7 @@ bar.txt sub-match[1]: bar</code></pre><h1 id="第-7-章-并行与并发"><a href
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在生产者中我们虽然可以使用 <code>notify_one()</code>，但实际上并不建议在此处使用， 因为在多消费者的情况下，我们的消费者实现中简单放弃了锁的持有，这使得可能让其他消费者争夺此锁，从而更好的利用多个消费者之间的并发。话虽如此，但实际上因为 <code>std::mutex</code> 的排他性， 我们根本无法期待多个消费者能真正意义上的并行消费队列的中生产的内容，我们仍需要粒度更细的手段。</p>
-<h2 id="7-5-原子操作与内存模型"><a href="#7-5-原子操作与内存模型" class="headerlink" title="7.5 原子操作与内存模型"></a>7.5 原子操作与内存模型</h2><p>细心的读者可能会对前一小节中生产者消费者模型的例子可能存在编译器优化导致程序出错的情况产生疑惑。例如，布尔值 <code>notified</code> 没有被 <code>volatile</code> 修饰，编译器可能对此变量存在优化，例如将其作为一个寄存器的值， 从而导致消费者线程永远无法观察到此值的变化。这是一个好问题，为了解释清楚这个问题，我们需要进一步讨论 从 C++ 11 起引入的内存模型这一概念。我们首先来看一个问题，下面这段代码输出结果是多少？</p>
+<h3 id="7-5-原子操作与内存模型"><a href="#7-5-原子操作与内存模型" class="headerlink" title="7.5 原子操作与内存模型"></a>7.5 原子操作与内存模型</h3><p>细心的读者可能会对前一小节中生产者消费者模型的例子可能存在编译器优化导致程序出错的情况产生疑惑。例如，布尔值 <code>notified</code> 没有被 <code>volatile</code> 修饰，编译器可能对此变量存在优化，例如将其作为一个寄存器的值， 从而导致消费者线程永远无法观察到此值的变化。这是一个好问题，为了解释清楚这个问题，我们需要进一步讨论 从 C++ 11 起引入的内存模型这一概念。我们首先来看一个问题，下面这段代码输出结果是多少？</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;thread></span>  </span>
 <span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
 
@@ -1849,7 +1855,7 @@ bar.txt sub-match[1]: bar</code></pre><h1 id="第-7-章-并行与并发"><a href
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从直观上看，<code>t2</code> 中 <code>a = 5;</code> 这一条语句似乎总在 <code>flag = 1;</code> 之前得到执行，而 <code>t1</code> 中 <code>while (flag != 1)</code> 似乎保证了 <code>std::cout &lt;&lt; &quot;b = &quot; &lt;&lt; b &lt;&lt; std::endl;</code> 不会再标记被改变前执行。从逻辑上看，似乎 <code>b</code> 的值应该等于 5。 但实际情况远比此复杂得多，或者说这段代码本身属于未定义的行为，因为对于 <code>a</code> 和 <code>flag</code> 而言，他们在两个并行的线程中被读写， 出现了竞争。除此之外，即便我们忽略竞争读写，仍然可能受 CPU 的乱序执行，编译器对指令的重排的影响， 导致 <code>a = 5</code> 发生在 <code>flag = 1</code> 之后。从而 <code>b</code> 可能输出 0。</p>
-<h3 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h3><p><code>std::mutex</code> 可以解决上面出现的并发读写的问题，但互斥锁是操作系统级的功能， 这是因为一个互斥锁的实现通常包含两条基本原理：</p>
+<h4 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h4><p><code>std::mutex</code> 可以解决上面出现的并发读写的问题，但互斥锁是操作系统级的功能， 这是因为一个互斥锁的实现通常包含两条基本原理：</p>
 <ol>
 <li>提供线程间自动的状态转换，即『锁住』这个状态</li>
 <li>保障在互斥锁操作期间，所操作变量的内存与临界区外进行隔离</li>
@@ -1892,83 +1898,115 @@ std<span class="token operator">::</span>atomic<span class="token operator">&lt;
     std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>boolalpha <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">.</span><span class="token function">is_lock_free</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="一致性模型"><a href="#一致性模型" class="headerlink" title="一致性模型"></a>一致性模型</h3><p>并行执行的多个线程，从某种宏观层面上讨论，可以粗略的视为一种分布式系统。 在分布式系统中，任何通信乃至本地操作都需要消耗一定时间，甚至出现不可靠的通信。</p>
+<h4 id="一致性模型"><a href="#一致性模型" class="headerlink" title="一致性模型"></a>一致性模型</h4><p>并行执行的多个线程，从某种宏观层面上讨论，可以粗略的视为一种分布式系统。 在分布式系统中，任何通信乃至本地操作都需要消耗一定时间，甚至出现不可靠的通信。</p>
 <p>如果我们强行将一个变量 <code>v</code> 在多个线程之间的操作设为原子操作，即任何一个线程在操作完 <code>v</code> 后， 其他线程均能<strong>同步</strong>感知到 <code>v</code> 的变化，则对于变量 <code>v</code> 而言，表现为顺序执行的程序，它并没有由于引入多线程 而得到任何效率上的收益。对此有什么办法能够适当的加速呢？答案便是削弱原子操作的在进程间的同步条件。</p>
 <p>从原理上看，每个线程可以对应为一个集群节点，而线程间的通信也几乎等价于集群节点间的通信。 削弱进程间的同步条件，通常我们会考虑四种不同的一致性模型：</p>
 <ol>
-<li>线性一致性：又称强一致性或原子一致性。它要求任何一次读操作都能读到某个数据的最近一次写的数据，并且所有线程的操作顺序与全局时钟下的顺序是一致的。<pre><code>     x.store(1)      x.load()
+<li><strong>线性一致性：又称强一致性或原子一致性。它要求任何一次读操作都能读到某个数据的最近一次写的数据，并且所有线程的操作顺序与全局时钟下的顺序是一致的。</strong></li>
+</ol>
+<pre><code>        x.store(1)      x.load()
 T1 ---------+----------------+------&gt;
 
-</code></pre></li>
+
+T2 -------------------+-------------&gt;
+                x.store(2)</code></pre><ol start="2">
+<li><strong>顺序一致性：同样要求任何一次读操作都能读到数据最近一次写入的数据，但未要求与全局时钟的顺序一致。</strong></li>
 </ol>
-<p>T2 ——————-+————-&gt;<br>                x.store(2)</p>
-<pre><code>
-2. 顺序一致性：同样要求任何一次读操作都能读到数据最近一次写入的数据，但未要求与全局时钟的顺序一致。</code></pre><pre><code>   x.store(1)  x.store(3)   x.load()  </code></pre><p>T1 ———+———–+———-+—–&gt;  </p>
-<p>T2 —————+———————-&gt;<br>              x.store(2)  </p>
-<p>或者  </p>
-<pre><code>    x.store(1)  x.store(3)   x.load()  </code></pre><p>T1 ———+———–+———-+—–&gt;  </p>
-<p>T2 ——+——————————-&gt;<br>      x.store(2)</p>
-<pre><code>
-在顺序一致性的要求下，`x.load()` 必须读到最近一次写入的数据，因此 `x.store(2)` 与 `x.store(1)` 并无任何先后保障，即 只要 `T2` 的 `x.store(2)` 发生在 `x.store(3)` 之前即可。
+<pre><code>       x.store(1)  x.store(3)   x.load()  
+T1 ---------+-----------+----------+-----&gt;  
 
-3. 因果一致性：它的要求进一步降低，只需要有因果关系的操作顺序得到保障，而非因果关系的操作顺序则不做要求。
-</code></pre><pre><code>  a = 1      b = 2</code></pre><p>T1 —-+———–+—————————-&gt;</p>
-<p>T2 ——+——————–+——–+——–&gt;<br>      x.store(3)         c = a + b    y.load()</p>
-<p>或者</p>
-<pre><code>  a = 1      b = 2</code></pre><p>T1 —-+———–+—————————-&gt;</p>
-<p>T2 ——+——————–+——–+——–&gt;<br>      x.store(3)          y.load()   c = a + b</p>
-<p>亦或者</p>
-<pre><code> b = 2       a = 1</code></pre><p>T1 —-+———–+—————————-&gt;</p>
-<p>T2 ——+——————–+——–+——–&gt;<br>      y.load()            c = a + b  x.store(3)</p>
-<pre><code>
-上面给出的三种例子都是属于因果一致的，因为整个过程中，只有 `c` 对 `a` 和 `b` 产生依赖，而 `x` 和 `y` 在此例子中表现为没有关系（但实际情况中我们需要更详细的信息才能确定 `x` 与 `y` 确实无关）
 
-4. 最终一致性：是最弱的一致性要求，它只保障某个操作在未来的某个时间节点上会被观察到，但并未要求被观察到的时间。因此我们甚至可以对此条件稍作加强，例如规定某个操作被观察到的时间总是有界的。当然这已经不在我们的讨论范围之内了。
-</code></pre><pre><code>x.store(3)  x.store(4)  </code></pre><p>T1 —-+———–+——————————————–&gt;  </p>
-<p>T2 ———+————+——————–+——–+——–&gt;<br>         x.read      x.read()           x.read()   x.read()</p>
-<pre><code>在上面的情况中，如果我们假设 x 的初始值为 0，则 `T2` 中四次 `x.read()` 结果可能但不限于以下情况：</code></pre><p>3 4 4 4 // x 的写操作被很快观察到<br>0 3 3 4 // x 的写操作被观察到的时间存在一定延迟<br>0 0 0 4 // 最后一次读操作读到了 x 的最终值，但此前的变化并未观察到<br>0 0 0 0 // 在当前时间段内 x 的写操作均未被观察到，<br>        // 但未来某个时间点上一定能观察到 x 为 4 的情况</p>
-<pre><code>
-### 内存顺序
+T2 ---------------+----------------------&gt;  
+              x.store(2)  
 
-为了追求极致的性能，实现各种强度要求的一致性，C++11 为原子操作定义了六种不同的内存顺序 `std::memory_order` 的选项，表达了四种多线程间的同步模型：
+或者  
 
-1. 宽松模型：在此模型下，单个线程内的原子操作都是顺序执行的，不允许指令重排，但不同线程间原子操作的顺序是任意的。类型通过 `std::memory_order_relaxed` 指定。我们来看一个例子：
-```cpp
-std::atomic&lt;int&gt; counter = {0};  
-std::vector&lt;std::thread&gt; vt;  
-for (int i = 0; i &lt; 100; ++i) {  
-    vt.emplace_back([&amp;](){  
-        counter.fetch_add(1, std::memory_order_relaxed);  
-    });  
-}  
+        x.store(1)  x.store(3)   x.load()  
+T1 ---------+-----------+----------+-----&gt;  
 
-for (auto&amp; t : vt) {  
-    t.join();  
-}  
-std::cout &lt;&lt; &quot;current counter:&quot; &lt;&lt; counter &lt;&lt; std::endl;</code></pre><ol start="2">
-<li><p>释放/消费模型：在此模型中，我们开始限制进程间的操作顺序，如果某个线程需要修改某个值，但另一个线程会对该值的某次操作产生依赖，即后者依赖前者。具体而言，线程 A 完成了三次对 <code>x</code> 的写操作，线程 <code>B</code> 仅依赖其中第三次 <code>x</code> 的写操作，与 <code>x</code> 的前两次写行为无关，则当 <code>A</code> 主动 <code>x.release()</code> 时候（即使用 <code>std::memory_order_release</code>），选项 <code>std::memory_order_consume</code> 能够确保 <code>B</code> 在调用 <code>x.load()</code> 时候观察到 <code>A</code> 中第三次对 <code>x</code> 的写操作。我们来看一个例子：</p>
+
+T2 ------+-------------------------------&gt;  
+      x.store(2)</code></pre><p>在顺序一致性的要求下，<code>x.load()</code> 必须读到最近一次写入的数据，因此 <code>x.store(2)</code> 与 <code>x.store(1)</code> 并无任何先后保障，即 只要 <code>T2</code> 的 <code>x.store(2)</code> 发生在 <code>x.store(3)</code> 之前即可。</p>
+<ol start="3">
+<li><strong>因果一致性：它的要求进一步降低，只需要有因果关系的操作顺序得到保障，而非因果关系的操作顺序则不做要求。</strong></li>
+</ol>
+<pre><code>      a = 1      b = 2
+T1 ----+-----------+----------------------------&gt;
+
+
+T2 ------+--------------------+--------+--------&gt;
+      x.store(3)         c = a + b    y.load()
+
+或者
+
+      a = 1      b = 2
+T1 ----+-----------+----------------------------&gt;
+
+
+T2 ------+--------------------+--------+--------&gt;
+      x.store(3)          y.load()   c = a + b
+
+亦或者
+
+     b = 2       a = 1
+T1 ----+-----------+----------------------------&gt;
+
+
+T2 ------+--------------------+--------+--------&gt;
+      y.load()            c = a + b  x.store(3)</code></pre><p>上面给出的三种例子都是属于因果一致的，因为整个过程中，只有 <code>c</code> 对 <code>a</code> 和 <code>b</code> 产生依赖，而 <code>x</code> 和 <code>y</code> 在此例子中表现为没有关系（但实际情况中我们需要更详细的信息才能确定 <code>x</code> 与 <code>y</code> 确实无关）</p>
+<ol start="4">
+<li><strong>最终一致性：是最弱的一致性要求，它只保障某个操作在未来的某个时间节点上会被观察到，但并未要求被观察到的时间。因此我们甚至可以对此条件稍作加强，例如规定某个操作被观察到的时间总是有界的。当然这已经不在我们的讨论范围之内了。</strong></li>
+</ol>
+<pre><code>    x.store(3)  x.store(4)  
+T1 ----+-----------+--------------------------------------------&gt;  
+
+
+T2 ---------+------------+--------------------+--------+--------&gt;  
+         x.read      x.read()           x.read()   x.read()</code></pre><p>在上面的情况中，如果我们假设 x 的初始值为 0，则 <code>T2</code> 中四次 <code>x.read()</code> 结果可能但不限于以下情况：</p>
+<pre><code>3 4 4 4 // x 的写操作被很快观察到  
+0 3 3 4 // x 的写操作被观察到的时间存在一定延迟  
+0 0 0 4 // 最后一次读操作读到了 x 的最终值，但此前的变化并未观察到  
+0 0 0 0 // 在当前时间段内 x 的写操作均未被观察到，  
+        // 但未来某个时间点上一定能观察到 x 为 4 的情况</code></pre><h4 id="内存顺序"><a href="#内存顺序" class="headerlink" title="内存顺序"></a>内存顺序</h4><p>为了追求极致的性能，实现各种强度要求的一致性，C++11 为原子操作定义了六种不同的内存顺序 <code>std::memory_order</code> 的选项，表达了四种多线程间的同步模型：</p>
+<ol>
+<li><strong>宽松模型：在此模型下，单个线程内的原子操作都是顺序执行的，不允许指令重排，但不同线程间原子操作的顺序是任意的。类型通过 <code>std::memory_order_relaxed</code> 指定。我们来看一个例子：</strong></li>
+</ol>
+<pre class="line-numbers language-cpp"><code class="language-cpp">std<span class="token operator">::</span>atomic<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> counter <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  
+std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>std<span class="token operator">::</span>thread<span class="token operator">></span> vt<span class="token punctuation">;</span>  
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    vt<span class="token punctuation">.</span><span class="token function">emplace_back</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
+        counter<span class="token punctuation">.</span><span class="token function">fetch_add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> std<span class="token operator">::</span>memory_order_relaxed<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token operator">&amp;</span> t <span class="token operator">:</span> vt<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"current counter:"</span> <span class="token operator">&lt;&lt;</span> counter <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
+<li><strong>释放/消费模型：在此模型中，我们开始限制进程间的操作顺序，如果某个线程需要修改某个值，但另一个线程会对该值的某次操作产生依赖，即后者依赖前者。具体而言，线程 A 完成了三次对 <code>x</code> 的写操作，线程 <code>B</code> 仅依赖其中第三次 <code>x</code> 的写操作，与 <code>x</code> 的前两次写行为无关，则当 <code>A</code> 主动 <code>x.release()</code> 时候（即使用 <code>std::memory_order_release</code>），选项 <code>std::memory_order_consume</code> 能够确保 <code>B</code> 在调用 <code>x.load()</code> 时候观察到 <code>A</code> 中第三次对 <code>x</code> 的写操作。我们来看一个例子：</strong></li>
+</ol>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">// 初始化为 nullptr 防止 consumer 线程从野指针进行读取</span>
 std<span class="token operator">::</span>atomic<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token operator">></span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> v<span class="token punctuation">;</span>
 std<span class="token operator">::</span>thread <span class="token function">producer</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
- <span class="token keyword">int</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- v <span class="token operator">=</span> <span class="token number">1024</span><span class="token punctuation">;</span>
- ptr<span class="token punctuation">.</span><span class="token function">store</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> std<span class="token operator">::</span>memory_order_release<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    v <span class="token operator">=</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+    ptr<span class="token punctuation">.</span><span class="token function">store</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> std<span class="token operator">::</span>memory_order_release<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 std<span class="token operator">::</span>thread <span class="token function">consumer</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
- <span class="token keyword">int</span><span class="token operator">*</span> p<span class="token punctuation">;</span>
- <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>p <span class="token operator">=</span> ptr<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>std<span class="token operator">::</span>memory_order_consume<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token operator">*</span> p<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>p <span class="token operator">=</span> ptr<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>std<span class="token operator">::</span>memory_order_consume<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
- std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"p: "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>p <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
- std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"v: "</span> <span class="token operator">&lt;&lt;</span> v <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"p: "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>p <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"v: "</span> <span class="token operator">&lt;&lt;</span> v <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 producer<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 consumer<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>释放/获取模型：在此模型下，我们可以进一步加紧对不同线程间原子操作的顺序的限制，在释放 <code>std::memory_order_release</code> 和获取 <code>std::memory_order_acquire</code> 之间规定时序，即发生在释放（release）操作之前的<strong>所有</strong>写操作，对其他线程的任何获取（acquire）操作都是可见的，亦即发生顺序（happens-before）。</p>
-</li>
-</ol>
+<p><strong>3. 释放/获取模型：在此模型下，我们可以进一步加紧对不同线程间原子操作的顺序的限制，在释放 <code>std::memory_order_release</code> 和获取 <code>std::memory_order_acquire</code> 之间规定时序，即发生在释放（release）操作之前的</strong>所有<strong>写操作，对其他线程的任何获取（acquire）操作都是可见的，亦即发生顺序（happens-before）。</strong></p>
+<blockquote>
 <p>可以看到，<code>std::memory_order_release</code> 确保了它之前的写操作不会发生在释放操作之后，是一个向后的屏障（backward），而 <code>std::memory_order_acquire</code> 确保了它之前的写行为不会发生在该获取操作之后，是一个向前的屏障（forward）。对于选项 <code>std::memory_order_acq_rel</code> 而言，则结合了这两者的特点，唯一确定了一个内存屏障，使得当前线程对内存的读写不会被重排并越过此操作的前后：</p>
+</blockquote>
 <pre class="line-numbers language-cpp"><code class="language-cpp">std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> v<span class="token punctuation">;</span>
 std<span class="token operator">::</span>atomic<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> flag <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 std<span class="token operator">::</span>thread <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1990,9 +2028,7 @@ release<span class="token punctuation">.</span><span class="token function">join
 acqrel<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 acquire<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在此例中我们使用了 <code>compare_exchange_strong</code> 比较交换原语（Compare-and-swap primitive），它有一个更弱的版本，即 <code>compare_exchange_weak</code>，它允许即便交换成功，也仍然返回 <code>false</code> 失败。其原因是因为在某些平台上虚假故障导致的，具体而言，当 CPU 进行上下文切换时，另一线程加载同一地址产生的不一致。除此之外，<code>compare_exchange_strong</code> 的性能可能稍差于 <code>compare_exchange_weak</code>，但大部分情况下，鉴于其使用的复杂度而言，<code>compare_exchange_weak</code> 应该被有限考虑。</p>
-<ol start="4">
-<li>顺序一致模型：在此模型下，原子操作满足顺序一致性，进而可能对性能产生损耗。可显式的通过 <code>std::memory_order_seq_cst</code> 进行指定。最后来看一个例子：</li>
-</ol>
+<p><strong>4. 顺序一致模型：在此模型下，原子操作满足顺序一致性，进而可能对性能产生损耗。可显式的通过 <code>std::memory_order_seq_cst</code> 进行指定。最后来看一个例子：</strong></p>
 <pre class="line-numbers language-cpp"><code class="language-cpp">std<span class="token operator">::</span>atomic<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> counter <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  
 std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>std<span class="token operator">::</span>thread<span class="token operator">></span> vt<span class="token punctuation">;</span>  
 <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
@@ -2006,7 +2042,7 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
 <span class="token punctuation">}</span>  
 std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"current counter:"</span> <span class="token operator">&lt;&lt;</span> counter <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个例子与第一个宽松模型的例子本质上没有区别，仅仅只是将原子操作的内存顺序修改为了 <code>memory_order_seq_cst</code>，有兴趣的读者可以自行编写程序测量这两种不同内存顺序导致的性能差异。</p>
-<h1 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h1><h2 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h2><p>C++ 11 引入了两个新的关键字 <code>alignof</code> 和 <code>alignas</code> 来支持对内存对齐进行控制。 <code>alignof</code> 关键字能够获得一个与平台相关的 <code>std::size_t</code> 类型的值，用于查询该平台的对齐方式。 当然我们有时候并不满足于此，甚至希望自定定义结构的对齐方式，同样，C++ 11 还引入了 <code>alignas</code> 来重新修饰某个结构的对齐方式。我们来看两个例子：</p>
+<h2 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h2><h3 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h3><p>C++ 11 引入了两个新的关键字 <code>alignof</code> 和 <code>alignas</code> 来支持对内存对齐进行控制。 <code>alignof</code> 关键字能够获得一个与平台相关的 <code>std::size_t</code> 类型的值，用于查询该平台的对齐方式。 当然我们有时候并不满足于此，甚至希望自定定义结构的对齐方式，同样，C++ 11 还引入了 <code>alignas</code> 来重新修饰某个结构的对齐方式。我们来看两个例子：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 
 <span class="token keyword">struct</span> Storage <span class="token punctuation">{</span>
@@ -2029,7 +2065,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中 <code>std::max_align_t</code> 要求每个标量类型的对齐方式严格一样，因此它几乎是最大标量没有差异， 进而大部分平台上得到的结果为 <code>long double</code>，因此我们这里得到的 <code>AlignasStorage</code> 的对齐要求是 8 或 16。</p>
-<h2 id="noexcept-的修饰和操作"><a href="#noexcept-的修饰和操作" class="headerlink" title="noexcept 的修饰和操作"></a>noexcept 的修饰和操作</h2><p>C++ 相比于 C 的一大优势就在于 C++ 本身就定义了一套完整的异常处理机制。 然而在 C++11 之前，几乎没有人去使用在函数名后书写异常声明表达式， 从 C++11 开始，这套机制被弃用，所以我们不去讨论也不去介绍以前这套机制是如何工作如何使用， 你更不应该主动去了解它。</p>
+<h3 id="noexcept-的修饰和操作"><a href="#noexcept-的修饰和操作" class="headerlink" title="noexcept 的修饰和操作"></a>noexcept 的修饰和操作</h3><p>C++ 相比于 C 的一大优势就在于 C++ 本身就定义了一套完整的异常处理机制。 然而在 C++11 之前，几乎没有人去使用在函数名后书写异常声明表达式， 从 C++11 开始，这套机制被弃用，所以我们不去讨论也不去介绍以前这套机制是如何工作如何使用， 你更不应该主动去了解它。</p>
 <p>C++11 将异常的声明简化为以下两种情况：</p>
 <ol>
 <li>函数可能抛出任何异常</li>
@@ -2082,6 +2118,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
 <p>最终输出为：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp">捕获异常<span class="token punctuation">,</span> 来自 <span class="token function">may_throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 捕获异常<span class="token punctuation">,</span> 来自 <span class="token function">non_block_throw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>好了，你已经完全掌握modern cpp了，快去使用吧！</p>
 
             </div>
             <hr/>
@@ -2685,7 +2722,7 @@ std<span class="token operator">::</span>cout <span class="token operator">&lt;&
             
                 
                     &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
-                            class="white-color">293.8k</span>&nbsp;字
+                            class="white-color">296.1k</span>&nbsp;字
                 
                 
                 <script>
