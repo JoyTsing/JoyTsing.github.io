@@ -459,7 +459,7 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Linux/</loc>
+    <loc>https://joytsing.github.io/tags/LaTeX/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -473,7 +473,21 @@
   </url>
   
   <url>
+    <loc>https://joytsing.github.io/tags/Linux/</loc>
+    <lastmod>2023-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/tags/%E7%BC%96%E7%A8%8B%E9%80%8F%E8%A7%86/</loc>
+    <lastmod>2023-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/Play-with-Algorithms/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -487,7 +501,7 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Play-with-Algorithms/</loc>
+    <loc>https://joytsing.github.io/tags/Cpp/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -509,6 +523,13 @@
   
   <url>
     <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <lastmod>2023-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -577,27 +598,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://joytsing.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2023-10-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/tags/Cpp/</loc>
-    <lastmod>2023-10-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/tags/LaTeX/</loc>
-    <lastmod>2023-10-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   
   <url>
@@ -608,7 +608,7 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/Linux/</loc>
+    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -622,6 +622,13 @@
   </url>
   
   <url>
+    <loc>https://joytsing.github.io/categories/Linux/</loc>
+    <lastmod>2023-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/categories/Algorithms/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
@@ -629,7 +636,7 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -644,13 +651,6 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/UESTC/</loc>
-    <lastmod>2023-10-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2023-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
