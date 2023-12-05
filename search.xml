@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Cpp Core Guidelines</title>
+      <link href="posts/8961/"/>
+      <url>posts/8961/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇文章实际上是<a href="https://zhuanlan.zhihu.com/p/662592729">C++ Core Guidelines</a>解析的转载加上一些自己的理解(相当于自己集合一些觉得精华的内容放在自己blog上),废话少说。开始挖坑！</p><h2 id="理念"><a href="#理念" class="headerlink" title="理念"></a>理念</h2><p>理念性规则概览：</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Cpp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>git如何更新新的个人令牌Tokens</title>
       <link href="posts/21341/"/>
       <url>posts/21341/</url>

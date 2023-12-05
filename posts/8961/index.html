@@ -4,11 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux学习笔记(四), 博客 JoyTsing blog">
-    <meta name="description" content="磁盘与文件数据存储在文件之中，而文件就保存在硬盘的某个部分之中，用户可以把磁盘分成更小的单元和子单元，分别命名，然后把相关的信息保存在同一个单元或子单元中。文件是操作系统对io设备的一个抽象，进程/线程是对执行过程的抽象。
-
-
-文件在UNX">
+    <meta name="keywords" content="Cpp Core Guidelines, 博客 JoyTsing blog">
+    <meta name="description" content="前言这篇文章实际上是C++ Core Guidelines解析的转载加上一些自己的理解(相当于自己集合一些觉得精华的内容放在自己blog上),废话少说。开始挖坑！
+理念理念性规则概览：
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +16,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Linux学习笔记(四) | JoyTsing</title>
+    <title>Cpp Core Guidelines | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -409,12 +408,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux学习笔记(四)</h1>
+                    <h1 class="description center-align post-title">Cpp Core Guidelines</h1>
                 </div>
             </div>
         </div>
@@ -530,8 +529,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
                                 </a>
                             
                         </div>
@@ -542,8 +541,8 @@
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                <a href="/categories/Cpp/" class="post-category">
+                                    Cpp
                                 </a>
                             
                         </div>
@@ -555,28 +554,28 @@
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-04-29
+                        2023-12-05
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2023-09-25
+                        2023-12-05
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1.9k
+                        66
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        6 分
+                        1 分
                     </div>
                 
 
@@ -591,216 +590,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="磁盘与文件"><a href="#磁盘与文件" class="headerlink" title="磁盘与文件"></a>磁盘与文件</h2><p>数据存储在文件之中，而文件就保存在硬盘的某个部分之中，用户可以把磁盘分成更小的单元和子单元，分别命名，然后把相关的信息保存在同一个单元或子单元中。文件是操作系统对io设备的一个抽象，进程/线程是对执行过程的抽象。</p>
-<a id="more"></a>
-
-<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><p>在UNX系统中,文件是字节序列。UNIX不支持另外一些操作系统支持的其他结构(例如记录或者域)。UNIX 有3类文件。</p>
-<p><strong>普通文件:</strong> 规则文件包含字节序列，可以是程序代码、文本等。用vi编辑器创建的文件是普通文件,大多数用户管理使用的都是这类文件。</p>
-<p><strong>目录文件:</strong> 在很多方面,目录文件和其他文件一样,目录以树的形式组织文件，其本身是一个文件。</p>
-<p><strong>特殊文件:</strong> 特殊文件(设备文件)包含对应于外围设备(如打印机、磁盘等)的特殊信息。UNIX把I/O设备看作文件。</p>
-<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>目录是UNIX文件系统的基本特征，目录系统提供了磁盘组织文件的结构。UNIX中，目录结构是分层组织，允许用户方便地组织和查找文件，最高层目录为根目录，所有其他目录是它的直接或间接分支，目录不包含所含文件的信息，而是提供一个索引路径，允许用户组织和查找文件。</p>
-<img style="width:400px;height:200px" src="/posts/22865/1.jpg">
-
-<br>
-
-<pre class="line-numbers language-markdown"><code class="language-markdown">/bin 普通用户执行的命令存放的地方
-
-/sbin 管理员执行的命令存放的地方
-
-/usr应用程序存放的目录
-
-　　/usr/bin 存放应用程序　　
-
-　　/usr/lib 存放不能直接运行的，却是许多程序运行所必需的一些函数库文件
-
-　　/usr/local 存放软件升级包
-
-/lib 系统使用的函数库的目录
-
-/root 管理员的家目录(宿主目录)
-
-/home 普通用户的家目录
-
-/var 放置系统执行过程中经常变化的文件，如随时更改的日志文件
-
-/etc 存放各种配置文件
-
-/srv 服务启动之后要访问的目录
-
-/mnt 光盘默认挂载点
-
-/dev 存放linux系统下的设备文件，访问该目录下某个文件，相当于访问某个设备
-
-/opt 给主机额外安装软件所存放的目录
-
-/tmp 一般用户或正在执行的程序临时存放文件的目录<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="理解路径和路径名"><a href="#理解路径和路径名" class="headerlink" title="理解路径和路径名"></a>理解路径和路径名</h3><p>每个路径的最后是一个普通文件或目录文件，普通文件在路径的末尾，不能再有更下级的目录。</p>
-<p>几个重要的目录概念：</p>
-<pre class="line-numbers language-markdown"><code class="language-markdown">~HOME目录
-
-.当前目录
-
-..父目录<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>每个文件有一个路径名，路径名在文件系统中定位文件，</p>
-<ul>
-<li>1.路径名开始的斜杠(/)代表根目录。</li>
-<li>2.其他斜杠用来分割目录和文件名。</li>
-<li>3.工作目录的文件可以立即访问，访问其他目录的文件需要用路径名指定该文件。</li>
-</ul>
-<h3 id="使用文件和目录名"><a href="#使用文件和目录名" class="headerlink" title="使用文件和目录名"></a>使用文件和目录名</h3><p>Unix中，不要在文件名中使用以下字符</p>
-<ul>
-<li>避免使用：&lt;&gt;，()，[]，{}，*，?，“，‘，-，$，^</li>
-</ul>
-<p>因为：这些符号是正则表达式使用，同时，注意文件名是大小写敏感的。</p>
-<h3 id="目录命令"><a href="#目录命令" class="headerlink" title="目录命令"></a>目录命令</h3><ul>
-<li>pwd打印当前工作目录</li>
-<li>cd改变当前工作目录<ul>
-<li>cd</li>
-<li>cd 路径</li>
-</ul>
-</li>
-<li>mkdir创建目录<ul>
-<li>mkdir 路径</li>
-<li>mkdir -p 路径</li>
-</ul>
-</li>
-<li>rmdir删除目录<ul>
-<li>非空目录无法删除</li>
-</ul>
-</li>
-</ul>
-<p>下面是一个比较重要的命令：</p>
-<p>ls命令用来显示指定目录的内容。</p>
-<table>
-<thead>
-<tr>
-<th align="right">选项</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="right">-a</td>
-<td align="left">列出所有文件，包括隐藏文件</td>
-</tr>
-<tr>
-<td align="right">-C</td>
-<td align="left">用多列方式列出文件，按列排列</td>
-</tr>
-<tr>
-<td align="right">-F</td>
-<td align="left">将子目录与普通文件类型分开，子目录加/，可执行文件加*</td>
-</tr>
-<tr>
-<td align="right">-l</td>
-<td align="left">详细列出文件的属性，每行一个文件</td>
-</tr>
-<tr>
-<td align="right">-m</td>
-<td align="left">按页宽列出文件，用逗号隔开</td>
-</tr>
-<tr>
-<td align="right">-p</td>
-<td align="left">如果是目录，文件名后加/</td>
-</tr>
-<tr>
-<td align="right">-r</td>
-<td align="left">以字母反序列表</td>
-</tr>
-<tr>
-<td align="right">-R</td>
-<td align="left">循环列出子目录内容</td>
-</tr>
-<tr>
-<td align="right">-s</td>
-<td align="left">以文件块为单位显示文件大小</td>
-</tr>
-<tr>
-<td align="right">-X</td>
-<td align="left">以多列的格式列表，按行排序</td>
-</tr>
-</tbody></table>
-<p>一行命令中可以多于一个选项，加目录的路径名列出其他目录的文件</p>
-<p>下面利用<code>ls -al</code>来继续学习文件类型</p>
-<img src="/posts/22865/2.jpg">
-
-<p>开始的字母，表示的是</p>
-<ul>
-<li>文件类型<ul>
-<li>- 表示普通文件</li>
-<li>d 表示目录</li>
-<li>c 表示字符设备</li>
-<li>b 表示块设备</li>
-<li>l 表示符号连接</li>
-</ul>
-</li>
-</ul>
-<p>随后的9个字符由三组r、w、x和连字符-组成，描述了文件的访问模式，表明了系统中的每个用户的指定文件的访问模式</p>
-<ul>
-<li>r 表示读权限</li>
-<li>w 表示写权限</li>
-<li>x 表示执行权限，目录的话是访问权限</li>
-</ul>
-<p>第一组字符rwx字符表示的是所有者的读写执行权限，第二组rwx表示的是用户组的读写执行权限，第三组rwx是指其他用户的读写执行权限，通过对不同用户组设置不同的访问字符，就可以控制谁访问该文件以及具有何种类型的访问权。</p>
-<p><strong>链接数:</strong> 第2列显示链接数。</p>
-<p><strong>文件所有者:</strong> 第3列显示文件的拥有者，该名字通常是创建文件的用户ID。</p>
-<p><strong>文件组:</strong> 第4列显示用户组。每一个UNIX用户有用户ID和组ID,这些是由系统管理员指定的。例如,同一个项目的人设成相同的组ID。</p>
-<p><strong>文件大小:</strong> 第5列显示文件大小，这是文件的字节数。</p>
-<p><strong>日期和时间:</strong> 第6列显示最后更改的日期和时间。</p>
-<p><strong>文件名:</strong> 第7列显示文件名。</p>
-<h3 id="隐藏文件"><a href="#隐藏文件" class="headerlink" title="隐藏文件"></a>隐藏文件</h3><p>以.点开头的文件或目录是缺省不被显示,目录列表命令通常不显示它们。启动文件通常不可见，以避免搞乱目录。</p>
-<p>如果想创建自己的不可见文件，只需要文件名以.开始即可，除根目录外，每个目录都有两个特殊的不可见文件项——单点和双点：</p>
-<ul>
-<li><p>.表示当前目录</p>
-</li>
-<li><p>..表示父目录</p>
-</li>
-</ul>
-<h3 id="显示文件内容"><a href="#显示文件内容" class="headerlink" title="显示文件内容"></a>显示文件内容</h3><p><code>cat</code> 查看文件内容，cat无分屏浏览功能，但只适合于文件内容在一屏内的文件，如果cat命令后跟了两个文件名，那么将按照顺序依次输出两个文件的内容，如果输出内容过多，可以使用<code>[Ctrl-s]</code>来停止输出，<code>[Ctrl-q]</code>来恢复。</p>
-<h3 id="打印文件内容"><a href="#打印文件内容" class="headerlink" title="打印文件内容"></a>打印文件内容</h3><p><code>lp</code>命令来使用打印机来打印</p>
-<table>
-<thead>
-<tr>
-<th align="right">选项</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="right">-d</td>
-<td align="left">指定的打印机上打印</td>
-</tr>
-<tr>
-<td align="right">-m</td>
-<td align="left">完成打印请求后向用户邮箱发邮件提醒</td>
-</tr>
-<tr>
-<td align="right">-n</td>
-<td align="left">打印指定份数</td>
-</tr>
-<tr>
-<td align="right">-s</td>
-<td align="left">取消反馈消息</td>
-</tr>
-<tr>
-<td align="right">-t</td>
-<td align="left">输出的标题页打印指定标题</td>
-</tr>
-<tr>
-<td align="right">-w</td>
-<td align="left">完成打印请求后，在用户终端显示消息</td>
-</tr>
-</tbody></table>
-<p>如果不想打印了，可以使用<code>cancel</code>命令来取消打印请求</p>
-<p><code>lpstat</code>命令获取打印机状态</p>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><ul>
-<li>rm删除文件<ul>
-<li>rm –fr递归删除文件及目录</li>
-<li>rm –i确认删除</li>
-</ul>
-</li>
-</ul>
-<p>在删除目录的时候，需要使用-r来递归删除。如果要删除其他路径的文件或目录，需要指定路径名。</p>
-<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p>touch创建一个空文件</p>
-<p>mkdir创建一个空目录</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这篇文章实际上是<a href="https://zhuanlan.zhihu.com/p/662592729">C++ Core Guidelines</a>解析的转载加上一些自己的理解(相当于自己集合一些觉得精华的内容放在自己blog上),废话少说。开始挖坑！</p>
+<h2 id="理念"><a href="#理念" class="headerlink" title="理念"></a>理念</h2><p>理念性规则概览：</p>
 
             </div>
             <hr/>
@@ -814,8 +605,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
                                 </a>
                             
                         </div>
@@ -1125,50 +916,50 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/24325/">
+                    <a href="/posts/8961/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Linux学习笔记(五)">
+                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Cpp Core Guidelines">
                             
-                            <span class="card-title">Linux学习笔记(五)</span>
+                            <span class="card-title">Cpp Core Guidelines</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                VI高级用法前面我们已经学习了vi的基本用法，现在我们将要更进一步，学习更多和vi相关的内容。
+                                前言这篇文章实际上是C++ Core Guidelines解析的转载加上一些自己的理解(相当于自己集合一些觉得精华的内容放在自己blog上),废话少说。开始挖坑！
+理念理念性规则概览：
 
-
-VI编辑器只读选项在打开某些配置文件的时候，为了安全起见应该避免修改源文件，这时候vi编辑器就提供了只读启动选项。
--R 作为vi的选项，使
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-12-05
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <a href="/categories/Cpp/" class="post-category">
+                                    Cpp
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
                                 </a>
                             
                         </div>
@@ -1182,32 +973,33 @@ VI编辑器只读选项在打开某些配置文件的时候，为了安全起见
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/53165/">
+                    <a href="/posts/21341/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Linux学习笔记(三)">
+                                <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="git如何更新新的个人令牌Tokens">
                             
-                            <span class="card-title">Linux学习笔记(三)</span>
+                            <span class="card-title">git如何更新新的个人令牌Tokens</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                vi编辑器所有的Linux系统都会内建vi文本编辑器。
-而vim则是vi的升级版本，vim具有程序编辑的能力，可以看做是vi的增强版本，可以主动的以字体颜色辨别语法的正确性，方便程序设计。代码补完、编译及错误跳转等方便编程的功能特别丰富，在
+                                前言2021年8月13日开始，GitHub在使用Git操作远程仓库时不再支持使用用户名密码形式进行身份验证，需使用个人访问令牌。使用Git操作GitHub仓库时使用用户名密码进行身份验证会报错：
+
+解决方法使用token登录的方式，就是把你
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-09
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-10-09
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <a href="/categories/%E6%9D%82%E8%AE%B0/" class="post-category">
+                                    杂记
                                 </a>
                                     
                                 
@@ -1217,8 +1009,8 @@ VI编辑器只读选项在打开某些配置文件的时候，为了安全起见
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>

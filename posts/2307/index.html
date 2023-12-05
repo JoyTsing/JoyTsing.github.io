@@ -1,7 +1,658 @@
-<!DOCTYPE HTML><html lang="zh-CN"><head><meta charset="utf-8"><meta name="keywords" content="Play-with-Algorithms(3)：O(n*logn)排序算法之 快速排序（随机化、二路、三路排序） 及衍生算法, 博客 JoyTsing"><meta name="description" content="在上一篇博文中学习了时间复杂度为 O(nlogn) 的归并算法，介绍其两种实现方式——自顶向下和自底向上，不同于O(n^2)排序算法，O(n *logn)在处理百万级数据量上有明显的性能优势。而此篇文章将介绍具有代表性O(n *logn)的"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="renderer" content="webkit|ie-stand|ie-comp"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="white"><title>Play-with-Algorithms(3)：O(n*logn)排序算法之 快速排序（随机化、二路、三路排序） 及衍生算法 | JoyTsing</title><link rel="apple-touch-icon" href="/"><link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css"><link rel="stylesheet" type="text/css" href="/libs/aos/aos.css"><link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css"><link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css"><link rel="stylesheet" type="text/css" href="/css/matery.css"><link rel="stylesheet" type="text/css" href="/css/my.css"><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style><script src="/libs/jquery/jquery.min.js"></script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="JoyTsing" type="application/atom+xml"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><header class="navbar-fixed"><nav id="headNav" class="bg-color nav-transparent"><div id="navContainer" class="nav-wrapper container"><div class="brand-logo"><a href="/" class="waves-effect waves-light"><img src="/apple-touch-icon.png" class="logo-img" alt="LOGO"> <span class="logo-span">JoyTsing</span></a></div><a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a><ul class="right nav-menu"><li class="hide-on-med-and-down nav-item"><a href="/" class="waves-effect waves-light"><i class="fa fa-home"></i> <span>首页</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-tags"></i> <span>标签</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-bookmark"></i> <span>分类</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-archive"></i> <span>归档</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/about" class="waves-effect waves-light"><i class="fa fa-user-circle-o"></i> <span>关于</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/contact" class="waves-effect waves-light"><i class="fa fa-envelope"></i> <span>留言</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/friends" class="waves-effect waves-light"><i class="fa fa-address-book"></i> <span>友链</span></a></li><li><a href="#searchModal" class="modal-trigger waves-effect waves-light"><i id="searchIcon" class="fa fa-search" title="搜索"></i></a></li></ul><div id="mobile-nav" class="side-nav sidenav"><div class="mobile-head bg-color"><img src="/medias/avatars/touxiang2.jpg" class="logo-img circle responsive-img"><div class="logo-name">JoyTsing</div><div class="logo-desc">一条咸鱼的个人blog</div></div><ul class="menu-list mobile-menu-list"><li class="m-nav-item"><a href="/" class="waves-effect waves-light"><i class="fa fa-fw fa-home"></i> 首页</a></li><li class="m-nav-item"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-fw fa-tags"></i> 标签</a></li><li class="m-nav-item"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-fw fa-bookmark"></i> 分类</a></li><li class="m-nav-item"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-fw fa-archive"></i> 归档</a></li><li class="m-nav-item"><a href="/about" class="waves-effect waves-light"><i class="fa fa-fw fa-user-circle-o"></i> 关于</a></li><li class="m-nav-item"><a href="/contact" class="waves-effect waves-light"><i class="fa fa-fw fa-envelope"></i> 留言</a></li><li class="m-nav-item"><a href="/friends" class="waves-effect waves-light"><i class="fa fa-fw fa-address-book"></i> 友链</a></li><li><div class="divider"></div></li><li><a href="https://github.com/JoyTsing" class="waves-effect waves-light" target="_blank"><i class="fa fa-github-square fa-fw"></i>Follow Me</a></li></ul></div></div><style>.nav-transparent .github-corner{display:none!important}.github-corner{position:absolute;z-index:10;top:0;right:0;border:0;transform:scale(1.1)}.github-corner svg{color:#000;fill:#fff;height:64px;width:64px}.github-corner:hover .octo-arm{animation:a .56s ease-in-out}.github-corner .octo-arm{animation:none}@keyframes a{0%,to{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}</style><a href="https://github.com/JoyTsing" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Follow Me" data-position="left" data-delay="50"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a></nav></header><div class="bg-cover pd-header post-cover" style="background-image:url(/medias/featureimages/5.jpg)"><div class="container" style="right:0;left:0"><div class="row"><div class="col s12 m12 l12"><div class="brand"><h1 class="description center-align post-title">Play-with-Algorithms(3)：O(n*logn)排序算法之 快速排序（随机化、二路、三路排序） 及衍生算法</h1></div></div></div></div></div><main class="post-container content"><link rel="stylesheet" href="/libs/tocbot/tocbot.css"><style>#articleContent h1::before,#articleContent h2::before,#articleContent h3::before,#articleContent h4::before,#articleContent h5::before,#articleContent h6::before{display:block;content:" ";height:100px;margin-top:-100px;visibility:hidden}#articleContent :focus{outline:0}.toc-fixed{position:fixed;top:64px}.toc-widget{width:345px;padding-left:20px}.toc-widget .toc-title{margin:35px 0 15px 0;padding-left:17px;font-size:1.5rem;font-weight:700;line-height:1.5rem}.toc-widget ol{padding:0;list-style:none}#toc-content{height:calc(100vh - 250px);overflow:auto}#toc-content ol{padding-left:10px}#toc-content ol li{padding-left:10px}#toc-content .toc-link:hover{color:#42b983;font-weight:700;text-decoration:underline}#toc-content .toc-link::before{background-color:transparent;max-height:25px;position:absolute;right:23.5vw;display:block}#toc-content .is-active-link{color:#42b983}#floating-toc-btn{position:fixed;right:15px;bottom:76px;padding-top:15px;margin-bottom:0;z-index:998}#floating-toc-btn .btn-floating{width:48px;height:48px}#floating-toc-btn .btn-floating i{line-height:48px;font-size:1.4rem}</style><div class="row"><div id="main-content" class="col s12 m12 l9"><div id="artDetail"><div class="card"><div class="card-content article-info"><div class="row tag-cate"><div class="col s7"><div class="article-tag"><a href="/tags/C/"><span class="chip bg-color">C++</span> </a><a href="/tags/Play-with-Algorithms/"><span class="chip bg-color">Play-with-Algorithms</span></a></div></div><div class="col s5 right-align"><div class="post-cate"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Algorithms/" class="post-category">Algorithms</a></div></div></div><div class="post-info"><div class="post-date info-break-policy"><i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp; 2019-09-08</div><div class="post-date info-break-policy"><i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp; 2023-09-25</div><div class="info-break-policy"><i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp; 1.7k</div><div class="info-break-policy"><i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp; 6 分</div><div id="busuanzi_container_page_pv" class="info-break-policy"><i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp; <span id="busuanzi_value_page_pv"></span></div></div></div><hr class="clearfix"><div class="card-content article-card-content"><div id="articleContent"><p>在上一篇博文中学习了时间复杂度为 O(n<em>logn) 的归并算法，介绍其两种实现方式——自顶向下和自底向上，不同于O(n^2)排序算法，O(n *logn)在处理百万级数据量上有明显的性能优势。而此篇文章将介绍具有代表性O(n *logn)的另一种算法—— *</em>快速排序，其性能总体还会优于归并排序，但是在最坏情况下时间复杂度会退化为O(n^2)！继而出现了对快速排序的系列优化并衍生出新的实现方式，来一探究竟。**</p><p>此篇博文涉及的知识点如下：</p><ul><li>快速排序法</li><li>随机化快速排序法</li><li>双路快速排序法</li><li>三路快速排序法</li><li>归并排序和快速排序的衍生问题</li></ul><a id="more"></a><h2 id="一-快速排序（Quick-Sort）"><a href="#一-快速排序（Quick-Sort）" class="headerlink" title="一. 快速排序（Quick Sort）"></a>一. 快速排序（Quick Sort）</h2><h4 id="1-算法思想"><a href="#1-算法思想" class="headerlink" title="1. 算法思想"></a>1. 算法思想</h4><p><strong>（1）整体过程</strong></p><p>首先来回顾一下上篇博文讲解的归并排序重点思想：不论数组排序内容，直接一分为二再逐渐归并排序。而<strong>快速排序：</strong></p><ul><li>则每次从当前考虑的数组中选择一个元素，以这个元素为基点，进行处理将此基点放到数组中的合适位置，使得左边的其它元素比此元素小，右边的其它元素比此元素大。</li><li>之后对左、右边这2个子数组分别使用快速排序的思路进行排序，逐渐递归下去完成整个排序过程。</li></ul><p>以下数组{4,6,2,3,1,5,7}为例，选择4为基点，将4放到合适位置，使得4之前的所以元素小于4，后面的所有元素大于4。<br><img src="/posts/2307/1.gif" alt="partition"></p><p><strong>（2）Partition过程</strong><br>对于快速排序过程而言，最重要的是将数组分成两个部分，使得基点元素在分界点。此过程为快速排序的核心，通常称为 Partition，以下动画演示了此过程：</p><ul><li>通常使用数组的第一个元素来作为分界的标志点（基点），记为l（left）</li><li>之后逐渐遍历右边所有未被访问元素</li><li>在遍历的过程中逐渐整理让整个数组左部分小于 v 这个元素值，右部分大于 v。</li><li>在此过程中，用j 来记录左右部分的分界点，当前访问的元素记为 i 。这样整个数组中 arr[l+1……j ] &lt; v，arr[j+1……i-1] &gt;v</li></ul><p>接下来讨论 i 这个元素（即当前访问的元素 e）如何变化才能使整个数组保证 v 的左右两部分刚好代表小于、大于v的位于两侧：</p><ul><li><strong>当 e &gt; v</strong>时：直接将 e 放到大于v右部分的后面，下标i ++，继续判断下一个元素。</li><li><strong>当 e &lt; v</strong>时：需要将e放到橘黄色部分（也就是v的左部分），这时只需要将j所指的最后一个元素与 e进行交换，也就是一个大于v的元素与e进行交换下标j++，代表 橘黄色部分元素新增了一个，再进行i ++，继续判断下一个元素。</li></ul><p><img src="/posts/2307/2.gif" alt="partitiongif"></p><p><strong>最终结果</strong></p><p><img src="/posts/2307/1.png" alt="end"></p><p>经过以上部分对数组进行遍历，完成后就是上图所示，第一个元素是 v ，橘黄色部分小于 v ，紫色部分大于 v ，最后只需要将l下标和j 下标所指的元素交换位置即可。</p><p><strong>整个数组被分成小于v 和大于 v的两部分，而v也放到了合适的位置，如下图所示：</strong></p><p><img src="/posts/2307/2.png" alt="position"></p><hr><h4 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>以上就是整个Partition的过程，理解透彻后可以轻松实现快速排序的逻辑代码。</p><p><strong>（1）quickSort函数</strong><br><em>目的：主函数中调用此方法即可（暴露给上层调用）</em></p><p>在函数quickSort中定义另一个函数__quickSort，取名代表它其实是一个私有的函数，被quickSort所调用，对于用户而言只需调用quickSort即可。</p><p><strong>（2）__quickSort函数</strong><br><em>目的：使用递归来进行快速排序,对arr[l…r]的范围进行快速排序</em></p><ul><li>首先进行边界判断（即递归到底的情况），若 l 大于或等于 r ，即可停止递归。</li><li>下面开始快速排序核心算法，首先需要调用一个新函数<strong>__partition对arr数组从l 到r 进行partition操作，此函数会返回一个索引值，该值就是arr数组被partition后分成左右两部分的中间分界点下标。</strong></li><li>获取到索引值后，则相当于将此数组分成左右两个部分（即左部分的所有元素值都小于索引值的元素值，右部分的所有元素则大于…），接下来使用递归分别对这两个子数组进行快速排序</li></ul><p><strong>（3）__partition函数</strong><br><em>目的：对arr[l…r]部分进行partition操作，返回p, 使得arr[l…p-1] &lt; arr[p] ; arr[p+1…r] &gt; arr[p]</em></p><p>此函数需要进行的逻辑操作在上一点partition过程思想中已详细讲解，来查看具体实现：</p><ul><li>在快速排序中需要一个标准值来作判断，这里默认为第一个值l ，用临时变量v 记录其元素值。</li><li>通过循环，从l + 1开始遍历整个数组，让整个数组在此循环之后分成两个部分，即arr[l+1…j] &lt; v ; arr[j+1…i) &gt; v。判断当前元素是否大于v<ul><li>当前元素大于v：无需处理，判断下一个元素即可。</li><li>当前元素小于v：需要进行交换操作，交换arr[j+1]和当前元素的值。在循环开始下标j被赋值为l下标，所以j-l代表小于v的元素总数，j+1相当于小于v的元素总数新增一个。</li></ul></li><li>循环结束后，除了第一个元素外，整个数组已经按照第一个元素值为标准，分成了左右两个部分， 即arr[l+1…j] &lt; v ; arr[j+1…i) &gt; v。最后将l 与 j下标的元素交换，因为下一次快速排序还是会以函数中的参数 l 值（即第一个元素）为标准，所以此时应该交换：j下标位置元素值为v，而l 下标的值为小于 v 的一个函数。</li><li>最后返回j 下标，这个下标使得整个数组情况（j相当于p）：arr[l…p-1] &lt; arr[p] ; arr[p+1…r] &gt; arr[p]</li></ul><p>代码为：</p><pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Play-with-Algorithms(3)：O(n*logn)排序算法之 快速排序（随机化、二路、三路排序） 及衍生算法, 博客 JoyTsing blog">
+    <meta name="description" content="在上一篇博文中学习了时间复杂度为 O(nlogn) 的归并算法，介绍其两种实现方式——自顶向下和自底向上，不同于O(n^2)排序算法，O(n *logn)在处理百万级数据量上有明显的性能优势。而此篇文章将介绍具有代表性O(n *logn)的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="white"/>
+    <title>Play-with-Algorithms(3)：O(n*logn)排序算法之 快速排序（随机化、二路、三路排序） 及衍生算法 | JoyTsing</title>
+    <link rel="apple-touch-icon" href="/">
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+
+        
+    </style>
+    <script src="/libs/jquery/jquery.min.js"></script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="JoyTsing" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <img src="/apple-touch-icon.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JoyTsing</span>
+                </a>
+            </div>
+            
+
+
+<!-- <a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-envelope"></i>
+            
+            <span>留言</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友链</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul> -->
+
+<!-- 支持二级菜单特性 -->
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right nav-menu">
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-home"></i>
+                    
+                    <span>首页</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/tags" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-tags"></i>
+                    
+                    <span>标签</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/categories" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-bookmark"></i>
+                    
+                    <span>分类</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/archives" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-archive"></i>
+                    
+                    <span>归档</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/about" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-user-circle-o"></i>
+                    
+                    <span>关于</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/contact" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-envelope"></i>
+                    
+                    <span>留言</span>
+                </a>
+
+            
+        </li>
+    
+        <li class="hide-on-med-and-down nav-item">
+
+            
+                <a href="/friends" class="waves-effect waves-light">
+                    
+                        <i class="fa fa-address-book"></i>
+                    
+                    <span>友链</span>
+                </a>
+
+            
+        </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+            <img src="/medias/avatars/touxiang2.jpg"
+                 class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JoyTsing</div>
+        <div class="logo-desc">
+            
+                寒冬本来就冷, 还要吵个不停
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+            <li class="m-nav-item">
+                
+                    <a href="/" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-home"></i>
+                        
+                        首页
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/tags" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-tags"></i>
+                        
+                        标签
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/categories" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-bookmark"></i>
+                        
+                        分类
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/archives" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-archive"></i>
+                        
+                        归档
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/about" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-user-circle-o"></i>
+                        
+                        关于
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/contact" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-envelope"></i>
+                        
+                        留言
+                    </a>
+                
+            </li>
+        
+            <li class="m-nav-item">
+                
+                    <a href="/friends" class="waves-effect waves-light">
+                        
+                            <i class="fa fa-fw fa-address-book"></i>
+                        
+                        友链
+                    </a>
+                
+            </li>
+        
+        
+            <li>
+                <div class="divider"></div>
+            </li>
+            <li>
+                <a href="https://github.com/JoyTsing" class="waves-effect waves-light" target="_blank">
+                    <i class="fa fa-github-square fa-fw"></i>Follow Me
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #000000;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JoyTsing" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Follow Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Play-with-Algorithms(3)：O(n*logn)排序算法之 快速排序（随机化、二路、三路排序） 及衍生算法</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+        <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/tags/Play-with-Algorithms/">
+                                    <span class="chip bg-color">Play-with-Algorithms</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                        <div class="post-cate">
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                                <a href="/categories/Algorithms/" class="post-category">
+                                    Algorithms
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                        2019-09-08
+                    </div>
+                
+
+                
+                    <div class="post-date info-break-policy">
+                        <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
+                        2023-09-25
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1.7k
+                    </div>
+                
+
+                
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        6 分
+                    </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>在上一篇博文中学习了时间复杂度为 O(n<em>logn) 的归并算法，介绍其两种实现方式——自顶向下和自底向上，不同于O(n^2)排序算法，O(n *logn)在处理百万级数据量上有明显的性能优势。而此篇文章将介绍具有代表性O(n *logn)的另一种算法—— *</em>快速排序，其性能总体还会优于归并排序，但是在最坏情况下时间复杂度会退化为O(n^2)！继而出现了对快速排序的系列优化并衍生出新的实现方式，来一探究竟。**</p>
+<p>此篇博文涉及的知识点如下：</p>
+<ul>
+<li>快速排序法</li>
+<li>随机化快速排序法</li>
+<li>双路快速排序法</li>
+<li>三路快速排序法</li>
+<li>归并排序和快速排序的衍生问题</li>
+</ul>
+<a id="more"></a>
+<h2 id="一-快速排序（Quick-Sort）"><a href="#一-快速排序（Quick-Sort）" class="headerlink" title="一. 快速排序（Quick Sort）"></a>一. 快速排序（Quick Sort）</h2><h4 id="1-算法思想"><a href="#1-算法思想" class="headerlink" title="1. 算法思想"></a>1. 算法思想</h4><p><strong>（1）整体过程</strong></p>
+<p>首先来回顾一下上篇博文讲解的归并排序重点思想：不论数组排序内容，直接一分为二再逐渐归并排序。而<strong>快速排序：</strong></p>
+<ul>
+<li>则每次从当前考虑的数组中选择一个元素，以这个元素为基点，进行处理将此基点放到数组中的合适位置，使得左边的其它元素比此元素小，右边的其它元素比此元素大。</li>
+<li>之后对左、右边这2个子数组分别使用快速排序的思路进行排序，逐渐递归下去完成整个排序过程。</li>
+</ul>
+<p>以下数组{4,6,2,3,1,5,7}为例，选择4为基点，将4放到合适位置，使得4之前的所以元素小于4，后面的所有元素大于4。<br><img src="/posts/2307/1.gif" alt="partition"></p>
+<p><strong>（2）Partition过程</strong><br>对于快速排序过程而言，最重要的是将数组分成两个部分，使得基点元素在分界点。此过程为快速排序的核心，通常称为 Partition，以下动画演示了此过程：</p>
+<ul>
+<li>通常使用数组的第一个元素来作为分界的标志点（基点），记为l（left）</li>
+<li>之后逐渐遍历右边所有未被访问元素</li>
+<li>在遍历的过程中逐渐整理让整个数组左部分小于 v 这个元素值，右部分大于 v。</li>
+<li>在此过程中，用j 来记录左右部分的分界点，当前访问的元素记为 i 。这样整个数组中 arr[l+1……j ] &lt; v，arr[j+1……i-1] &gt;v</li>
+</ul>
+<p>接下来讨论 i 这个元素（即当前访问的元素 e）如何变化才能使整个数组保证 v 的左右两部分刚好代表小于、大于v的位于两侧：</p>
+<ul>
+<li><strong>当 e &gt; v</strong>时：直接将 e 放到大于v右部分的后面，下标i ++，继续判断下一个元素。</li>
+<li><strong>当 e &lt; v</strong>时：需要将e放到橘黄色部分（也就是v的左部分），这时只需要将j所指的最后一个元素与 e进行交换，也就是一个大于v的元素与e进行交换下标j++，代表 橘黄色部分元素新增了一个，再进行i ++，继续判断下一个元素。</li>
+</ul>
+<p><img src="/posts/2307/2.gif" alt="partitiongif"></p>
+<p><strong>最终结果</strong></p>
+<p><img src="/posts/2307/1.png" alt="end"></p>
+<p>经过以上部分对数组进行遍历，完成后就是上图所示，第一个元素是 v ，橘黄色部分小于 v ，紫色部分大于 v ，最后只需要将l下标和j 下标所指的元素交换位置即可。</p>
+<p><strong>整个数组被分成小于v 和大于 v的两部分，而v也放到了合适的位置，如下图所示：</strong></p>
+<p><img src="/posts/2307/2.png" alt="position"></p>
+<hr>
+<h4 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>以上就是整个Partition的过程，理解透彻后可以轻松实现快速排序的逻辑代码。</p>
+<p><strong>（1）quickSort函数</strong><br><em>目的：主函数中调用此方法即可（暴露给上层调用）</em></p>
+<p>在函数quickSort中定义另一个函数__quickSort，取名代表它其实是一个私有的函数，被quickSort所调用，对于用户而言只需调用quickSort即可。</p>
+<p><strong>（2）__quickSort函数</strong><br><em>目的：使用递归来进行快速排序,对arr[l…r]的范围进行快速排序</em></p>
+<ul>
+<li>首先进行边界判断（即递归到底的情况），若 l 大于或等于 r ，即可停止递归。</li>
+<li>下面开始快速排序核心算法，首先需要调用一个新函数<strong>__partition对arr数组从l 到r 进行partition操作，此函数会返回一个索引值，该值就是arr数组被partition后分成左右两部分的中间分界点下标。</strong></li>
+<li>获取到索引值后，则相当于将此数组分成左右两个部分（即左部分的所有元素值都小于索引值的元素值，右部分的所有元素则大于…），接下来使用递归分别对这两个子数组进行快速排序</li>
+</ul>
+<p><strong>（3）__partition函数</strong><br><em>目的：对arr[l…r]部分进行partition操作，返回p, 使得arr[l…p-1] &lt; arr[p] ; arr[p+1…r] &gt; arr[p]</em></p>
+<p>此函数需要进行的逻辑操作在上一点partition过程思想中已详细讲解，来查看具体实现：</p>
+<ul>
+<li>在快速排序中需要一个标准值来作判断，这里默认为第一个值l ，用临时变量v 记录其元素值。</li>
+<li>通过循环，从l + 1开始遍历整个数组，让整个数组在此循环之后分成两个部分，即arr[l+1…j] &lt; v ; arr[j+1…i) &gt; v。判断当前元素是否大于v<ul>
+<li>当前元素大于v：无需处理，判断下一个元素即可。</li>
+<li>当前元素小于v：需要进行交换操作，交换arr[j+1]和当前元素的值。在循环开始下标j被赋值为l下标，所以j-l代表小于v的元素总数，j+1相当于小于v的元素总数新增一个。</li>
+</ul>
+</li>
+<li>循环结束后，除了第一个元素外，整个数组已经按照第一个元素值为标准，分成了左右两个部分， 即arr[l+1…j] &lt; v ; arr[j+1…i) &gt; v。最后将l 与 j下标的元素交换，因为下一次快速排序还是会以函数中的参数 l 值（即第一个元素）为标准，所以此时应该交换：j下标位置元素值为v，而l 下标的值为小于 v 的一个函数。</li>
+<li>最后返回j 下标，这个下标使得整个数组情况（j相当于p）：arr[l…p-1] &lt; arr[p] ; arr[p+1…r] &gt; arr[p]</li>
+</ul>
+<p>代码为：</p>
+<pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
 // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
-template <typename t>
+template <typename T>
 int __partition(T arr[], int l, int r){
 
     T v = arr[l];
@@ -19,7 +670,7 @@ int __partition(T arr[], int l, int r){
 }
 
 // 对arr[l...r]部分进行快速排序
-template <typename t>
+template <typename T>
 void __quickSort(T arr[], int l, int r){
 
     if( l >= r )
@@ -30,10 +681,11 @@ void __quickSort(T arr[], int l, int r){
     __quickSort(arr, p+1, r);
 }
 
-template <typename t>
+template <typename T>
 void quickSort(T arr[], int n){
     __quickSort(arr, 0, n-1);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></typename></typename></code></pre><h4 id="3-比较Merge-Sort和Quick-Sort两种排序算法的性能效率"><a href="#3-比较Merge-Sort和Quick-Sort两种排序算法的性能效率" class="headerlink" title="3. 比较Merge Sort和Quick Sort两种排序算法的性能效率"></a>3. 比较Merge Sort和Quick Sort两种排序算法的性能效率</h4><pre class="line-numbers language-C++"><code class="language-C++">int main() {
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-比较Merge-Sort和Quick-Sort两种排序算法的性能效率"><a href="#3-比较Merge-Sort和Quick-Sort两种排序算法的性能效率" class="headerlink" title="3. 比较Merge Sort和Quick Sort两种排序算法的性能效率"></a>3. 比较Merge Sort和Quick Sort两种排序算法的性能效率</h4><pre class="line-numbers language-C++"><code class="language-C++">int main() {
 
     int n = 100000;
 
@@ -50,9 +702,29 @@ void quickSort(T arr[], int n){
 
     cout<<endl;
     return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="/posts/2307/3.png" alt="result"></p><p>总结:</p><p><strong>两种排序算法虽然都是O(nlogn)级别的, 但是快速排序（Quick Sort）算法有常数级的优势，比归并排序（Merge Sort） 快，即使已经对 **归并排序</strong> 进行了优化。**</p><h4 id="4-代码优化"><a href="#4-代码优化" class="headerlink" title="4. 代码优化"></a>4. 代码优化</h4><p>熟悉套路的都知道接下来对快速排序进行代码优化，这里主要优化两个部分：</p><p><strong>（1）优化一：</strong><br>在详细学习了上篇博文归并排序讲解后，此点优化并不陌生，那就是<strong>高级的排序算法在底层时可使用插入排序（Insertion Sort）优化快速排序——递归到底优化：</strong>__quickSort函数中的第一个判断是当只剩下一个元素时才返回，事实上当方法递归到元素较少时，可使用插入排序来提高性能，由以下两个原因：</p><ul><li>当待排序的数组元素较少时，<strong>近乎有序的情况概率较大，此时插入排序有优势。</strong></li><li>虽然插入排序的时间复杂度是O(n^2)级别，而归并排序是O(n<em>logn)，*</em>但是别忽视这两者都依赖于常数系数n，当n较小时，插入排序是稍快于归并排序的**</li></ul><p>所以优化一：函数一开始判断当递归到底只剩下一定值时（可自行修改，不要过大，这里设定为15）时，剩下的数组采用插入算法进行排序</p><p><strong>（2）优化二:</strong></p><p>此优化才是快速排序的<strong>重点问题</strong>，首先引出其问题再做一组测试用例，就是归并排序和快速排序对近乎有序的数组进行排序<br>结果如下：<br><img src="/posts/2307/4.png" alt="result"></p><p>查看第二个测试用例结果，发现两种排序在对近乎有序的数组情况时，归并排序很快得出了结果，但是快速排序迟迟未出现结果（最后需要几十秒）！<br><strong>原因分析</strong></p><p>归并排序之所以是一个O(n* logn)的算法，在每次排序的时候都将数组一分为二，这样依次类推下去，整个层数是 logn层，每一层排序消耗O(n)时间，最后时间复杂度为O(n * logn)，如下图所示：</p><p><img src="/posts/2307/5.png" alt="reason"></p><p>对于快速排序而言，也是这样将整个数据一分为二，层层递进下去，只是稍有不同的是需要找到一个标志点，将此点左、右部分的数组进行分别排序。<strong>这样快速排序与归并排序产生不同：归并排序每次都是平均地将整个数组一分为二，而对于快速排序就无法保证，分出来的子数组可能是一大一小情况，进而再次递归时，情况会更严重。（如下图所示：）</strong><br><img src="/posts/2307/6.png" alt="reason2"><br>快速排序最差情况，退化为O(n^2)</p><p>因此快速排序生成的递归树的平衡度比归并排序要差，并且并不难保证树的高度是logn，甚至于高过logn。<strong>最差的情况就是当整个数组近乎有序的情况，生成的递归树如下图所示，每次作为标志点的第一个元素左部分并无小于它的元素（因为是近乎有序数组），从而导致递归树层级很高，到达n层，每一层又消耗O(n)，此时最终时间复杂度为O(n^2)</strong><br><img src="/posts/2307/7.png" alt="reason3"></p><p>解决优化:<br>以上也就是为何快速排序在面对近乎有序数组的情况下性能慢的原因，而解决方法正是对快速排序的第二个优化：<strong>在原有快速排序中，是固定使用最左侧元素作为标志元素，而希望是尽可能地使用整个数组中间的元素，也许不能准确地定位此中间元素。</strong><br><strong>优化二：其实只要随机使用一个标志元素即可，此时快速排序的时间复杂度期望值是O(n*logn)，此时退化成O(n^2)的概率是很小的，因为正好选到最小值作为标志元素的概率是很小的。（第一次选中最小值作为标志点的概率是1/n，第二次是1/(n-1)，依次类推，最后相乘得到结果近乎于0）</strong></p><p>代码如下：</p><pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="/posts/2307/3.png" alt="result"></p>
+<p>总结:</p>
+<p><strong>两种排序算法虽然都是O(nlogn)级别的, 但是快速排序（Quick Sort）算法有常数级的优势，比归并排序（Merge Sort） 快，即使已经对  **归并排序</strong>  进行了优化。**</p>
+<h4 id="4-代码优化"><a href="#4-代码优化" class="headerlink" title="4. 代码优化"></a>4. 代码优化</h4><p>熟悉套路的都知道接下来对快速排序进行代码优化，这里主要优化两个部分：</p>
+<p><strong>（1）优化一：</strong><br>在详细学习了上篇博文归并排序讲解后，此点优化并不陌生，那就是<strong>高级的排序算法在底层时可使用插入排序（Insertion Sort）优化快速排序——递归到底优化：</strong>__quickSort函数中的第一个判断是当只剩下一个元素时才返回，事实上当方法递归到元素较少时，可使用插入排序来提高性能，由以下两个原因：</p>
+<ul>
+<li>当待排序的数组元素较少时，<strong>近乎有序的情况概率较大，此时插入排序有优势。</strong></li>
+<li>虽然插入排序的时间复杂度是O(n^2)级别，而归并排序是O(n<em>logn)，*</em>但是别忽视这两者都依赖于常数系数n，当n较小时，插入排序是稍快于归并排序的**</li>
+</ul>
+<p>所以优化一：函数一开始判断当递归到底只剩下一定值时（可自行修改，不要过大，这里设定为15）时，剩下的数组采用插入算法进行排序</p>
+<p><strong>（2）优化二:</strong></p>
+<p>此优化才是快速排序的<strong>重点问题</strong>，首先引出其问题再做一组测试用例，就是归并排序和快速排序对近乎有序的数组进行排序<br>结果如下：<br><img src="/posts/2307/4.png" alt="result"></p>
+<p>查看第二个测试用例结果，发现两种排序在对近乎有序的数组情况时，归并排序很快得出了结果，但是快速排序迟迟未出现结果（最后需要几十秒）！<br><strong>原因分析</strong></p>
+<p>归并排序之所以是一个O(n* logn)的算法，在每次排序的时候都将数组一分为二，这样依次类推下去，整个层数是 logn层，每一层排序消耗O(n)时间，最后时间复杂度为O(n * logn)，如下图所示：</p>
+<p><img src="/posts/2307/5.png" alt="reason"></p>
+<p>对于快速排序而言，也是这样将整个数据一分为二，层层递进下去，只是稍有不同的是需要找到一个标志点，将此点左、右部分的数组进行分别排序。<strong>这样快速排序与归并排序产生不同：归并排序每次都是平均地将整个数组一分为二，而对于快速排序就无法保证，分出来的子数组可能是一大一小情况，进而再次递归时，情况会更严重。（如下图所示：）</strong><br><img src="/posts/2307/6.png" alt="reason2"><br>快速排序最差情况，退化为O(n^2)</p>
+<p>因此快速排序生成的递归树的平衡度比归并排序要差，并且并不难保证树的高度是logn，甚至于高过logn。<strong>最差的情况就是当整个数组近乎有序的情况，生成的递归树如下图所示，每次作为标志点的第一个元素左部分并无小于它的元素（因为是近乎有序数组），从而导致递归树层级很高，到达n层，每一层又消耗O(n)，此时最终时间复杂度为O(n^2)</strong><br><img src="/posts/2307/7.png" alt="reason3"></p>
+<p>解决优化:<br>以上也就是为何快速排序在面对近乎有序数组的情况下性能慢的原因，而解决方法正是对快速排序的第二个优化：<strong>在原有快速排序中，是固定使用最左侧元素作为标志元素，而希望是尽可能地使用整个数组中间的元素，也许不能准确地定位此中间元素。</strong><br><strong>优化二：其实只要随机使用一个标志元素即可，此时快速排序的时间复杂度期望值是O(n*logn)，此时退化成O(n^2)的概率是很小的，因为正好选到最小值作为标志元素的概率是很小的。（第一次选中最小值作为标志点的概率是1/n，第二次是1/(n-1)，依次类推，最后相乘得到结果近乎于0）</strong></p>
+<p>代码如下：</p>
+<pre class="line-numbers language-C++"><code class="language-C++">// 对arr[l...r]部分进行partition操作
 // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
-template <typename t>
+template <typename T>
 int _partition(T arr[], int l, int r){
 
     // ☆☆☆☆☆ 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
@@ -72,7 +744,7 @@ int _partition(T arr[], int l, int r){
 }
 
 // 对arr[l...r]部分进行快速排序
-template <typename t>
+template <typename T>
 void _quickSort(T arr[], int l, int r){
 
     // 对于小规模数组, 使用插入排序进行优化
@@ -86,16 +758,38 @@ void _quickSort(T arr[], int l, int r){
     _quickSort(arr, p+1, r);
 }
 
-template <typename t>
+template <typename T>
 void quickSort(T arr[], int n){
     //设置随机种子
     srand(time(NULL));
     _quickSort(arr, 0, n-1);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></typename></typename></code></pre><p>优化后的测试<br><img src="/posts/2307/8.png" alt="result4"><br>最后在优化后发现快速排序的性能已经极高地提升起来了，虽然没有快过归并排序，因为归并排序中的第二个优化，在已经排好序的数组中不用再次递归调用了。<strong>但也只是在近乎有序数组的情况下，这里快速排序结合随机算法进行了优化，在大部分情况下性能还是更优的。（此时快速排序的时间复杂度在最坏情况下仍是O(n^2)，但是此概率是极其极其低，近乎为0）</strong></p><h2 id="二-双路快速排序法（Quick-Sort-2-Ways）"><a href="#二-双路快速排序法（Quick-Sort-2-Ways）" class="headerlink" title="二. 双路快速排序法（Quick Sort 2 Ways）"></a>二. 双路快速排序法（Quick Sort 2 Ways）</h2><h4 id="1-快速排序问题"><a href="#1-快速排序问题" class="headerlink" title="1. 快速排序问题"></a>1. 快速排序问题</h4><p><strong>(1）包含大量相同元素的数组测试</strong></p><p>经过上面的优化过程，快速排序算法已是非常稳健了，但是它仍然存在一些问题：再测试一组特殊实例情况，对存在包含大量相同元素的数组（0~10范围内50万个数）进行排序，结果如下。<br><img src="/posts/2307/9.png" alt="result5"></p><p><strong>（2）分析</strong><br><img src="/posts/2307/10.png" alt="result6"><br>上图部分并不陌生，是快速排序的核心部分，即Partition过程，判断当前元素e是否大于v，根据结果放入橘黄色部分或紫色部分。<strong>但是这里有一个隐患，我们并没有判断等于的情况！</strong></p><p>第一反应你可能觉得这很好解决，至于要把相等的部分放入左、右任何一部分即可，数组中含有大量重复元素，<strong>这样会把数组分成极度不平衡的两个部分，在这种情况下快速排序会退化成O(n^2)，结果如下图所示：</strong><br><img src="/posts/2307/11.png" alt="result7"></p><h4 id="2-算法思路"><a href="#2-算法思路" class="headerlink" title="2. 算法思路"></a>2. 算法思路</h4><p>意识到以上问题后，主要需要解决的还是Partition过程，于是我们换一个思路来实现Partition过程，查看以下动画：</p><p>之前快速排序中的Partition过程是将小于v 和大于 v 的两部分放在一起，然后从左到右逐渐遍历整个数组。<strong>现在将这两部分放到数组的两端，下标i、j分别进行扫码：</strong></p><ul><li>从下标 i这个位置向后扫描，<ul><li>当扫描的元素e小于v ：则继续向后扫描。</li><li>当扫描的元素e大于v：</li></ul></li><li>从下标 j这个位置向前扫描，<ul><li>当扫描的元素e大于v ：则继续向前扫描。</li><li>当扫描的元素e小于v：</li></ul></li></ul><p>以上两个下标进行扫码时，有一种情况没有写，<strong>其实就是当下标 i扫描的元素大于v，下标 j扫描的元素小于v时，将两个下标所指的元素值交换即可！</strong><br>最后，当下标i 等于下标j 时，扫描结束。将l 和 j下标所代表的元素交换位置即可。<br><img src="/posts/2307/3.gif" alt="2way"><br>最终结果：<br><img src="/posts/2307/12.png" alt="result8"><br>以上就是Partition后的结果，查看此图你会发现怎么橘黄色部分和紫色部分都含有等于v的元素，这范围设置的是否不对？<strong>其实不然！此种双路快速排序法与之前最大的区别就是：把等于v的元素分散到左右两部分。当下标i、j指向的元素即使与v相等，也要互相交换位置。这样可避免大量等于v的元素集中在一部分，正因如此，这样的算法面临大量重复元素值的情况下，也可以很好的平衡两部分。</strong></p><h4 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h4><p>这里只修改partition函数即可，代码如下：</p><pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>优化后的测试<br><img src="/posts/2307/8.png" alt="result4"><br>最后在优化后发现快速排序的性能已经极高地提升起来了，虽然没有快过归并排序，因为归并排序中的第二个优化，在已经排好序的数组中不用再次递归调用了。<strong>但也只是在近乎有序数组的情况下，这里快速排序结合随机算法进行了优化，在大部分情况下性能还是更优的。（此时快速排序的时间复杂度在最坏情况下仍是O(n^2)，但是此概率是极其极其低，近乎为0）</strong></p>
+<h2 id="二-双路快速排序法（Quick-Sort-2-Ways）"><a href="#二-双路快速排序法（Quick-Sort-2-Ways）" class="headerlink" title="二. 双路快速排序法（Quick Sort 2 Ways）"></a>二. 双路快速排序法（Quick Sort 2 Ways）</h2><h4 id="1-快速排序问题"><a href="#1-快速排序问题" class="headerlink" title="1. 快速排序问题"></a>1. 快速排序问题</h4><p><strong>(1）包含大量相同元素的数组测试</strong></p>
+<p>经过上面的优化过程，快速排序算法已是非常稳健了，但是它仍然存在一些问题：再测试一组特殊实例情况，对存在包含大量相同元素的数组（0~10范围内50万个数）进行排序，结果如下。<br><img src="/posts/2307/9.png" alt="result5"></p>
+<p><strong>（2）分析</strong><br><img src="/posts/2307/10.png" alt="result6"><br>上图部分并不陌生，是快速排序的核心部分，即Partition过程，判断当前元素e是否大于v，根据结果放入橘黄色部分或紫色部分。<strong>但是这里有一个隐患，我们并没有判断等于的情况！</strong></p>
+<p>第一反应你可能觉得这很好解决，至于要把相等的部分放入左、右任何一部分即可，数组中含有大量重复元素，<strong>这样会把数组分成极度不平衡的两个部分，在这种情况下快速排序会退化成O(n^2)，结果如下图所示：</strong><br><img src="/posts/2307/11.png" alt="result7"></p>
+<h4 id="2-算法思路"><a href="#2-算法思路" class="headerlink" title="2. 算法思路"></a>2. 算法思路</h4><p>意识到以上问题后，主要需要解决的还是Partition过程，于是我们换一个思路来实现Partition过程，查看以下动画：</p>
+<p>之前快速排序中的Partition过程是将小于v 和大于 v 的两部分放在一起，然后从左到右逐渐遍历整个数组。<strong>现在将这两部分放到数组的两端，下标i、j分别进行扫码：</strong></p>
+<ul>
+<li>从下标 i这个位置向后扫描，<ul>
+<li>当扫描的元素e小于v ：则继续向后扫描。</li>
+<li>当扫描的元素e大于v：</li>
+</ul>
+</li>
+<li>从下标 j这个位置向前扫描，<ul>
+<li>当扫描的元素e大于v ：则继续向前扫描。</li>
+<li>当扫描的元素e小于v：</li>
+</ul>
+</li>
+</ul>
+<p>以上两个下标进行扫码时，有一种情况没有写，<strong>其实就是当下标 i扫描的元素大于v，下标 j扫描的元素小于v时，将两个下标所指的元素值交换即可！</strong><br>最后，当下标i 等于下标j 时，扫描结束。将l 和 j下标所代表的元素交换位置即可。<br><img src="/posts/2307/3.gif" alt="2way"><br>最终结果：<br><img src="/posts/2307/12.png" alt="result8"><br>以上就是Partition后的结果，查看此图你会发现怎么橘黄色部分和紫色部分都含有等于v的元素，这范围设置的是否不对？<strong>其实不然！此种双路快速排序法与之前最大的区别就是：把等于v的元素分散到左右两部分。当下标i、j指向的元素即使与v相等，也要互相交换位置。这样可避免大量等于v的元素集中在一部分，正因如此，这样的算法面临大量重复元素值的情况下，也可以很好的平衡两部分。</strong></p>
+<h4 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3. 代码实现"></a>3. 代码实现</h4><p>这里只修改partition函数即可，代码如下：</p>
+<pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
 
 // 双路快速排序的partition
 // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
-template <typename t>
+template <typename T>
 int _partition2(T arr[], int l, int r){
 
     // 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
@@ -124,10 +818,34 @@ int _partition2(T arr[], int l, int r){
     swap( arr[l] , arr[j]);
 
     return j;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre><p>注意<br>以上代码中的重点，也就是<strong>双路快速排序法</strong>的重点，就是判断下标i、j增减的条件边界，之前反复强调的重点就是将重复值平均分配到数组中的两个部分，所以边界判断只能是&lt; 或 &gt;，而不是&lt;= 或&gt;=。<br>下面举个例子来体会，数组 1,0,0, …, 0, 0：</p><ul><li>对于arr[i]&lt; v和arr[j]&gt;v的方式，第一次partition得到的分点是数组中间；</li><li>对于arr[i]&lt;=v和arr[j]&gt;=v的方式，第一次partition得到的分点是数组的倒数第二个。</li></ul><p>因为连续出现相等的情况，第一种会交换i和j的值，而第二种方式则会将连续出现的这些值归为其中一方，使得两棵子树不平衡，这样会导致O(n^2)出现。</p><h4 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4. 测试结果"></a>4. 测试结果</h4><p>再次进行测试（测试代码见源码）：<br><img src="/posts/2307/13.png" alt="result9"></p><h2 id="三-三路快速排序法（Quick-Sort-3-Ways）"><a href="#三-三路快速排序法（Quick-Sort-3-Ways）" class="headerlink" title="三. 三路快速排序法（Quick Sort 3 Ways）"></a>三. 三路快速排序法（Quick Sort 3 Ways）</h2><p>以上在面临数组中包含大量重复值排序时，对会沦为O(n^2)的排序算法进行优化，从而避免并更好的提高了其性能，但其实针对快速排序算法还有一个更经典的方法 —– <strong>三路快速排序法</strong></p><h4 id="1-算法思路"><a href="#1-算法思路" class="headerlink" title="1. 算法思路"></a>1. 算法思路</h4><p>在之前进行快速排序时都是将整个数组分成两部分，即小于v 和大于v（两部分都含有等于v的元素值），而三路快速排序法则是多加了一部分—–等于v，将这一部分单独提出来。查看以下动画，这样划分之后，在处理等于v的元素可不管，而是处理小、大于v的元素即可。</p><p>三部分下标划分表示:</p><ul><li>小于v 部分：使用下标 lt （less than）指向小于v数组部分的最后一个位置，这样arr[l+1…lt]&lt;v：</li><li>大于v 部分：使用下标gt （great than）指向大于v数组部分的第一个位置，这样arr[gt…r] &gt; v</li><li>等于v 部分：下标i 指向当前判断的元素下标，所以中间部分表示为arr[lt+1…i-1]==v</li></ul><p>下面要处理i下标代表的元素e，分以下3种情况：</p><ul><li>e 等于v ：直接纳入绿色部分，即无需处理，下标i后移。</li><li>e 小于v ：在学习之前二路快速排序法，应该有思路了，<strong>将下标i的元素值和下标 lt+1（即等于v绿色部分的第一个元素）交换，然后i下标后移，继而判断下一个元素；lt下标后移，代表小于v的元素新增了一个。</strong></li><li>e 大于v ：同理，将下标i的元素值和下标 gt-1（紫色部分的前一个元素）交换，gt下标前移，代表大于v的元素新增了一个。<strong>注意此时下标i 无需后移，因为不同于小于v 部分，此时交换后的元素是未处理过的，所以直接判断即可！</strong></li></ul><p>最后，当下标i 等于下标gt时，扫描结束。将l 和 lt下标所代表的元素交换位置即可。<br><img src="/posts/2307/4.gif" alt="3ways"><br>这种方式的优点就是不需要对等于v的元素进行重复操作，可以一次性少考虑相同元素</p><h4 id="2-代码实现-1"><a href="#2-代码实现-1" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>这里只修改partition函数即可，代码如下：</p><pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意<br>以上代码中的重点，也就是<strong>双路快速排序法</strong>的重点，就是判断下标i、j增减的条件边界，之前反复强调的重点就是将重复值平均分配到数组中的两个部分，所以边界判断只能是&lt; 或 &gt;，而不是&lt;= 或&gt;=。<br>下面举个例子来体会，数组 1,0,0, …, 0, 0：</p>
+<ul>
+<li>对于arr[i]&lt; v和arr[j]&gt;v的方式，第一次partition得到的分点是数组中间；</li>
+<li>对于arr[i]&lt;=v和arr[j]&gt;=v的方式，第一次partition得到的分点是数组的倒数第二个。</li>
+</ul>
+<p>因为连续出现相等的情况，第一种会交换i和j的值，而第二种方式则会将连续出现的这些值归为其中一方，使得两棵子树不平衡，这样会导致O(n^2)出现。</p>
+<h4 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4. 测试结果"></a>4. 测试结果</h4><p>再次进行测试（测试代码见源码）：<br><img src="/posts/2307/13.png" alt="result9"></p>
+<h2 id="三-三路快速排序法（Quick-Sort-3-Ways）"><a href="#三-三路快速排序法（Quick-Sort-3-Ways）" class="headerlink" title="三. 三路快速排序法（Quick Sort 3 Ways）"></a>三. 三路快速排序法（Quick Sort 3 Ways）</h2><p>以上在面临数组中包含大量重复值排序时，对会沦为O(n^2)的排序算法进行优化，从而避免并更好的提高了其性能，但其实针对快速排序算法还有一个更经典的方法 —– <strong>三路快速排序法</strong></p>
+<h4 id="1-算法思路"><a href="#1-算法思路" class="headerlink" title="1. 算法思路"></a>1. 算法思路</h4><p>在之前进行快速排序时都是将整个数组分成两部分，即小于v 和大于v（两部分都含有等于v的元素值），而三路快速排序法则是多加了一部分—–等于v，将这一部分单独提出来。查看以下动画，这样划分之后，在处理等于v的元素可不管，而是处理小、大于v的元素即可。</p>
+<p>三部分下标划分表示:</p>
+<ul>
+<li>小于v 部分：使用下标 lt （less than）指向小于v数组部分的最后一个位置，这样arr[l+1…lt]&lt;v：</li>
+<li>大于v 部分：使用下标gt （great than）指向大于v数组部分的第一个位置，这样arr[gt…r] &gt; v</li>
+<li>等于v 部分：下标i 指向当前判断的元素下标，所以中间部分表示为arr[lt+1…i-1]==v</li>
+</ul>
+<p>下面要处理i下标代表的元素e，分以下3种情况：</p>
+<ul>
+<li>e 等于v ：直接纳入绿色部分，即无需处理，下标i后移。</li>
+<li>e 小于v ：在学习之前二路快速排序法，应该有思路了，<strong>将下标i的元素值和下标 lt+1（即等于v绿色部分的第一个元素）交换，然后i下标后移，继而判断下一个元素；lt下标后移，代表小于v的元素新增了一个。</strong></li>
+<li>e 大于v ：同理，将下标i的元素值和下标 gt-1（紫色部分的前一个元素）交换，gt下标前移，代表大于v的元素新增了一个。<strong>注意此时下标i 无需后移，因为不同于小于v 部分，此时交换后的元素是未处理过的，所以直接判断即可！</strong></li>
+</ul>
+<p>最后，当下标i 等于下标gt时，扫描结束。将l 和 lt下标所代表的元素交换位置即可。<br><img src="/posts/2307/4.gif" alt="3ways"><br>这种方式的优点就是不需要对等于v的元素进行重复操作，可以一次性少考虑相同元素</p>
+<h4 id="2-代码实现-1"><a href="#2-代码实现-1" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h4><p>这里只修改partition函数即可，代码如下：</p>
+<pre class="line-numbers language-C++"><code class="language-C++">【只修改partition函数即可】
 
 // 递归的三路快速排序算法
-template <typename t>
+template <typename T>
 void __quickSort3Ways(T arr[], int l, int r){
 
     // 对于小规模数组, 使用插入排序进行优化
@@ -163,7 +881,38 @@ void __quickSort3Ways(T arr[], int l, int r){
 
     __quickSort3Ways(arr, l, lt-1);
     __quickSort3Ways(arr, gt, r);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></code></pre><h4 id="3-归并排序、快速排序、三路快速排序比较"><a href="#3-归并排序、快速排序、三路快速排序比较" class="headerlink" title="3. 归并排序、快速排序、三路快速排序比较"></a>3. 归并排序、快速排序、三路快速排序比较</h4><p>下面针对以上讲解的3种快速排序方式分别对随机数组、近乎有序数组、包含大量重复元素数组进行测试，结果如下（测试代码见源码）：<br><img src="/posts/2307/14.png" alt="sort"></p><p>结论:</p><ul><li>测试一：面临大量无序元素时，快速排序最佳。</li><li>测试二：面临近乎有序数组时，归并排序最佳。</li><li>测试三：面临包含大量重复元素数组的情况下，三路快速排序比归并排序、快速排序有质变的超越！<br>总体而言，快速排序的性能是要优于归并排序！一般系统级别的快速排序都会选择三路快速排序，因为它在处理包含大量重复元素时，性能极高，即使不是，它的性能也得到保证，不会太差。</li></ul><h2 id="四-归并排序（Merge-Sort）和快速排序（Quick-Sort）的衍生问题"><a href="#四-归并排序（Merge-Sort）和快速排序（Quick-Sort）的衍生问题" class="headerlink" title="四. 归并排序（Merge Sort）和快速排序（Quick Sort）的衍生问题"></a>四. 归并排序（Merge Sort）和快速排序（Quick Sort）的衍生问题</h2><h4 id="1-分治算法"><a href="#1-分治算法" class="headerlink" title="1. 分治算法"></a>1. 分治算法</h4><p>这两种O(n*logn)高效的排序算法本身背后隐藏着重要的算法思想：其实归并排序和快速排序都使用了分治算法的基本思想。</p><blockquote><p>分治算法：分而治之，就是将原问题分割成同等结构的子问题，之后将子问题逐一解决后，原问题也得到解决。</p></blockquote><p>虽然都使用了分治算法的基本思想，但是归并排序和快速排序依旧代表了不同的实现：</p><ul><li>归并排序：在划分这个问题没有过多考虑，直接一分为二，递归进行归并排序，重点在于递归之后如何归并起来（”合”过程）。</li><li>快速排序：重点在于如何划分这个问题上，采用了标志点，结合Partition过程，使得标志点左部分元素小于标志点元素值，右部分大于。当标志点移到合适位置后，才将整个数组划分成两部分，这样在“合”时就无需多做处理。</li></ul><p>其实后面介绍的树形结构有关内容也使用了 分治思想，所以不要把一些经典的算法实现和算法设计思想拆开。</p><h4 id="2-逆序对"><a href="#2-逆序对" class="headerlink" title="2. 逆序对"></a>2. 逆序对</h4><p>关于归并排序和快速排序的第一个衍生问题就是逆序对，例如下图中的数组{8,6,2,3,1,5,7,4}，其中{2,3}就是一个顺序对，而{2,1}就是一个逆序对。<br><img src="/posts/2307/15.png" alt="sort"><br><strong>一个数组中逆序对的数量最有效的就是衡量这个数组的有序程度，</strong> 例如{1,2,3,4,5,6,7,8,}，这是完全有序数组，逆序对为0；而数组{8,7,6,5,4,3,2,1}完全逆序数组，此时逆序数量达到最大值。</p><p>（1）暴力破解</p><p>最容易解决的方式就是双重循环，考察每一个数对，判断是否逆序，实现简单，效率低，时间复杂度为O(n^2)</p><p>（2）归并排序</p><p>要解决此问题此时可以依赖于归并过程，例如以下动画，两个分别排好序的子数组{2,3,6,8,}和{1,4,5,7,}：</p><ul><li>首先1比2小，意味1比2后面的所有元素都小，计数器可直接加4，指向1的下标后移。</li><li>4大于2，不考虑，指向2的下标后移。</li><li>4大于3，不考虑，指向3的下标后移。</li><li>4小于6，意味4比6后面的所有元素都小，计数器可直接加2，指向4的下标后移。</li><li>依次类推</li></ul><p><img src="/posts/2307/5.gif" alt="sort"></p><pre class="line-numbers language-C++"><code class="language-C++">// 计算逆序数对的结果以long long返回
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-归并排序、快速排序、三路快速排序比较"><a href="#3-归并排序、快速排序、三路快速排序比较" class="headerlink" title="3. 归并排序、快速排序、三路快速排序比较"></a>3. 归并排序、快速排序、三路快速排序比较</h4><p>下面针对以上讲解的3种快速排序方式分别对随机数组、近乎有序数组、包含大量重复元素数组进行测试，结果如下（测试代码见源码）：<br><img src="/posts/2307/14.png" alt="sort"></p>
+<p>结论:</p>
+<ul>
+<li>测试一：面临大量无序元素时，快速排序最佳。</li>
+<li>测试二：面临近乎有序数组时，归并排序最佳。</li>
+<li>测试三：面临包含大量重复元素数组的情况下，三路快速排序比归并排序、快速排序有质变的超越！<br>总体而言，快速排序的性能是要优于归并排序！一般系统级别的快速排序都会选择三路快速排序，因为它在处理包含大量重复元素时，性能极高，即使不是，它的性能也得到保证，不会太差。</li>
+</ul>
+<h2 id="四-归并排序（Merge-Sort）和快速排序（Quick-Sort）的衍生问题"><a href="#四-归并排序（Merge-Sort）和快速排序（Quick-Sort）的衍生问题" class="headerlink" title="四. 归并排序（Merge Sort）和快速排序（Quick Sort）的衍生问题"></a>四. 归并排序（Merge Sort）和快速排序（Quick Sort）的衍生问题</h2><h4 id="1-分治算法"><a href="#1-分治算法" class="headerlink" title="1. 分治算法"></a>1. 分治算法</h4><p>这两种O(n*logn)高效的排序算法本身背后隐藏着重要的算法思想：其实归并排序和快速排序都使用了分治算法的基本思想。</p>
+<blockquote>
+<p>分治算法：分而治之，就是将原问题分割成同等结构的子问题，之后将子问题逐一解决后，原问题也得到解决。</p>
+</blockquote>
+<p>虽然都使用了分治算法的基本思想，但是归并排序和快速排序依旧代表了不同的实现：</p>
+<ul>
+<li>归并排序：在划分这个问题没有过多考虑，直接一分为二，递归进行归并排序，重点在于递归之后如何归并起来（”合”过程）。</li>
+<li>快速排序：重点在于如何划分这个问题上，采用了标志点，结合Partition过程，使得标志点左部分元素小于标志点元素值，右部分大于。当标志点移到合适位置后，才将整个数组划分成两部分，这样在“合”时就无需多做处理。</li>
+</ul>
+<p>其实后面介绍的树形结构有关内容也使用了 分治思想，所以不要把一些经典的算法实现和算法设计思想拆开。</p>
+<h4 id="2-逆序对"><a href="#2-逆序对" class="headerlink" title="2. 逆序对"></a>2. 逆序对</h4><p>关于归并排序和快速排序的第一个衍生问题就是逆序对，例如下图中的数组{8,6,2,3,1,5,7,4}，其中{2,3}就是一个顺序对，而{2,1}就是一个逆序对。<br><img src="/posts/2307/15.png" alt="sort"><br><strong>一个数组中逆序对的数量最有效的就是衡量这个数组的有序程度，</strong> 例如{1,2,3,4,5,6,7,8,}，这是完全有序数组，逆序对为0；而数组{8,7,6,5,4,3,2,1}完全逆序数组，此时逆序数量达到最大值。</p>
+<p>（1）暴力破解</p>
+<p>最容易解决的方式就是双重循环，考察每一个数对，判断是否逆序，实现简单，效率低，时间复杂度为O(n^2)</p>
+<p>（2）归并排序</p>
+<p>要解决此问题此时可以依赖于归并过程，例如以下动画，两个分别排好序的子数组{2,3,6,8,}和{1,4,5,7,}：</p>
+<ul>
+<li>首先1比2小，意味1比2后面的所有元素都小，计数器可直接加4，指向1的下标后移。</li>
+<li>4大于2，不考虑，指向2的下标后移。</li>
+<li>4大于3，不考虑，指向3的下标后移。</li>
+<li>4小于6，意味4比6后面的所有元素都小，计数器可直接加2，指向4的下标后移。</li>
+<li>依次类推</li>
+</ul>
+<p><img src="/posts/2307/5.gif" alt="sort"></p>
+<pre class="line-numbers language-C++"><code class="language-C++">// 计算逆序数对的结果以long long返回
 // 对于一个大小为N的数组, 其最大的逆序数对个数为 N*(N-1)/2, 非常容易产生整型溢出
 
 // merge函数求出在arr[l...mid]和arr[mid+1...r]有序的基础上, arr[l...r]的逆序数对个数
@@ -226,9 +975,14 @@ long long __inversionCount(int arr[], int l, int r){
 long long inversionCount(int arr[], int n){
 
     return __inversionCount(arr, 0, n-1);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="3-取数组中第n大的元素"><a href="#3-取数组中第n大的元素" class="headerlink" title="3. 取数组中第n大的元素"></a>3. 取数组中第n大的元素</h4><p>如果这个问题是取数组中的最大值或最小值，那么时间复杂度为O(n)，可是现在是取第n大的元素，例如在1000000里取第1000个元素。</p><p>此问题的解决思路很简单，就是给整个数组排序再通过下标索引取出元素即可，算法复杂度为O(n*logn)，但是！在本篇博文中学习了快速排序后，可使用O(n)时间获取。</p><p>快速排序的核心过程:<br><strong>每次找到一个标志点，将此点挪到数组中合适的位置，注意此合适位置恰好是数组中排序好后所处的位置。</strong></p><p>示例引导:<br>例如下图示例中的标志点4，最后挪到的位置恰好就是数组最后有序的位置，比如此时我们要获取第6个位置上的元素，那么标志位4之前的元素无需考虑，从后部分处理，继续处理后部分的第二位是谁？<br><img src="/posts/2307/16.png" alt="sort"></p><pre class="line-numbers language-C++"><code class="language-C++">// partition 过程, 和快排的partition一样
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-取数组中第n大的元素"><a href="#3-取数组中第n大的元素" class="headerlink" title="3. 取数组中第n大的元素"></a>3. 取数组中第n大的元素</h4><p>如果这个问题是取数组中的最大值或最小值，那么时间复杂度为O(n)，可是现在是取第n大的元素，例如在1000000里取第1000个元素。</p>
+<p>此问题的解决思路很简单，就是给整个数组排序再通过下标索引取出元素即可，算法复杂度为O(n*logn)，但是！在本篇博文中学习了快速排序后，可使用O(n)时间获取。</p>
+<p>快速排序的核心过程:<br><strong>每次找到一个标志点，将此点挪到数组中合适的位置，注意此合适位置恰好是数组中排序好后所处的位置。</strong></p>
+<p>示例引导:<br>例如下图示例中的标志点4，最后挪到的位置恰好就是数组最后有序的位置，比如此时我们要获取第6个位置上的元素，那么标志位4之前的元素无需考虑，从后部分处理，继续处理后部分的第二位是谁？<br><img src="/posts/2307/16.png" alt="sort"></p>
+<pre class="line-numbers language-C++"><code class="language-C++">// partition 过程, 和快排的partition一样
 // 思考: 双路快排和三路快排的思想能不能用在selection算法中? :)
-template <typename t>
+template <typename T>
 int __partition( T arr[], int l, int r ){
 
     int p = rand()%(r-l+1) + l;
@@ -245,7 +999,7 @@ int __partition( T arr[], int l, int r ){
 }
 
 // 求出arr[l...r]范围里第k小的数
-template <typename t>
+template <typename T>
 int __selection( T arr[], int l, int r, int k ){
 
     if( l == r )
@@ -263,14 +1017,790 @@ int __selection( T arr[], int l, int r, int k ){
 }
 
 // 寻找arr数组中第k小的元素
-template <typename t>
+template <typename T>
 int selection(T arr[], int n, int k) {
 
     assert( k >= 0 && k < n );
 
     srand(time(NULL));
     return __selection(arr, 0, n - 1, k);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></typename></typename></typename></code></pre><p>下一篇博文将讲解另一个排序算法——堆排序，也是此系列的第一个数据结构—–堆，后续学习你会发现对于堆的使用将远超与求解排序。</p><p>转载自：<a href="https://blog.csdn.net/ITermeng/article/details/77397212">https://blog.csdn.net/ITermeng/article/details/77397212</a></p></div><hr><div class="tag_share" style="display:block"><div class="post-meta__tag-list" style="display:inline-block"><div class="article-tag"><a href="/tags/C/"><span class="chip bg-color">C++</span> </a><a href="/tags/Play-with-Algorithms/"><span class="chip bg-color">Play-with-Algorithms</span></a></div></div><div class="post_share" style="zoom:80%;width:fit-content;display:inline-block;float:right;margin:-.15rem 0"><link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css"><div id="article-share"><div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div><script src="/libs/share/js/social-share.min.js"></script></div></div></div></div></div><style>.valine-card{margin:1.5rem auto}.valine-card .card-content{padding:20px 20px 5px 20px}#vcomments textarea{box-sizing:border-box;background:url(/medias/comment_bg.png) 100% 100% no-repeat}#vcomments p{margin:2px 2px 10px;font-size:1.05rem;line-height:1.78rem}#vcomments blockquote p{text-indent:.2rem}#vcomments a{padding:0 2px;color:#4cbf30;font-weight:500;text-decoration:none}#vcomments img{max-width:100%;height:auto;cursor:pointer}#vcomments ol li{list-style-type:decimal}#vcomments ol,ul{display:block;padding-left:2em;word-spacing:.05rem}#vcomments ul li,ol li{display:list-item;line-height:1.8rem;font-size:1rem}#vcomments ul li{list-style-type:disc}#vcomments ul ul li{list-style-type:circle}#vcomments table,td,th{padding:12px 13px;border:1px solid #dfe2e5}#vcomments table,td,th{border:0}table tr:nth-child(2n),thead{background-color:#fafafa}#vcomments table th{background-color:#f2f2f2;min-width:80px}#vcomments table td{min-width:80px}#vcomments h1{font-size:1.85rem;font-weight:700;line-height:2.2rem}#vcomments h2{font-size:1.65rem;font-weight:700;line-height:1.9rem}#vcomments h3{font-size:1.45rem;font-weight:700;line-height:1.7rem}#vcomments h4{font-size:1.25rem;font-weight:700;line-height:1.5rem}#vcomments h5{font-size:1.1rem;font-weight:700;line-height:1.4rem}#vcomments h6{font-size:1rem;line-height:1.3rem}#vcomments p{font-size:1rem;line-height:1.5rem}#vcomments hr{margin:12px 0;border:0;border-top:1px solid #ccc}#vcomments blockquote{margin:15px 0;border-left:5px solid #42b983;padding:1rem .8rem .3rem .8rem;color:#666;background-color:rgba(66,185,131,.1)}#vcomments pre{font-family:monospace,monospace;padding:1.2em;margin:.5em 0;background:#272822;overflow:auto;border-radius:.3em;tab-size:4}#vcomments code{font-family:monospace,monospace;padding:1px 3px;font-size:.92rem;color:#e96900;background-color:#f8f8f8;border-radius:2px}#vcomments pre code{font-family:monospace,monospace;padding:0;color:#e8eaf6;background-color:#272822}#vcomments pre[class*=language-]{padding:1.2em;margin:.5em 0}#vcomments code[class*=language-],pre[class*=language-]{color:#e8eaf6}#vcomments [type=checkbox]:not(:checked),[type=checkbox]:checked{position:inherit;margin-left:-1.3rem;margin-right:.4rem;margin-top:-1px;vertical-align:middle;left:unset;visibility:visible}#vcomments b,strong{font-weight:700}#vcomments dfn{font-style:italic}#vcomments small{font-size:85%}#vcomments cite{font-style:normal}#vcomments mark{background-color:#fcf8e3;padding:.2em}#vcomments table,td,th{padding:12px 13px;border:1px solid #dfe2e5}table tr:nth-child(2n),thead{background-color:#fafafa}#vcomments table th{background-color:#f2f2f2;min-width:80px}#vcomments table td{min-width:80px}#vcomments [type=checkbox]:not(:checked),[type=checkbox]:checked{position:inherit;margin-left:-1.3rem;margin-right:.4rem;margin-top:-1px;vertical-align:middle;left:unset;visibility:visible}.v .vlist .vcard{padding-top:2.5em!important}</style><div class="card valine-card" data-aos="fade-up"><div class="comment_headling" style="font-size:20px;font-weight:700;position:relative;left:20px;top:15px;padding-bottom:5px"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> <span>评论</span></div><div id="vcomments" class="card-content" style="display:grid"></div></div><script src="/libs/valine/av-min.js"></script><script src="/libs/valine/Valine.min.js"></script><script>new Valine({el:"#vcomments",appId:"98JpzSGcrl9jFqHO13vqxHvX-gzGzoHsz",appKey:"mDmr2h9PB20xvPMNqgyRnNIC",notify:!0,verify:!0,visitor:!0,avatar:"mm",pageSize:"10",lang:"zh-cn",placeholder:"just go go"})</script><article id="prenext-posts" class="prev-next articles"><div class="row article-row"><div class="article col s12 m6" data-aos="fade-up"><div class="article-badge left-badge text-color"><i class="fa fa-chevron-left"></i>&nbsp;上一篇</div><div class="card"><a href="/posts/49310/"><div class="card-image"><img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Play-with-Algorithms(4)：堆排序之 二叉堆（Heapify、原地堆排序优化）"> <span class="card-title">Play-with-Algorithms(4)：堆排序之 二叉堆（Heapify、原地堆排序优化）</span></div></a><div class="card-content article-content"><div class="summary block-with-text">不同于前面几篇O(n^2)或O(n*logn)排序算法，此篇文章将讲解另一个排序算法——堆排序，也是此系列的第一个数据结构—–堆，需要注意的是在堆结构中排序是次要的，重要的是堆结构及衍生出来的数据结构问题，排序只是堆应用之一。 此篇涉及的知</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-08 </span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Algorithms/" class="post-category">Algorithms</a></span></div></div><div class="card-action article-tags"><a href="/tags/C/"><span class="chip bg-color">C++</span> </a><a href="/tags/Play-with-Algorithms/"><span class="chip bg-color">Play-with-Algorithms</span></a></div></div></div><div class="article col s12 m6" data-aos="fade-up"><div class="article-badge right-badge text-color">下一篇&nbsp;<i class="fa fa-chevron-right"></i></div><div class="card"><a href="/posts/24873/"><div class="card-image"><img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Play-with-Algorithms(2)：O(n*logn)排序算法之 归并排序（自顶向下、自底向上） 及 算法优化"> <span class="card-title">Play-with-Algorithms(2)：O(n*logn)排序算法之 归并排序（自顶向下、自底向上） 及 算法优化</span></div></a><div class="card-content article-content"><div class="summary block-with-text">在上一篇博文中学习了时间复杂度为 O(n^2)的几个排序算法（选择、插入、冒泡、希尔排序），其中尤为需要注意的是插入排序，在近乎有序的测试用例条件下，此算法的效率会高于 O(n*logn) 的排序算法，所以它的效率不容小觑。 但是 O(n</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-08 </span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Algorithms/" class="post-category">Algorithms</a></span></div></div><div class="card-action article-tags"><a href="/tags/C/"><span class="chip bg-color">C++</span> </a><a href="/tags/Play-with-Algorithms/"><span class="chip bg-color">Play-with-Algorithms</span></a></div></div></div></div></article></div><script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script><script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script><script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script><script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style></div><div id="toc-aside" class="expanded col l3 hide-on-med-and-down"><div class="toc-widget"><div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div><div id="toc-content"></div></div></div></div><div id="floating-toc-btn" class="hide-on-med-and-down"><a class="btn-floating btn-large bg-color"><i class="fa fa-list"></i></a></div><script src="/libs/tocbot/tocbot.min.js"></script><script>$(function(){tocbot.init({tocSelector:"#toc-content",contentSelector:"#articleContent",headingsOffset:-(.4*$(window).height()-45),headingSelector:"h2, h3, h4, h5"});let t=0;var e="toc-heading-";$("#toc-content a").each(function(){$(this).attr("href","#"+e+ ++t)}),t=0,$("#articleContent").children("h2, h3, h4, h5").each(function(){$(this).attr("id",e+ ++t)});var n=parseInt(.4*$(window).height()-64);let o=$(".toc-widget");$(window).scroll(function(){var t=$(window).scrollTop();n<t?o.addClass("toc-fixed"):o.removeClass("toc-fixed")});var i="expanded";let a=$("#toc-aside"),c=$("#main-content");$("#floating-toc-btn .btn-floating").click(function(){a.hasClass(i)?(a.removeClass(i).hide(),c.removeClass("l9")):(a.addClass(i).show(),c.addClass("l9")),function(){let e=$("#artDetail");if(0!==e.length){let t=e.width();450<=t?t+=21:350<=t&&t<450?t+=18:300<=t&&t<350?t+=16:t+=14,$("#prenext-posts").width(t)}}()})})</script></main><footer class="page-footer bg-color"><div class="container row center-align"><div class="col s12 m8 l8 copy-right">Copyright&nbsp;&copy; <span id="year">2019</span> <a href="/about" rel="external nofollow noreferrer">JoyTsing</a> |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a><br><span id="sitetime">载入运行时间...</span> <span id="busuanzi_container_site_pv">|&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv" class="white-color"></span>&nbsp;次 </span><span id="busuanzi_container_site_uv">|&nbsp;<i class="fa fa-user"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv" class="white-color"></span>&nbsp;人</span><br><script type="text/javascript">var cnzz_protocol="https:"==document.location.protocol?"https://":"http://";document.write(unescape("%3Cspan id='cnzz_stat_icon_1278523400'%3E%3C/span%3E%3Cscript src='"+cnzz_protocol+"s4.cnzz.com/z_stat.php%3Fid%3D1278523400%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"))</script><br>&nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span class="white-color">296.9k</span>&nbsp;字<script>function siteTime(){var e=864e5,t="2019",n=(m=new Date).getFullYear(),o=m.getMonth()+1,r=m.getDate(),a=m.getHours(),i=m.getMinutes(),l=m.getSeconds(),m=Date.UTC(t,"7","24","0","0","0"),r=Date.UTC(n,o,r,a,i,l)-m,a=Math.floor(r/31536e6),i=Math.floor(r/e-365*a),l=Math.floor((r-(365*a+i)*e)/36e5),m=Math.floor((r-(365*a+i)*e-36e5*l)/6e4),M=Math.floor((r-(365*a+i)*e-36e5*l-6e4*m)/1e3);t==n?(document.getElementById("year").innerHTML=n,document.getElementById("sitetime").innerHTML="本站已安全运行 "+i+" 天 "+l+" 小时 "+m+" 分钟 "+M+" 秒"):(document.getElementById("year").innerHTML=t+" - "+n,document.getElementById("sitetime").innerHTML="本站已安全运行 "+a+" 年 "+i+" 天 "+l+" 小时 "+m+" 分钟 "+M+" 秒")}setInterval(siteTime,1e3)</script></div><div class="col s12 m4 l4 social-link social-statis"><a href="https://github.com/JoyTsing" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50"><i class="fa fa-github"></i> </a><a href="http://wpa.qq.com/msgrd?v=3&uin=792566033&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="添加我的 QQ" data-position="top" data-delay="50"><i class="fa fa-qq"></i> </a><a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=792566033@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50"><i class="fa fa-envelope-open"></i></a></div></div></footer><div class="progress-bar"></div><div id="searchModal" class="modal"><div class="modal-content"><div class="search-header"><span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span> <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input"></div><div id="searchResult"></div></div></div><script src="/js/search.js"></script><script type="text/javascript">$(function(){searchFunc("/search.xml","searchInput","searchResult")})</script><div id="backTop" class="top-scroll"><a class="btn-floating btn-large waves-effect waves-light" href="#!"><i class="fa fa-angle-up"></i></a></div><script src="/libs/materialize/materialize.min.js"></script><script src="/libs/masonry/masonry.pkgd.min.js"></script><script src="/libs/aos/aos.js"></script><script src="/libs/scrollprogress/scrollProgress.min.js"></script><script src="/libs/lightGallery/js/lightgallery-all.min.js"></script><script src="/js/matery.js"></script><script async src="/libs/others/busuanzi.pure.mini.js"></script><script type="text/javascript">var st,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="(oﾟvﾟ)ノ Hi",clearTimeout(st)):(document.title="(*´∇｀*) 欢迎回来！",st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><script type="text/javascript" color="0,0,255" pointcolor="0,0,255" opacity="0.8" zindex="-1" count="150" src="/libs/background/canvas-nest.js"></script><script src="/libs/instantpage/instantpage.js" type="module"></script><script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script><script>const hasAttr = (e,a) => a.some(_=> e.attr(_)!==undefined);
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下一篇博文将讲解另一个排序算法——堆排序，也是此系列的第一个数据结构—–堆，后续学习你会发现对于堆的使用将远超与求解排序。</p>
+<p>转载自：<a href="https://blog.csdn.net/ITermeng/article/details/77397212">https://blog.csdn.net/ITermeng/article/details/77397212</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/tags/Play-with-Algorithms/">
+                                    <span class="chip bg-color">Play-with-Algorithms</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share"
+                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+    
+        <div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin"
+             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+        <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    /* 修复评论第一行位置错位 */
+    .v .vlist .vcard {
+        padding-top: 2.5em !important;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling"
+         style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fa fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '98JpzSGcrl9jFqHO13vqxHvX-gzGzoHsz',
+        appKey: 'mDmr2h9PB20xvPMNqgyRnNIC',
+        notify: 'true' === 'true',
+        verify: 'true' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge left-badge text-color">
+                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <div class="card">
+                    <a href="/posts/49310/">
+                        <div class="card-image">
+                            
+                                
+                                <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Play-with-Algorithms(4)：堆排序之 二叉堆（Heapify、原地堆排序优化）">
+                            
+                            <span class="card-title">Play-with-Algorithms(4)：堆排序之 二叉堆（Heapify、原地堆排序优化）</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                不同于前面几篇O(n^2)或O(n*logn)排序算法，此篇文章将讲解另一个排序算法——堆排序，也是此系列的第一个数据结构—–堆，需要注意的是在堆结构中排序是次要的，重要的是堆结构及衍生出来的数据结构问题，排序只是堆应用之一。
+此篇涉及的知
+                            
+                        </div>
+                        <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-08
+                        </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Algorithms/" class="post-category">
+                                    Algorithms
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/tags/Play-with-Algorithms/">
+                                    <span class="chip bg-color">Play-with-Algorithms</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+        
+            <div class="article col s12 m6" data-aos="fade-up">
+                <div class="article-badge right-badge text-color">
+                    下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+                </div>
+                <div class="card">
+                    <a href="/posts/24873/">
+                        <div class="card-image">
+                            
+                                
+                                <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Play-with-Algorithms(2)：O(n*logn)排序算法之 归并排序（自顶向下、自底向上） 及 算法优化">
+                            
+                            <span class="card-title">Play-with-Algorithms(2)：O(n*logn)排序算法之 归并排序（自顶向下、自底向上） 及 算法优化</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                在上一篇博文中学习了时间复杂度为 O(n^2)的几个排序算法（选择、插入、冒泡、希尔排序），其中尤为需要注意的是插入排序，在近乎有序的测试用例条件下，此算法的效率会高于 O(n*logn) 的排序算法，所以它的效率不容小觑。
+但是 O(n 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-08
+                            </span>
+                            <span class="publish-author">
+                                
+                                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                    
+                                        <a href="/categories/Algorithms/" class="post-category">
+                                    Algorithms
+                                </a>
+                                    
+                                
+                            </span>
+                        </div>
+                    </div>
+                    
+                        <div class="card-action article-tags">
+                            
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/tags/Play-with-Algorithms/">
+                                    <span class="chip bg-color">Play-with-Algorithms</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+            </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+    <script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+    <script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+    <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+    <style type="text/css">
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+    </style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+    <div id="floating-toc-btn" class="hide-on-med-and-down">
+        <a class="btn-floating btn-large bg-color">
+            <i class="fa fa-list"></i>
+        </a>
+    </div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换 TOC 目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" rel="external nofollow noreferrer">JoyTsing</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            <span id="sitetime">载入运行时间...</span>
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                                                                       class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fa fa-user"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                                                                         class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+                    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278523400'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1278523400%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+                <br>
+            
+            
+                
+                    &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span
+                            class="white-color">297k</span>&nbsp;字
+                
+                
+                <script>
+                    function siteTime() {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2019";
+                        var startMonth = "7";
+                        var startDate = "24";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+                        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                            minutes);
+                        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                            diffMinutes * minutes) / seconds);
+                        if (startYear == todayYear) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                                " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                                " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                        }
+                    }
+
+                    setInterval(siteTime, 1000);
+                </script>
+            
+
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JoyTsing" class="tooltipped" target="_blank"
+       data-tooltip="访问我的GitHub"
+       data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    $(function () {
+        searchFunc("/search.xml", 'searchInput', 'searchResult');
+    });
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+<!-- Baidu Analytics -->
+
+
+<!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+<script type="text/javascript">
+    var OriginTitile = document.title,
+        st;
+    document.addEventListener("visibilitychange", function () {
+        document.hidden ? (document.title = "(oﾟvﾟ)ノ Hi", clearTimeout(st)) : (document.title =
+            "(*´∇｀*) 欢迎回来！", st = setTimeout(function () {
+            document.title = OriginTitile
+        }, 3e3))
+    })
+</script>
+
+<!-- 在线聊天工具  -->
+
+
+
+<!-- 背景 canvas-nest -->
+
+    <script type="text/javascript" color="0,0,255"
+            pointColor="0,0,255" opacity='0.8'
+            zIndex="-1" count="150"
+            src="/libs/background/canvas-nest.js"></script>
+
+
+
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+
+
+
+        <script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script>
+        <script>
+        const hasAttr = (e,a) => a.some(_=> e.attr(_)!==undefined);
         $('a').each(function() {
           const $this = $(this);
           if(hasAttr($this,["data-fancybox","ignore-external-link"])) return;
@@ -287,4 +1817,6 @@ int selection(T arr[], int n, int k) {
                 }
             }
           }
-        });</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":200},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>
+        });
+        </script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":200},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body>
+</html>
