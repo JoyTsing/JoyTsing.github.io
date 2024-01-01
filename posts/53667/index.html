@@ -4,14 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux学习笔记(九), 博客 JoyTsing blog">
-    <meta name="description" content="Shell编程脚本shell脚本工作原理:
-
-loader程序加载脚本，发现不是elf可执行文件，返回错误
-bash收到错误，然后打开文件头部，发现是脚本
-调用脚本执行
-
-几乎所有编程语言的教程都是从使用著名的“Hello World”开始">
+    <meta name="keywords" content="贵安，元旦快乐, 博客 JoyTsing blog">
+    <meta name="description" content="元旦快乐2024年伊始，很久没有更新新的博文了，先给大家祝贺一下。在这里顺便说一下本站接下来的计划吧：
+因为这个blog是我大二时候一时兴起搭的，大部分插件什么的也是那会弄的，现在发现已经有很多不能用了，可能之后会有一次大的迭代或者重构吧。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +15,7 @@ bash收到错误，然后打开文件头部，发现是脚本
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="white"/>
-    <title>Linux学习笔记(九) | JoyTsing</title>
+    <title>贵安，元旦快乐 | JoyTsing</title>
     <link rel="apple-touch-icon" href="/">
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -412,12 +407,12 @@ bash收到错误，然后打开文件头部，发现是脚本
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux学习笔记(九)</h1>
+                    <h1 class="description center-align post-title">贵安，元旦快乐</h1>
                 </div>
             </div>
         </div>
@@ -533,8 +528,8 @@ bash收到错误，然后打开文件头部，发现是脚本
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -545,8 +540,8 @@ bash收到错误，然后打开文件头部，发现是脚本
                         <div class="post-cate">
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                                <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                <a href="/categories/%E6%9D%82%E8%AE%B0/" class="post-category">
+                                    杂记
                                 </a>
                             
                         </div>
@@ -558,28 +553,28 @@ bash收到错误，然后打开文件头部，发现是脚本
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                        2020-05-11
+                        2024-01-02
                     </div>
                 
 
                 
                     <div class="post-date info-break-policy">
                         <i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp;
-                        2023-09-25
+                        2024-01-02
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        3.1k
+                        220
                     </div>
                 
 
                 
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        11 分
+                        1 分
                     </div>
                 
 
@@ -594,352 +589,9 @@ bash收到错误，然后打开文件头部，发现是脚本
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Shell编程"><a href="#Shell编程" class="headerlink" title="Shell编程"></a>Shell编程</h2><h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><p>shell脚本工作原理:</p>
-<ul>
-<li>loader程序加载脚本，发现不是elf可执行文件，返回错误</li>
-<li>bash收到错误，然后打开文件头部，发现是脚本</li>
-<li>调用脚本执行</li>
-</ul>
-<p>几乎所有编程语言的教程都是从使用著名的“Hello World”开始的，我们的第一个 Shell 脚本也输出“Hello World”。</p>
-<a id="more"></a>
-
-<p>使用vim创建一个新的文本文件，并输入</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token keyword">echo</span> <span class="token string">"Hello World !"</span>  <span class="token comment" spellcheck="true">#这是一条语句</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>第 1 行的#!是一个约定的标记，它告诉系统这个脚本需要什么解释器来执行，即使用哪一种 Shell；后面的/bin/sh就是指明了解释器的具体位置。然后将文件修改为可执行文件 <code>chmod 777 filename</code> 可以为所有用户赋予读写执行的权限，如果有其他需求修改即可。</p>
-<p>shell的注释以#开头，#后面的内容即为注释</p>
-<h3 id="脚本调试"><a href="#脚本调试" class="headerlink" title="脚本调试"></a>脚本调试</h3><p>在编写较长并且复杂的脚本文件容易出现错误，且脚本文件是非编译程序，不配置的话是不会有编译器差错的。因为只能靠运行程序并尝试解释屏幕显示错误。</p>
-<p>set命令选项</p>
-<table>
-<thead>
-<tr>
-<th align="left">选项</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-n</td>
-<td align="left">读取命令但不执行，用来检查脚本中的语法错误</td>
-</tr>
-<tr>
-<td align="left">-v</td>
-<td align="left">输出参数替换前的命令</td>
-</tr>
-<tr>
-<td align="left">-x</td>
-<td align="left">输出的是带参数展开后的命令</td>
-</tr>
-</tbody></table>
-<p>如果想要关闭上述命令，将-换为+即可。</p>
-<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>关于变量赋值已经在八中讲过了，现在我们来学习一下怎么进行变量替换操作，既只有某种条件发生时才进行替换,这里举出几个最常用的:</p>
-<table>
-<thead>
-<tr>
-<th align="left">替换操作</th>
-<th align="left">功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">${value:-word}</td>
-<td align="left">如果变量不存在(或为空)，返回word，否则返回变量的值</td>
-</tr>
-<tr>
-<td align="left">${value:=word}</td>
-<td align="left">如果变量不存在(或为空)，设置VAR变量为word，返回word</td>
-</tr>
-<tr>
-<td align="left">${value:?word}</td>
-<td align="left">如果变量不存在(或为空)，打印message，退出，但交互shell不会退出</td>
-</tr>
-<tr>
-<td align="left">${value:+word}</td>
-<td align="left">如果变量存在，返回word；否则返回null</td>
-</tr>
-</tbody></table>
-<p>删除变量则使用unset VARNAME即可</p>
-<h4 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h4><h4 id="位置参数"><a href="#位置参数" class="headerlink" title="位置参数"></a>位置参数</h4><p>运行 Shell 脚本文件时我们可以给它传递一些参数，这些参数在脚本文件内部可以使用$n的形式来接收，例如，$1 表示第一个参数，$2 表示第二个参数，依次类推，最多可以有10个命令行参数,如果参数个数太多，达到或者超过了 10 个，那么就得用${n}的形式来接收了，例如 ${10}、${23}。{ }的作用是为了帮助解释器识别参数的边界，这跟使用变量时加{ }是一样的效果。</p>
-<p>同样，在调用函数时也可以传递参数。<strong>Shell 函数参数的传递和其它编程语言不同，没有所谓的形参和实参， 在定义函数时也不用指明参数的名字和数目。</strong> 换句话说，定义 Shell 函数时不能带参数，但是在调用函数时却可以传递参数，这些传递进来的参数，在函数内部就也使用$n的形式接收，例如，$1 表示第一个参数，$2 表示第二个参数，依次类推。</p>
-<p>这种通过$n的形式来接收的参数，在 Shell 中称为位置参数，除了 $n，Shell 中还有 $#、$*、$@、$?、$$ 几个特殊参数。</p>
-<h5 id="给脚本文件传递位置参数"><a href="#给脚本文件传递位置参数" class="headerlink" title="给脚本文件传递位置参数"></a>给脚本文件传递位置参数</h5><pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token keyword">echo</span> <span class="token string">"Language: <span class="token variable">$1</span>"</span>
-<span class="token keyword">echo</span> <span class="token string">"URL: <span class="token variable">$2</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>运行并附带参数：<br><img src="/posts/4083/1.png"></p>
-<h4 id="给函数传递位置参数"><a href="#给函数传递位置参数" class="headerlink" title="给函数传递位置参数"></a>给函数传递位置参数</h4><pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token comment" spellcheck="true">#定义函数</span>
-<span class="token keyword">function</span> func<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">echo</span> <span class="token string">"Language: <span class="token variable">$1</span>"</span>
-    <span class="token keyword">echo</span> <span class="token string">"URL: <span class="token variable">$2</span>"</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">#调用函数</span>
-func shell https://github.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<img src="/posts/4083/2.png">
-
-<h4 id="特殊参数"><a href="#特殊参数" class="headerlink" title="特殊参数"></a>特殊参数</h4><table>
-<thead>
-<tr>
-<th align="left">变量</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">$0</td>
-<td align="left">当前脚本的文件名</td>
-</tr>
-<tr>
-<td align="left">$n（n≥1）</td>
-<td align="left">传递给脚本或函数的参数。n 是一个数字，表示第几个参数</td>
-</tr>
-<tr>
-<td align="left">$#</td>
-<td align="left">传递给脚本或函数的参数个数</td>
-</tr>
-<tr>
-<td align="left">$*</td>
-<td align="left">传递给脚本或函数的所有参数,将所有参数使用$IFS隔开，形成一个字符串</td>
-</tr>
-<tr>
-<td align="left">$@</td>
-<td align="left">传递给脚本或函数的所有参数。当被双引号” “包含时，$@ 与 $* 稍有不同</td>
-</tr>
-<tr>
-<td align="left">$?</td>
-<td align="left">上个命令的退出状态，或函数的返回值</td>
-</tr>
-<tr>
-<td align="left">$$</td>
-<td align="left">表示当前进程id</td>
-</tr>
-</tbody></table>
-<p>$* 和 $@ 都表示传递给函数或脚本的所有参数,这里重点区分一下当，$*和 $@ 不被双引号” “包围时，它们之间没有任何区别，都是将接收到的每个参数看做一份数据，彼此之间以空格来分隔。</p>
-<p>但是当它们被双引号” “包含时，就会有区别了：</p>
-<ul>
-<li><code>&quot;$*&quot;</code>会将所有的参数从整体上看做一份数据，而不是把每个参数都看做一份数据。</li>
-<li><code>&quot;$@&quot;</code>仍然将每个参数都看作一份数据，彼此之间是独立的。</li>
-</ul>
-<p>比如传递了 5 个参数，那么对于”$*”来说，这 5 个参数会合并到一起形成一份数据，它们之间是无法分割的；而对于”$@”来说，这 5 个参数是相互独立的，它们是 5 份数据。</p>
-<p>如果使用 echo 直接输出”$*”和”$@”做对比，是看不出区别的；但如果使用 for 循环来逐个输出数据，立即就能看出区别来,这里先提前使用for循环，如果不了解的话请在学习后再来回顾。</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token keyword">echo</span> <span class="token string">"print each param from \"\<span class="token variable">$*</span>\""</span>
-<span class="token keyword">for</span> var <span class="token keyword">in</span> <span class="token string">"<span class="token variable">$*</span>"</span>
-<span class="token keyword">do</span>
-    <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$var</span>"</span>
-<span class="token keyword">done</span>
-<span class="token keyword">echo</span> <span class="token string">"print each param from \"\<span class="token variable">$@</span>\""</span>
-<span class="token keyword">for</span> var <span class="token keyword">in</span> <span class="token string">"<span class="token variable">$@</span>"</span>
-<span class="token keyword">do</span>
-    <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$var</span>"</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/posts/4083/3.png" alt="例子"></p>
-<p>$? 获取上一个命令的退出状态,所谓退出状态，就是上一个命令执行后的返回结果。退出状态是一个数字，一般情况下，大部分命令执行成功会返回 0，失败返回 1，这和C语言的 main() 函数是类似的,除了用于获取上一个命令退出状态外，还可以用来获取函数的返回值。这里仅讲获取函数的返回值，前一种情况类比即可。</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
-<span class="token comment" spellcheck="true">#得到两个数相加的和</span>
-<span class="token keyword">function</span> add<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">expr</span> $1 + $2<span class="token variable">)</span></span>
-<span class="token punctuation">}</span>
-add 23 50  <span class="token comment" spellcheck="true">#调用函数</span>
-<span class="token keyword">echo</span> <span class="token variable">$?</span>  <span class="token comment" spellcheck="true">#获取函数返回值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="算术表达式"><a href="#算术表达式" class="headerlink" title="算术表达式"></a>算术表达式</h4><p>Shell中变量都是字符串，计算算术的时候使用$(())作为算术表达式并获取值(注意，双小括号运算仅在Bash shell中运行)，否则将视作两个字符串操作。</p>
-<p><code>echo $((3+2))</code></p>
-<p>除了算术运算外还可以进行逻辑运算，规则与其他编程语言相同，不再累述了（值得注意的是对于字符串而言=也可以表示等于）。</p>
-<h4 id="逻辑连接"><a href="#逻辑连接" class="headerlink" title="逻辑连接"></a>逻辑连接</h4><p>使用&amp;&amp;和||连接两条命令,&amp;&amp;表示and,||表示or,相似的，在shell中也有逻辑短路。</p>
-<ul>
-<li>Command1 &amp;&amp; command2，当command1正确执行，才会执行command2</li>
-<li>Command1 || command2，当command1执行错误，才会执行command2</li>
-</ul>
-<h4 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h4><p>eval命令将会首先扫描命令行进行所有的替换，然后再执行命令。该命令使用于那些一次扫描无法实现其功能的变量。该命令对变量进行两次扫描。这些需要进行两次扫描的变量有时候被称为复杂变量，eval告诉shell再跑一遍命令解释流程。</p>
-<p><code>eval echo \$$# 取得最后一个参数</code></p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cat</span> last
-<span class="token function">eval</span> <span class="token keyword">echo</span> \$$<span class="token comment" spellcheck="true">#</span>
-./last one two three four
-four<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>第一遍扫描后，shell把反斜杠去掉了。当shell再次扫描该行时，它替换了$4的值，并执行echo命令。</p>
-<h3 id="shift"><a href="#shift" class="headerlink" title="shift"></a>shift</h3><p>位置参数可以用shift命令左移。比如shift 3表示原来的$4现在变成$1，原来的$5现在变成$2等等，原来的$1、$2、$3丢弃，$0不移动。不带参数的shift命令相当于shift 1。</p>
-<p>我们知道，对于位置变量或命令行参数，其个数必须是确定的，或者当 Shell 程序不知道其个数时，可以把所有参数一起赋值给变量$*。若用户要求 Shell 在不知道位置变量个数的情况下，还能逐个的把参数一一处理，也就是在 $1 后为 $2,在 $2 后面为 $3 等。在 shift 命令执行前变量 $1 的值在 shift 命令执行后就不可用了。</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">until</span> <span class="token punctuation">[</span> $<span class="token comment" spellcheck="true"># -eq 0 ]</span>
-<span class="token keyword">do</span>
-<span class="token keyword">echo</span> <span class="token string">"第一个参数为: <span class="token variable">$1</span> 参数个数为: <span class="token variable">$#</span>"</span>
-<span class="token function">shift</span>
-<span class="token keyword">done</span>
-执行以上程序x_shift.sh：
-./x_shift.sh 1 2 3 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>结果显示如下：</p>
-<p>第一个参数为: 1 参数个数为: 4<br>第一个参数为: 2 参数个数为: 3<br>第一个参数为: 3 参数个数为: 2<br>第一个参数为: 4 参数个数为: 1</p>
-<h3 id="条件分支"><a href="#条件分支" class="headerlink" title="条件分支"></a>条件分支</h3><p>语法格式为:</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">if</span> 条件<span class="token punctuation">;</span> <span class="token keyword">then</span>
-    <span class="token function">command</span> lines
-<span class="token punctuation">[</span>elif 条件
-    <span class="token function">command</span> lines<span class="token punctuation">]</span>
-<span class="token punctuation">[</span>else
-    <span class="token function">command</span> lines<span class="token punctuation">]</span>
-<span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>条件是一段命令，测试的是$?是否是0,为0满足条件,条件外面的括号是必须的，且条件必须用空格包围起来。</p>
-<h4 id="测试条件"><a href="#测试条件" class="headerlink" title="测试条件"></a>测试条件</h4><h5 id="测试字符串表达式"><a href="#测试字符串表达式" class="headerlink" title="测试字符串表达式"></a>测试字符串表达式</h5><p>[]和test是等价的</p>
-<p>逻辑运算符有：</p>
-<ul>
-<li>-a与运算符</li>
-<li>-o或运算符</li>
-<li>-!非运算符</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">示例</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">=</td>
-<td align="left">“$STR1” = “STR2”</td>
-<td align="left">两个字符串是否相同</td>
-</tr>
-<tr>
-<td align="left">!=</td>
-<td align="left">“$STR1” != “STR2”</td>
-<td align="left">两个字符串是否不同</td>
-</tr>
-<tr>
-<td align="left">-n</td>
-<td align="left">-n “$STR”</td>
-<td align="left">字符串不是null</td>
-</tr>
-<tr>
-<td align="left">-z</td>
-<td align="left">-z “$STR”</td>
-<td align="left">字符串是null</td>
-</tr>
-</tbody></table>
-<p>在引用变量做字符串测试时，一定要加引号(保证正确的检验)，操作符两侧必须有空格，[ … ]中括号必须有空格</p>
-<h5 id="文件测试表达式"><a href="#文件测试表达式" class="headerlink" title="文件测试表达式"></a>文件测试表达式</h5><table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">示例</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">-r</td>
-<td align="left">-r filename</td>
-<td align="left">文件是否可读</td>
-</tr>
-<tr>
-<td align="left">-w</td>
-<td align="left">-w filename</td>
-<td align="left">文件是否可写</td>
-</tr>
-<tr>
-<td align="left">-s</td>
-<td align="left">-s filename</td>
-<td align="left">文件是否存在并且长度非0</td>
-</tr>
-<tr>
-<td align="left">-f</td>
-<td align="left">-f filename</td>
-<td align="left">文件是否为普通文件</td>
-</tr>
-<tr>
-<td align="left">-d</td>
-<td align="left">-d filename</td>
-<td align="left">文件是否为目录文件</td>
-</tr>
-</tbody></table>
-<p>例子：[ -e /var/log/syslog ] 判断是否存在</p>
-<h5 id="算术表达式测试"><a href="#算术表达式测试" class="headerlink" title="算术表达式测试"></a>算术表达式测试</h5><p>利用$(())计算算算术表达式</p>
-<p>即[ $((2+3)) = 5 ]</p>
-<p>例</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token function">printf</span> <span class="token string">"Are you ok?\n"</span>
-<span class="token function">printf</span> <span class="token string">"Input y for yes and no for no: "</span>
-<span class="token function">read</span> ANSWER
-<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$ANSWER</span>"</span> <span class="token operator">=</span> y <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
-    <span class="token function">printf</span> <span class="token string">"Glad to hear that!\n"</span>
-<span class="token keyword">else</span>
-    <span class="token function">printf</span> <span class="token string">"Go home!\n"</span>
-<span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h3><pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">case</span> <span class="token variable">$1</span> <span class="token keyword">in</span>
-    -f<span class="token punctuation">)</span>
-        … <span class="token punctuation">;</span><span class="token punctuation">;</span>
-    -d <span class="token operator">|</span> --directory<span class="token punctuation">)</span>
-        … <span class="token punctuation">;</span><span class="token punctuation">;</span>
-    *<span class="token punctuation">)</span>
-        … <span class="token punctuation">;</span><span class="token punctuation">;</span>
-esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>case、in 和 esac 都是 Shell 关键字，;;和*)就相当于其它编程语言中的 break 和 default。</p>
-<p>例子</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#! /bin/sh</span>
-<span class="token function">printf</span> <span class="token string">"Are you ok?\n"</span>
-<span class="token function">printf</span> <span class="token string">"Input y for yes and no for no: "</span>
-<span class="token function">read</span> ANSWER
-<span class="token keyword">case</span> <span class="token variable">$ANSWER</span> <span class="token keyword">in</span>
-    <span class="token punctuation">[</span>Yy<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">printf</span> <span class="token string">"Glad to hear that!\n"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-    <span class="token punctuation">[</span>Nn<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">printf</span> <span class="token string">"Go home!\n"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-       *<span class="token punctuation">)</span> <span class="token function">printf</span> <span class="token string">"No such option\n"</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>case in 的 pattern 部分支持简单的正则表达式，具体来说，可以使用以下几种格式：</p>
-<table>
-<thead>
-<tr>
-<th align="left">格式</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">*</td>
-<td align="left">表示任意字符串。</td>
-</tr>
-<tr>
-<td align="left">[abc]</td>
-<td align="left">表示 a、b、c 三个字符中的任意一个。比如，[15ZH] 表示 1、5、Z、H 四个字符中的任意一个</td>
-</tr>
-<tr>
-<td align="left">[m-n]</td>
-<td align="left">表示从 m 到 n 的任意一个字符。比如，[0-9] 表示任意一个数字，[0-9a-zA-Z] 表示字母或数字</td>
-</tr>
-<tr>
-<td align="left">|</td>
-<td align="left">表示多重选择，类似逻辑运算中的或运算。比如，abc</td>
-</tr>
-</tbody></table>
-<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><p>for循环有C风格的循环也有Python风格的for in循环，这里介绍后者。</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">for</span> variable <span class="token keyword">in</span> list-of-values<span class="token punctuation">;</span> <span class="token keyword">do</span>
-…
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>list-of-values用$IFS隔开，缺省是空格、tab、回车,例子如下</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#! /bin/sh</span>
-<span class="token keyword">for</span> count <span class="token keyword">in</span> 1 2 3<span class="token punctuation">;</span> <span class="token keyword">do</span>
-<span class="token keyword">echo</span> “In the loop <span class="token keyword">for</span> <span class="token variable">$count</span> times”
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><p>while循环格式如:</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">while</span> <span class="token punctuation">[</span> condition <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-…
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>[ condition ]等价于前述的test命令,例子如下</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#! /bin/sh</span>
-count<span class="token operator">=</span>1
-<span class="token keyword">while</span> <span class="token punctuation">[</span> <span class="token variable"><span class="token variable">$((</span>count <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token variable">))</span></span> <span class="token operator">=</span> “1” <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-<span class="token keyword">echo</span> <span class="token variable">$count</span>
-count<span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>count<span class="token operator">+</span><span class="token number">1</span><span class="token variable">))</span></span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="until循环"><a href="#until循环" class="headerlink" title="until循环"></a>until循环</h4><p>Until循环的格式如下,Until表示条件为假时，执行循环体</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">until</span> <span class="token punctuation">[</span> condition <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-…
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>例子如下：</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token shebang important">#! /bin/sh</span>
-count<span class="token operator">=</span>1
-<span class="token keyword">until</span> <span class="token punctuation">[</span> <span class="token variable"><span class="token variable">$((</span>count <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token variable">))</span></span> <span class="token operator">=</span> “0” <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
-<span class="token keyword">echo</span> <span class="token variable">$count</span>
-count<span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span>count<span class="token operator">+</span><span class="token number">1</span><span class="token variable">))</span></span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数已经在前面中出现过了，函数引用类似于普通命令，但是函数执行类似于内置命令，不会新fork一个shell。</p>
-<p>Shell 函数定义的语法格式如下：</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token keyword">function</span> name<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    statements
-    <span class="token punctuation">[</span>return value<span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>调用 Shell 函数时可以给它传递参数，也可以不传递。如果不传递参数，直接给出函数名字即可,如果传递参数，那么多个参数之间以空格分隔，不管是哪种形式，函数名字后面都不需要带括号，和其它编程语言不同的是，Shell 函数在定义时不能指明参数，但是在调用时却可以传递参数，并且给它传递什么参数它就接收什么参数。</p>
-<p>Shell 也不限制定义和调用的顺序，你可以将定义放在调用的前面，也可以反过来，将定义放在调用的后面。</p>
+                <h2 id="元旦快乐"><a href="#元旦快乐" class="headerlink" title="元旦快乐"></a>元旦快乐</h2><p>2024年伊始，很久没有更新新的博文了，先给大家祝贺一下。在这里顺便说一下本站接下来的计划吧：</p>
+<p>因为这个blog是我大二时候一时兴起搭的，大部分插件什么的也是那会弄的，现在发现已经有很多不能用了，可能之后会有一次大的迭代或者重构吧。毕竟前端这东西还是迭代太快了，这才4年hexo的结构就已经变了个样了，插件统计什么的我估计之前都是靠着缓存在工作，clean之后直接罢工了（笑。</p>
+<p>希望新的一年多多努力，好好奋斗，多读点书（不管是什么样的），做一些有意义的工作，别的想说的都融在那两首歌里面了，愿意听就去听吧。</p>
 
             </div>
             <hr/>
@@ -953,8 +605,8 @@ count<span class="token operator">=</span><span class="token variable"><span cla
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -1264,52 +916,49 @@ count<span class="token operator">=</span><span class="token variable"><span cla
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-            <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+                </div>
                 <div class="card">
-                    <a href="/posts/64955/">
+                    <a href="/posts/53667/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Linux学习笔记(十)">
+                                <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="贵安，元旦快乐">
                             
-                            <span class="card-title">Linux学习笔记(十)</span>
+                            <span class="card-title">贵安，元旦快乐</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                df,du与归档压缩等df与dudf显示可用空间，-h用常见的格式显示出大小
-
-du统计文件或者目录的磁盘使用情况，用得比较少。
-这些命令通常是在要扩容和挂载时候才使用，配合fdisk -l和lvextend来使用。
-
-
-tartar 命令
+                                元旦快乐2024年伊始，很久没有更新新的博文了，先给大家祝贺一下。在这里顺便说一下本站接下来的计划吧：
+因为这个blog是我大二时候一时兴起搭的，大部分插件什么的也是那会弄的，现在发现已经有很多不能用了，可能之后会有一次大的迭代或者重构吧。
                             
                         </div>
                         <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2024-01-02
+                            </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <a href="/categories/%E6%9D%82%E8%AE%B0/" class="post-category">
+                                    杂记
                                 </a>
                                     
                                 
                             </span>
                         </div>
                     </div>
+
                     
                         <div class="card-action article-tags">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
+                                <a href="/tags/%E6%9D%82%E8%AE%B0/">
+                                    <span class="chip bg-color">杂记</span>
                                 </a>
                             
                         </div>
@@ -1323,32 +972,31 @@ tartar 命令
                     下一篇&nbsp;<i class="fa fa-chevron-right"></i>
                 </div>
                 <div class="card">
-                    <a href="/posts/24357/">
+                    <a href="/posts/19689/">
                         <div class="card-image">
                             
                                 
-                                <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Linux学习笔记(八)">
+                                <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Linux下多Clang工具链的踩坑">
                             
-                            <span class="card-title">Linux学习笔记(八)</span>
+                            <span class="card-title">Linux下多Clang工具链的踩坑</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                ShellUnix操作系统分为两个部分：内核和应用，内核是UNIX系统的核心并且驻留内存，日常事务比如直接与硬件通信等都由内核完成。除了内核，有一些基本模块也是驻留内存的，这些模块完成重要的功能，比如输入/输出管理，文件管理内存管理等待。
-
+                                不难但是确实找不到相关资料
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-05-08
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-12-21
                             </span>
                             <span class="publish-author">
                                 
                                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                                     
-                                        <a href="/categories/Linux/" class="post-category">
-                                    Linux
+                                        <a href="/categories/Cpp/" class="post-category">
+                                    Cpp
                                 </a>
                                     
                                 
@@ -1357,6 +1005,10 @@ tartar 命令
                     </div>
                     
                         <div class="card-action article-tags">
+                            
+                                <a href="/tags/Cpp/">
+                                    <span class="chip bg-color">Cpp</span>
+                                </a>
                             
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
