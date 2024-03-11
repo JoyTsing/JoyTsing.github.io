@@ -1,371 +1,364 @@
 <!DOCTYPE HTML><html lang="zh-CN"><head><meta charset="utf-8"><meta name="keywords" content="贪吃蛇C++教程, 博客 JoyTsing blog"><meta name="description" content="概述
-
-  整个程序设计的原理就是：主函数死循环，不断刷新打印贪吃蛇和食物。这样每循环一次，就类似电影里面的一帧，最终显示的效果就是蛇会动起来。下面会有一一讲解的,主要涉及到一些类的设计
+整个程序设计的原理就是：主函数死循环，不断刷新打印贪吃蛇和食物。这样每循环一次，就类似电影里面的一帧，最终显示的效果就是蛇会动起来。下面会有一一讲解的,主要涉及到一些类的设计
 
 
 
 01初始化工作-游戏设置
+游戏设置和相关初始化放在了"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="renderer" content="webkit|ie-stand|ie-comp"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="white"><title>贪吃蛇C++教程 | JoyTsing</title><link rel="apple-touch-icon" href="/"><link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css"><link rel="stylesheet" type="text/css" href="/libs/aos/aos.css"><link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css"><link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css"><link rel="stylesheet" type="text/css" href="/css/matery.css"><link rel="stylesheet" type="text/css" href="/css/my.css"><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style><script src="/libs/jquery/jquery.min.js"></script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="JoyTsing" type="application/atom+xml"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><header class="navbar-fixed"><nav id="headNav" class="bg-color nav-transparent"><div id="navContainer" class="nav-wrapper container"><div class="brand-logo"><a href="/" class="waves-effect waves-light"><img src="/apple-touch-icon.png" class="logo-img" alt="LOGO"> <span class="logo-span">JoyTsing</span></a></div><a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a><ul class="right nav-menu"><li class="hide-on-med-and-down nav-item"><a href="/" class="waves-effect waves-light"><i class="fa fa-home"></i> <span>首页</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-tags"></i> <span>标签</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-bookmark"></i> <span>分类</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-archive"></i> <span>归档</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/about" class="waves-effect waves-light"><i class="fa fa-user-circle-o"></i> <span>关于</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/contact" class="waves-effect waves-light"><i class="fa fa-envelope"></i> <span>留言</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/friends" class="waves-effect waves-light"><i class="fa fa-address-book"></i> <span>友链</span></a></li><li><a href="#searchModal" class="modal-trigger waves-effect waves-light"><i id="searchIcon" class="fa fa-search" title="搜索"></i></a></li></ul><div id="mobile-nav" class="side-nav sidenav"><div class="mobile-head bg-color"><img src="/medias/avatars/touxiang2.jpg" class="logo-img circle responsive-img"><div class="logo-name">JoyTsing</div><div class="logo-desc">寒冬本来就冷, 还要吵个不停</div></div><ul class="menu-list mobile-menu-list"><li class="m-nav-item"><a href="/" class="waves-effect waves-light"><i class="fa fa-fw fa-home"></i> 首页</a></li><li class="m-nav-item"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-fw fa-tags"></i> 标签</a></li><li class="m-nav-item"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-fw fa-bookmark"></i> 分类</a></li><li class="m-nav-item"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-fw fa-archive"></i> 归档</a></li><li class="m-nav-item"><a href="/about" class="waves-effect waves-light"><i class="fa fa-fw fa-user-circle-o"></i> 关于</a></li><li class="m-nav-item"><a href="/contact" class="waves-effect waves-light"><i class="fa fa-fw fa-envelope"></i> 留言</a></li><li class="m-nav-item"><a href="/friends" class="waves-effect waves-light"><i class="fa fa-fw fa-address-book"></i> 友链</a></li><li><div class="divider"></div></li><li><a href="https://github.com/JoyTsing" class="waves-effect waves-light" target="_blank"><i class="fa fa-github-square fa-fw"></i>Follow Me</a></li></ul></div></div><style>.nav-transparent .github-corner{display:none!important}.github-corner{position:absolute;z-index:10;top:0;right:0;border:0;transform:scale(1.1)}.github-corner svg{color:#000;fill:#fff;height:64px;width:64px}.github-corner:hover .octo-arm{animation:a .56s ease-in-out}.github-corner .octo-arm{animation:none}@keyframes a{0%,to{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}</style><a href="https://github.com/JoyTsing" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Follow Me" data-position="left" data-delay="50"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a></nav></header><div class="bg-cover pd-header post-cover" style="background-image:url(/medias/featureimages/8.jpg)"><div class="container" style="right:0;left:0"><div class="row"><div class="col s12 m12 l12"><div class="brand"><h1 class="description center-align post-title">贪吃蛇C++教程</h1></div></div></div></div></div><main class="post-container content"><link rel="stylesheet" href="/libs/tocbot/tocbot.css"><style>#articleContent h1::before,#articleContent h2::before,#articleContent h3::before,#articleContent h4::before,#articleContent h5::before,#articleContent h6::before{display:block;content:" ";height:100px;margin-top:-100px;visibility:hidden}#articleContent :focus{outline:0}.toc-fixed{position:fixed;top:64px}.toc-widget{width:345px;padding-left:20px}.toc-widget .toc-title{margin:35px 0 15px 0;padding-left:17px;font-size:1.5rem;font-weight:700;line-height:1.5rem}.toc-widget ol{padding:0;list-style:none}#toc-content{height:calc(100vh - 250px);overflow:auto}#toc-content ol{padding-left:10px}#toc-content ol li{padding-left:10px}#toc-content .toc-link:hover{color:#42b983;font-weight:700;text-decoration:underline}#toc-content .toc-link::before{background-color:transparent;max-height:25px;position:absolute;right:23.5vw;display:block}#toc-content .is-active-link{color:#42b983}#floating-toc-btn{position:fixed;right:15px;bottom:76px;padding-top:15px;margin-bottom:0;z-index:998}#floating-toc-btn .btn-floating{width:48px;height:48px}#floating-toc-btn .btn-floating i{line-height:48px;font-size:1.4rem}</style><div class="row"><div id="main-content" class="col s12 m12 l9"><div id="artDetail"><div class="card"><div class="card-content article-info"><div class="row tag-cate"><div class="col s7"><div class="article-tag"><a href="/tags/Cpp/"><span class="chip bg-color">Cpp</span> </a><a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/"><span class="chip bg-color">贪吃蛇</span></a></div></div><div class="col s5 right-align"><div class="post-cate"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Cpp/" class="post-category">Cpp</a></div></div></div><div class="post-info"><div class="post-date info-break-policy"><i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp; 2019-08-28</div><div class="post-date info-break-policy"><i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp; 2024-03-11</div><div class="info-break-policy"><i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp; 2.8k</div><div class="info-break-policy"><i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp; 11 分</div><div id="busuanzi_container_page_pv" class="info-break-policy"><i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp; <span id="busuanzi_value_page_pv"></span></div></div></div><hr class="clearfix"><div class="card-content article-card-content"><div id="articleContent"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote><p>整个程序设计的原理就是：主函数死循环，不断刷新打印贪吃蛇和食物。这样每循环一次，就类似电影里面的一帧，最终显示的效果就是蛇会动起来。下面会有一一讲解的,主要涉及到一些类的设计</p></blockquote><a id="more"></a><h2 id="01初始化工作-游戏设置"><a href="#01初始化工作-游戏设置" class="headerlink" title="01初始化工作-游戏设置"></a>01初始化工作-游戏设置</h2><blockquote><p>游戏设置和相关初始化放在了一个类里面，并进行了静态声明。主要设置了游戏窗口的长和款。并在GameInit()函数里面设置了窗口大小，隐藏光标，初始化随机数种子等。代码如下：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//游戏设置相关模块，把函数都放到一个类里面了。函数定义为static静态成员，不生成实体也可以直接调用</span>
+<span class="token keyword">class</span> <span class="token class-name">GameSetting</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>    <span class="token comment" spellcheck="true">//游戏窗口的长宽    </span>
+    <span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">int</span> window_height <span class="token operator">=</span> <span class="token number">40</span><span class="token punctuation">;</span>    
+    <span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">int</span> window_width <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>    
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">GameInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">//设置游戏窗口大小</span>
+        <span class="token keyword">char</span> buffer<span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">;</span>       
+       <span class="token function">sprintf_s</span><span class="token punctuation">(</span>buffer<span class="token punctuation">,</span> <span class="token string">"mode con cols=%d lines=%d"</span><span class="token punctuation">,</span>window_width<span class="token punctuation">,</span> window_height<span class="token punctuation">)</span><span class="token punctuation">;</span>        
+       <span class="token function">system</span><span class="token punctuation">(</span>buffer<span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
-游戏设置和相关初始"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="renderer" content="webkit|ie-stand|ie-comp"><meta name="mobile-web-app-capable" content="yes"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="white"><title>贪吃蛇C++教程 | JoyTsing</title><link rel="apple-touch-icon" href="/"><link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico"><link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css"><link rel="stylesheet" type="text/css" href="/libs/aos/aos.css"><link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css"><link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css"><link rel="stylesheet" type="text/css" href="/css/matery.css"><link rel="stylesheet" type="text/css" href="/css/my.css"><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style><script src="/libs/jquery/jquery.min.js"></script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="JoyTsing" type="application/atom+xml"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head><body><header class="navbar-fixed"><nav id="headNav" class="bg-color nav-transparent"><div id="navContainer" class="nav-wrapper container"><div class="brand-logo"><a href="/" class="waves-effect waves-light"><img src="/apple-touch-icon.png" class="logo-img" alt="LOGO"> <span class="logo-span">JoyTsing</span></a></div><a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a><ul class="right nav-menu"><li class="hide-on-med-and-down nav-item"><a href="/" class="waves-effect waves-light"><i class="fa fa-home"></i> <span>首页</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-tags"></i> <span>标签</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-bookmark"></i> <span>分类</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-archive"></i> <span>归档</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/about" class="waves-effect waves-light"><i class="fa fa-user-circle-o"></i> <span>关于</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/contact" class="waves-effect waves-light"><i class="fa fa-envelope"></i> <span>留言</span></a></li><li class="hide-on-med-and-down nav-item"><a href="/friends" class="waves-effect waves-light"><i class="fa fa-address-book"></i> <span>友链</span></a></li><li><a href="#searchModal" class="modal-trigger waves-effect waves-light"><i id="searchIcon" class="fa fa-search" title="搜索"></i></a></li></ul><div id="mobile-nav" class="side-nav sidenav"><div class="mobile-head bg-color"><img src="/medias/avatars/touxiang2.jpg" class="logo-img circle responsive-img"><div class="logo-name">JoyTsing</div><div class="logo-desc">寒冬本来就冷, 还要吵个不停</div></div><ul class="menu-list mobile-menu-list"><li class="m-nav-item"><a href="/" class="waves-effect waves-light"><i class="fa fa-fw fa-home"></i> 首页</a></li><li class="m-nav-item"><a href="/tags" class="waves-effect waves-light"><i class="fa fa-fw fa-tags"></i> 标签</a></li><li class="m-nav-item"><a href="/categories" class="waves-effect waves-light"><i class="fa fa-fw fa-bookmark"></i> 分类</a></li><li class="m-nav-item"><a href="/archives" class="waves-effect waves-light"><i class="fa fa-fw fa-archive"></i> 归档</a></li><li class="m-nav-item"><a href="/about" class="waves-effect waves-light"><i class="fa fa-fw fa-user-circle-o"></i> 关于</a></li><li class="m-nav-item"><a href="/contact" class="waves-effect waves-light"><i class="fa fa-fw fa-envelope"></i> 留言</a></li><li class="m-nav-item"><a href="/friends" class="waves-effect waves-light"><i class="fa fa-fw fa-address-book"></i> 友链</a></li><li><div class="divider"></div></li><li><a href="https://github.com/JoyTsing" class="waves-effect waves-light" target="_blank"><i class="fa fa-github-square fa-fw"></i>Follow Me</a></li></ul></div></div><style>.nav-transparent .github-corner{display:none!important}.github-corner{position:absolute;z-index:10;top:0;right:0;border:0;transform:scale(1.1)}.github-corner svg{color:#000;fill:#fff;height:64px;width:64px}.github-corner:hover .octo-arm{animation:a .56s ease-in-out}.github-corner .octo-arm{animation:none}@keyframes a{0%,to{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}</style><a href="https://github.com/JoyTsing" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Follow Me" data-position="left" data-delay="50"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a></nav></header><div class="bg-cover pd-header post-cover" style="background-image:url(/medias/featureimages/8.jpg)"><div class="container" style="right:0;left:0"><div class="row"><div class="col s12 m12 l12"><div class="brand"><h1 class="description center-align post-title">贪吃蛇C++教程</h1></div></div></div></div></div><main class="post-container content"><link rel="stylesheet" href="/libs/tocbot/tocbot.css"><style>#articleContent h1::before,#articleContent h2::before,#articleContent h3::before,#articleContent h4::before,#articleContent h5::before,#articleContent h6::before{display:block;content:" ";height:100px;margin-top:-100px;visibility:hidden}#articleContent :focus{outline:0}.toc-fixed{position:fixed;top:64px}.toc-widget{width:345px;padding-left:20px}.toc-widget .toc-title{margin:35px 0 15px 0;padding-left:17px;font-size:1.5rem;font-weight:700;line-height:1.5rem}.toc-widget ol{padding:0;list-style:none}#toc-content{height:calc(100vh - 250px);overflow:auto}#toc-content ol{padding-left:10px}#toc-content ol li{padding-left:10px}#toc-content .toc-link:hover{color:#42b983;font-weight:700;text-decoration:underline}#toc-content .toc-link::before{background-color:transparent;max-height:25px;position:absolute;right:23.5vw;display:block}#toc-content .is-active-link{color:#42b983}#floating-toc-btn{position:fixed;right:15px;bottom:76px;padding-top:15px;margin-bottom:0;z-index:998}#floating-toc-btn .btn-floating{width:48px;height:48px}#floating-toc-btn .btn-floating i{line-height:48px;font-size:1.4rem}</style><div class="row"><div id="main-content" class="col s12 m12 l9"><div id="artDetail"><div class="card"><div class="card-content article-info"><div class="row tag-cate"><div class="col s7"><div class="article-tag"><a href="/tags/Cpp/"><span class="chip bg-color">Cpp</span> </a><a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/"><span class="chip bg-color">贪吃蛇</span></a></div></div><div class="col s5 right-align"><div class="post-cate"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Cpp/" class="post-category">Cpp</a></div></div></div><div class="post-info"><div class="post-date info-break-policy"><i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp; 2019-08-28</div><div class="post-date info-break-policy"><i class="fa fa-calendar-check-o fa-fw"></i>更新日期:&nbsp;&nbsp; 2023-12-14</div><div class="info-break-policy"><i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp; 515</div><div class="info-break-policy"><i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp; 2 分</div><div id="busuanzi_container_page_pv" class="info-break-policy"><i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp; <span id="busuanzi_value_page_pv"></span></div></div></div><hr class="clearfix"><div class="card-content article-card-content"><div id="articleContent"><p>概述</p><blockquote><p>整个程序设计的原理就是：主函数死循环，不断刷新打印贪吃蛇和食物。这样每循环一次，就类似电影里面的一帧，最终显示的效果就是蛇会动起来。下面会有一一讲解的,主要涉及到一些类的设计</p></blockquote><a id="more"></a><h3 id="01初始化工作-游戏设置"><a href="#01初始化工作-游戏设置" class="headerlink" title="01初始化工作-游戏设置"></a>01初始化工作-游戏设置</h3><hr><blockquote><p>游戏设置和相关初始化放在了一个类里面，并进行了静态声明。主要设置了游戏窗口的长和款。并在GameInit()函数里面设置了窗口大小，隐藏光标，初始化随机数种子等。代码如下：</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">
-//游戏设置相关模块，把函数都放到一个类里面了。函数定义为static静态成员，不生成实体也可以直接调用
-class GameSetting{
-public:    //游戏窗口的长宽    
-    static const int window_height = 40;    
-    static const int window_width = 80;
-public:    
-    static void GameInit()    {
-//设置游戏窗口大小
-        char buffer[32];       
-       sprintf_s(buffer, "mode con cols=%d lines=%d",window_width, window_height);        
-       system(buffer); 
+<span class="token comment" spellcheck="true">//隐藏光标HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);</span>
+        CONSOLE_CURSOR_INFO CursorInfo<span class="token punctuation">;</span> 
+        <span class="token function">GetConsoleCursorInfo</span><span class="token punctuation">(</span>handle<span class="token punctuation">,</span> <span class="token operator">&amp;</span>CursorInfo<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//获取控制台光标信息</span>
+        CursorInfo<span class="token punctuation">.</span>bVisible <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//隐藏控制台光标</span>
+        <span class="token function">SetConsoleCursorInfo</span><span class="token punctuation">(</span>handle<span class="token punctuation">,</span> <span class="token operator">&amp;</span>CursorInfo<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//设置控制台光标状态        </span>
+<span class="token comment" spellcheck="true">//初始化随机数种子       </span>
+        <span class="token function">srand</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="02-打印信息类"><a href="#02-打印信息类" class="headerlink" title="02 打印信息类"></a>02 打印信息类</h2><p>该类主要是用来打印一些游戏相关信息的。该类大体如下：</p><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">printInfo</span><span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+         <span class="token comment" spellcheck="true">//画地图边界</span>
+       <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">DrawMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token comment" spellcheck="true">//游戏结束</span>
+       <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Gameover</span><span class="token punctuation">(</span><span class="token keyword">int</span> score<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token comment" spellcheck="true">//画分数</span>
+       <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">DrawScore</span><span class="token punctuation">(</span><span class="token keyword">int</span> score<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token comment" spellcheck="true">//画游戏操作说明</span>
+       <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">DrawGameInfo</span><span class="token punctuation">(</span><span class="token keyword">bool</span> model<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-//隐藏光标HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-        CONSOLE_CURSOR_INFO CursorInfo; 
-        GetConsoleCursorInfo(handle, &CursorInfo);//获取控制台光标信息
-        CursorInfo.bVisible = false; //隐藏控制台光标
-        SetConsoleCursorInfo(handle, &CursorInfo);//设置控制台光标状态        
-//初始化随机数种子       
-        srand((unsigned int)time(0));    
-    }
-};
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h4 id="02-打印信息类"><a href="#02-打印信息类" class="headerlink" title="02 打印信息类"></a>02 打印信息类</h4><p>该类主要是用来打印一些游戏相关信息的。该类大体如下：</p><pre class="line-numbers language-C++"><code class="language-C++">
-class printInfo{
-public:
-         //画地图边界
-       static void DrawMap();
-         //游戏结束
-       static void Gameover(int score);
-         //画分数
-       static void DrawScore(int score);
-         //画游戏操作说明
-       static void DrawGameInfo(bool model);
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>下面挑几个重点的来讲：</p><h3 id="2-1-画地图边界"><a href="#2-1-画地图边界" class="headerlink" title="2.1 画地图边界"></a>2.1 画地图边界</h3><blockquote><p>这个函数主要是根据上面所给的游戏窗口长宽来打印地图边界的。其中还划分了几个区域，主要用来放不同的信息的。</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">
+<span class="token comment" spellcheck="true">//画地图边界</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">DrawMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>    
+    <span class="token function">system</span><span class="token punctuation">(</span><span class="token string">"cls"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>    
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> GameSetting<span class="token operator">::</span>window_width<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"#"</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> GameSetting<span class="token operator">::</span>window_height<span class="token number">-2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>        
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> GameSetting<span class="token operator">::</span>window_width<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">13</span> <span class="token operator">&amp;&amp;</span> j <span class="token operator">>=</span> GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">29</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"#"</span><span class="token punctuation">;</span>
+                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
 
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>下面挑几个重点的来讲：</p><h5 id="2-1-画地图边界"><a href="#2-1-画地图边界" class="headerlink" title="2.1 画地图边界"></a>2.1 画地图边界</h5><blockquote><p>这个函数主要是根据上面所给的游戏窗口长宽来打印地图边界的。其中还划分了几个区域，主要用来放不同的信息的。</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">
-//画地图边界
-static void DrawMap()
-{    
-    system("cls");    
-    int i, j;    
-    for (i = 0; i < GameSetting::window_width; i++)
-        cout << "#";
-    cout << endl;
-    for (i = 0; i < GameSetting::window_height-2; i++)
-    {        
-        for (j = 0; j < GameSetting::window_width; j++)
-        {
-            if (i == 13 && j >= GameSetting::window_width - 29)
-                {
-                    cout << "#";
-                    continue;
-                }
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> j <span class="token operator">==</span> GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">29</span> <span class="token operator">||</span> j <span class="token operator">==</span> GameSetting<span class="token operator">::</span>window_width<span class="token number">-1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+             cout <span class="token operator">&lt;&lt;</span> <span class="token string">"#"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+             cout <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
 
-      if (j == 0 || j == GameSetting::window_width - 29 || j == GameSetting::window_width-1)
-        {
-             cout << "#";
-        }
-        else
-             cout << " ";
+    <span class="token punctuation">}</span>
+    cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> GameSetting<span class="token operator">::</span>window_width<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"#"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="2-2-画出分数和模式"><a href="#2-2-画出分数和模式" class="headerlink" title="2.2 画出分数和模式"></a>2.2 画出分数和模式</h3><blockquote><p>该函数主要是在右上角画出成绩和游戏模式的，在绘制之前会进行刷新处理。先清除，再重新打印。用到了一个gotoxy()函数。这个函数主要是移动光标到(x, y)坐标处的。关于(x, y)的位置，根据实际情况调整即可。</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//画分数</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">DrawScore</span><span class="token punctuation">(</span><span class="token keyword">int</span> score<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">gotoxy</span><span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">22</span><span class="token operator">+</span><span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"  "</span><span class="token punctuation">;</span>
+    <span class="token function">gotoxy</span><span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">22</span><span class="token operator">+</span><span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"  "</span><span class="token punctuation">;</span>
 
-    }
-    cout << endl;
-}
-for (i = 0; i < GameSetting::window_width; i++)
-    cout << "#";
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h5 id="2-2-画出分数和模式"><a href="#2-2-画出分数和模式" class="headerlink" title="2.2 画出分数和模式"></a>2.2 画出分数和模式</h5><hr><blockquote><p>该函数主要是在右上角画出成绩和游戏模式的，在绘制之前会进行刷新处理。先清除，再重新打印。用到了一个gotoxy()函数。这个函数主要是移动光标到(x, y)坐标处的。关于(x, y)的位置，根据实际情况调整即可。</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">
-//画分数
-static void DrawScore(int score)
-{
-    gotoxy(GameSetting::window_width - 22+14, 6);
-    cout << "  ";
-    gotoxy(GameSetting::window_width - 22+14, 4);
-    cout << "  ";
+    <span class="token function">gotoxy</span><span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"当前玩家分数: "</span> <span class="token operator">&lt;&lt;</span> score <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token function">gotoxy</span><span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"当前游戏速度: "</span> <span class="token operator">&lt;&lt;</span> <span class="token number">10</span> <span class="token operator">-</span> speed <span class="token operator">/</span> <span class="token number">25</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
 
-    gotoxy(GameSetting::window_width - 22, 6);
-    cout << "当前玩家分数: " << score << endl;
-    gotoxy(GameSetting::window_width - 22, 4);
-    cout << "当前游戏速度: " << 10 - speed / 25 << endl;
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="03食物类"><a href="#03食物类" class="headerlink" title="03食物类"></a>03食物类</h2><blockquote><p>食物类定义了食物的坐标，随机生成规则，和画出食物等一系列操作。其中食物坐标我们用了一个结构体：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">
+<span class="token keyword">typedef</span> struct2
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> y
+<span class="token punctuation">;</span><span class="token punctuation">}</span>COORDINATE<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>该结构体两个成员，分别保存坐标的(x, y)。蛇身的坐标也会用到这个结构体。有关食物类的大体如下：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">
+<span class="token keyword">class</span> <span class="token class-name">Food</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment" spellcheck="true">//食物坐标 </span>
+    COORDINATE m_coordinate<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token comment" spellcheck="true">//坐标范围 </span>
+    <span class="token comment" spellcheck="true">//x：1 to gemeSetting::windos_width-30  </span>
+    <span class="token comment" spellcheck="true">//y：1 to gemeSetting::windos_width-2</span>
+    <span class="token keyword">void</span> <span class="token function">RandomXY</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>COORDINATE<span class="token operator">></span> <span class="token operator">&amp;</span>coord<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//默认构造函数 </span>
+    <span class="token function">Food</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//构造函数 传入参数为蛇身坐标 </span>
+    <span class="token function">Food</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>COORDINATE<span class="token operator">></span> <span class="token operator">&amp;</span>coord<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//画出食物的位置 </span>
+    <span class="token keyword">void</span> <span class="token function">DrawFood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//接口,获取食物位置 </span>
+    COORDINATE <span class="token function">GetFoodCoordinate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h3 id="3-1-随机生成食物"><a href="#3-1-随机生成食物" class="headerlink" title="3.1 随机生成食物"></a>3.1 随机生成食物</h3><blockquote><p>随机生成食物，<strong>原则上不允许食物出现在蛇身的位置上</strong>，如果有。我们重新生成。注意地图的范围，就是区域左边一块。实际情况根据自身的地图范围来调整食物坐标的范围，注意不要越界。用rand()函数获得随机坐标。代码如下：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">RandomXY</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>COORDINATE<span class="token operator">></span> <span class="token operator">&amp;</span> coord<span class="token punctuation">)</span>
+ <span class="token punctuation">{</span>
+     m_coordinate<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     m_coordinate<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_height <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+     <span class="token comment" spellcheck="true">//原则上不允许食物出现在蛇的位置上，如果有，重新生成</span>
+     <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> coord<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+     <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//食物出现在蛇身的位置上。重新生成</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>coord<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">==</span> m_coordinate<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span> coord<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">==</span> m_coordinate<span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            m_coordinate<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            m_coordinate<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_height <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h3 id="3-2-画出食物"><a href="#3-2-画出食物" class="headerlink" title="3.2 画出食物"></a>3.2 画出食物</h3><blockquote><p>画出食物比较简单了，gotoxy到随机生成的坐标之后，cout就行。我们在这还设置了一个食物颜色为红色。代码如下：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">DrawFood</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">gotoxy</span><span class="token punctuation">(</span>m_coordinate<span class="token punctuation">.</span>x<span class="token punctuation">,</span> m_coordinate<span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"@"</span><span class="token punctuation">;</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h2 id="04-贪吃蛇类"><a href="#04-贪吃蛇类" class="headerlink" title="04 贪吃蛇类"></a>04 贪吃蛇类</h2><blockquote><p>定义贪吃蛇的移动，打印，吃食物等等。这节课我们暂时不讨论AI功能，先把手动操作的贪吃蛇做了跑起来，下节课再做AI功能的介绍。该类大体如下：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//贪吃蛇类，定义贪吃蛇的移动，打印，吃食物等待</span>
+<span class="token comment" spellcheck="true">//地图范围 width: 2 to width-2  height: 2 to height-2</span>
+<span class="token keyword">class</span> <span class="token class-name">Snake</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> m_direction<span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> m_is_alive<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>蛇身坐标 
+    vector<span class="token operator">&lt;</span>COORDINATE<span class="token operator">></span> m_coordinate<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//监听键盘</span>
+    <span class="token keyword">void</span> <span class="token function">listen_key_borad</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> 
+    <span class="token comment" spellcheck="true">//检测是否碰到自己</span>
+    <span class="token keyword">bool</span> <span class="token function">self_collision</span><span class="token punctuation">(</span>COORDINATE head<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//移动贪吃蛇</span>
+    <span class="token keyword">void</span> <span class="token function">move_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//判断是否吃到食物</span>
+    <span class="token keyword">bool</span> <span class="token function">is_eat_food</span><span class="token punctuation">(</span>Food <span class="token operator">&amp;</span>f<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//判断是否die</span>
+    <span class="token keyword">bool</span> <span class="token function">snake_is_alive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//draw</span>
+    <span class="token keyword">void</span> <span class="token function">draw_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//清屏</span>
+    <span class="token keyword">void</span> <span class="token function">ClearSnake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//获取贪吃蛇的长度</span>
+    <span class="token keyword">int</span> <span class="token function">GetSnakeSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> 
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="4-1-成员变量"><a href="#4-1-成员变量" class="headerlink" title="4.1 成员变量"></a>4.1 成员变量</h3><blockquote><p>成员变量m_direction记录每次移动的方向。m_is_alive记录贪吃蛇是否还活着。m_coordinate则是贪吃蛇身体坐标的记录。贪吃蛇是一节一节的，整条蛇必然是由许多节组成的。因此用了一个vector来存储蛇身，每节类型是COORDINATE结构体的。</p></blockquote><h3 id="4-2-默认构造函数"><a href="#4-2-默认构造函数" class="headerlink" title="4.2 默认构造函数"></a>4.2 默认构造函数</h3><blockquote><p>默认构造函数Snake()里面主要是做了初始贪吃蛇的生成，以及移动方向的定义等。初始的蛇为3节。在中间位置，向上移动。代码如下：</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token function">Snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>      <span class="token comment" spellcheck="true">//移动方向向上</span>
+    m_direction <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    m_is_alive <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    COORDINATE snake_head<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//蛇头生成位置</span>
+    snake_head<span class="token punctuation">.</span>x <span class="token operator">=</span> GameSetting<span class="token operator">::</span>window_width <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">;</span>
+    snake_head<span class="token punctuation">.</span>y <span class="token operator">=</span> GameSetting<span class="token operator">::</span>window_height <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
 
-}
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h4 id="食物类"><a href="#食物类" class="headerlink" title="食物类"></a>食物类</h4><blockquote><p>食物类定义了食物的坐标，随机生成规则，和画出食物等一系列操作。其中食物坐标我们用了一个结构体：</p></blockquote><pre class="line-numbers language-C"><code class="language-C">
-typedef struct2
-{
-    int x;
-    int y
-;}COORDINATE;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>该结构体两个成员，分别保存坐标的(x, y)。蛇身的坐标也会用到这个结构体。有关食物类的大体如下：</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">
-class Food
-{
-private:
-    //食物坐标 
-    COORDINATE m_coordinate;
-public:
-    //坐标范围 
-    //x：1 to gemeSetting::windos_width-30  
-    //y：1 to gemeSetting::windos_width-2
-    void RandomXY(vector<coordinate> &coord) {}
-    //默认构造函数 
-    Food(){}
-    //构造函数 传入参数为蛇身坐标 
-    Food(vector<coordinate> &coord){}
-    //画出食物的位置 
-    void DrawFood(){}
-    //接口,获取食物位置 
-    COORDINATE GetFoodCoordinate(){}
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></coordinate></coordinate></code></pre><hr><h5 id="3-1-随机生成食物"><a href="#3-1-随机生成食物" class="headerlink" title="3.1 随机生成食物"></a>3.1 随机生成食物</h5><blockquote><p>随机生成食物，<strong>原则上不允许食物出现在蛇身的位置上</strong>，如果有。我们重新生成。注意地图的范围，就是区域左边一块。实际情况根据自身的地图范围来调整食物坐标的范围，注意不要越界。用rand()函数获得随机坐标。代码如下：</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">void RandomXY(vector<coordinate> & coord)
- {
-     m_coordinate.x = rand() % (GameSetting::window_width - 30) + 1;
-     m_coordinate.y = rand() % (GameSetting::window_height - 2) + 1;
-     unsigned int i;
-     //原则上不允许食物出现在蛇的位置上，如果有，重新生成
-     for (i = 0; i < coord.size(); i++)
-     {
-        //食物出现在蛇身的位置上。重新生成
-        if (coord[i].x == m_coordinate.x && coord[i].y == m_coordinate.y)
-        {
-            m_coordinate.x = rand() % (GameSetting::window_width - 30) + 1;
-            m_coordinate.y = rand() % (GameSetting::window_height - 2) + 1;
-            i = 0;
-        }
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></coordinate></code></pre><hr><h5 id="3-2-画出食物"><a href="#3-2-画出食物" class="headerlink" title="3.2 画出食物"></a>3.2 画出食物</h5><blockquote><p>画出食物比较简单了，gotoxy到随机生成的坐标之后，cout就行。我们在这还设置了一个食物颜色为红色。代码如下：</p></blockquote><pre class="line-numbers language-C"><code class="language-C">void DrawFood()
-{
-    setColor(12, 0);
-    gotoxy(m_coordinate.x, m_coordinate.y);
-    cout << "@";
-    setColor(7, 0);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h4 id="04-贪吃蛇类"><a href="#04-贪吃蛇类" class="headerlink" title="04 贪吃蛇类"></a>04 贪吃蛇类</h4><blockquote><p>定义贪吃蛇的移动，打印，吃食物等等。这节课我们暂时不讨论AI功能，先把手动操作的贪吃蛇做了跑起来，下节课再做AI功能的介绍。该类大体如下：</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">//贪吃蛇类，定义贪吃蛇的移动，打印，吃食物等待
-//地图范围 width: 2 to width-2  height: 2 to height-2
-class Snake
-{
-private:
-    int m_direction;
-    bool m_is_alive;
-public://蛇身坐标 
-    vector<coordinate> m_coordinate;
-public:
-    Snake(){}
-    //监听键盘
-    void listen_key_borad(){} 
-    //检测是否碰到自己
-    bool self_collision(COORDINATE head){}
-    //移动贪吃蛇
-    void move_snake(){}
-    //判断是否吃到食物
-    bool is_eat_food(Food &f){}
-    //判断是否die
-    bool snake_is_alive(){}
-    //draw
-    void draw_snake(){}
-    //清屏
-    void ClearSnake(){}
-    //获取贪吃蛇的长度
-    int GetSnakeSize(){} 
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></coordinate></code></pre><hr><h5 id="4-1-成员变量"><a href="#4-1-成员变量" class="headerlink" title="4.1 成员变量"></a>4.1 成员变量</h5><blockquote><p>成员变量m_direction记录每次移动的方向。m_is_alive记录贪吃蛇是否还活着。m_coordinate则是贪吃蛇身体坐标的记录。贪吃蛇是一节一节的，整条蛇必然是由许多节组成的。因此用了一个vector来存储蛇身，每节类型是COORDINATE结构体的。</p></blockquote><hr><h5 id="4-2-默认构造函数"><a href="#4-2-默认构造函数" class="headerlink" title="4.2 默认构造函数"></a>4.2 默认构造函数</h5><blockquote><p>默认构造函数Snake()里面主要是做了初始贪吃蛇的生成，以及移动方向的定义等。初始的蛇为3节。在中间位置，向上移动。代码如下：</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">Snake()
-{      //移动方向向上
-    m_direction = 1;
-    m_is_alive = true;
-    COORDINATE snake_head;
-    //蛇头生成位置
-    snake_head.x = GameSetting::window_width / 2 - 15;
-    snake_head.y = GameSetting::window_height / 2;
+    <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_coordinate<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>snake_head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    snake_head<span class="token punctuation">.</span>y<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_coordinate<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>snake_head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    snake_head<span class="token punctuation">.</span>y<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_coordinate<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>snake_head<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//初始蛇身长度三节</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="4-3-监听键盘"><a href="#4-3-监听键盘" class="headerlink" title="4.3 监听键盘"></a>4.3 监听键盘</h3><blockquote><p>监听键盘用了C里面的一个库函数。_kbhit()非阻塞函数，可以不断监听键盘的情况从而不产生阻塞。有键盘按下的时候，就获取按下的键盘是哪个。然后做出相应的变化，其实是方向的调整。需要注意的是，当我们的蛇往上走的时候，按下方向的键，我们是不做处理的。其它方向一样。还有一个调整游戏速度的，speed是休眠时间，speed越小，速度越快。反之速度越慢。</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">    <span class="token comment" spellcheck="true">//监听键盘</span>
+<span class="token keyword">void</span> <span class="token function">listen_key_borad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> ch<span class="token punctuation">;</span>
 
-    this->m_coordinate.push_back(snake_head);
-    snake_head.y++;
-    this->m_coordinate.push_back(snake_head);
-    snake_head.y++;
-    this->m_coordinate.push_back(snake_head); //初始蛇身长度三节
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h5 id="4-3-监听键盘"><a href="#4-3-监听键盘" class="headerlink" title="4.3 监听键盘"></a>4.3 监听键盘</h5><blockquote><p>监听键盘用了C里面的一个库函数。_kbhit()非阻塞函数，可以不断监听键盘的情况从而不产生阻塞。有键盘按下的时候，就获取按下的键盘是哪个。然后做出相应的变化，其实是方向的调整。需要注意的是，当我们的蛇往上走的时候，按下方向的键，我们是不做处理的。其它方向一样。还有一个调整游戏速度的，speed是休眠时间，speed越小，速度越快。反之速度越慢。</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">    //监听键盘
-void listen_key_borad()
-{
-    char ch;
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_kbhit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>                    <span class="token comment" spellcheck="true">//kbhit 非阻塞函数 </span>
+    <span class="token punctuation">{</span>
+        ch <span class="token operator">=</span> <span class="token function">_getch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//使用 getch 函数获取键盘输入 </span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>ch<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string">'w'</span><span class="token operator">:</span>
+        <span class="token keyword">case</span> <span class="token string">'W'</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">==</span> DOWN<span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">=</span> UP<span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'s'</span><span class="token operator">:</span>
+        <span class="token keyword">case</span> <span class="token string">'S'</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">==</span> UP<span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">=</span> DOWN<span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'a'</span><span class="token operator">:</span>
+        <span class="token keyword">case</span> <span class="token string">'A'</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">==</span> RIGHT<span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">=</span> LEFT<span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'d'</span><span class="token operator">:</span>
+        <span class="token keyword">case</span> <span class="token string">'D'</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">==</span> LEFT<span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction <span class="token operator">=</span> RIGHT<span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'+'</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>speed <span class="token operator">>=</span> <span class="token number">25</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                speed <span class="token operator">-</span><span class="token operator">=</span> <span class="token number">25</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'-'</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>speed <span class="token operator">&lt;</span> <span class="token number">250</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                speed <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">25</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="4-4-移动贪吃蛇"><a href="#4-4-移动贪吃蛇" class="headerlink" title="4.4 移动贪吃蛇"></a>4.4 移动贪吃蛇</h3><blockquote><p><strong>移动贪吃蛇，我们用了一个方向变量，在监听键盘的时候获取移动的方向，然后在根据方向移动贪吃蛇的蛇头。这里的移动我们是这样处理的，首先，贪吃蛇每移动一次，需要改变的只有蛇头和蛇尾两节。我们只需要把新的蛇头插进去，最后再画出来就可以了。至于蛇尾，如果我们不删除蛇尾的话，蛇会不断变长的。因此我们的做法是：吃到食物的时候插入蛇头而不删除蛇尾，没有吃到食物的时候插入蛇头同时删除蛇尾。这样就完美搞定了。</strong></p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">    <span class="token comment" spellcheck="true">//移动贪吃蛇</span>
+<span class="token keyword">void</span> <span class="token function">move_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//监听键盘</span>
+    <span class="token function">listen_key_borad</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//蛇头</span>
+    COORDINATE head <span class="token operator">=</span> m_coordinate<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//direction方向:1 上  2 下  3 左  4 右</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_direction<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> UP<span class="token operator">:</span>
+        head<span class="token punctuation">.</span>y<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> DOWN<span class="token operator">:</span>
+        head<span class="token punctuation">.</span>y<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> LEFT<span class="token operator">:</span>
+        head<span class="token punctuation">.</span>x<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> RIGHT<span class="token operator">:</span>
+        head<span class="token punctuation">.</span>x<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//插入移动后新的蛇头。是否删除蛇尾，在后续吃到食物判断那里做</span>
+    m_coordinate<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>m_coordinate<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="4-5-是否吃到食物"><a href="#4-5-是否吃到食物" class="headerlink" title="4.5 是否吃到食物"></a>4.5 是否吃到食物</h3><blockquote><p>判断是否吃到食物，就是看看蛇头的坐标等不等于食物的坐标。如果等于，就重新生成食物，不删除蛇尾，蛇变长一节。不等于，就删除蛇尾,蛇长不变。</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">is_eat_food</span><span class="token punctuation">(</span>Food <span class="token operator">&amp;</span> f<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//获取食物坐标</span>
+    COORDINATE food_coordinate <span class="token operator">=</span> f<span class="token punctuation">.</span><span class="token function">GetFoodCoordinate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//吃到食物，食物重新生成，不删除蛇尾</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">==</span> food_coordinate<span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span> m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">==</span> food_coordinate<span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        f<span class="token punctuation">.</span><span class="token function">RandomXY</span><span class="token punctuation">(</span>m_coordinate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//没有吃到食物，删除蛇尾</span>
+        m_coordinate<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>m_coordinate<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h3 id="4-6判断蛇是否还存活"><a href="#4-6判断蛇是否还存活" class="headerlink" title="4.6判断蛇是否还存活"></a>4.6判断蛇是否还存活</h3><blockquote><p>判断蛇是否GG，主要是看是否超出边界，是否碰到自己身体其他部分。</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">
+<span class="token comment" spellcheck="true">//判断贪吃蛇死了没</span>
+<span class="token keyword">bool</span> <span class="token function">snake_is_alive</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token operator">||</span>
+        m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">>=</span> GameSetting<span class="token operator">::</span>window_width <span class="token operator">-</span> <span class="token number">29</span> <span class="token operator">||</span>
+        m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token operator">||</span>
+        m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">>=</span> GameSetting<span class="token operator">::</span>window_height <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//超出边界</span>
+        m_is_alive <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> m_is_alive<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//和自己碰到一起</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m_coordinate<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>m_coordinate<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">==</span> m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>x <span class="token operator">&amp;&amp;</span> m_coordinate<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y <span class="token operator">==</span> m_coordinate<span class="token punctuation">[</span>HEAD<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            m_is_alive <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> m_is_alive<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    m_is_alive <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 
-    if (_kbhit())                    //kbhit 非阻塞函数 
-    {
-        ch = _getch();    //使用 getch 函数获取键盘输入 
-        switch (ch)
-        {
-        case 'w':
-        case 'W':
-            if (this->m_direction == DOWN)
-                break;
-            this->m_direction = UP;
-            break;
-        case 's':
-        case 'S':
-            if (this->m_direction == UP)
-                break;
-            this->m_direction = DOWN;
-            break;
-        case 'a':
-        case 'A':
-            if (this->m_direction == RIGHT)
-                break;
-            this->m_direction = LEFT;
-            break;
-        case 'd':
-        case 'D':
-            if (this->m_direction == LEFT)
-                break;
-            this->m_direction = RIGHT;
-            break;
-        case '+':
-            if (speed >= 25)
-            {
-                speed -= 25;
-            }
-            break;
-        case '-':
-            if (speed < 250)
-            {
-                speed += 25;
-            }
-            break;
-        }
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h4 id="4-4-移动贪吃蛇"><a href="#4-4-移动贪吃蛇" class="headerlink" title="4.4 移动贪吃蛇"></a>4.4 移动贪吃蛇</h4><blockquote><p><strong>移动贪吃蛇，我们用了一个方向变量，在监听键盘的时候获取移动的方向，然后在根据方向移动贪吃蛇的蛇头。这里的移动我们是这样处理的，首先，贪吃蛇每移动一次，需要改变的只有蛇头和蛇尾两节。我们只需要把新的蛇头插进去，最后再画出来就可以了。至于蛇尾，如果我们不删除蛇尾的话，蛇会不断变长的。因此我们的做法是：吃到食物的时候插入蛇头而不删除蛇尾，没有吃到食物的时候插入蛇头同时删除蛇尾。这样就完美搞定了。</strong></p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">    //移动贪吃蛇
-void move_snake()
-{
-    //监听键盘
-    listen_key_borad();
-    //蛇头
-    COORDINATE head = m_coordinate[0];
-    //direction方向:1 上  2 下  3 左  4 右
-    switch (this->m_direction)
-    {
-    case UP:
-        head.y--;
-        break;
-    case DOWN:
-        head.y++;
-        break;
-    case LEFT:
-        head.x--;
-        break;
-    case RIGHT:
-        head.x++;
-        break;
-    }
-    //插入移动后新的蛇头。是否删除蛇尾，在后续吃到食物判断那里做
-    m_coordinate.insert(m_coordinate.begin(), head);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h5 id="4-5-是否吃到食物"><a href="#4-5-是否吃到食物" class="headerlink" title="4.5 是否吃到食物"></a>4.5 是否吃到食物</h5><blockquote><p>判断是否吃到食物，就是看看蛇头的坐标等不等于食物的坐标。如果等于，就重新生成食物，不删除蛇尾，蛇变长一节。不等于，就删除蛇尾,蛇长不变。</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">bool is_eat_food(Food & f)
-{
-    //获取食物坐标
-    COORDINATE food_coordinate = f.GetFoodCoordinate();
-    //吃到食物，食物重新生成，不删除蛇尾
-    if (m_coordinate[HEAD].x == food_coordinate.x && m_coordinate[HEAD].y == food_coordinate.y)
-    {
-        f.RandomXY(m_coordinate);
-        return true;
-    }
-    else
-    {
-        //没有吃到食物，删除蛇尾
-        m_coordinate.erase(m_coordinate.end() - 1);
-        return false;
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h5 id="4-6判断蛇是否还存活"><a href="#4-6判断蛇是否还存活" class="headerlink" title="4.6判断蛇是否还存活"></a>4.6判断蛇是否还存活</h5><blockquote><p>判断蛇是否GG，主要是看是否超出边界，是否碰到自己身体其他部分。</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">
-//判断贪吃蛇死了没
-bool snake_is_alive()
-{
-    if (m_coordinate[HEAD].x <= 0 ||
-        m_coordinate[HEAD].x >= GameSetting::window_width - 29 ||
-        m_coordinate[HEAD].y <= 0 ||
-        m_coordinate[HEAD].y >= GameSetting::window_height - 1)
-    {
-        //超出边界
-        m_is_alive = false;
-        return m_is_alive;
-    }
-    //和自己碰到一起
-    for (unsigned int i = 1; i < m_coordinate.size(); i++)
-    {
-        if (m_coordinate[i].x == m_coordinate[HEAD].x && m_coordinate[i].y == m_coordinate[HEAD].y)
-        {
-            m_is_alive = false;
-            return m_is_alive;
-        }
-    }
-    m_is_alive = true;
+    <span class="token keyword">return</span> m_is_alive<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h3 id="4-7-画出贪吃蛇"><a href="#4-7-画出贪吃蛇" class="headerlink" title="4.7 画出贪吃蛇"></a>4.7 画出贪吃蛇</h3><p>画出贪吃蛇比较简单，gotoxy到身体的每一节，然后cout就行。</p><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//画出贪吃蛇</span>
+<span class="token keyword">void</span> <span class="token function">draw_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//设置颜色为浅绿色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_coordinate<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">gotoxy</span><span class="token punctuation">(</span>m_coordinate<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> m_coordinate<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"*"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//恢复原来的颜色</span>
+    <span class="token function">setColor</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h3 id="4-8-清除屏幕上的贪吃蛇"><a href="#4-8-清除屏幕上的贪吃蛇" class="headerlink" title="4.8 清除屏幕上的贪吃蛇"></a>4.8 清除屏幕上的贪吃蛇</h3><blockquote><p><strong>我们是死循环不断刷新打印贪吃蛇的，因此每移动一次，必然会在屏幕上留下上一次贪吃蛇的痕迹。因此我们每次在画蛇之前，不是添足，而是清理一下上次遗留的蛇身。我们知道，蛇每次移动，变的只有蛇头和蛇尾，因此该函数我们只需要清理蛇尾就行。gotoxy到蛇尾的坐标，cout&lt;&lt;” “;就行。</strong></p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">ClearSnake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+<span class="token function">gotoxy</span><span class="token punctuation">(</span>m_coordinate<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_coordinate<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>x<span class="token punctuation">,</span> m_coordinate<span class="token punctuation">[</span><span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>m_coordinate<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h2 id="05-主函数，组装我们的游戏"><a href="#05-主函数，组装我们的游戏" class="headerlink" title="05 主函数，组装我们的游戏"></a>05 主函数，组装我们的游戏</h2><blockquote><p>我们的游戏在主函数里面进行组装。然后开始运行。首先我们做游戏相关的初始化。</p></blockquote><pre class="line-numbers language-cpp"><code class="language-cpp">GameSetting setting<span class="token punctuation">;</span>
+PrintInfo print_info<span class="token punctuation">;</span>
+Snake  snake<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//初始化游戏</span>
+setting<span class="token punctuation">.</span><span class="token function">GameInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//游戏模式选择</span>
+print_info<span class="token punctuation">.</span><span class="token function">DrawChoiceInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    return m_is_alive;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h5 id="4-7-画出贪吃蛇"><a href="#4-7-画出贪吃蛇" class="headerlink" title="4.7 画出贪吃蛇"></a>4.7 画出贪吃蛇</h5><p>画出贪吃蛇比较简单，gotoxy到身体的每一节，然后cout就行。</p><pre class="line-numbers language-C++"><code class="language-C++">//画出贪吃蛇
-void draw_snake()
-{
-    //设置颜色为浅绿色
-    setColor(10, 0);
-    for (unsigned int i = 0; i < this->m_coordinate.size(); i++)
-    {
-        gotoxy(m_coordinate[i].x, m_coordinate[i].y);
-        cout << "*";
-    }
-    //恢复原来的颜色
-    setColor(7, 0);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h5 id="4-8-清除屏幕上的贪吃蛇"><a href="#4-8-清除屏幕上的贪吃蛇" class="headerlink" title="4.8 清除屏幕上的贪吃蛇"></a>4.8 清除屏幕上的贪吃蛇</h5><blockquote><p><strong>我们是死循环不断刷新打印贪吃蛇的，因此每移动一次，必然会在屏幕上留下上一次贪吃蛇的痕迹。因此我们每次在画蛇之前，不是添足，而是清理一下上次遗留的蛇身。我们知道，蛇每次移动，变的只有蛇头和蛇尾，因此该函数我们只需要清理蛇尾就行。gotoxy到蛇尾的坐标，cout&lt;&lt;” “;就行。</strong></p></blockquote><pre class="line-numbers language-C"><code class="language-C">
-void ClearSnake(){
-gotoxy(m_coordinate[this->m_coordinate.size()-1].x, m_coordinate[this->m_coordinate.size() - 1].y);
-cout << " ";
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><h3 id="05-主函数，组装我们的游戏"><a href="#05-主函数，组装我们的游戏" class="headerlink" title="05 主函数，组装我们的游戏"></a>05 主函数，组装我们的游戏</h3><blockquote><p>我们的游戏在主函数里面进行组装。然后开始运行。首先我们做游戏相关的初始化。</p></blockquote><pre class="line-numbers language-C++"><code class="language-C++">GameSetting setting;
-PrintInfo print_info;
-Snake  snake;
-//初始化游戏
-setting.GameInit();
-//游戏模式选择
-print_info.DrawChoiceInfo();
-
-char ch = _getch();
-switch (ch)
-{
-case '1':
-    snake.set_model(true);
-    speed = 50;
-    break;
-case '2':
-    snake.set_model(false);
-    break;
-default:
-    gotoxy(GameSetting::window_width / 2 - 10, GameSetting::window_height / 2 + 3);
-    cout << "输入错误，Bye！" << endl;
-    cin.get();
-    cin.get();
-    return 0;
-}
-gotoxy(GameSetting::window_width / 2 - 10, GameSetting::window_height / 2 + 3);
-system("pause");<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后就是画地图边框，打印游戏相关信息和说明。生成食物了。</p><pre class="line-numbers language-C++"><code class="language-C++">//画地图
-print_info.DrawMap();
-print_info.DrawGameInfo(snake.GetModel());
-//生成食物
-Food food(snake.m_coordinate);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>最后就是游戏死循环，在死循环里面，我们需要不断移动蛇，画蛇，判断蛇的状态，判断食物的状态，是否吃到食物等等。具体代码：</p><pre class="line-numbers language-C++"><code class="language-C++">//游戏死循环
-while (true)
-{
-    //打印成绩
-    print_info.DrawScore(snake.GetSnakeSize());
-    //画出食物
-    food.DrawFood();
-    //清理蛇尾，每次画蛇前必做
-    snake.ClearSnake();
-    //判断是否吃到食物
-    snake.is_eat_food(food);
-    //根据用户模式选择不同的调度方式
-    if (snake.GetModel() == true)
-    {
-        snake.move_snake();
-    }
-    else
-    {
-        snake.AI_find_path(food);
-        snake.AI_move_snake();
-    }
-    //画蛇
-    snake.draw_snake();
-    //判断蛇是否还活着
-    if (!snake.snake_is_alive())
-    {
-        print_info.GameOver(snake.GetSnakeSize());
-        break;
-    }
-    //控制游戏速度
-    Sleep(speed);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><p>转载自：<a href="https://www.cnblogs.com/dengfaheng/p/9384977.html">https://www.cnblogs.com/dengfaheng/p/9384977.html</a></p></div><hr><div class="tag_share" style="display:block"><div class="post-meta__tag-list" style="display:inline-block"><div class="article-tag"><a href="/tags/Cpp/"><span class="chip bg-color">Cpp</span> </a><a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/"><span class="chip bg-color">贪吃蛇</span></a></div></div><div class="post_share" style="zoom:80%;width:fit-content;display:inline-block;float:right;margin:-.15rem 0"><link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css"><div id="article-share"><div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div><script src="/libs/share/js/social-share.min.js"></script></div></div></div></div></div><style>.valine-card{margin:1.5rem auto}.valine-card .card-content{padding:20px 20px 5px 20px}#vcomments textarea{box-sizing:border-box;background:url(/medias/comment_bg.png) 100% 100% no-repeat}#vcomments p{margin:2px 2px 10px;font-size:1.05rem;line-height:1.78rem}#vcomments blockquote p{text-indent:.2rem}#vcomments a{padding:0 2px;color:#4cbf30;font-weight:500;text-decoration:none}#vcomments img{max-width:100%;height:auto;cursor:pointer}#vcomments ol li{list-style-type:decimal}#vcomments ol,ul{display:block;padding-left:2em;word-spacing:.05rem}#vcomments ul li,ol li{display:list-item;line-height:1.8rem;font-size:1rem}#vcomments ul li{list-style-type:disc}#vcomments ul ul li{list-style-type:circle}#vcomments table,td,th{padding:12px 13px;border:1px solid #dfe2e5}#vcomments table,td,th{border:0}table tr:nth-child(2n),thead{background-color:#fafafa}#vcomments table th{background-color:#f2f2f2;min-width:80px}#vcomments table td{min-width:80px}#vcomments h1{font-size:1.85rem;font-weight:700;line-height:2.2rem}#vcomments h2{font-size:1.65rem;font-weight:700;line-height:1.9rem}#vcomments h3{font-size:1.45rem;font-weight:700;line-height:1.7rem}#vcomments h4{font-size:1.25rem;font-weight:700;line-height:1.5rem}#vcomments h5{font-size:1.1rem;font-weight:700;line-height:1.4rem}#vcomments h6{font-size:1rem;line-height:1.3rem}#vcomments p{font-size:1rem;line-height:1.5rem}#vcomments hr{margin:12px 0;border:0;border-top:1px solid #ccc}#vcomments blockquote{margin:15px 0;border-left:5px solid #42b983;padding:1rem .8rem .3rem .8rem;color:#666;background-color:rgba(66,185,131,.1)}#vcomments pre{font-family:monospace,monospace;padding:1.2em;margin:.5em 0;background:#272822;overflow:auto;border-radius:.3em;tab-size:4}#vcomments code{font-family:monospace,monospace;padding:1px 3px;font-size:.92rem;color:#e96900;background-color:#f8f8f8;border-radius:2px}#vcomments pre code{font-family:monospace,monospace;padding:0;color:#e8eaf6;background-color:#272822}#vcomments pre[class*=language-]{padding:1.2em;margin:.5em 0}#vcomments code[class*=language-],pre[class*=language-]{color:#e8eaf6}#vcomments [type=checkbox]:not(:checked),[type=checkbox]:checked{position:inherit;margin-left:-1.3rem;margin-right:.4rem;margin-top:-1px;vertical-align:middle;left:unset;visibility:visible}#vcomments b,strong{font-weight:700}#vcomments dfn{font-style:italic}#vcomments small{font-size:85%}#vcomments cite{font-style:normal}#vcomments mark{background-color:#fcf8e3;padding:.2em}#vcomments table,td,th{padding:12px 13px;border:1px solid #dfe2e5}table tr:nth-child(2n),thead{background-color:#fafafa}#vcomments table th{background-color:#f2f2f2;min-width:80px}#vcomments table td{min-width:80px}#vcomments [type=checkbox]:not(:checked),[type=checkbox]:checked{position:inherit;margin-left:-1.3rem;margin-right:.4rem;margin-top:-1px;vertical-align:middle;left:unset;visibility:visible}.v .vlist .vcard{padding-top:2.5em!important}</style><div class="card valine-card" data-aos="fade-up"><div class="comment_headling" style="font-size:20px;font-weight:700;position:relative;left:20px;top:15px;padding-bottom:5px"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> <span>评论</span></div><div id="vcomments" class="card-content" style="display:grid"></div></div><script src="/libs/valine/av-min.js"></script><script src="/libs/valine/Valine.min.js"></script><script>new Valine({el:"#vcomments",appId:"98JpzSGcrl9jFqHO13vqxHvX-gzGzoHsz",appKey:"mDmr2h9PB20xvPMNqgyRnNIC",notify:!0,verify:!0,visitor:!0,avatar:"mm",pageSize:"10",lang:"zh-cn",placeholder:"just go go"})</script><article id="prenext-posts" class="prev-next articles"><div class="row article-row"><div class="article col s12 m6" data-aos="fade-up"><div class="article-badge left-badge text-color"><i class="fa fa-chevron-left"></i>&nbsp;上一篇</div><div class="card"><a href="/posts/12550/"><div class="card-image"><img src="/medias/featureimages/14.jpg" class="responsive-img" alt="由Set作业题引发的问题"> <span class="card-title">由Set作业题引发的问题</span></div></a><div class="card-content article-content"><div class="summary block-with-text">问题c++需要着重学指针，引用和动态内存分配，这个问题的背后实际上是C++对象的赋值和复制问题，是Set的成员变量所占内存的销毁问题，因为c++的编码逻辑和内存管理交融在一起，所以这种类型的问题难以发现和解决，而且这个坑也经常遇到，现在记录</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05 </span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Cpp/" class="post-category">Cpp</a></span></div></div><div class="card-action article-tags"><a href="/tags/Cpp/"><span class="chip bg-color">Cpp</span></a></div></div></div><div class="article col s12 m6" data-aos="fade-up"><div class="article-badge right-badge text-color">下一篇&nbsp;<i class="fa fa-chevron-right"></i></div><div class="card"><a href="/posts/7317/"><div class="card-image"><img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Leetcode链表"> <span class="card-title">Leetcode链表</span></div></a><div class="card-content article-content"><div class="summary block-with-text">第一章链表 了解单链表和双链表的结构; 在单链表或双链表中实现遍历、插入和删除; 分析在单链表或双链表中的各种操作的复杂度； 在链表中使用双指针技巧（快指针慢指针技巧）； 解决一些经典问题，例如反转链表； 分析你设计的算法的复杂度； 积累</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25 </span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Cpp/" class="post-category">Cpp</a></span></div></div><div class="card-action article-tags"><a href="/tags/Leetcode/"><span class="chip bg-color">Leetcode</span></a></div></div></div></div></article></div><script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script><script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script><script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script><script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style></div><div id="toc-aside" class="expanded col l3 hide-on-med-and-down"><div class="toc-widget"><div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div><div id="toc-content"></div></div></div></div><div id="floating-toc-btn" class="hide-on-med-and-down"><a class="btn-floating btn-large bg-color"><i class="fa fa-list"></i></a></div><script src="/libs/tocbot/tocbot.min.js"></script><script>$(function(){tocbot.init({tocSelector:"#toc-content",contentSelector:"#articleContent",headingsOffset:-(.4*$(window).height()-45),headingSelector:"h2, h3, h4, h5"});let t=0;var e="toc-heading-";$("#toc-content a").each(function(){$(this).attr("href","#"+e+ ++t)}),t=0,$("#articleContent").children("h2, h3, h4, h5").each(function(){$(this).attr("id",e+ ++t)});var n=parseInt(.4*$(window).height()-64);let o=$(".toc-widget");$(window).scroll(function(){var t=$(window).scrollTop();n<t?o.addClass("toc-fixed"):o.removeClass("toc-fixed")});var i="expanded";let a=$("#toc-aside"),c=$("#main-content");$("#floating-toc-btn .btn-floating").click(function(){a.hasClass(i)?(a.removeClass(i).hide(),c.removeClass("l9")):(a.addClass(i).show(),c.addClass("l9")),function(){let e=$("#artDetail");if(0!==e.length){let t=e.width();450<=t?t+=21:350<=t&&t<450?t+=18:300<=t&&t<350?t+=16:t+=14,$("#prenext-posts").width(t)}}()})})</script></main><footer class="page-footer bg-color"><div class="container row center-align"><div class="col s12 m8 l8 copy-right">Copyright&nbsp;&copy; <span id="year">2019</span> <a href="/about" rel="external nofollow noreferrer">JoyTsing</a> |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a><br><span id="sitetime">载入运行时间...</span> <span id="busuanzi_container_site_pv">|&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv" class="white-color"></span>&nbsp;次 </span><span id="busuanzi_container_site_uv">|&nbsp;<i class="fa fa-user"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv" class="white-color"></span>&nbsp;人</span><br>&nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span class="white-color">373.6k</span>&nbsp;字<script>function siteTime(){var e=864e5,t="2019",n=(m=new Date).getFullYear(),o=m.getMonth()+1,r=m.getDate(),a=m.getHours(),i=m.getMinutes(),l=m.getSeconds(),m=Date.UTC(t,"7","24","0","0","0"),r=Date.UTC(n,o,r,a,i,l)-m,a=Math.floor(r/31536e6),i=Math.floor(r/e-365*a),l=Math.floor((r-(365*a+i)*e)/36e5),m=Math.floor((r-(365*a+i)*e-36e5*l)/6e4),M=Math.floor((r-(365*a+i)*e-36e5*l-6e4*m)/1e3);t==n?(document.getElementById("year").innerHTML=n,document.getElementById("sitetime").innerHTML="本站已安全运行 "+i+" 天 "+l+" 小时 "+m+" 分钟 "+M+" 秒"):(document.getElementById("year").innerHTML=t+" - "+n,document.getElementById("sitetime").innerHTML="本站已安全运行 "+a+" 年 "+i+" 天 "+l+" 小时 "+m+" 分钟 "+M+" 秒")}setInterval(siteTime,1e3)</script></div><div class="col s12 m4 l4 social-link social-statis"><a href="https://github.com/JoyTsing" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50"><i class="fa fa-github"></i></a></div></div></footer><div class="progress-bar"></div><div id="searchModal" class="modal"><div class="modal-content"><div class="search-header"><span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span> <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input"></div><div id="searchResult"></div></div></div><script src="/js/search.js"></script><script type="text/javascript">$(function(){searchFunc("/search.xml","searchInput","searchResult")})</script><div id="backTop" class="top-scroll"><a class="btn-floating btn-large waves-effect waves-light" href="#!"><i class="fa fa-angle-up"></i></a></div><script src="/libs/materialize/materialize.min.js"></script><script src="/libs/masonry/masonry.pkgd.min.js"></script><script src="/libs/aos/aos.js"></script><script src="/libs/scrollprogress/scrollProgress.min.js"></script><script src="/libs/lightGallery/js/lightgallery-all.min.js"></script><script src="/js/matery.js"></script><script async src="/libs/others/busuanzi.pure.mini.js"></script><script type="text/javascript">var st,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="(oﾟvﾟ)ノ Hi",clearTimeout(st)):(document.title="(*´∇｀*) 欢迎回来！",st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><script type="text/javascript" color="0,0,255" pointcolor="0,0,255" opacity="0.8" zindex="-1" count="150" src="/libs/background/canvas-nest.js"></script><script src="/libs/instantpage/instantpage.js" type="module"></script><script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script><script>const hasAttr = (e,a) => a.some(_=> e.attr(_)!==undefined);
+<span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token function">_getch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">switch</span> <span class="token punctuation">(</span>ch<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">case</span> <span class="token string">'1'</span><span class="token operator">:</span>
+    snake<span class="token punctuation">.</span><span class="token function">set_model</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    speed <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token keyword">case</span> <span class="token string">'2'</span><span class="token operator">:</span>
+    snake<span class="token punctuation">.</span><span class="token function">set_model</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">break</span><span class="token punctuation">;</span>
+<span class="token keyword">default</span><span class="token operator">:</span>
+    <span class="token function">gotoxy</span><span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> <span class="token number">10</span><span class="token punctuation">,</span> GameSetting<span class="token operator">::</span>window_height <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"输入错误，Bye！"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cin<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cin<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">gotoxy</span><span class="token punctuation">(</span>GameSetting<span class="token operator">::</span>window_width <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> <span class="token number">10</span><span class="token punctuation">,</span> GameSetting<span class="token operator">::</span>window_height <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">system</span><span class="token punctuation">(</span><span class="token string">"pause"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>然后就是画地图边框，打印游戏相关信息和说明。生成食物了。</p><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//画地图</span>
+print_info<span class="token punctuation">.</span><span class="token function">DrawMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+print_info<span class="token punctuation">.</span><span class="token function">DrawGameInfo</span><span class="token punctuation">(</span>snake<span class="token punctuation">.</span><span class="token function">GetModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//生成食物</span>
+Food <span class="token function">food</span><span class="token punctuation">(</span>snake<span class="token punctuation">.</span>m_coordinate<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>最后就是游戏死循环，在死循环里面，我们需要不断移动蛇，画蛇，判断蛇的状态，判断食物的状态，是否吃到食物等等。具体代码：</p><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//游戏死循环</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//打印成绩</span>
+    print_info<span class="token punctuation">.</span><span class="token function">DrawScore</span><span class="token punctuation">(</span>snake<span class="token punctuation">.</span><span class="token function">GetSnakeSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//画出食物</span>
+    food<span class="token punctuation">.</span><span class="token function">DrawFood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//清理蛇尾，每次画蛇前必做</span>
+    snake<span class="token punctuation">.</span><span class="token function">ClearSnake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//判断是否吃到食物</span>
+    snake<span class="token punctuation">.</span><span class="token function">is_eat_food</span><span class="token punctuation">(</span>food<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//根据用户模式选择不同的调度方式</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>snake<span class="token punctuation">.</span><span class="token function">GetModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        snake<span class="token punctuation">.</span><span class="token function">move_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        snake<span class="token punctuation">.</span><span class="token function">AI_find_path</span><span class="token punctuation">(</span>food<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        snake<span class="token punctuation">.</span><span class="token function">AI_move_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//画蛇</span>
+    snake<span class="token punctuation">.</span><span class="token function">draw_snake</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//判断蛇是否还活着</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>snake<span class="token punctuation">.</span><span class="token function">snake_is_alive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        print_info<span class="token punctuation">.</span><span class="token function">GameOver</span><span class="token punctuation">(</span>snake<span class="token punctuation">.</span><span class="token function">GetSnakeSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//控制游戏速度</span>
+    <span class="token function">Sleep</span><span class="token punctuation">(</span>speed<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><hr><p>转载自：<a href="https://www.cnblogs.com/dengfaheng/p/9384977.html">https://www.cnblogs.com/dengfaheng/p/9384977.html</a></p></div><hr><div class="tag_share" style="display:block"><div class="post-meta__tag-list" style="display:inline-block"><div class="article-tag"><a href="/tags/Cpp/"><span class="chip bg-color">Cpp</span> </a><a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/"><span class="chip bg-color">贪吃蛇</span></a></div></div><div class="post_share" style="zoom:80%;width:fit-content;display:inline-block;float:right;margin:-.15rem 0"><link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css"><div id="article-share"><div class="social-share" data-sites="wechat,qq,weibo,twitter,facebook,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div><script src="/libs/share/js/social-share.min.js"></script></div></div></div></div></div><style>.valine-card{margin:1.5rem auto}.valine-card .card-content{padding:20px 20px 5px 20px}#vcomments textarea{box-sizing:border-box;background:url(/medias/comment_bg.png) 100% 100% no-repeat}#vcomments p{margin:2px 2px 10px;font-size:1.05rem;line-height:1.78rem}#vcomments blockquote p{text-indent:.2rem}#vcomments a{padding:0 2px;color:#4cbf30;font-weight:500;text-decoration:none}#vcomments img{max-width:100%;height:auto;cursor:pointer}#vcomments ol li{list-style-type:decimal}#vcomments ol,ul{display:block;padding-left:2em;word-spacing:.05rem}#vcomments ul li,ol li{display:list-item;line-height:1.8rem;font-size:1rem}#vcomments ul li{list-style-type:disc}#vcomments ul ul li{list-style-type:circle}#vcomments table,td,th{padding:12px 13px;border:1px solid #dfe2e5}#vcomments table,td,th{border:0}table tr:nth-child(2n),thead{background-color:#fafafa}#vcomments table th{background-color:#f2f2f2;min-width:80px}#vcomments table td{min-width:80px}#vcomments h1{font-size:1.85rem;font-weight:700;line-height:2.2rem}#vcomments h2{font-size:1.65rem;font-weight:700;line-height:1.9rem}#vcomments h3{font-size:1.45rem;font-weight:700;line-height:1.7rem}#vcomments h4{font-size:1.25rem;font-weight:700;line-height:1.5rem}#vcomments h5{font-size:1.1rem;font-weight:700;line-height:1.4rem}#vcomments h6{font-size:1rem;line-height:1.3rem}#vcomments p{font-size:1rem;line-height:1.5rem}#vcomments hr{margin:12px 0;border:0;border-top:1px solid #ccc}#vcomments blockquote{margin:15px 0;border-left:5px solid #42b983;padding:1rem .8rem .3rem .8rem;color:#666;background-color:rgba(66,185,131,.1)}#vcomments pre{font-family:monospace,monospace;padding:1.2em;margin:.5em 0;background:#272822;overflow:auto;border-radius:.3em;tab-size:4}#vcomments code{font-family:monospace,monospace;padding:1px 3px;font-size:.92rem;color:#e96900;background-color:#f8f8f8;border-radius:2px}#vcomments pre code{font-family:monospace,monospace;padding:0;color:#e8eaf6;background-color:#272822}#vcomments pre[class*=language-]{padding:1.2em;margin:.5em 0}#vcomments code[class*=language-],pre[class*=language-]{color:#e8eaf6}#vcomments [type=checkbox]:not(:checked),[type=checkbox]:checked{position:inherit;margin-left:-1.3rem;margin-right:.4rem;margin-top:-1px;vertical-align:middle;left:unset;visibility:visible}#vcomments b,strong{font-weight:700}#vcomments dfn{font-style:italic}#vcomments small{font-size:85%}#vcomments cite{font-style:normal}#vcomments mark{background-color:#fcf8e3;padding:.2em}#vcomments table,td,th{padding:12px 13px;border:1px solid #dfe2e5}table tr:nth-child(2n),thead{background-color:#fafafa}#vcomments table th{background-color:#f2f2f2;min-width:80px}#vcomments table td{min-width:80px}#vcomments [type=checkbox]:not(:checked),[type=checkbox]:checked{position:inherit;margin-left:-1.3rem;margin-right:.4rem;margin-top:-1px;vertical-align:middle;left:unset;visibility:visible}.v .vlist .vcard{padding-top:2.5em!important}</style><div class="card valine-card" data-aos="fade-up"><div class="comment_headling" style="font-size:20px;font-weight:700;position:relative;left:20px;top:15px;padding-bottom:5px"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> <span>评论</span></div><div id="vcomments" class="card-content" style="display:grid"></div></div><script src="/libs/valine/av-min.js"></script><script src="/libs/valine/Valine.min.js"></script><script>new Valine({el:"#vcomments",appId:"98JpzSGcrl9jFqHO13vqxHvX-gzGzoHsz",appKey:"mDmr2h9PB20xvPMNqgyRnNIC",notify:!0,verify:!0,visitor:!0,avatar:"mm",pageSize:"10",lang:"zh-cn",placeholder:"just go go"})</script><article id="prenext-posts" class="prev-next articles"><div class="row article-row"><div class="article col s12 m6" data-aos="fade-up"><div class="article-badge left-badge text-color"><i class="fa fa-chevron-left"></i>&nbsp;上一篇</div><div class="card"><a href="/posts/12550/"><div class="card-image"><img src="/medias/featureimages/14.jpg" class="responsive-img" alt="由Set作业题引发的问题"> <span class="card-title">由Set作业题引发的问题</span></div></a><div class="card-content article-content"><div class="summary block-with-text">问题c++需要着重学指针，引用和动态内存分配，这个问题的背后实际上是C++对象的赋值和复制问题，是Set的成员变量所占内存的销毁问题，因为c++的编码逻辑和内存管理交融在一起，所以这种类型的问题难以发现和解决，而且这个坑也经常遇到，现在记录</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05 </span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Cpp/" class="post-category">Cpp</a></span></div></div><div class="card-action article-tags"><a href="/tags/Cpp/"><span class="chip bg-color">Cpp</span></a></div></div></div><div class="article col s12 m6" data-aos="fade-up"><div class="article-badge right-badge text-color">下一篇&nbsp;<i class="fa fa-chevron-right"></i></div><div class="card"><a href="/posts/7317/"><div class="card-image"><img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Leetcode链表"> <span class="card-title">Leetcode链表</span></div></a><div class="card-content article-content"><div class="summary block-with-text">第一章链表 了解单链表和双链表的结构; 在单链表或双链表中实现遍历、插入和删除; 分析在单链表或双链表中的各种操作的复杂度； 在链表中使用双指针技巧（快指针慢指针技巧）； 解决一些经典问题，例如反转链表； 分析你设计的算法的复杂度； 积累</div><div class="publish-info"><span class="publish-date"><i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25 </span><span class="publish-author"><i class="fa fa-bookmark fa-fw icon-category"></i> <a href="/categories/Cpp/" class="post-category">Cpp</a></span></div></div><div class="card-action article-tags"><a href="/tags/Leetcode/"><span class="chip bg-color">Leetcode</span></a></div></div></div></div></article></div><script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script><script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script><script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script><script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script><style type="text/css">code[class*=language-],pre[class*=language-]{white-space:pre!important}</style></div><div id="toc-aside" class="expanded col l3 hide-on-med-and-down"><div class="toc-widget"><div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div><div id="toc-content"></div></div></div></div><div id="floating-toc-btn" class="hide-on-med-and-down"><a class="btn-floating btn-large bg-color"><i class="fa fa-list"></i></a></div><script src="/libs/tocbot/tocbot.min.js"></script><script>$(function(){tocbot.init({tocSelector:"#toc-content",contentSelector:"#articleContent",headingsOffset:-(.4*$(window).height()-45),headingSelector:"h2, h3, h4, h5"});let t=0;var e="toc-heading-";$("#toc-content a").each(function(){$(this).attr("href","#"+e+ ++t)}),t=0,$("#articleContent").children("h2, h3, h4, h5").each(function(){$(this).attr("id",e+ ++t)});var n=parseInt(.4*$(window).height()-64);let o=$(".toc-widget");$(window).scroll(function(){var t=$(window).scrollTop();n<t?o.addClass("toc-fixed"):o.removeClass("toc-fixed")});var i="expanded";let a=$("#toc-aside"),c=$("#main-content");$("#floating-toc-btn .btn-floating").click(function(){a.hasClass(i)?(a.removeClass(i).hide(),c.removeClass("l9")):(a.addClass(i).show(),c.addClass("l9")),function(){let e=$("#artDetail");if(0!==e.length){let t=e.width();450<=t?t+=21:350<=t&&t<450?t+=18:300<=t&&t<350?t+=16:t+=14,$("#prenext-posts").width(t)}}()})})</script></main><footer class="page-footer bg-color"><div class="container row center-align"><div class="col s12 m8 l8 copy-right">Copyright&nbsp;&copy; <span id="year">2019</span> <a href="/about" rel="external nofollow noreferrer">JoyTsing</a> |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a> |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a><br><span id="sitetime">载入运行时间...</span> <span id="busuanzi_container_site_pv">|&nbsp;<i class="fa fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv" class="white-color"></span>&nbsp;次 </span><span id="busuanzi_container_site_uv">|&nbsp;<i class="fa fa-user"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv" class="white-color"></span>&nbsp;人</span><br>&nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;<span class="white-color">397.8k</span>&nbsp;字<script>function siteTime(){var e=864e5,t="2019",n=(m=new Date).getFullYear(),o=m.getMonth()+1,r=m.getDate(),a=m.getHours(),i=m.getMinutes(),l=m.getSeconds(),m=Date.UTC(t,"7","24","0","0","0"),r=Date.UTC(n,o,r,a,i,l)-m,a=Math.floor(r/31536e6),i=Math.floor(r/e-365*a),l=Math.floor((r-(365*a+i)*e)/36e5),m=Math.floor((r-(365*a+i)*e-36e5*l)/6e4),M=Math.floor((r-(365*a+i)*e-36e5*l-6e4*m)/1e3);t==n?(document.getElementById("year").innerHTML=n,document.getElementById("sitetime").innerHTML="本站已安全运行 "+i+" 天 "+l+" 小时 "+m+" 分钟 "+M+" 秒"):(document.getElementById("year").innerHTML=t+" - "+n,document.getElementById("sitetime").innerHTML="本站已安全运行 "+a+" 年 "+i+" 天 "+l+" 小时 "+m+" 分钟 "+M+" 秒")}setInterval(siteTime,1e3)</script></div><div class="col s12 m4 l4 social-link social-statis"><a href="https://github.com/JoyTsing" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50"><i class="fa fa-github"></i></a></div></div></footer><div class="progress-bar"></div><div id="searchModal" class="modal"><div class="modal-content"><div class="search-header"><span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span> <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input"></div><div id="searchResult"></div></div></div><script src="/js/search.js"></script><script type="text/javascript">$(function(){searchFunc("/search.xml","searchInput","searchResult")})</script><div id="backTop" class="top-scroll"><a class="btn-floating btn-large waves-effect waves-light" href="#!"><i class="fa fa-angle-up"></i></a></div><script src="/libs/materialize/materialize.min.js"></script><script src="/libs/masonry/masonry.pkgd.min.js"></script><script src="/libs/aos/aos.js"></script><script src="/libs/scrollprogress/scrollProgress.min.js"></script><script src="/libs/lightGallery/js/lightgallery-all.min.js"></script><script src="/js/matery.js"></script><script async src="/libs/others/busuanzi.pure.mini.js"></script><script type="text/javascript">var st,OriginTitile=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="(oﾟvﾟ)ノ Hi",clearTimeout(st)):(document.title="(*´∇｀*) 欢迎回来！",st=setTimeout(function(){document.title=OriginTitile},3e3))})</script><script type="text/javascript" color="0,0,255" pointcolor="0,0,255" opacity="0.8" zindex="-1" count="150" src="/libs/background/canvas-nest.js"></script><script src="/libs/instantpage/instantpage.js" type="module"></script><script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script><script>const hasAttr = (e,a) => a.some(_=> e.attr(_)!==undefined);
         $('a').each(function() {
           const $this = $(this);
           if(hasAttr($this,["data-fancybox","ignore-external-link"])) return;
@@ -382,4 +375,4 @@ while (true)
                 }
             }
           }
-        });</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/shizuku.model.json"},display:{position:"left",width:150,height:200},mobile:{show:!1},react:{opacity:.7}})</script></body></html>
+        });</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":200},"mobile":{"show":false},"react":{"opacity":0.7}});</script></body></html>
