@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://joytsing.github.io/posts/45891/</loc>
+    
+    <lastmod>2024-03-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/posts/32059/</loc>
     
     <lastmod>2024-03-11</lastmod>
@@ -122,13 +129,6 @@
   
   <url>
     <loc>https://joytsing.github.io/posts/3192/</loc>
-    
-    <lastmod>2024-03-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/posts/45891/</loc>
     
     <lastmod>2024-03-11</lastmod>
     
@@ -735,13 +735,6 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/UESTC/</loc>
-    <lastmod>2024-03-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/Cpp/</loc>
     <lastmod>2024-03-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
