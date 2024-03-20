@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://joytsing.github.io/posts/9398/</loc>
+    
+    <lastmod>2024-03-20</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/posts/34936/</loc>
     
     <lastmod>2024-03-20</lastmod>
@@ -798,6 +805,13 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/UESTC/</loc>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2024-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
