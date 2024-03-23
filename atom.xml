@@ -183,11 +183,11 @@
       <category term="Cpp" scheme="https://JoyTsing.github.io/categories/Cpp/"/>
     
     
-      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
-    
       <category term="CMake" scheme="https://JoyTsing.github.io/tags/CMake/"/>
     
       <category term="Tool" scheme="https://JoyTsing.github.io/tags/Tool/"/>
+    
+      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
@@ -288,7 +288,7 @@
     <link href="https://joytsing.github.io/posts/17028/"/>
     <id>https://joytsing.github.io/posts/17028/</id>
     <published>2024-03-13T12:24:15.000Z</published>
-    <updated>2024-03-20T08:57:06.569Z</updated>
+    <updated>2024-03-23T15:37:46.391Z</updated>
     
     <content type="html"><![CDATA[<h2 id="喜报"><a href="#喜报" class="headerlink" title="喜报"></a>喜报</h2><p>为了庆祝我的blog阅读量全面超过我的qq空间访问数量(快一万)，加上真的没想到有这么多人看这个blog，为了更好的访问体验，本人决定自掏腰包，买了腾讯云的域名和对应服务(主要是dns加快访问，众所众知github的dns服务器经常被污染),因此以后的新域名就是<code>https://joytsing.cn/</code>啦，同时还白嫖了腾讯云的SSL证书(爽到)。</p><p><img src="/posts/17028/1.png" alt="迫真购买记录"></p><h2 id="悲报"><a href="#悲报" class="headerlink" title="悲报"></a>悲报</h2><p>换了新域名后访问记录归零啦！😅这下qq空间又赢了，难蚌。。。</p><p><img src="/posts/17028/2.png" alt="迫真归零"></p><p>不过体感上真的快了不少，以前有时候不挂梯子都上不了blog，果然花钱就是好啊(赞赏🤣)，总体上肯定是好的，访问量归零就归零了把，反正有之前的文章记录了之前的访问量，以后会努力产出的(<del>毕竟花了💰</del>)</p>]]></content>
     
@@ -307,6 +307,8 @@
     
       <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
     
+      <category term="站点相关" scheme="https://JoyTsing.github.io/tags/%E7%AB%99%E7%82%B9%E7%9B%B8%E5%85%B3/"/>
+    
   </entry>
   
   <entry>
@@ -314,7 +316,7 @@
     <link href="https://joytsing.github.io/posts/29245/"/>
     <id>https://joytsing.github.io/posts/29245/</id>
     <published>2024-03-12T11:53:46.000Z</published>
-    <updated>2024-03-12T11:58:01.714Z</updated>
+    <updated>2024-03-23T15:38:49.598Z</updated>
     
     <content type="html"><![CDATA[<h2 id="迫真喜报"><a href="#迫真喜报" class="headerlink" title="迫真喜报"></a>迫真喜报</h2><p>下图为本人qq空间访问量</p><p><img src="/posts/29245/1.png" alt="qq空间访问量"></p><p>下图为本人blog访问量</p><p><img src="/posts/29245/2.png" alt="blog访问量"></p><p><strong>喜报！本人blog花了4年半的时间超过了我10多年的qq空间浏览量！</strong>😄</p>]]></content>
     
@@ -333,6 +335,8 @@
     
     
       <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+    
+      <category term="站点相关" scheme="https://JoyTsing.github.io/tags/%E7%AB%99%E7%82%B9%E7%9B%B8%E5%85%B3/"/>
     
   </entry>
   
@@ -524,9 +528,9 @@
       <category term="Cpp" scheme="https://JoyTsing.github.io/categories/Cpp/"/>
     
     
-      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
-    
       <category term="Tool" scheme="https://JoyTsing.github.io/tags/Tool/"/>
+    
+      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
       <category term="Linux" scheme="https://JoyTsing.github.io/tags/Linux/"/>
     
