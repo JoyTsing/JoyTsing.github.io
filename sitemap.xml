@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://joytsing.github.io/posts/41940/</loc>
+    
+    <lastmod>2024-03-29</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/posts/60864/</loc>
     
     <lastmod>2024-03-29</lastmod>
@@ -669,13 +676,6 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/LaTeX/</loc>
-    <lastmod>2024-03-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://joytsing.github.io/tags/Go/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
@@ -691,6 +691,13 @@
   
   <url>
     <loc>https://joytsing.github.io/tags/Linux/</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/LaTeX/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -746,14 +753,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>https://joytsing.github.io/tags/Shell/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Shell/</loc>
+    <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -788,6 +795,20 @@
   </url>
   
   <url>
+    <loc>https://joytsing.github.io/tags/Docker/</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/Kubernetes/</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/tags/UESTC/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
@@ -811,13 +832,6 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
-    <lastmod>2024-03-29</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://joytsing.github.io/categories/Go/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
@@ -826,6 +840,13 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/C/</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -861,6 +882,13 @@
   
   <url>
     <loc>https://joytsing.github.io/categories/Redis/</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/categories/Kubernetes/</loc>
     <lastmod>2024-03-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
