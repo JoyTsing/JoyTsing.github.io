@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-03-29T15:28:32.453Z</updated>
+  <updated>2024-03-30T08:03:01.334Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网站需要备案，新域名先暂停使用</title>
+    <link href="https://joytsing.github.io/posts/44555/"/>
+    <id>https://joytsing.github.io/posts/44555/</id>
+    <published>2024-03-30T08:01:29.000Z</published>
+    <updated>2024-03-30T08:03:01.334Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="还是老的域名登录"><a href="#还是老的域名登录" class="headerlink" title="还是老的域名登录"></a>还是老的域名登录</h2><p>等备案完成了会加上CDN加快访问。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;还是老的域名登录&quot;&gt;&lt;a href=&quot;#还是老的域名登录&quot; class=&quot;headerlink&quot; title=&quot;还是老的域名登录&quot;&gt;&lt;/a&gt;还是老的域名登录&lt;/h2&gt;&lt;p&gt;等备案完成了会加上CDN加快访问。&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+      <category term="站点相关" scheme="https://JoyTsing.github.io/tags/%E7%AB%99%E7%82%B9%E7%9B%B8%E5%85%B3/"/>
+    
+  </entry>
   
   <entry>
     <title>深入剖析Kubernetes(一)</title>
@@ -555,34 +582,6 @@
       
       
         &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;本科时候质疑CMAKE，后面理解CMAKE,加入CMAKE。言归正传，之前不喜欢用clion的原因，一是因为clion每次使用的时候启动慢，
-      
-    
-    </summary>
-    
-    
-      <category term="Cpp" scheme="https://JoyTsing.github.io/categories/Cpp/"/>
-    
-    
-      <category term="Cpp" scheme="https://JoyTsing.github.io/tags/Cpp/"/>
-    
-      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>通过折叠表达式简化返回值检测</title>
-    <link href="https://joytsing.github.io/posts/33498/"/>
-    <id>https://joytsing.github.io/posts/33498/</id>
-    <published>2024-03-04T07:14:44.000Z</published>
-    <updated>2024-03-20T16:12:25.953Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="返回值检查"><a href="#返回值检查" class="headerlink" title="返回值检查"></a>返回值检查</h2><p>比如在启动服务器或者客户端的时候编写init函数， 此时需要依次去config目录加载对应的配置，log的配置等等，在这个时候如果一行行写的话就会有如下代码：</p><pre class="line-numbers language-cpp"><code class="language-cpp">error_t result<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>result <span class="token operator">=</span> <span class="token function">check1</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">!=</span> error_t<span class="token operator">::</span>ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token keyword">return</span> result<span class="token punctuation">;</span><span class="token punctuation">}</span>result <span class="token operator">=</span> <span class="token function">check2</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">!=</span> error_t<span class="token operator">::</span>ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token keyword">return</span> result<span class="token punctuation">;</span><span class="token punctuation">}</span>result <span class="token operator">=</span> <span class="token function">check3</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">!=</span> error_t<span class="token operator">::</span>ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token keyword">return</span> result<span class="token punctuation">;</span><span class="token punctuation">}</span>result <span class="token operator">=</span> <span class="token function">check4</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span>result <span class="token operator">!=</span> error_t<span class="token operator">::</span>ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token keyword">return</span> result<span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token keyword">return</span> error_t<span class="token operator">::</span>ok<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>虽说也可以但是终归是比较丑陋，如果应用折叠表达式的话可以写成如下形式：</p><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">return</span> <span class="token function">checked_exec</span><span class="token punctuation">(</span>  error_t<span class="token operator">::</span>ok<span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">check1</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">check2</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">check3</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token operator">&amp;</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">check4</span><span class="token punctuation">(</span>…<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>对应的check_exec可以写成：</p><pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> R<span class="token punctuation">,</span>          <span class="token keyword">typename</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> Fn<span class="token operator">></span>R <span class="token function">checked_exec</span><span class="token punctuation">(</span><span class="token keyword">const</span> R<span class="token operator">&amp;</span> expected<span class="token punctuation">,</span>               Fn<span class="token operator">&amp;&amp;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> fn<span class="token punctuation">)</span><span class="token punctuation">{</span>  R result <span class="token operator">=</span> expected<span class="token punctuation">;</span>  <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>result <span class="token operator">=</span> forward<span class="token operator">&lt;</span>Fn<span class="token operator">></span><span class="token punctuation">(</span>             fn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> expected<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>         <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token keyword">return</span> result<span class="token punctuation">;</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>当然，前提是不传入参数，传入参数不同的话就需要额外编写。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;返回值检查&quot;&gt;&lt;a href=&quot;#返回值检查&quot; class=&quot;headerlink&quot; title=&quot;返回值检查&quot;&gt;&lt;/a&gt;返回值检查&lt;/h2&gt;&lt;p&gt;比如在启动服务器或者客户端的时候编写init函数， 此时需要依次去config目录加载对应的配置，log的配置等等，
       
     
     </summary>
