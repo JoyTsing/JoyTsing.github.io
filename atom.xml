@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-03-30T08:03:01.334Z</updated>
+  <updated>2024-03-30T08:03:22.283Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://joytsing.github.io/posts/44555/"/>
     <id>https://joytsing.github.io/posts/44555/</id>
     <published>2024-03-30T08:01:29.000Z</published>
-    <updated>2024-03-30T08:03:01.334Z</updated>
+    <updated>2024-03-30T08:03:22.283Z</updated>
     
     <content type="html"><![CDATA[<h2 id="还是老的域名登录"><a href="#还是老的域名登录" class="headerlink" title="还是老的域名登录"></a>还是老的域名登录</h2><p>等备案完成了会加上CDN加快访问。</p>]]></content>
     
@@ -305,11 +305,11 @@
       <category term="Cpp" scheme="https://JoyTsing.github.io/categories/Cpp/"/>
     
     
+      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+    
       <category term="CMake" scheme="https://JoyTsing.github.io/tags/CMake/"/>
     
       <category term="Tool" scheme="https://JoyTsing.github.io/tags/Tool/"/>
-    
-      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
