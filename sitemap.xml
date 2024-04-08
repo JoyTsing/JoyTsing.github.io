@@ -788,14 +788,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/LaTeX/</loc>
+    <loc>https://joytsing.github.io/tags/C/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/C/</loc>
+    <loc>https://joytsing.github.io/tags/LaTeX/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -823,13 +823,6 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Play-with-Algorithms/</loc>
-    <lastmod>2024-04-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://joytsing.github.io/tags/Virtual-Machine/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
@@ -838,6 +831,13 @@
   
   <url>
     <loc>https://joytsing.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2024-04-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://joytsing.github.io/tags/Play-with-Algorithms/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -858,14 +858,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</loc>
+    <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>https://joytsing.github.io/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -879,14 +879,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Leetcode/</loc>
+    <loc>https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E8%AE%A1%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E8%AE%A1%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://joytsing.github.io/tags/Leetcode/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -937,14 +937,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>https://joytsing.github.io/categories/C/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/C/</loc>
+    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-04-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
