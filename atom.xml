@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-04-21T13:13:29.129Z</updated>
+  <updated>2024-04-25T07:21:30.122Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2024,F1上海站</title>
+    <link href="https://joytsing.github.io/posts/8251/"/>
+    <id>https://joytsing.github.io/posts/8251/</id>
+    <published>2024-04-25T07:05:15.000Z</published>
+    <updated>2024-04-25T07:21:30.122Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="20年的道路"><a href="#20年的道路" class="headerlink" title="20年的道路"></a>20年的道路</h2><p><img src="/posts/8251/zhou.jpg" alt="周冠宇"></p><p>很遗憾没能去现场，也许二十年后，新的年轻中国车手可以在领奖台上说，二十年前在上海，中国的第一位F1车手曾激励了我。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;20年的道路&quot;&gt;&lt;a href=&quot;#20年的道路&quot; class=&quot;headerlink&quot; title=&quot;20年的道路&quot;&gt;&lt;/a&gt;20年的道路&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/posts/8251/zhou.jpg&quot; alt=&quot;周冠宇&quot;&gt;&lt;/p&gt;
+&lt;p&gt;很遗憾没
+      
+    
+    </summary>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Boost中Asio网络编程</title>
@@ -586,34 +613,6 @@
       <category term="C" scheme="https://JoyTsing.github.io/tags/C/"/>
     
       <category term="源码阅读" scheme="https://JoyTsing.github.io/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>有关Linux下的零拷贝技术</title>
-    <link href="https://joytsing.github.io/posts/44422/"/>
-    <id>https://joytsing.github.io/posts/44422/</id>
-    <published>2024-04-02T09:16:35.000Z</published>
-    <updated>2024-04-10T09:00:44.328Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>零拷贝技术是一种<code>IO</code>操作优化技术。可以快速高效地将数据从文件系统移动到网络接口，<strong>而不需要将其从内核空间复制到用户空间。</strong></p><h2 id="一-相关概念"><a href="#一-相关概念" class="headerlink" title="一. 相关概念"></a>一. 相关概念</h2><p>用户进行<code>IO</code>操作，其实也就是应用程序访问系统资源，即通过系统调用 或者中断（外中断、内中断）<strong>从而使得 <code>CPU</code> 从用户态转向内核态。</strong></p><p>系统调用其实就是一些函数，用于对文件和设备进行访问和控制。最常见的有两种：</p><ul><li><code>read</code>：从文件中读取内容。</li><li><code>write</code>：往文件中写入内容。</li></ul><h3 id="1-1-缓冲区"><a href="#1-1-缓冲区" class="headerlink" title="1.1 缓冲区"></a>1.1 缓冲区</h3><p>在复习<code>IO</code>模型相关的知识的时候，就遇到这么两个概念：</p><ul><li><strong>内核缓冲区。</strong></li><li><strong>用户缓冲区。</strong></li></ul><p>这个到底有什么区别呢？我们知道，我们的应用程序从磁盘上读取数据的时候，一般都是分成两步：</p><ol><li><strong>操作系统（内核）从磁盘上读取数据存到内核空间。</strong></li><li><strong>再把数据从内核空间拷贝到用户空间。</strong></li></ol><p>那么这个过程中就会涉及到<strong>两次</strong>数据读操作：</p><ol><li>从<strong>磁盘</strong>上读取。</li><li>从<strong>内存</strong>中读取。</li></ol><p>而<strong>访问磁盘的速度要远远小于访问内存的速度</strong>，那么整个读取数据的操作中耗费时长最长的阶段自然在磁盘读取上。因此出现了内核缓冲区以及对应的用户缓冲区。至于具体流程可以看另外几篇博文。</p><h4 id="1-1-1-内核缓冲区"><a href="#1-1-1-内核缓冲区" class="headerlink" title="1.1.1 内核缓冲区"></a>1.1.1 内核缓冲区</h4><p>内核缓冲区，其实可以从两个方向去理解：</p><ul><li><strong>缓冲</strong>：<code>Buffer</code>。</li><li><strong>缓存</strong>：<code>Cache</code>。</li></ul><p>它的作用如下：</p><ul><li><strong>数据预读（缓存功能）</strong>：当程序发起<code>read</code>系统调用的时候，<strong>内核会读更多磁盘上的数据，以备程序后续使用</strong>。（假设我的<code>read</code>请求可能只需要读<code>100KB</code>的数据，那么此时内核会读<code>200KB</code>，就是这个意思。）</li><li><strong>延时回写（缓冲功能）</strong>：当程序发起 <code>write</code> 系统调用时，<strong>内核并不会直接把数据写入到磁盘文件中，而是写入到缓冲区中。当缓冲区中的数据积累到一定程度，才将数据真正地刷新到磁盘中。</strong></li></ul><h4 id="1-1-2-用户缓冲区"><a href="#1-1-2-用户缓冲区" class="headerlink" title="1.1.2 用户缓冲区"></a>1.1.2 用户缓冲区</h4><p>用户缓冲区的作用和内核缓冲区一样，都是数据的预读以及延时回写。不过两者出现的目的还是不一样：</p><ul><li>内核缓冲区：主要处理的是内核空间和磁盘之间的数据传递，<strong>目的是减少访问磁盘的次数。</strong></li><li>用户缓冲区：主要处理的是用户空间和内核空间之间的数据传递，<strong>目的是减少系统调用的次数。</strong></li></ul><h3 id="1-2-DMA技术"><a href="#1-2-DMA技术" class="headerlink" title="1.2 DMA技术"></a>1.2 DMA技术</h3><p><code>DMA</code>的全称：<code>Direct Memory Access</code>，直接存储器访问。<code>DMA</code>传输<strong>将数据从一个地址空间复制到另一个地址空间，提供在外设和存储器之间或者存储器和存储器之间的高速数据传输。</strong></p><p>为什么要有<code>DMA</code>技术？我们来看下<code>IO</code>操作的前后流程对比：<br><img src="/posts/44422/929e089c44174984a067f1b11008629f.png" alt><br>总结就是：<strong><code>DMA</code>帮助<code>CPU</code>将数据从磁盘拷贝至内核缓冲区中，让<code>CPU</code>解放双手。</strong></p><h3 id="1-3-虚拟内存"><a href="#1-3-虚拟内存" class="headerlink" title="1.3 虚拟内存"></a>1.3 虚拟内存</h3><p>虚拟内存：<strong>即拿出一部分硬盘空间来充当内存使用</strong>，当内存占用完时，电脑就会自动调用硬盘来充当内存，以缓解内存的紧张。一般虚拟内存都用来替代一部分物理内存的，有这么几个好处：</p><ol><li>多个虚拟内存可以指向同一个物理地址（<strong>多对一</strong>）。</li><li>虚拟内存空间可以远远大于物理内存空间（<strong>空间大</strong>）。</li></ol><h2 id="二-零拷贝"><a href="#二-零拷贝" class="headerlink" title="二. 零拷贝"></a>二. 零拷贝</h2><h3 id="2-1-传统文件传输流程"><a href="#2-1-传统文件传输流程" class="headerlink" title="2.1 传统文件传输流程"></a>2.1 传统文件传输流程</h3><p>我们用一个最基本的文件读取操作来看下流程，无非分为两个步骤：</p><pre class="line-numbers language-c"><code class="language-c"><span class="token function">read</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> tmp_buf<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">write</span><span class="token punctuation">(</span>socket<span class="token punctuation">,</span> tmp_buf<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><ol><li>将磁盘上的文件读取出来。</li><li>将文件数据通过网络协议发送给客户端。</li></ol><p>流程图如下：</p><p><img src="/posts/44422/1.png" alt></p><p>这里能得到几个信息：</p><ol><li>期间完成了<strong>4次</strong>数据拷贝。</li><li>完成了<strong>4次</strong>的用户态和内核态之间的状态切换，我们简称上下文切换。</li></ol><p><strong>备注：每次系统调用都得先从用户态切换到内核态，等内核完成任务后，再从内核态切换回用户态。因此相当于2次上下文切换。</strong>问题就是：再这样的传统<code>IO</code>传输模型中，用户为了获取服务器上的某个数据，期间竟然有4次数据的搬运过程，<strong>而过多的数据拷贝会消耗CPU资源，在高并发的情况下更是大大降低了系统的性能。</strong></p><p><strong>如何减少用户态和内核态之间的上下文切换以及内存拷贝的次数”</strong> 成了提高文件传输性能的一个关键点。</p><h3 id="2-2-零拷贝技术原理"><a href="#2-2-零拷贝技术原理" class="headerlink" title="2.2 零拷贝技术原理"></a>2.2 零拷贝技术原理</h3><p>还记得上文提到的虚拟内存的概念吗？零拷贝技术中就用到了虚拟内存可以多对一的一个特性：<strong>将内核空间和用户空间的虚拟地址映射到同一个物理地址，这样在 I/O 操作时就不需要来回复制了。</strong></p><p>零拷贝实现的方式有多种：</p><ul><li><code>mmap + write</code></li><li><code>sendfile</code></li><li><code>sendfile+DMA收集</code></li><li><code>splice</code></li></ul><h4 id="2-2-1-mmap-write"><a href="#2-2-1-mmap-write" class="headerlink" title="2.2.1 mmap+ write"></a>2.2.1 mmap+ write</h4><p><code>mmap()</code>函数也是属于系统函数的一种，在 2.1 节当中，我们知道<code>read()</code>函数<strong>会把内核缓冲区的数据拷贝到用户的缓冲区里。</strong> 而<code>mmap()</code>函数就可以减少这一步开销，因为它会<strong>直接把内核缓冲区里的数据映射到用户空间。</strong>那么这种模式下，文件传输模型图就会有所改变：</p><p><img src="/posts/44422/795ab30d4d2d4ce6a807f2ca4ffc12df.png" alt></p><p><strong>具体过程如下：</strong></p><ul><li>应用进程调用了 mmap() 后，DMA 会把磁盘的数据拷贝到内核的缓冲区里。接着，应用进程跟操作系统内核「共享」这个缓冲区；</li><li>应用进程再调用 write()，操作系统直接将内核缓冲区的数据拷贝到 socket 缓冲区中，这一切都发生在内核态，由 CPU 来搬运数据；</li><li>最后，把内核的 socket 缓冲区里的数据，拷贝到网卡的缓冲区里，这个过程是由 DMA 搬运的。</li></ul><p>可以看到：</p><ol><li>虽然说拷贝过程从原来的4次—-&gt;3次。</li><li>但是系统调用依旧是2次。原本：<code>read + write</code>。现在：<code>mmap + write</code>。</li></ol><h4 id="2-2-2-sendfile-amp-amp-sendfile-DMA收集"><a href="#2-2-2-sendfile-amp-amp-sendfile-DMA收集" class="headerlink" title="2.2.2 sendfile&amp;&amp;sendfile+DMA收集"></a>2.2.2 sendfile&amp;&amp;sendfile+DMA收集</h4><p><code>sendfile()</code>是一个专门发送文件的系统调用函数，由于 sendfile 仅仅对应一次系统调用，而传统文件操作则需要使用 read 以及 write 两个系统调用。</p><pre class="line-numbers language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/socket.h></span></span>ssize_t <span class="token function">sendfile</span><span class="token punctuation">(</span><span class="token keyword">int</span> out_fd<span class="token punctuation">,</span> <span class="token keyword">int</span> in_fd<span class="token punctuation">,</span> off_t <span class="token operator">*</span>offset<span class="token punctuation">,</span> size_t count<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><ul><li><code>out_fd</code>：目的端的文件描述符。</li><li><code>in_fd</code>：源端文件描述符。</li><li><code>offset</code>：源端数据偏移量。</li><li><code>count</code>：复制数据的长度。</li></ul><p>最终的返回是实际复制数据的长度。该函数的作用主要有两点：</p><ol><li>可以同时替代<code>read(</code>)和<code>write()</code>函数。<strong>即可以减少一次系统调用。</strong></li><li>通过<code>SG-DMA</code>控制器减少数据拷贝的次数。</li></ol><p>这个<code>SG</code>的前缀是什么意思呢？</p><blockquote><p><code>SG：scatter-gather</code>。其原理就是在内核空间 <code>Read Buffer</code> 和 <code>Socket Buffer</code> <strong>不做数据复制，而是将 <code>Read Buffer</code> 的内存地址、偏移量记录到相应的 <code>Socket Buffer</code> 中</strong>，这样就不需要复制。其本质和虚拟内存的解决方法思路一致，就是内存地址的记录。</p></blockquote><p>流程如下：</p><ol><li>通过 <code>DMA</code> 将磁盘上的数据拷贝到内核缓冲区里。</li><li>将缓冲区描述符和数据长度传到 <code>socket</code> 缓冲区，<strong><code>SG-DMA</code>控制器直接将内核缓存中的数据拷贝到网卡的缓冲区里，</strong> 因此不需要将内核缓冲区的数据拷贝到<code>socket</code>缓冲区中。</li></ol><p>如图：</p><p><img src="/posts/44422/cfd077077e0145938fa085f78daad0a5.png" alt></p><p>这就是零拷贝技术。即没有再内存层面去拷贝数据，整个过程中<code>CPU</code>都没有参与数据的拷贝，都是交给<code>DMA</code>来完成。</p><p>相对于传统的文件传输方式，零拷贝的优势：</p><ol><li>减少了2次上下文切换和数据拷贝。</li><li>2次的数据拷贝过程中，无需<code>CPU</code>参与，因此<code>CPU</code>可以在此期间做其他事情。</li></ol><p><strong>注意：零拷贝并不是说数据传输过程中拷贝的次数为0，而是指不存在内存层面的数据拷贝（一共2次）。</strong>因为我们没有在内存层面去拷贝数据，也就是说全程没有通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的。</p><h4 id="2-2-3-splice方式"><a href="#2-2-3-splice方式" class="headerlink" title="2.2.3 splice方式"></a>2.2.3 splice方式</h4><p>splice系统调用是Linux 在 2.6 版本引入的，其不需要硬件支持，并且不再限定于socket上，实现两个普通文件之间的数据零拷贝。</p><p><code>splice</code> 调用和<code>sendfile</code> 非常相似，用户应用程序必须拥有两个已经打开的文件描述符，一个表示输入设备，一个表示输出设备。与<code>sendfile</code>不同的是，<code>splice</code>允许任意两个文件互相连接，而并不只是文件与<code>socket</code>进行数据传输。对于从一个文件描述符发送数据到<code>socket</code>这种特例来说，一直都是使用<code>sendfile</code>系统调用，而<code>splice</code>一直以来就只是一种机制，它并不仅限于<code>sendfile</code>的功能。也就是说 sendfile 是 splice 的一个子集。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>无论是传统的 I/O 方式，还是引入了零拷贝之后，2 次 <code>DMA copy</code>是都少不了的。因为两次 DMA 都是依赖硬件完成的。所以，所谓的零拷贝，都是为了减少 CPU copy 及减少了上下文的切换。</p><p>下图展示了各种零拷贝技术的对比图：</p><table><thead><tr><th></th><th>CPU拷贝</th><th>DMA拷贝</th><th>系统调用</th><th>上下文切换</th></tr></thead><tbody><tr><td>传统方法</td><td>2</td><td>2</td><td>read/write</td><td>4</td></tr><tr><td>内存映射</td><td>1</td><td>2</td><td>mmap/write</td><td>4</td></tr><tr><td>sendfile</td><td>1</td><td>2</td><td>sendfile</td><td>2</td></tr><tr><td>scatter/gather copy</td><td>0</td><td>2</td><td>sendfile</td><td>2</td></tr><tr><td>splice</td><td>0</td><td>2</td><td>splice</td><td>0</td></tr></tbody></table>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;零拷贝技术是一种&lt;code&gt;IO&lt;/code&gt;操作优化技术。可以快速高效地将数据从文件系统移动到网络接口，&lt;strong&gt;而不需要将其从内核
-      
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="https://JoyTsing.github.io/categories/Linux/"/>
-    
-    
-      <category term="原理剖析" scheme="https://JoyTsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
-    
-      <category term="Linux" scheme="https://JoyTsing.github.io/tags/Linux/"/>
     
   </entry>
   
