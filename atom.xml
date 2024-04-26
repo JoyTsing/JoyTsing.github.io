@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-04-25T14:41:07.231Z</updated>
+  <updated>2024-04-26T07:07:20.192Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2024,F1上海站</title>
+    <link href="https://joytsing.github.io/posts/8251/"/>
+    <id>https://joytsing.github.io/posts/8251/</id>
+    <published>2024-04-26T05:05:15.000Z</published>
+    <updated>2024-04-26T07:07:20.192Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="20年的道路"><a href="#20年的道路" class="headerlink" title="20年的道路"></a>20年的道路</h2><p>曾经我们有个“奥运三问”：中国什么时候能参加奥运，什么时候能拿到金牌，什么时候我们能举办奥运会。同样的，我们也有个“F1三问”：中国什么时候可以举办F1分站、什么时候可以出一个F1车手、什么时候我们的车手可以拿到F1年度冠军。2024赛季虽然这是周冠宇的第三年，却是中国大奖赛的回归，周冠宇第一次回到主场作战，我们才真切的有“中国出了个F1车手”的实感啊。既然有了第一个车手，那就会有第二个、第三个，。总有一天，我们会拿到第一个分站冠军，乃至拿下年度冠军，总有一天。</p><p><img src="/posts/8251/zhou.jpg" alt="周冠宇"></p><p>很遗憾我没能去现场去看小周这场比赛，但是也许二十年后，新的年轻中国车手可以在领奖台上说，二十年前在上海，中国的第一位F1车手曾激励了我。</p><p><img src="/posts/8251/image-20240426145048589.png" alt="经典窝法乙烷"></p><h2 id="明年还能再见吗"><a href="#明年还能再见吗" class="headerlink" title="明年还能再见吗"></a>明年还能再见吗</h2><p>2024年算是车手合同到期的大年，刘易斯汉密尔顿爵士加盟法拉利绝对是车手市场的震撼级操作，而围场中岁数最大的车手头哥阿隆索跟马丁续约，也让年轻车手们争夺席位的压力变得更大了。席位一共就那么多个，让小周去五大车队或者小红牛是绝对没戏的。2025年，小周如果想继续在F1赛场上奋战，那么希望只在这三小车队索伯、哈斯和威廉姆斯身上，而这希望目前看来并不算大。</p><p>周冠宇留在F1，除了成绩，还需要的是进步和身后赞助商支持。虽然我不想这么说，但周冠宇目前实际上还是属于付费车手一级，并没有征服其他车队。赛季初采访周冠宇的时候他的目标是争取一份长期合同留在围场，这个目标说实话有点难。很多时候周冠宇被诟病的就是不够狠，起步昏厥和极速不够快，当然这里有车的问题(struggle)。</p><p><img src="/posts/8251/image-20240426145841657.png" alt="奥迪只想拿名次"></p><p>从卡丁车到F4，再到需要大量投入的F3和F2，最后走上F1<strong>成为了中国第一位F1正赛车手</strong>。也许你可以说有很多的不完美，阿尔法罗密欧不是强队、带资进组、周冠宇F2表现并没有达到顶尖水平….各种种种，都可以，或许<strong>成绩也许看起来平平，但是却创造了诸多的中国车手的历史</strong>。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;20年的道路&quot;&gt;&lt;a href=&quot;#20年的道路&quot; class=&quot;headerlink&quot; title=&quot;20年的道路&quot;&gt;&lt;/a&gt;20年的道路&lt;/h2&gt;&lt;p&gt;曾经我们有个“奥运三问”：中国什么时候能参加奥运，什么时候能拿到金牌，什么时候我们能举办奥运会。同样的，我们
+      
+    
+    </summary>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>在Linux下Cpp添加三方库</title>
@@ -97,33 +123,6 @@
       <category term="数据库" scheme="https://JoyTsing.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
       <category term="教程" scheme="https://JoyTsing.github.io/tags/%E6%95%99%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2024,F1上海站</title>
-    <link href="https://joytsing.github.io/posts/8251/"/>
-    <id>https://joytsing.github.io/posts/8251/</id>
-    <published>2024-04-25T07:05:15.000Z</published>
-    <updated>2024-04-25T07:21:30.122Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="20年的道路"><a href="#20年的道路" class="headerlink" title="20年的道路"></a>20年的道路</h2><p><img src="/posts/8251/zhou.jpg" alt="周冠宇"></p><p>很遗憾没能去现场，也许二十年后，新的年轻中国车手可以在领奖台上说，二十年前在上海，中国的第一位F1车手曾激励了我。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;20年的道路&quot;&gt;&lt;a href=&quot;#20年的道路&quot; class=&quot;headerlink&quot; title=&quot;20年的道路&quot;&gt;&lt;/a&gt;20年的道路&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/posts/8251/zhou.jpg&quot; alt=&quot;周冠宇&quot;&gt;&lt;/p&gt;
-&lt;p&gt;很遗憾没
-      
-    
-    </summary>
-    
-    
-      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
-    
-    
-      <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
     
   </entry>
   
