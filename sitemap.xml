@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://joytsing.github.io/posts/37357/</loc>
+    
+    <lastmod>2024-05-19</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/posts/29394/</loc>
     
     <lastmod>2024-05-19</lastmod>
@@ -984,6 +991,13 @@
 
   
   <url>
+    <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
+    <lastmod>2024-05-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://joytsing.github.io/tags/Cpp/</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>daily</changefreq>
@@ -992,13 +1006,6 @@
   
   <url>
     <loc>https://joytsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/</loc>
-    <lastmod>2024-05-19</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1082,14 +1089,14 @@
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://joytsing.github.io/tags/Play-with-Algorithms/</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/tags/Play-with-Algorithms/</loc>
+    <loc>https://joytsing.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1168,14 +1175,14 @@
 
   
   <url>
-    <loc>https://joytsing.github.io/categories/Cpp/</loc>
+    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/</loc>
+    <loc>https://joytsing.github.io/categories/Cpp/</loc>
     <lastmod>2024-05-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
