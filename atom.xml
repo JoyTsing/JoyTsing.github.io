@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-05-20T09:31:06.111Z</updated>
+  <updated>2024-05-22T07:14:05.545Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GitFlow与CMake</title>
+    <link href="https://joytsing.github.io/posts/52642/"/>
+    <id>https://joytsing.github.io/posts/52642/</id>
+    <published>2024-05-21T15:46:36.000Z</published>
+    <updated>2024-05-22T07:14:05.545Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>首先先把github action的文档放在<a href="https://docs.github.com/zh/actions">这里</a>，总结一下本质上和去一台新机器里构建没有别的区别。</p><h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p>实现过程可以说非常简单，脚本也很轻松易懂，可以理解为我们要去一个新的容器里面去构建我们的环境并运行我们的测试。也就是说不仅需要构建所需的编译器，还需要去下载所需的包。</p><p><img src="/posts/52642/2aa6305e6b9b082ff9a8405236ee364f.png" alt></p><h3 id="多平台构建"><a href="#多平台构建" class="headerlink" title="多平台构建"></a>多平台构建</h3><p>可以看starter-workflows的<a href="https://github.com/actions/starter-workflows/issues/586">issue586</a>，里面有一个多编译器多平台的暴力<a href="https://github.com/dlang/dmd/blob/86c4cd1819fd26a822e0b1daf09f460dd5a3043e/.github/workflows/runnable_cxx.yml">构建脚本</a>。</p><h3 id="gcc13构建"><a href="#gcc13构建" class="headerlink" title="gcc13构建"></a>gcc13构建</h3><p>首先头疼的是<code>gcc-13</code>的选择，因为需要支持新的std标准，必须使用<code>gcc-13</code>，而<code>gcc-13</code>在ubuntu的apt标准源里面是没有的，从源码构建当然可以，但是这个太麻烦了，后面发现有简单的方法。</p><ol><li>先安装工具源</li></ol><pre><code>sudo add-apt-repository ppa:ubuntu-toolchain-r/test</code></pre><ol start="2"><li>更新源</li></ol><pre><code>sudo apt update</code></pre><ol start="3"><li>安装gcc和g+</li></ol><pre><code>apt install gcc-13 g++-13</code></pre><p>随后记得gcc-11 g++-11为高优先级（优先使用版本13）</p><pre><code> sudo update-alternatives --install `which gcc` gcc `which gcc-13` 99 sudo update-alternatives --install `which g++` g++ `which g++-13` 99</code></pre><p>在workflow脚本中可以这么写：</p><pre><code>    - name: install GCC13      shell:  bash      run:  |        sudo add-apt-repository ppa:ubuntu-toolchain-r/test        sudo apt update &amp;&amp; sudo apt-get install gcc-13 g++-13        sudo update-alternatives --install `which gcc` gcc `which gcc-13` 99        sudo update-alternatives --install `which g++` g++ `which g++-13` 99</code></pre><p><img src="/posts/52642/11d93d21317627ab91cfd4a825fe9832.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;首先先把github action的文档放在&lt;a href=&quot;https://docs.github.com/zh/actions&quot;&gt;这里&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="生产环境" scheme="https://JoyTsing.github.io/categories/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
+    
+    
+      <category term="Cpp" scheme="https://JoyTsing.github.io/tags/Cpp/"/>
+    
+      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+    
+      <category term="生产环境" scheme="https://JoyTsing.github.io/tags/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
+    
+  </entry>
   
   <entry>
     <title>如何让clangd支持makefile工程</title>
@@ -564,36 +594,6 @@
       <category term="读书笔记" scheme="https://JoyTsing.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
       <category term="数据库" scheme="https://JoyTsing.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在Linux下为g++链接三方库</title>
-    <link href="https://joytsing.github.io/posts/24753/"/>
-    <id>https://joytsing.github.io/posts/24753/</id>
-    <published>2024-04-27T14:27:36.000Z</published>
-    <updated>2024-05-05T16:09:13.630Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>最近在学习Boost网络库，一开始使用的版本是apt源带的1.74.0，大概是20年左右的版本，后面想了一下太老了，同时想配合gcc13体验一下协程，就去下了最新的Boost 1.85.0, 然后在安装的时候没有选择默认安装位置（之前不知道吃大亏），而是自定义了一个地方，这样能够让我们多版本使用，但是无法像之前直接丝滑的<code>#include</code>使用，同时又不想像维护第三方一样每次都写CMakeList，于是怎么让g++(or gcc)识别库就成了一个问题。</p><h2 id="Boost"><a href="#Boost" class="headerlink" title="Boost"></a>Boost</h2><p><img src="/posts/24753/image-20240425223633571.png" alt></p><p>这里选择的方法是使用在<code>.zshrc</code>中export环境变量的方法来使用，下面分别来看这三变量的作用：</p><ul><li><code>BOOST_ROOT</code>:实际上可有可无，主要是在CMakeList中使用<code>find_package</code>查找boost时使用</li><li><code>CPLUS_INCLUDE_PATH</code>: g++查找头文件包含处</li><li><code>LD_LIBRARY_PATH</code>: 动态库连接地址</li></ul><p>常用的话可以直接加在<code>.zshrc</code>中避免繁杂的编写。</p><h2 id="Protobuf"><a href="#Protobuf" class="headerlink" title="Protobuf"></a>Protobuf</h2><p>只能说太折磨了，本来想着一开始或许像Boost一样给他安装完就行了，没想到复杂程度翻了好几个倍，而且还需要像之前一样使用不指定路径直接使用，好在最后折磨了几个小时终于配好了。网上有关的资料实在是太少，最后还是只能靠自己分析出来，果然<code>make your hands dirty</code>才是让工程能力上升的好方式。而且其实最后的答案也并不意外，但是如果没有人跟你说的话自己需要碰壁很久（还是之前boost太好配置形成路径依赖了）。</p><p>如果你只想快速使用，而不需要太新的版本的话那么可以直接通过下面两个命令快速安装学习使用。</p><pre class="line-numbers language-sh"><code class="language-sh">sudo apt install protobuf-compilersudo apt install libprotobuf-dev<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>至于怎么安装，安装Protobuf可是一大乐子，这里只说如果安装在其他路径而非默认路径怎么添加到我们需要的环境中，在安装完后，需要添加对应的<strong>环境</strong>（重点），找到一些测试的demo，同时生成对应的pb文件，后面我们就需要编译了，首先大概率是这种情况：</p><p><img src="/posts/24753/image-20240428021010055.png" alt="其实一点不意外"></p><p>好的，然后去网络上查找，发现原来需要 <code>-lprotobuf</code>，加上试试，然后会发现<code>ld</code>找不到protobuf库，那么如果说手动指定链接的库能否成功？</p><p><img src="/posts/24753/image-20240428021753549.png" alt="成功了"></p><p>尝试<code>echo</code>一下<code>$LD_LIBRARY_PATH</code>，发现是有对应库的地址的，那么说明问题并不在动态库上，链接有问题而不是动态库，那么只剩下是静态库的问题了，首先添加一下静态库的地址：</p><p><img src="/posts/24753/image-20240428023212566.png" alt></p><ul><li>第一个用于执行protoc</li><li>第二个命令用于寻找pkgconfig，主要用于CMakeLists</li><li>剩下的分别是头文件包含，静态库动态库连接地址</li></ul><p><img src="/posts/24753/image-20240428023335931.png" alt="终于可以不用手动指定链接地址了"></p><h3 id="CMake中使用"><a href="#CMake中使用" class="headerlink" title="CMake中使用"></a>CMake中使用</h3><p>与Boost不同，Boost在设置完环境变量后的使用基本跟std差不多，可以无感使用非常丝滑，但是Protobuf不行，并且Protobuf一般在中大型项目里面我们才会使用（一般要配合CMakeLists），那么怎么在CMakeLists里面使用就成了关键。</p><ul><li><p>方法一：手动指定</p><pre class="line-numbers language-cmake"><code class="language-cmake">set(Protobuf_PREFIX_PATH    "/home/joytsing/makeInstall/protobuf3.21.12/include"                "/home/joytsing/makeInstall/protobuf3.21.12/lib"                 "/home/joytsing/makeInstall/protobuf3.21.12/bin" )list(APPEND CMAKE_PREFIX_PATH "${Protobuf_PREFIX_PATH}")find_package(Protobuf REQUIRED)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="/posts/24753/image-20240428024042418.png" alt></p></li><li><p>方法二：利用PkgConfig</p><pre><code>find_package(PkgConfig)pkg_search_module(Protobuf REQUIRED protobuf)</code></pre></li></ul><p>注意，这个方法有缺陷，没法使用<code>protobuf_generate_cpp</code>这些原生指令，简单的工程可以用方法2，复杂的最好就不要用了。</p><p><img src="/posts/24753/image-20240428024120881.png" alt></p><p>在引入库之后就可以正常使用了，可喜可贺。</p><pre class="line-numbers language-cmake"><code class="language-cmake">find_package(Protobuf REQUIRED)  #查找protobuf包include_directories(${Protobuf_INCLUDE_DIRS})  #添加头文件,其实这一步在我们添加完CPLUS_INCLUDE是不需要的add_executable(exe main.cpp test.pb.cc) # 在用file(GLOB_RECURSE)的时候一定要注意是*.cc，找*.cpp无法编译target_link_libraries(exe ${PROTOBUF_LIBRARIES})  #一定要连接库文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="一些疑惑"><a href="#一些疑惑" class="headerlink" title="一些疑惑"></a>一些疑惑</h2><p>其实我挺奇怪为什么boost不需要像Protobuf一样在使用<code>g++</code>命令的时候手动链接，同时不需要添加静态库的地址（最后还是为了以防万一把boost的静态链接给加上了）。</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>最好不要把protobuf加到全局里面去配置，大概率会跟grpc冲突。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;最近在学习Boost网络库，一开始使用的版本是apt源带的1.74.0，大概是20年左右的版本，后面想了一下太老了，同时想配合gcc13体验
-      
-    
-    </summary>
-    
-    
-      <category term="Cpp" scheme="https://JoyTsing.github.io/categories/Cpp/"/>
-    
-    
-      <category term="Cpp" scheme="https://JoyTsing.github.io/tags/Cpp/"/>
-    
-      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
-    
-      <category term="Linux" scheme="https://JoyTsing.github.io/tags/Linux/"/>
     
   </entry>
   
