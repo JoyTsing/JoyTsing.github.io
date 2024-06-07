@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-06-06T09:12:49.741Z</updated>
+  <updated>2024-06-07T06:23:40.344Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>德尔斐神庙与三句箴言</title>
+    <link href="https://joytsing.github.io/posts/32630/"/>
+    <id>https://joytsing.github.io/posts/32630/</id>
+    <published>2024-06-07T06:17:40.000Z</published>
+    <updated>2024-06-07T06:23:40.344Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="阿波罗太阳神庙"><a href="#阿波罗太阳神庙" class="headerlink" title="阿波罗太阳神庙"></a>阿波罗太阳神庙</h2><ul><li>认识你自己<ul><li>想要贯彻自己的意志，那么惜字如金，然后充耳不闻就是最好的选择</li></ul></li><li>凡事勿过度<ul><li>沉默又冷酷，但要注意不要太过火，否则没说出口的单词就会演变成暴力。</li></ul></li><li>妄立誓则祸近<ul><li>不要相信其他人，action louder than speak</li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;阿波罗太阳神庙&quot;&gt;&lt;a href=&quot;#阿波罗太阳神庙&quot; class=&quot;headerlink&quot; title=&quot;阿波罗太阳神庙&quot;&gt;&lt;/a&gt;阿波罗太阳神庙&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;认识你自己&lt;ul&gt;
+&lt;li&gt;想要贯彻自己的意志，那么惜字如金，然后充耳不闻就是最好的选择
+      
+    
+    </summary>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Cpp与Callback</title>
@@ -564,36 +592,6 @@
       <category term="Cpp" scheme="https://JoyTsing.github.io/tags/Cpp/"/>
     
       <category term="原理剖析" scheme="https://JoyTsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何在Linux下让grpc与protobuf多版本共存</title>
-    <link href="https://joytsing.github.io/posts/9331/"/>
-    <id>https://joytsing.github.io/posts/9331/</id>
-    <published>2024-05-05T16:00:02.000Z</published>
-    <updated>2024-05-30T15:00:06.239Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><a href="https://joytsing.cn/posts/24753/">前情提要</a>，之前配置了比较低版本的protobuf，当时我就有预感肯定有伏笔，没想到伏笔来得这么快，因为grpc是需要配合protobuf使用的，也就是你单独弄的protobuf和grpc大概率版本是不统一的，这时候你去使用两者都会有问题，并且如果你按照前情提要配置的话大概率会遇到这个问题，其实这个问题只要不在全局配置问题都不大。</p><h2 id="grpc"><a href="#grpc" class="headerlink" title="grpc"></a>grpc</h2><p>安装过程就不必多说了，配置完后为了方便给加到了<code>.zshrc</code>里（不推荐，但是经常使用的话可以加，去掉也简单）。这时候因为protobuf版本冲突会导致有一者无法正常编译（版本出问题）。这时候我选择的是留下grpc而把老的protobuf版本去掉，因为grpc其实里面包含了protobuf,还有很多其他三方库（re2，abseil等等），在使用上可以用grpc里带的protobuf代替。当然，如果像我一样遇到这种问题要给解决，可以尝试一下。</p><p>配置好后的grpc使用：</p><p><img src="/posts/9331/349e76de8ff10715ccdad6dbc227013e.png" alt="方便？下面就有伏笔了"></p><pre class="line-numbers language-cmake"><code class="language-cmake">find_package(Protobuf CONFIG REQUIRED)find_package(gRPC CONFIG REQUIRED)message(STATUS "Using protobuf-${Protobuf_VERSION}")message(STATUS "Using gRPC-${gRPC_VERSION}")set(PROTO_PATH ${PROJECT_SOURCE_DIR}/proto)file(GLOB_RECURSE PROTO_FILES ${PROTO_PATH}/*.cc)file(GLOB_RECURSE all_srcs CONFIGURE_DEPENDS *.cpp)include_directories(${PROTO_PATH})add_executable(main ${all_srcs} ${PROTO_FILES})target_link_libraries(main PUBLIC gRPC::grpc++ protobuf)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="/posts/9331/image-20240506002754665.png" alt="猜猜直接找到了配套的老的会怎么样"></p><h2 id="版本冲突"><a href="#版本冲突" class="headerlink" title="版本冲突"></a>版本冲突</h2><p>当版本冲突时候的报错让人头皮发麻：</p><p><img src="/posts/9331/66f2db0ff9599db168f991216770f647.png" alt="头皮发麻"></p><p>如果像下面一样两个都留着的话，按照添加path的递归方式会选择使用grpc的，那么自然老的protobuf就不能够编译，那么如果我想使用前文提到过的直接手动指定行不行？</p><p><img src="/posts/9331/image-20240506001306510.png" alt></p><p>也就是将CMakeLists这样编写手动指定应该就行了吧？</p><pre><code>set(Protobuf_PREFIX_PATH  &quot;/home/joytsing/makeInstall/protobuf3.21.12/include&quot;  &quot;/home/joytsing/makeInstall/protobuf3.21.12/lib&quot;  &quot;/home/joytsing/makeInstall/protobuf3.21.12/bin&quot;)list(APPEND CMAKE_PREFIX_PATH &quot;${Protobuf_PREFIX_PATH}&quot;)find_package(Protobuf 3.21.12 REQUIRED)</code></pre><p>很遗憾，答案是不行，因为在我们全局配置完后，你只要使用<code>target_link_libraries(main PUBLIC protobuf)</code>，那么它默认会使用我们添加在全局PATH里的路径（而且我们已经在全局配置完lib和include，也就是说只需要link就能使用），只有当它在全局路径中找不到的时候它才会使用我们指定的路径，就是这么霸道。也就是说，在link的时候的protobuf都是默认指的grpc的（这取决于你），那么在把留在<code>.zshrc</code>老的<code>protobuf</code>去掉后我们还需要做什么，其实需要做的并不多，只需要稍稍修改就行。</p><p>再提一嘴为什么要把老的protobuf配置给去掉（很重要，不去掉的话一样会报错），因为现在版本有冲突，留着不仅没有用还会造成命名空间污染。所以现在相当于要配置一个安在其他地方的第三方库，仅此而已，稍稍配置就行了（除了库名因为被grpc污染不能使用）。</p><pre class="line-numbers language-cmake"><code class="language-cmake">set(Protobuf_PREFIX_PATH  "/home/joytsing/makeInstall/protobuf3.21.12/include"  "/home/joytsing/makeInstall/protobuf3.21.12/lib"  "/home/joytsing/makeInstall/protobuf3.21.12/bin")list(APPEND CMAKE_PREFIX_PATH "${Protobuf_PREFIX_PATH}")find_package(Protobuf 3.21.12 REQUIRED)include_directories(${Protobuf_INCLUDE_DIRS})include_directories(${PROJECT_SOURCE_DIR}/pb)file(GLOB_RECURSE all_srcs ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/pb/*.cc)add_executable(server ${all_srcs})target_link_libraries(server PUBLIC ${Protobuf_LIBRARIES})<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>把需要链接的库名protobuf改成对应cmake变量就行，同时加上对应的include，和正常使用三方库没区别（其实就是）。</p><p><img src="/posts/9331/image-20240506002501985.png" alt></p><p>好了，可喜可贺，一些可能有用的文档：</p><p><a href="https://www.jianshu.com/p/ae5c56845896">多个Protobuf版本时让find_package正确选择</a></p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>另外在运行的时候发现一件事情，顺便还把k8s在最后<code>kubeadm init</code>时最后的通信连接不上的问题给解决了。</p><p><img src="/posts/9331/image-20240506221042708.png" alt="无响应"></p><p>因为之前在配置<code>minikube</code>的时候，官方推荐添加<code>NO_PROXY</code>,于是我图方便写了个脚本又给加入了全局环境中</p><p><img src="/posts/9331/image-20240506221343597.png" alt="孩子们，又是我"></p><p>所以现在的情况就是grpc依然走的代理，但是实际上我们把对应的代理地址给关闭了，自然也就连接不上，解决方法很简单，再写个脚本用<code>unset</code>，有同样的情况直接取消代理就行。</p><p><img src="/posts/9331/image-20240506221413586.png" alt="第六行"></p><h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p><a href="https://www.cnblogs.com/dangerman/p/6529742.html">CMake add_custom_command 使用</a></p><p><a href="https://samthursfield.wordpress.com/2015/11/21/cmake-dependencies-between-targets-and-files-and-custom-commands/">CMake: dependencies between targets and files and custom commands</a></p><p><a href="https://stackoverflow.com/questions/2937128/cmake-add-custom-command-not-being-run">stackoverflow: CMake add_custom_command not being run</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://joytsing.cn/posts/24753/&quot;&gt;前情提要&lt;/a&gt;，之前配置了比较低版本的protobu
-      
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="https://JoyTsing.github.io/categories/Linux/"/>
-    
-    
-      <category term="Cpp" scheme="https://JoyTsing.github.io/tags/Cpp/"/>
-    
-      <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
-    
-      <category term="Linux" scheme="https://JoyTsing.github.io/tags/Linux/"/>
     
   </entry>
   
