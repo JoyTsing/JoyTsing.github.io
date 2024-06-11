@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://joytsing.github.io/"/>
-  <updated>2024-06-07T06:23:40.344Z</updated>
+  <updated>2024-06-06T09:12:49.741Z</updated>
   <id>https://joytsing.github.io/</id>
   
   <author>
@@ -15,34 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>德尔斐神庙与三句箴言</title>
-    <link href="https://joytsing.github.io/posts/32630/"/>
-    <id>https://joytsing.github.io/posts/32630/</id>
-    <published>2024-06-07T06:17:40.000Z</published>
-    <updated>2024-06-07T06:23:40.344Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="阿波罗太阳神庙"><a href="#阿波罗太阳神庙" class="headerlink" title="阿波罗太阳神庙"></a>阿波罗太阳神庙</h2><ul><li>认识你自己<ul><li>想要贯彻自己的意志，那么惜字如金，然后充耳不闻就是最好的选择</li></ul></li><li>凡事勿过度<ul><li>沉默又冷酷，但要注意不要太过火，否则没说出口的单词就会演变成暴力。</li></ul></li><li>妄立誓则祸近<ul><li>不要相信其他人，action louder than speak</li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;阿波罗太阳神庙&quot;&gt;&lt;a href=&quot;#阿波罗太阳神庙&quot; class=&quot;headerlink&quot; title=&quot;阿波罗太阳神庙&quot;&gt;&lt;/a&gt;阿波罗太阳神庙&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;认识你自己&lt;ul&gt;
-&lt;li&gt;想要贯彻自己的意志，那么惜字如金，然后充耳不闻就是最好的选择
-      
-    
-    </summary>
-    
-    
-      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
-    
-    
-      <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
-    
-  </entry>
   
   <entry>
     <title>Cpp与Callback</title>
@@ -97,6 +69,36 @@
       <category term="Cpp" scheme="https://JoyTsing.github.io/tags/Cpp/"/>
     
       <category term="工程经验" scheme="https://JoyTsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>德尔斐神庙与三句箴言</title>
+    <link href="https://joytsing.github.io/posts/32630/"/>
+    <id>https://joytsing.github.io/posts/32630/</id>
+    <published>2024-06-01T06:17:40.000Z</published>
+    <updated>2024-06-11T14:09:44.540Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="三句箴言"><a href="#三句箴言" class="headerlink" title="三句箴言"></a>三句箴言</h2><ul><li>认识你自己<ul><li>想要贯彻自己的意志，那么惜字如金，然后充耳不闻就是最好的选择</li></ul></li><li>凡事勿过度<ul><li>沉默又冷酷，但要注意不要太过火，否则没说出口的单词就会演变成暴力。</li></ul></li><li>妄立誓则祸近<ul><li>不要相信其他人，action louder than speak</li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;三句箴言&quot;&gt;&lt;a href=&quot;#三句箴言&quot; class=&quot;headerlink&quot; title=&quot;三句箴言&quot;&gt;&lt;/a&gt;三句箴言&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;认识你自己&lt;ul&gt;
+&lt;li&gt;想要贯彻自己的意志，那么惜字如金，然后充耳不闻就是最好的选择&lt;/li&gt;
+&lt;/ul&gt;
+
+      
+    
+    </summary>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+    
+    
+      <category term="杂记" scheme="https://JoyTsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
     
   </entry>
   
@@ -302,9 +304,9 @@
       <category term="计算机网络" scheme="https://JoyTsing.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
     
-      <category term="原理剖析" scheme="https://JoyTsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
-    
       <category term="计算机网络" scheme="https://JoyTsing.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="原理剖析" scheme="https://JoyTsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
   </entry>
   
@@ -330,9 +332,9 @@
       <category term="Redis" scheme="https://JoyTsing.github.io/categories/Redis/"/>
     
     
-      <category term="原理剖析" scheme="https://JoyTsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
-    
       <category term="计算机网络" scheme="https://JoyTsing.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="原理剖析" scheme="https://JoyTsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
       <category term="Redis" scheme="https://JoyTsing.github.io/tags/Redis/"/>
     
