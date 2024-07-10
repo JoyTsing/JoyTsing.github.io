@@ -5,9 +5,9 @@
   <subtitle>深海</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://joytsing.github.io/"/>
+  <link href="https://joytsing.cn/"/>
   <updated>2024-07-10T07:47:53.881Z</updated>
-  <id>https://joytsing.github.io/</id>
+  <id>https://joytsing.cn/</id>
   
   <author>
     <name>JoyTsing</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>本站dp容灾切换与智能全局流量管理地址池踩坑</title>
-    <link href="https://joytsing.github.io/posts/33051/"/>
-    <id>https://joytsing.github.io/posts/33051/</id>
+    <link href="https://joytsing.cn/posts/33051/"/>
+    <id>https://joytsing.cn/posts/33051/</id>
     <published>2024-07-09T08:16:03.000Z</published>
     <updated>2024-07-10T07:47:53.881Z</updated>
     
@@ -35,17 +35,17 @@
     </summary>
     
     
-      <category term="杂记" scheme="https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+      <category term="杂记" scheme="https://joytsing.cn/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-      <category term="杂记" scheme="https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+      <category term="杂记" scheme="https://joytsing.cn/tags/%E6%9D%82%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Cpp静态初始化与lambda表达式的结合</title>
-    <link href="https://joytsing.github.io/posts/55793/"/>
-    <id>https://joytsing.github.io/posts/55793/</id>
+    <link href="https://joytsing.cn/posts/55793/"/>
+    <id>https://joytsing.cn/posts/55793/</id>
     <published>2024-07-09T08:14:44.000Z</published>
     <updated>2024-07-10T08:07:57.363Z</updated>
     
@@ -62,19 +62,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>如何用函数式编程实现信号槽</title>
-    <link href="https://joytsing.github.io/posts/9176/"/>
-    <id>https://joytsing.github.io/posts/9176/</id>
+    <link href="https://joytsing.cn/posts/9176/"/>
+    <id>https://joytsing.cn/posts/9176/</id>
     <published>2024-06-24T16:25:34.000Z</published>
     <updated>2024-06-25T07:43:11.916Z</updated>
     
@@ -90,19 +90,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>使用std::variant实现非虚运行时多态实现</title>
-    <link href="https://joytsing.github.io/posts/63582/"/>
-    <id>https://joytsing.github.io/posts/63582/</id>
+    <link href="https://joytsing.cn/posts/63582/"/>
+    <id>https://joytsing.cn/posts/63582/</id>
     <published>2024-06-23T15:28:16.000Z</published>
     <updated>2024-06-23T15:45:08.239Z</updated>
     
@@ -118,21 +118,21 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="原理剖析" scheme="https://joytsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
+      <category term="原理剖析" scheme="https://joytsing.cn/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>Windows反复蓝屏与dump定位</title>
-    <link href="https://joytsing.github.io/posts/61347/"/>
-    <id>https://joytsing.github.io/posts/61347/</id>
+    <link href="https://joytsing.cn/posts/61347/"/>
+    <id>https://joytsing.cn/posts/61347/</id>
     <published>2024-06-21T13:28:39.000Z</published>
     <updated>2024-06-29T13:43:49.861Z</updated>
     
@@ -149,17 +149,17 @@
     </summary>
     
     
-      <category term="杂记" scheme="https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+      <category term="杂记" scheme="https://joytsing.cn/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-      <category term="杂记" scheme="https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+      <category term="杂记" scheme="https://joytsing.cn/tags/%E6%9D%82%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>类型擦除与Pimpl</title>
-    <link href="https://joytsing.github.io/posts/42968/"/>
-    <id>https://joytsing.github.io/posts/42968/</id>
+    <link href="https://joytsing.cn/posts/42968/"/>
+    <id>https://joytsing.cn/posts/42968/</id>
     <published>2024-06-21T07:43:30.000Z</published>
     <updated>2024-06-21T13:44:45.020Z</updated>
     
@@ -175,21 +175,21 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="原理剖析" scheme="https://joytsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
+      <category term="原理剖析" scheme="https://joytsing.cn/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>nvim下的CMake,编译与Debug</title>
-    <link href="https://joytsing.github.io/posts/63066/"/>
-    <id>https://joytsing.github.io/posts/63066/</id>
+    <link href="https://joytsing.cn/posts/63066/"/>
+    <id>https://joytsing.cn/posts/63066/</id>
     <published>2024-06-15T11:36:19.000Z</published>
     <updated>2024-06-18T12:49:22.020Z</updated>
     
@@ -205,19 +205,19 @@
     </summary>
     
     
-      <category term="生产环境" scheme="https://joytsing.github.io/categories/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
+      <category term="生产环境" scheme="https://joytsing.cn/categories/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="Tool" scheme="https://joytsing.github.io/tags/Tool/"/>
+      <category term="Tool" scheme="https://joytsing.cn/tags/Tool/"/>
     
   </entry>
   
   <entry>
     <title>Cpp与Callback</title>
-    <link href="https://joytsing.github.io/posts/39903/"/>
-    <id>https://joytsing.github.io/posts/39903/</id>
+    <link href="https://joytsing.cn/posts/39903/"/>
+    <id>https://joytsing.cn/posts/39903/</id>
     <published>2024-06-06T07:24:34.000Z</published>
     <updated>2024-06-06T09:12:49.741Z</updated>
     
@@ -233,19 +233,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>Cpp如何集成Prometheus和Grafana</title>
-    <link href="https://joytsing.github.io/posts/45028/"/>
-    <id>https://joytsing.github.io/posts/45028/</id>
+    <link href="https://joytsing.cn/posts/45028/"/>
+    <id>https://joytsing.cn/posts/45028/</id>
     <published>2024-06-05T08:59:03.000Z</published>
     <updated>2024-06-05T09:25:44.300Z</updated>
     
@@ -261,19 +261,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>德尔斐神庙与三句箴言</title>
-    <link href="https://joytsing.github.io/posts/32630/"/>
-    <id>https://joytsing.github.io/posts/32630/</id>
+    <link href="https://joytsing.cn/posts/32630/"/>
+    <id>https://joytsing.cn/posts/32630/</id>
     <published>2024-06-01T06:17:40.000Z</published>
     <updated>2024-06-11T14:09:44.540Z</updated>
     
@@ -293,17 +293,17 @@
     </summary>
     
     
-      <category term="杂记" scheme="https://joytsing.github.io/categories/%E6%9D%82%E8%AE%B0/"/>
+      <category term="杂记" scheme="https://joytsing.cn/categories/%E6%9D%82%E8%AE%B0/"/>
     
     
-      <category term="杂记" scheme="https://joytsing.github.io/tags/%E6%9D%82%E8%AE%B0/"/>
+      <category term="杂记" scheme="https://joytsing.cn/tags/%E6%9D%82%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>CMake与Protobuf教程&amp;踩坑日记</title>
-    <link href="https://joytsing.github.io/posts/59761/"/>
-    <id>https://joytsing.github.io/posts/59761/</id>
+    <link href="https://joytsing.cn/posts/59761/"/>
+    <id>https://joytsing.cn/posts/59761/</id>
     <published>2024-05-30T13:15:28.000Z</published>
     <updated>2024-06-03T11:28:52.018Z</updated>
     
@@ -319,21 +319,21 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
-      <category term="CMake" scheme="https://joytsing.github.io/tags/CMake/"/>
+      <category term="CMake" scheme="https://joytsing.cn/tags/CMake/"/>
     
-      <category term="Tool" scheme="https://joytsing.github.io/tags/Tool/"/>
+      <category term="Tool" scheme="https://joytsing.cn/tags/Tool/"/>
     
   </entry>
   
   <entry>
     <title>GitFlow与CMake项目CI集成</title>
-    <link href="https://joytsing.github.io/posts/52642/"/>
-    <id>https://joytsing.github.io/posts/52642/</id>
+    <link href="https://joytsing.cn/posts/52642/"/>
+    <id>https://joytsing.cn/posts/52642/</id>
     <published>2024-05-21T15:46:36.000Z</published>
     <updated>2024-05-27T13:02:34.399Z</updated>
     
@@ -349,21 +349,21 @@
     </summary>
     
     
-      <category term="生产环境" scheme="https://joytsing.github.io/categories/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
+      <category term="生产环境" scheme="https://joytsing.cn/categories/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
-      <category term="生产环境" scheme="https://joytsing.github.io/tags/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
+      <category term="生产环境" scheme="https://joytsing.cn/tags/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83/"/>
     
   </entry>
   
   <entry>
     <title>如何让clangd支持makefile工程</title>
-    <link href="https://joytsing.github.io/posts/26828/"/>
-    <id>https://joytsing.github.io/posts/26828/</id>
+    <link href="https://joytsing.cn/posts/26828/"/>
+    <id>https://joytsing.cn/posts/26828/</id>
     <published>2024-05-20T08:59:52.000Z</published>
     <updated>2024-05-20T09:31:06.111Z</updated>
     
@@ -379,19 +379,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>浅析协程与线程与进程的区别和联系</title>
-    <link href="https://joytsing.github.io/posts/37357/"/>
-    <id>https://joytsing.github.io/posts/37357/</id>
+    <link href="https://joytsing.cn/posts/37357/"/>
+    <id>https://joytsing.cn/posts/37357/</id>
     <published>2024-05-19T15:39:41.000Z</published>
     <updated>2024-05-19T15:50:07.253Z</updated>
     
@@ -409,23 +409,23 @@
     </summary>
     
     
-      <category term="操作系统" scheme="https://joytsing.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="操作系统" scheme="https://joytsing.cn/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
     
-      <category term="原理剖析" scheme="https://joytsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
+      <category term="原理剖析" scheme="https://joytsing.cn/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
-      <category term="Linux" scheme="https://joytsing.github.io/tags/Linux/"/>
+      <category term="Linux" scheme="https://joytsing.cn/tags/Linux/"/>
     
-      <category term="C" scheme="https://joytsing.github.io/tags/C/"/>
+      <category term="C" scheme="https://joytsing.cn/tags/C/"/>
     
-      <category term="操作系统" scheme="https://joytsing.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+      <category term="操作系统" scheme="https://joytsing.cn/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>Cpp中的ABI探究</title>
-    <link href="https://joytsing.github.io/posts/27828/"/>
-    <id>https://joytsing.github.io/posts/27828/</id>
+    <link href="https://joytsing.cn/posts/27828/"/>
+    <id>https://joytsing.cn/posts/27828/</id>
     <published>2024-05-18T08:07:59.000Z</published>
     <updated>2024-05-18T08:24:56.597Z</updated>
     
@@ -441,19 +441,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="读书笔记" scheme="https://joytsing.github.io/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="https://joytsing.cn/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>grpc与CMake中find_package()命令神奇的寻址</title>
-    <link href="https://joytsing.github.io/posts/48298/"/>
-    <id>https://joytsing.github.io/posts/48298/</id>
+    <link href="https://joytsing.cn/posts/48298/"/>
+    <id>https://joytsing.cn/posts/48298/</id>
     <published>2024-05-17T12:33:13.000Z</published>
     <updated>2024-05-17T13:36:21.123Z</updated>
     
@@ -470,19 +470,19 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
-      <category term="工程经验" scheme="https://joytsing.github.io/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
+      <category term="工程经验" scheme="https://joytsing.cn/tags/%E5%B7%A5%E7%A8%8B%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
   <entry>
     <title>RPC的基本原理和层次架构</title>
-    <link href="https://joytsing.github.io/posts/17654/"/>
-    <id>https://joytsing.github.io/posts/17654/</id>
+    <link href="https://joytsing.cn/posts/17654/"/>
+    <id>https://joytsing.cn/posts/17654/</id>
     <published>2024-05-14T13:02:16.000Z</published>
     <updated>2024-05-14T13:26:20.350Z</updated>
     
@@ -499,19 +499,19 @@
     </summary>
     
     
-      <category term="计算机网络" scheme="https://joytsing.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="https://joytsing.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
     
-      <category term="原理剖析" scheme="https://joytsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
+      <category term="原理剖析" scheme="https://joytsing.cn/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
-      <category term="计算机网络" scheme="https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="https://joytsing.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
   <entry>
     <title>Redis单线程高性能解密</title>
-    <link href="https://joytsing.github.io/posts/55825/"/>
-    <id>https://joytsing.github.io/posts/55825/</id>
+    <link href="https://joytsing.cn/posts/55825/"/>
+    <id>https://joytsing.cn/posts/55825/</id>
     <published>2024-05-12T13:48:11.000Z</published>
     <updated>2024-05-15T09:04:00.459Z</updated>
     
@@ -527,21 +527,21 @@
     </summary>
     
     
-      <category term="Redis" scheme="https://joytsing.github.io/categories/Redis/"/>
+      <category term="Redis" scheme="https://joytsing.cn/categories/Redis/"/>
     
     
-      <category term="原理剖析" scheme="https://joytsing.github.io/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
+      <category term="原理剖析" scheme="https://joytsing.cn/tags/%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/"/>
     
-      <category term="计算机网络" scheme="https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="https://joytsing.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
-      <category term="Redis" scheme="https://joytsing.github.io/tags/Redis/"/>
+      <category term="Redis" scheme="https://joytsing.cn/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>重新认识端口重用</title>
-    <link href="https://joytsing.github.io/posts/48/"/>
-    <id>https://joytsing.github.io/posts/48/</id>
+    <link href="https://joytsing.cn/posts/48/"/>
+    <id>https://joytsing.cn/posts/48/</id>
     <published>2024-05-12T12:08:25.000Z</published>
     <updated>2024-05-14T13:55:49.570Z</updated>
     
@@ -557,19 +557,19 @@
     </summary>
     
     
-      <category term="计算机网络" scheme="https://joytsing.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="https://joytsing.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
     
-      <category term="计算机网络" scheme="https://joytsing.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+      <category term="计算机网络" scheme="https://joytsing.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
-      <category term="Linux" scheme="https://joytsing.github.io/tags/Linux/"/>
+      <category term="Linux" scheme="https://joytsing.cn/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>std::enable_shared_from_this():诞生和作用</title>
-    <link href="https://joytsing.github.io/posts/5981/"/>
-    <id>https://joytsing.github.io/posts/5981/</id>
+    <link href="https://joytsing.cn/posts/5981/"/>
+    <id>https://joytsing.cn/posts/5981/</id>
     <published>2024-05-11T07:35:50.000Z</published>
     <updated>2024-06-29T13:48:57.387Z</updated>
     
@@ -585,10 +585,10 @@
     </summary>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/categories/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/categories/Cpp/"/>
     
     
-      <category term="Cpp" scheme="https://joytsing.github.io/tags/Cpp/"/>
+      <category term="Cpp" scheme="https://joytsing.cn/tags/Cpp/"/>
     
   </entry>
   
